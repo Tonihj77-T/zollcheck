@@ -979,6 +979,288 @@ body {
     background: #E2E8F0;
 }
 
+/* === Trade Map === */
+.map-controls {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.map-btn {
+    flex: 1;
+    padding: 10px 12px;
+    border: 2px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--card);
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.map-btn.active {
+    border-color: var(--primary);
+    background: var(--primary);
+    color: white;
+}
+
+.map-svg-container {
+    position: relative;
+    background: linear-gradient(135deg, #E8F4FD 0%, #D4E8F7 100%);
+    border-radius: var(--radius);
+    overflow: hidden;
+    margin-bottom: 16px;
+}
+
+.world-map {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.country-dot {
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.country-dot:hover .country-circle {
+    transform: scale(1.3);
+}
+
+.country-circle {
+    transition: all 0.2s;
+}
+
+.country-label {
+    pointer-events: none;
+}
+
+.trade-flow {
+    cursor: pointer;
+    transition: opacity 0.2s, stroke-width 0.2s;
+}
+
+.trade-flow:hover {
+    opacity: 1 !important;
+    stroke-width: 2px !important;
+}
+
+.country-info {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    right: 10px;
+    background: white;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-lg);
+    overflow: hidden;
+    animation: slideUp 0.2s ease;
+}
+
+.country-info.hidden {
+    display: none;
+}
+
+.info-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px;
+    background: var(--primary);
+    color: white;
+}
+
+.info-flag {
+    font-size: 24px;
+}
+
+.info-name {
+    flex: 1;
+    font-weight: 600;
+}
+
+.info-close {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 0;
+    line-height: 1;
+}
+
+.info-body {
+    padding: 12px;
+}
+
+.info-stat {
+    display: flex;
+    justify-content: space-between;
+    padding: 6px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 13px;
+}
+
+.info-stat:last-child {
+    border-bottom: none;
+}
+
+.stat-label {
+    color: var(--text-light);
+}
+
+.stat-value {
+    font-weight: 600;
+}
+
+.info-section {
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px solid var(--border);
+}
+
+.section-label {
+    font-size: 12px;
+    color: var(--text-light);
+    display: block;
+    margin-bottom: 4px;
+}
+
+.section-value {
+    font-size: 13px;
+}
+
+.flow-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 0;
+    font-size: 13px;
+}
+
+.tariff-badge {
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.tariff-badge.low {
+    background: #C6F6D5;
+    color: #22543D;
+}
+
+.tariff-badge.medium {
+    background: #FEFCBF;
+    color: #744210;
+}
+
+.tariff-badge.high {
+    background: #FED7D7;
+    color: #742A2A;
+}
+
+/* Timeline */
+.map-timeline {
+    background: var(--card);
+    padding: 16px;
+    border-radius: var(--radius);
+    margin-bottom: 16px;
+    box-shadow: var(--shadow);
+}
+
+.timeline-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 12px;
+    font-weight: 600;
+}
+
+.timeline-year {
+    color: var(--primary);
+    font-size: 18px;
+}
+
+.timeline-slider {
+    width: 100%;
+    height: 8px;
+    -webkit-appearance: none;
+    appearance: none;
+    background: var(--border);
+    border-radius: 4px;
+    outline: none;
+    margin-bottom: 12px;
+}
+
+.timeline-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--primary);
+    cursor: pointer;
+    border: 3px solid white;
+    box-shadow: var(--shadow);
+}
+
+.timeline-event {
+    background: var(--bg);
+    padding: 12px;
+    border-radius: 8px;
+    border-left: 3px solid var(--secondary);
+}
+
+.event-title {
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 4px;
+}
+
+.event-impact {
+    font-size: 12px;
+    color: var(--text-light);
+}
+
+/* Legend */
+.map-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    font-size: 11px;
+    color: var(--text-light);
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.legend-line {
+    width: 20px;
+    height: 3px;
+    background: var(--secondary);
+    border-radius: 2px;
+}
+
+.legend-line.thick {
+    height: 4px;
+}
+
+.legend-line.thin {
+    height: 2px;
+    opacity: 0.5;
+}
+
+.legend-dot {
+    width: 10px;
+    height: 10px;
+    background: var(--primary);
+    border-radius: 50%;
+    border: 2px solid white;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+
 /* === Utilities === */
 .text-center { text-align: center; }
 .mt-16 { margin-top: 16px; }
