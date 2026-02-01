@@ -400,12 +400,90 @@ function showLexikonDetail(term) {
 function startSimulator(role) {
     state.simRole = role;
     state.simScenarioIndex = 0;
-    state.simMeters = { jobs: 50, prices: 50, trade: 50, treasury: 50 };
+    
+    // Verschiedene Meter je nach Rolle
+    if (role === 'minister') {
+        state.simMeters = { jobs: 50, prices: 50, trade: 50, treasury: 50 };
+    } else if (role === 'unternehmer') {
+        state.simMeters = { profit: 50, market: 50, costs: 50, employees: 50 };
+    } else if (role === 'verbraucher') {
+        state.simMeters = { budget: 50, satisfaction: 50, ethics: 50 };
+    }
     
     document.getElementById('sim-intro').classList.add('hidden');
     document.getElementById('sim-game').classList.remove('hidden');
     
     showSimScenario();
+}
+
+function getMetersHTML() {
+    if (state.simRole === 'minister') {
+        return `
+            <div class="sim-header">
+                <div class="sim-meters">
+                    <div class="meter">
+                        <span class="meter-label">👷 Arbeitsplätze</span>
+                        <div class="meter-bar"><div class="meter-fill green" style="width: ${state.simMeters.jobs}%"></div></div>
+                    </div>
+                    <div class="meter">
+                        <span class="meter-label">🛒 Preise</span>
+                        <div class="meter-bar"><div class="meter-fill ${state.simMeters.prices > 50 ? 'green' : 'red'}" style="width: ${state.simMeters.prices}%"></div></div>
+                    </div>
+                    <div class="meter">
+                        <span class="meter-label">🤝 Handel</span>
+                        <div class="meter-bar"><div class="meter-fill blue" style="width: ${state.simMeters.trade}%"></div></div>
+                    </div>
+                    <div class="meter">
+                        <span class="meter-label">💰 Staatskasse</span>
+                        <div class="meter-bar"><div class="meter-fill ${state.simMeters.treasury > 40 ? 'green' : 'red'}" style="width: ${state.simMeters.treasury}%"></div></div>
+                    </div>
+                </div>
+            </div>
+        `;
+    } else if (state.simRole === 'unternehmer') {
+        return `
+            <div class="sim-header">
+                <div class="sim-meters">
+                    <div class="meter">
+                        <span class="meter-label">💵 Gewinn</span>
+                        <div class="meter-bar"><div class="meter-fill ${state.simMeters.profit > 40 ? 'green' : 'red'}" style="width: ${state.simMeters.profit}%"></div></div>
+                    </div>
+                    <div class="meter">
+                        <span class="meter-label">📈 Marktanteil</span>
+                        <div class="meter-bar"><div class="meter-fill blue" style="width: ${state.simMeters.market}%"></div></div>
+                    </div>
+                    <div class="meter">
+                        <span class="meter-label">💰 Kostenkontrolle</span>
+                        <div class="meter-bar"><div class="meter-fill ${state.simMeters.costs > 40 ? 'green' : 'yellow'}" style="width: ${state.simMeters.costs}%"></div></div>
+                    </div>
+                    <div class="meter">
+                        <span class="meter-label">👥 Mitarbeiter</span>
+                        <div class="meter-bar"><div class="meter-fill green" style="width: ${state.simMeters.employees}%"></div></div>
+                    </div>
+                </div>
+            </div>
+        `;
+    } else if (state.simRole === 'verbraucher') {
+        return `
+            <div class="sim-header">
+                <div class="sim-meters">
+                    <div class="meter">
+                        <span class="meter-label">💰 Budget</span>
+                        <div class="meter-bar"><div class="meter-fill ${state.simMeters.budget > 40 ? 'green' : 'red'}" style="width: ${state.simMeters.budget}%"></div></div>
+                    </div>
+                    <div class="meter">
+                        <span class="meter-label">😊 Zufriedenheit</span>
+                        <div class="meter-bar"><div class="meter-fill ${state.simMeters.satisfaction > 50 ? 'green' : 'yellow'}" style="width: ${state.simMeters.satisfaction}%"></div></div>
+                    </div>
+                    <div class="meter">
+                        <span class="meter-label">🌱 Ethik/Nachhaltigkeit</span>
+                        <div class="meter-bar"><div class="meter-fill blue" style="width: ${state.simMeters.ethics}%"></div></div>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+    return '';
 }
 
 function showSimScenario() {
@@ -419,34 +497,8 @@ function showSimScenario() {
     const scenario = scenarios[state.simScenarioIndex];
     const container = document.getElementById('sim-game');
     
-    let metersHTML = '';
-    if (state.simRole === 'minister') {
-        metersHTML = `
-            <div class="sim-header">
-                <div class="sim-meters">
-                    <div class="meter">
-                        <span class="meter-label">👷 Arbeitsplätze</span>
-                        <div class="meter-bar"><div class="meter-fill green" style="width: ${state.simMeters.jobs}%"></div></div>
-                    </div>
-                    <div class="meter">
-                        <span class="meter-label">🛒 Verbraucherpreise</span>
-                        <div class="meter-bar"><div class="meter-fill yellow" style="width: ${state.simMeters.prices}%"></div></div>
-                    </div>
-                    <div class="meter">
-                        <span class="meter-label">🤝 Handelsbeziehungen</span>
-                        <div class="meter-bar"><div class="meter-fill blue" style="width: ${state.simMeters.trade}%"></div></div>
-                    </div>
-                    <div class="meter">
-                        <span class="meter-label">💰 Staatskasse</span>
-                        <div class="meter-bar"><div class="meter-fill green" style="width: ${state.simMeters.treasury}%"></div></div>
-                    </div>
-                </div>
-            </div>
-        `;
-    }
-    
     container.innerHTML = `
-        ${metersHTML}
+        ${getMetersHTML()}
         <div class="sim-scenario">
             <h4>Situation ${state.simScenarioIndex + 1}/${scenarios.length}</h4>
             <p><strong>${scenario.title}</strong></p>
@@ -494,29 +546,83 @@ function nextSimScenario() {
 function showSimResults() {
     const container = document.getElementById('sim-game');
     
-    let verdict = '';
-    const avg = (state.simMeters.jobs + state.simMeters.prices + state.simMeters.trade + state.simMeters.treasury) / 4;
+    // Berechne Durchschnitt je nach Rolle
+    let avg, verdict, roleTitle, summary;
+    const meters = state.simMeters;
     
-    if (avg >= 60) {
+    if (state.simRole === 'minister') {
+        avg = (meters.jobs + meters.prices + meters.trade + meters.treasury) / 4;
+        roleTitle = "Wirtschaftsminister";
+        summary = `
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 16px 0; font-size: 13px;">
+                <div>👷 Arbeitsplätze: <strong>${meters.jobs}%</strong></div>
+                <div>🛒 Preise: <strong>${meters.prices}%</strong></div>
+                <div>🤝 Handel: <strong>${meters.trade}%</strong></div>
+                <div>💰 Staatskasse: <strong>${meters.treasury}%</strong></div>
+            </div>
+        `;
+    } else if (state.simRole === 'unternehmer') {
+        avg = (meters.profit + meters.market + meters.costs + meters.employees) / 4;
+        roleTitle = "Unternehmer*in";
+        summary = `
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 16px 0; font-size: 13px;">
+                <div>💵 Gewinn: <strong>${meters.profit}%</strong></div>
+                <div>📈 Marktanteil: <strong>${meters.market}%</strong></div>
+                <div>💰 Kosten: <strong>${meters.costs}%</strong></div>
+                <div>👥 Mitarbeiter: <strong>${meters.employees}%</strong></div>
+            </div>
+        `;
+    } else {
+        avg = (meters.budget + meters.satisfaction + meters.ethics) / 3;
+        roleTitle = "Verbraucher*in";
+        summary = `
+            <div style="display: grid; grid-template-columns: 1fr; gap: 8px; margin: 16px 0; font-size: 13px;">
+                <div>💰 Budget: <strong>${meters.budget}%</strong></div>
+                <div>😊 Zufriedenheit: <strong>${meters.satisfaction}%</strong></div>
+                <div>🌱 Ethik: <strong>${meters.ethics}%</strong></div>
+            </div>
+        `;
+    }
+    
+    if (avg >= 65) {
         verdict = "🏆 Ausgezeichnet! Du hast eine gute Balance gefunden.";
-    } else if (avg >= 40) {
-        verdict = "👍 Solide! Es gibt Verbesserungspotenzial, aber insgesamt okay.";
+    } else if (avg >= 50) {
+        verdict = "👍 Solide! Es gibt Verbesserungspotenzial, aber insgesamt gut gemeistert.";
+    } else if (avg >= 35) {
+        verdict = "😐 Gemischt. Einige gute Entscheidungen, aber auch Verbesserungspotenzial.";
     } else {
         verdict = "😬 Schwierig! Deine Entscheidungen hatten einige negative Folgen.";
     }
     
+    const scenarios = simulatorScenarios[state.simRole];
+    
     container.innerHTML = `
         <div class="sim-scenario">
             <h4>🎮 Simulation beendet!</h4>
-            <p>${verdict}</p>
-            <p style="margin-top: 16px; font-size: 14px; color: #718096">
-                In der Realität sind solche Entscheidungen noch komplexer – es gibt selten eine "richtige" Antwort.
+            <p style="font-size: 13px; color: #718096; margin-bottom: 12px;">
+                Du hast ${scenarios.length} Situationen als ${roleTitle} gemeistert.
             </p>
+            <p style="font-size: 18px; font-weight: 600;">${verdict}</p>
+            ${summary}
+            <div style="background: #F7F9FC; padding: 12px; border-radius: 8px; margin-top: 16px;">
+                <p style="font-size: 13px; color: #718096; margin: 0;">
+                    💡 <strong>Erkenntnis:</strong> In der Realität sind solche Entscheidungen noch komplexer. 
+                    Es gibt selten eine "richtige" Antwort – jede Wahl hat Vor- und Nachteile.
+                </p>
+            </div>
         </div>
-        <button class="next-btn" onclick="resetSimulator()" style="width: 100%">Nochmal spielen</button>
+        <div style="display: flex; gap: 10px; margin-top: 16px;">
+            <button class="next-btn" onclick="restartSameRole()" style="flex: 1; background: #4ECDC4;">🔄 Nochmal</button>
+            <button class="next-btn" onclick="resetSimulator()" style="flex: 1;">↩️ Andere Rolle</button>
+        </div>
     `;
     
-    addXP(20);
+    addXP(25 + scenarios.length * 5); // Mehr XP für längere Simulationen
+}
+
+function restartSameRole() {
+    const role = state.simRole;
+    startSimulator(role);
 }
 
 function resetSimulator() {
