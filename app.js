@@ -640,3 +640,213 @@ document.querySelectorAll('.modal').forEach(modal => {
         }
     });
 });
+
+// === DYNAMISCHER SIMULATOR ===
+let currentDynamicScenario = null;
+
+function startDynamicSimulator() {
+    window.dynamicSim.init();
+    document.getElementById('sim-intro').classList.add('hidden');
+    document.getElementById('sim-game').classList.remove('hidden');
+    showDynamicScenario();
+}
+
+function showDynamicScenario() {
+    const sim = window.dynamicSim;
+    const state = sim.getState();
+    const container = document.getElementById('sim-game');
+    
+    // Check ob Spiel zu Ende
+    if (state.turn >= state.maxTurns) {
+        showDynamicResults();
+        return;
+    }
+    
+    // Check auf pending events
+    let scenario;
+    if (state.pendingEvents.length > 0) {
+        const pendingEvent = state.pendingEvents.shift();
+        // Generiere Szenario aus pending event
+        scenario = sim.generateScenario();
+        scenario.type = pendingEvent.type;
+        scenario.country = pendingEvent.country;
+        scenario.product = pendingEvent.product;
+        scenario.tariff = pendingEvent.tariff;
+    } else {
+        scenario = sim.generateScenario();
+    }
+    
+    currentDynamicScenario = scenario;
+    
+    // Render UI
+    const countries = sim.countries;
+    const relationsHTML = Object.entries(state.relations).map(([key, value]) => {
+        const country = countries[key];
+        return `<div class="relation-item">
+            <span>${country.flag}</span>
+            <span class="relation-bar" style="background: linear-gradient(to right, 
+                ${value < 0 ? '#FF6B6B' : '#4ECDC4'} ${Math.abs(value)}%, 
+                #E2E8F0 ${Math.abs(value)}%)"></span>
+            <span style="font-size: 11px">${sim.getRelationEmoji(value)}</span>
+        </div>`;
+    }).join('');
+    
+    container.innerHTML = `
+        <div class="sim-header">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <span style="font-weight: 600; color: #1E3A5F;">🗓️ Monat ${state.turn + 1}/${state.maxTurns}</span>
+                <span style="font-size: 12px; color: #718096;">Deutschland 🇩🇪</span>
+            </div>
+            <div class="sim-meters">
+                <div class="meter">
+                    <span class="meter-label">📈 Wirtschaft</span>
+                    <div class="meter-bar"><div class="meter-fill ${sim.getMeterColor(state.economy)}" style="width: ${state.economy}%"></div></div>
+                </div>
+                <div class="meter">
+                    <span class="meter-label">🌍 Diplomatie</span>
+                    <div class="meter-bar"><div class="meter-fill ${sim.getMeterColor(state.diplomacy)}" style="width: ${state.diplomacy}%"></div></div>
+                </div>
+                <div class="meter">
+                    <span class="meter-label">🏠 Innenpolitik</span>
+                    <div class="meter-bar"><div class="meter-fill ${sim.getMeterColor(state.domestic)}" style="width: ${state.domestic}%"></div></div>
+                </div>
+            </div>
+            <div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid #E2E8F0;">
+                <span style="font-size: 11px; color: #718096; display: block; margin-bottom: 6px;">Beziehungen:</span>
+                <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 4px; font-size: 12px;">
+                    ${relationsHTML}
+                </div>
+            </div>
+        </div>
+        
+        <div class="sim-scenario">
+            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+                <span style="font-size: 24px">${scenario.countryData.flag}</span>
+                <h4 style="margin: 0; color: #1E3A5F;">${scenario.title}</h4>
+            </div>
+            <p>${scenario.text}</p>
+        </div>
+        
+        <div class="sim-choices">
+            ${scenario.choices.map((choice, i) => `
+                <button class="choice-btn" onclick="makeDynamicChoice(${i})">${choice.text}</button>
+            `).join('')}
+        </div>
+    `;
+}
+
+function makeDynamicChoice(choiceIndex) {
+    const sim = window.dynamicSim;
+    const result = sim.processChoice(currentDynamicScenario, choiceIndex);
+    const state = sim.getState();
+    const container = document.getElementById('sim-game');
+    
+    // Zeige Ergebnis
+    container.innerHTML = `
+        <div class="sim-header">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <span style="font-weight: 600; color: #1E3A5F;">🗓️ Monat ${state.turn}/${state.maxTurns}</span>
+            </div>
+            <div class="sim-meters">
+                <div class="meter">
+                    <span class="meter-label">📈 Wirtschaft</span>
+                    <div class="meter-bar"><div class="meter-fill ${sim.getMeterColor(state.economy)}" style="width: ${state.economy}%"></div></div>
+                </div>
+                <div class="meter">
+                    <span class="meter-label">🌍 Diplomatie</span>
+                    <div class="meter-bar"><div class="meter-fill ${sim.getMeterColor(state.diplomacy)}" style="width: ${state.diplomacy}%"></div></div>
+                </div>
+                <div class="meter">
+                    <span class="meter-label">🏠 Innenpolitik</span>
+                    <div class="meter-bar"><div class="meter-fill ${sim.getMeterColor(state.domestic)}" style="width: ${state.domestic}%"></div></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="sim-scenario" style="border-left: 4px solid #4ECDC4;">
+            <h4 style="color: #1E3A5F; margin-bottom: 12px;">📰 Ergebnis</h4>
+            <p>${result.text}</p>
+            ${result.followUp ? '<p style="margin-top: 12px; color: #FF6B6B; font-weight: 500;">⚠️ Die Situation entwickelt sich weiter...</p>' : ''}
+        </div>
+        
+        <button class="next-btn" onclick="showDynamicScenario()" style="width: 100%">
+            ${state.turn >= state.maxTurns ? '📊 Ergebnis ansehen' : 'Weiter → Monat ' + (state.turn + 1)}
+        </button>
+    `;
+    
+    addXP(15);
+}
+
+function showDynamicResults() {
+    const sim = window.dynamicSim;
+    const state = sim.getState();
+    const score = sim.calculateFinalScore();
+    const verdict = sim.getVerdict(score);
+    const container = document.getElementById('sim-game');
+    
+    // Generiere Beziehungs-Zusammenfassung
+    const relSummary = Object.entries(state.relations).map(([key, value]) => {
+        const country = sim.countries[key];
+        return `<div style="display: flex; justify-content: space-between; padding: 4px 0; border-bottom: 1px solid #E2E8F0;">
+            <span>${country.flag} ${country.name}</span>
+            <span>${sim.getRelationEmoji(value)} ${sim.getRelationText(value)} (${value > 0 ? '+' : ''}${value})</span>
+        </div>`;
+    }).join('');
+    
+    // Generiere Chronik
+    const historyHTML = state.history.slice(-5).map(h => `
+        <div style="font-size: 12px; padding: 8px; background: #F7F9FC; border-radius: 6px; margin-bottom: 6px;">
+            <strong>Monat ${h.turn + 1}:</strong> ${h.scenario}<br>
+            <span style="color: #718096;">${h.choice}</span>
+        </div>
+    `).join('');
+    
+    container.innerHTML = `
+        <div class="sim-scenario">
+            <div style="text-align: center; margin-bottom: 20px;">
+                <span style="font-size: 48px;">${verdict.emoji}</span>
+                <h3 style="margin: 12px 0; color: #1E3A5F;">Amtszeit beendet!</h3>
+                <p style="font-size: 24px; font-weight: 700; color: #4ECDC4;">${score}/100 Punkte</p>
+            </div>
+            
+            <p style="text-align: center; margin-bottom: 20px;">${verdict.text}</p>
+            
+            <div style="background: #F7F9FC; padding: 16px; border-radius: 12px; margin-bottom: 16px;">
+                <h4 style="margin: 0 0 12px 0; font-size: 14px; color: #1E3A5F;">📊 Endstand</h4>
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; text-align: center;">
+                    <div>
+                        <div style="font-size: 24px; font-weight: 700; color: ${sim.getMeterColor(state.economy) === 'green' ? '#48BB78' : sim.getMeterColor(state.economy) === 'yellow' ? '#ECC94B' : '#FF6B6B'}">${state.economy}%</div>
+                        <div style="font-size: 11px; color: #718096;">Wirtschaft</div>
+                    </div>
+                    <div>
+                        <div style="font-size: 24px; font-weight: 700; color: ${sim.getMeterColor(state.diplomacy) === 'green' ? '#48BB78' : sim.getMeterColor(state.diplomacy) === 'yellow' ? '#ECC94B' : '#FF6B6B'}">${state.diplomacy}%</div>
+                        <div style="font-size: 11px; color: #718096;">Diplomatie</div>
+                    </div>
+                    <div>
+                        <div style="font-size: 24px; font-weight: 700; color: ${sim.getMeterColor(state.domestic) === 'green' ? '#48BB78' : sim.getMeterColor(state.domestic) === 'yellow' ? '#ECC94B' : '#FF6B6B'}">${state.domestic}%</div>
+                        <div style="font-size: 11px; color: #718096;">Innenpolitik</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="background: #F7F9FC; padding: 16px; border-radius: 12px; margin-bottom: 16px;">
+                <h4 style="margin: 0 0 12px 0; font-size: 14px; color: #1E3A5F;">🌍 Internationale Beziehungen</h4>
+                ${relSummary}
+            </div>
+            
+            <details style="background: #F7F9FC; padding: 12px; border-radius: 12px;">
+                <summary style="cursor: pointer; font-weight: 600; color: #1E3A5F;">📜 Chronik (letzte 5 Ereignisse)</summary>
+                <div style="margin-top: 12px;">
+                    ${historyHTML}
+                </div>
+            </details>
+        </div>
+        
+        <div style="display: flex; gap: 10px; margin-top: 16px;">
+            <button class="next-btn" onclick="startDynamicSimulator()" style="flex: 1; background: #4ECDC4;">🔄 Nochmal spielen</button>
+            <button class="next-btn" onclick="resetSimulator()" style="flex: 1;">↩️ Zurück</button>
+        </div>
+    `;
+    
+    addXP(50 + Math.floor(score / 2)); // Bonus XP basierend auf Score
+}
