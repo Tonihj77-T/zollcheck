@@ -979,188 +979,156 @@ body {
     background: #E2E8F0;
 }
 
-/* === Trade Map v6 - Responsive === */
-.tmap {
+/* === Leaflet Map === */
+.lmap-wrap {
     display: flex;
     flex-direction: column;
     gap: 10px;
+    position: relative;
 }
 
-.tmap-btns {
+.lmap-btns {
     display: flex;
     gap: 8px;
 }
 
-.tmap-btn {
+.lmap-btn {
     flex: 1;
-    padding: 10px;
+    padding: 12px;
     border: 2px solid var(--border);
     border-radius: var(--radius);
     background: var(--card);
-    font-size: 13px;
+    font-size: 14px;
     font-weight: 600;
     cursor: pointer;
+    transition: all 0.15s;
 }
 
-.tmap-btn.on {
+.lmap-btn.on {
     background: var(--primary);
     border-color: var(--primary);
     color: white;
 }
 
-/* Map Box - Responsive */
-.tmap-box {
-    position: relative;
-    width: 100%;
-    aspect-ratio: 2 / 1;
+/* Leaflet Container */
+#lmap {
+    height: 300px;
     border-radius: var(--radius);
     overflow: hidden;
-    background: 
-        linear-gradient(180deg, rgba(168,212,240,0.9) 0%, rgba(126,200,227,0.9) 100%),
-        url('https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/World_map_-_low_resolution.svg/1280px-World_map_-_low_resolution.svg.png');
-    background-size: cover;
-    background-position: center;
     box-shadow: var(--shadow);
 }
 
-.tmap-markers {
-    position: absolute;
-    inset: 0;
+@media (min-height: 700px) {
+    #lmap { height: 340px; }
 }
 
-/* Trade Lines */
-.tmap-line {
-    position: absolute;
-    inset: 0;
+@media (max-height: 600px) {
+    #lmap { height: 240px; }
+}
+
+/* Custom Markers */
+.lmap-marker {
+    background: none !important;
+    border: none !important;
+}
+
+.lm-dot {
     width: 100%;
     height: 100%;
-    pointer-events: none;
-}
-
-/* Country Markers */
-.tmap-m {
-    position: absolute;
-    transform: translate(-50%, -50%);
-    width: 32px;
-    height: 32px;
-    background: var(--c, #1E3A5F);
-    border: 3px solid white;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    cursor: pointer;
+    border: 3px solid white;
     box-shadow: 0 2px 8px rgba(0,0,0,0.3);
-    transition: transform 0.15s, box-shadow 0.15s;
-    z-index: 2;
-}
-
-.tmap-m span {
     font-size: 14px;
-    line-height: 1;
+    cursor: pointer;
+    transition: transform 0.15s;
 }
 
-.tmap-m:hover, .tmap-m:active {
-    transform: translate(-50%, -50%) scale(1.2);
-    z-index: 5;
+.lm-dot:hover {
+    transform: scale(1.15);
 }
 
-.tmap-m.main {
-    width: 40px;
-    height: 40px;
+.lm-dot.main {
     border-width: 4px;
-    animation: pulse 2s infinite;
-}
-
-.tmap-m.main span {
     font-size: 18px;
+    animation: mpulse 2s infinite;
 }
 
-.tmap-m.sel {
-    box-shadow: 0 0 0 4px gold, 0 2px 12px rgba(0,0,0,0.4);
-    z-index: 10;
-}
-
-@keyframes pulse {
+@keyframes mpulse {
     0%, 100% { box-shadow: 0 0 0 0 rgba(30,58,95,0.4), 0 2px 8px rgba(0,0,0,0.3); }
-    50% { box-shadow: 0 0 0 12px rgba(30,58,95,0), 0 2px 8px rgba(0,0,0,0.3); }
+    50% { box-shadow: 0 0 0 10px rgba(30,58,95,0), 0 2px 8px rgba(0,0,0,0.3); }
 }
 
 /* Info Panel */
-.tmap-panel {
+.lmap-info {
     position: absolute;
-    bottom: 8px;
-    left: 8px;
-    right: 8px;
+    bottom: 70px;
+    left: 10px;
+    right: 10px;
     background: white;
     border-radius: var(--radius);
-    box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
     overflow: hidden;
-    animation: panelUp 0.2s ease;
-    z-index: 20;
+    z-index: 1000;
+    animation: lslide 0.2s ease;
 }
 
-@keyframes panelUp {
+.lmap-info.hidden { display: none; }
+
+@keyframes lslide {
     from { opacity: 0; transform: translateY(10px); }
     to { opacity: 1; transform: translateY(0); }
 }
 
-.tp-head {
+.li-head {
     display: flex;
     align-items: center;
     gap: 8px;
-    padding: 10px 12px;
+    padding: 10px 14px;
     color: white;
     font-size: 14px;
 }
 
-.tp-head b { flex: 1; }
+.li-head b { flex: 1; }
 
-.tp-head button {
-    background: rgba(255,255,255,0.2);
-    border: none;
-    color: white;
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
+.li-head span {
     cursor: pointer;
-    font-size: 12px;
+    opacity: 0.8;
+    font-size: 18px;
 }
 
-.tp-body {
-    padding: 10px 12px;
+.li-body {
+    padding: 12px 14px;
     font-size: 13px;
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
+    line-height: 1.8;
 }
 
-.tp-body div {
-    display: flex;
-    justify-content: space-between;
+.li-foot {
+    padding: 8px 14px;
+    background: var(--bg);
+    font-size: 12px;
+    color: var(--text-light);
 }
-
-.tp-body .g { color: #38A169; }
-.tp-body .y { color: #D69E2E; }
-.tp-body .r { color: #E53E3E; }
 
 /* Timeline */
-.tmap-tl {
+.lmap-tl {
     background: var(--card);
     padding: 12px;
     border-radius: var(--radius);
     box-shadow: var(--shadow);
 }
 
-.tl-track {
+.ltl-dots {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 6px 0;
     position: relative;
+    padding: 8px 0;
 }
 
-.tl-track::before {
+.ltl-dots::before {
     content: '';
     position: absolute;
     top: 50%;
@@ -1171,58 +1139,41 @@ body {
     transform: translateY(-50%);
 }
 
-.tl-d {
+.ltl-dot {
     width: 14px;
     height: 14px;
     border-radius: 50%;
     background: var(--border);
     border: 2px solid white;
-    padding: 0;
     cursor: pointer;
     position: relative;
     z-index: 1;
     transition: all 0.15s;
 }
 
-.tl-d.on {
+.ltl-dot.on {
     background: var(--primary);
     transform: scale(1.3);
 }
 
-.tl-info {
+.ltl-txt {
     text-align: center;
     padding: 8px;
     background: var(--bg);
     border-radius: 6px;
-    font-size: 12px;
+    font-size: 13px;
     margin-top: 8px;
 }
 
-.tl-info b { color: var(--primary); }
+.ltl-txt b { color: var(--primary); }
 
 /* Legend */
-.tmap-leg {
+.lmap-leg {
     display: flex;
     justify-content: center;
-    gap: 12px;
-    font-size: 11px;
+    gap: 14px;
+    font-size: 12px;
     color: var(--text-light);
-}
-
-/* Responsive */
-@media (min-width: 400px) {
-    .tmap-m { width: 36px; height: 36px; }
-    .tmap-m span { font-size: 16px; }
-    .tmap-m.main { width: 46px; height: 46px; }
-    .tmap-m.main span { font-size: 20px; }
-}
-
-@media (max-width: 350px) {
-    .tmap-m { width: 26px; height: 26px; border-width: 2px; }
-    .tmap-m span { font-size: 12px; }
-    .tmap-m.main { width: 32px; height: 32px; }
-    .tmap-m.main span { font-size: 14px; }
-    .tmap-btn { font-size: 12px; padding: 8px; }
 }
 
 /* End of styles */
