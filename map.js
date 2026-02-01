@@ -1,91 +1,48 @@
-// === INTERAKTIVE HANDELSKARTE v2 ===
+// === HANDELSKARTE v3 - Mit echter Weltkarte ===
 
-// Länder-Daten mit besseren Koordinaten (Mercator-ähnlich, 0-100 skaliert)
 const mapCountries = {
-    germany: {
-        name: "Deutschland",
-        flag: "🇩🇪",
-        x: 52, y: 35,
+    germany: { name: "Deutschland", flag: "🇩🇪", x: 51, y: 32, color: "#1E3A5F", isMain: true,
         exports: { total: 1547, top: ["Autos", "Maschinen", "Chemie"] },
-        imports: { total: 1371, top: ["Öl", "Gas", "Elektronik"] },
-        color: "#1E3A5F",
-        isMain: true
+        imports: { total: 1371, top: ["Öl", "Gas", "Elektronik"] }
     },
-    usa: {
-        name: "USA",
-        flag: "🇺🇸",
-        x: 22, y: 40,
+    usa: { name: "USA", flag: "🇺🇸", x: 21, y: 38, color: "#3182CE",
         exports: { total: 2100, top: ["Tech", "Flugzeuge", "Pharma"] },
-        imports: { total: 3200, top: ["Elektronik", "Autos", "Öl"] },
-        color: "#3182CE"
+        imports: { total: 3200, top: ["Elektronik", "Autos", "Öl"] }
     },
-    china: {
-        name: "China",
-        flag: "🇨🇳",
-        x: 78, y: 42,
+    china: { name: "China", flag: "🇨🇳", x: 77, y: 40, color: "#E53E3E",
         exports: { total: 3500, top: ["Elektronik", "Maschinen", "Textilien"] },
-        imports: { total: 2700, top: ["Chips", "Öl", "Erze"] },
-        color: "#E53E3E"
+        imports: { total: 2700, top: ["Chips", "Öl", "Erze"] }
     },
-    japan: {
-        name: "Japan",
-        flag: "🇯🇵",
-        x: 88, y: 40,
+    japan: { name: "Japan", flag: "🇯🇵", x: 86, y: 38, color: "#805AD5",
         exports: { total: 756, top: ["Autos", "Elektronik", "Maschinen"] },
-        imports: { total: 897, top: ["Öl", "Gas", "Rohstoffe"] },
-        color: "#805AD5"
+        imports: { total: 897, top: ["Öl", "Gas", "Rohstoffe"] }
     },
-    uk: {
-        name: "UK",
-        flag: "🇬🇧",
-        x: 48, y: 33,
+    uk: { name: "UK", flag: "🇬🇧", x: 47, y: 30, color: "#2C5282",
         exports: { total: 468, top: ["Finanzen", "Pharma", "Autos"] },
-        imports: { total: 689, top: ["Autos", "Maschinen", "Elektronik"] },
-        color: "#2C5282"
+        imports: { total: 689, top: ["Autos", "Maschinen", "Elektronik"] }
     },
-    france: {
-        name: "Frankreich",
-        flag: "🇫🇷",
-        x: 49, y: 38,
+    france: { name: "Frankreich", flag: "🇫🇷", x: 48, y: 35, color: "#2B6CB0",
         exports: { total: 617, top: ["Flugzeuge", "Pharma", "Wein"] },
-        imports: { total: 714, top: ["Öl", "Autos", "Elektronik"] },
-        color: "#2B6CB0"
+        imports: { total: 714, top: ["Öl", "Autos", "Elektronik"] }
     },
-    brazil: {
-        name: "Brasilien",
-        flag: "🇧🇷",
-        x: 32, y: 68,
+    brazil: { name: "Brasilien", flag: "🇧🇷", x: 30, y: 65, color: "#38A169",
         exports: { total: 334, top: ["Soja", "Eisenerz", "Öl"] },
-        imports: { total: 251, top: ["Maschinen", "Elektronik", "Chemie"] },
-        color: "#38A169"
+        imports: { total: 251, top: ["Maschinen", "Elektronik", "Chemie"] }
     },
-    india: {
-        name: "Indien",
-        flag: "🇮🇳",
-        x: 72, y: 50,
+    india: { name: "Indien", flag: "🇮🇳", x: 70, y: 48, color: "#DD6B20",
         exports: { total: 453, top: ["IT-Services", "Pharma", "Textilien"] },
-        imports: { total: 617, top: ["Öl", "Gold", "Elektronik"] },
-        color: "#DD6B20"
+        imports: { total: 617, top: ["Öl", "Gold", "Elektronik"] }
     },
-    southkorea: {
-        name: "Südkorea",
-        flag: "🇰🇷",
-        x: 84, y: 40,
+    southkorea: { name: "Südkorea", flag: "🇰🇷", x: 82, y: 38, color: "#319795",
         exports: { total: 644, top: ["Halbleiter", "Autos", "Schiffe"] },
-        imports: { total: 632, top: ["Öl", "Gas", "Rohstoffe"] },
-        color: "#319795"
+        imports: { total: 632, top: ["Öl", "Gas", "Rohstoffe"] }
     },
-    mexico: {
-        name: "Mexiko",
-        flag: "🇲🇽",
-        x: 18, y: 50,
+    mexico: { name: "Mexiko", flag: "🇲🇽", x: 16, y: 48, color: "#C53030",
         exports: { total: 494, top: ["Autos", "Elektronik", "Öl"] },
-        imports: { total: 505, top: ["Elektronik", "Maschinen", "Kunststoff"] },
-        color: "#C53030"
+        imports: { total: 505, top: ["Elektronik", "Maschinen", "Kunststoff"] }
     }
 };
 
-// Handelsbeziehungen
 const tradeFlows = [
     { from: "germany", to: "usa", volume: 253, exports: 157, imports: 96, tariff: 15, trend: "down" },
     { from: "germany", to: "china", volume: 298, exports: 107, imports: 191, tariff: 8, trend: "stable" },
@@ -98,10 +55,8 @@ const tradeFlows = [
     { from: "germany", to: "mexico", volume: 18, exports: 11, imports: 7, tariff: 0, trend: "up" },
     { from: "usa", to: "china", volume: 758, exports: 151, imports: 607, tariff: 25, trend: "down", isGlobal: true },
     { from: "usa", to: "mexico", volume: 614, exports: 276, imports: 338, tariff: 0, trend: "up", isGlobal: true },
-    { from: "china", to: "japan", volume: 318, exports: 165, imports: 153, tariff: 5, trend: "stable", isGlobal: true },
 ];
 
-// Zeitleiste
 const timelineEvents = [
     { year: 2018, title: "Stahl-Zölle", desc: "USA führt 25% Stahl-Zölle ein" },
     { year: 2019, title: "Handelskrieg", desc: "US-China Konflikt eskaliert" },
@@ -114,28 +69,23 @@ const timelineEvents = [
     { year: 2026, title: "Handelskrieg 2.0", desc: "Weitere Eskalation droht" }
 ];
 
-let state = {
-    selectedCountry: null,
+// State
+let mapState = {
+    selected: null,
     showGlobal: false,
-    year: 2026,
-    animationFrame: null
+    year: 2026
 };
 
-// Vereinfachte Weltkarten-Pfade (stark vereinfacht für Performance)
-const worldMapPaths = `
-    <!-- Nordamerika -->
-    <path d="M5,25 Q15,20 25,22 L30,28 Q28,35 25,42 L22,50 Q18,52 15,48 L12,42 Q8,38 5,32 Z" fill="#E8EDF2" stroke="#CBD5E0" stroke-width="0.3"/>
-    <!-- Südamerika -->
-    <path d="M25,52 Q30,55 32,60 L35,72 Q33,78 28,80 L24,75 Q22,68 23,60 Z" fill="#E8EDF2" stroke="#CBD5E0" stroke-width="0.3"/>
-    <!-- Europa -->
-    <path d="M45,28 Q52,25 58,28 L60,35 Q58,40 54,42 L48,40 Q44,36 45,28 Z" fill="#E8EDF2" stroke="#CBD5E0" stroke-width="0.3"/>
-    <!-- Afrika -->
-    <path d="M48,45 Q55,44 60,48 L62,60 Q58,72 52,74 L46,70 Q44,60 48,45 Z" fill="#E8EDF2" stroke="#CBD5E0" stroke-width="0.3"/>
-    <!-- Asien -->
-    <path d="M60,25 Q75,22 90,28 L92,45 Q88,55 78,58 L68,55 Q62,48 60,38 Z" fill="#E8EDF2" stroke="#CBD5E0" stroke-width="0.3"/>
-    <!-- Australien -->
-    <path d="M82,65 Q88,62 92,66 L93,72 Q90,76 85,75 L82,70 Z" fill="#E8EDF2" stroke="#CBD5E0" stroke-width="0.3"/>
-`;
+// Echte Weltkarte SVG (vereinfacht aber realistisch)
+const WORLD_MAP_SVG = `
+<path fill="#E8EDF3" stroke="#CBD5E0" stroke-width="0.3" d="
+M15,28 Q18,25 22,26 L28,24 Q32,22 35,24 L38,28 Q36,32 34,35 L30,38 Q26,42 22,45 L18,50 Q14,52 12,48 L10,42 Q8,36 10,32 Z
+M25,52 Q28,50 32,52 L36,58 Q38,65 36,72 L32,78 Q28,80 24,76 L22,68 Q20,60 22,54 Z
+M44,24 Q48,22 52,24 L56,22 Q60,20 64,22 L68,26 Q66,30 62,32 L58,30 Q54,32 50,34 L46,32 Q44,28 44,24 Z
+M44,36 Q48,34 52,36 L58,38 Q62,42 64,48 L66,56 Q64,64 60,70 L54,74 Q48,72 44,66 L42,58 Q40,48 42,40 Z
+M58,22 Q65,18 72,20 L80,22 Q88,26 92,32 L94,40 Q92,48 88,54 L82,58 Q76,56 70,52 L64,46 Q60,38 58,30 Z
+M78,60 Q82,58 86,60 L90,64 Q92,70 90,74 L86,76 Q82,74 78,72 L76,66 Z
+"/>`;
 
 function initMap() {
     renderMap();
@@ -145,246 +95,177 @@ function renderMap() {
     const container = document.getElementById('map-container');
     if (!container) return;
     
-    const germanyFlows = tradeFlows.filter(f => f.from === 'germany' || f.to === 'germany');
-    const globalFlows = tradeFlows.filter(f => f.isGlobal);
-    const activeFlows = state.showGlobal ? [...germanyFlows, ...globalFlows] : germanyFlows;
+    const flows = mapState.showGlobal 
+        ? tradeFlows 
+        : tradeFlows.filter(f => f.from === 'germany' || f.to === 'germany');
+    
+    const event = timelineEvents.find(e => e.year === mapState.year) || {};
     
     container.innerHTML = `
-        <div class="trade-map-wrapper">
-            <!-- Toggle -->
-            <div class="map-toggle">
-                <button class="toggle-btn ${!state.showGlobal ? 'active' : ''}" onclick="setMapView(false)">
-                    🇩🇪 Deutschland
-                </button>
-                <button class="toggle-btn ${state.showGlobal ? 'active' : ''}" onclick="setMapView(true)">
-                    🌍 Global
-                </button>
+        <div class="map-wrapper">
+            <div class="map-buttons">
+                <button class="map-btn ${!mapState.showGlobal ? 'active' : ''}" id="btn-germany">🇩🇪 Deutschland</button>
+                <button class="map-btn ${mapState.showGlobal ? 'active' : ''}" id="btn-global">🌍 Global</button>
             </div>
             
-            <!-- Map SVG -->
-            <div class="map-canvas">
-                <svg viewBox="0 0 100 85" preserveAspectRatio="xMidYMid meet">
+            <div class="map-container-inner">
+                <svg viewBox="0 0 100 80" class="world-map-svg">
                     <!-- Ozean -->
-                    <rect width="100" height="85" fill="#D4E9F7"/>
+                    <rect width="100" height="80" fill="#B8D4E8"/>
                     
                     <!-- Kontinente -->
-                    ${worldMapPaths}
+                    ${WORLD_MAP_SVG}
                     
                     <!-- Handelslinien -->
-                    <g class="trade-lines">
-                        ${renderTradeLines(activeFlows)}
-                    </g>
+                    ${flows.map(f => renderLine(f)).join('')}
                     
-                    <!-- Länder-Marker -->
-                    <g class="country-markers">
-                        ${renderCountryMarkers()}
-                    </g>
+                    <!-- Länder-Punkte -->
+                    ${Object.entries(mapCountries).map(([id, c]) => renderMarker(id, c)).join('')}
                 </svg>
                 
-                <!-- Country Info Card -->
-                ${state.selectedCountry ? renderCountryCard() : ''}
+                ${mapState.selected ? renderInfoCard() : ''}
             </div>
             
-            <!-- Timeline -->
-            <div class="map-timeline-section">
-                <div class="timeline-bar">
+            <div class="map-timeline">
+                <div class="timeline-dots">
                     ${timelineEvents.map(e => `
-                        <div class="timeline-dot ${e.year === state.year ? 'active' : ''}" 
-                             onclick="setYear(${e.year})"
-                             title="${e.year}: ${e.title}">
-                        </div>
+                        <button class="tl-dot ${e.year === mapState.year ? 'active' : ''}" data-year="${e.year}"></button>
                     `).join('')}
                 </div>
-                <div class="timeline-labels">
-                    <span>2018</span>
-                    <span>2026</span>
-                </div>
-                <div class="timeline-info">
-                    <span class="timeline-year">${state.year}</span>
-                    <span class="timeline-title">${timelineEvents.find(e => e.year === state.year)?.title || ''}</span>
-                    <span class="timeline-desc">${timelineEvents.find(e => e.year === state.year)?.desc || ''}</span>
+                <div class="timeline-labels"><span>2018</span><span>2026</span></div>
+                <div class="timeline-event">
+                    <strong>${mapState.year}: ${event.title || ''}</strong><br>
+                    <span>${event.desc || ''}</span>
                 </div>
             </div>
             
-            <!-- Legende -->
-            <div class="map-legend-bar">
-                <span class="legend-item"><span class="dot green"></span> Kein Zoll</span>
-                <span class="legend-item"><span class="dot yellow"></span> Niedriger Zoll</span>
-                <span class="legend-item"><span class="dot red"></span> Hoher Zoll</span>
+            <div class="map-legend">
+                <span><span class="legend-dot green"></span> Kein Zoll</span>
+                <span><span class="legend-dot yellow"></span> 1-15%</span>
+                <span><span class="legend-dot red"></span> >15%</span>
             </div>
         </div>
     `;
-}
-
-function renderTradeLines(flows) {
-    return flows.map(flow => {
-        const from = mapCountries[flow.from];
-        const to = mapCountries[flow.to];
-        if (!from || !to) return '';
-        
-        // Farbe basierend auf Zoll
-        let color = '#4ECDC4'; // grün = kein zoll
-        if (flow.tariff > 15) color = '#FF6B6B'; // rot = hoch
-        else if (flow.tariff > 0) color = '#ECC94B'; // gelb = niedrig
-        
-        // Dicke basierend auf Volumen
-        const thickness = Math.max(0.5, Math.min(2.5, flow.volume / 150));
-        
-        // Kurve berechnen (Bogen nach oben)
-        const midX = (from.x + to.x) / 2;
-        const midY = (from.y + to.y) / 2 - Math.abs(from.x - to.x) / 6;
-        
-        // Pfeilspitze Position (am Ende der Kurve)
-        const angle = Math.atan2(to.y - midY, to.x - midX);
-        const arrowSize = 1.5;
-        
-        const isSelected = state.selectedCountry && 
-            (flow.from === state.selectedCountry || flow.to === state.selectedCountry);
-        
-        return `
-            <g class="trade-line ${isSelected ? 'highlighted' : ''}" 
-               onclick="selectCountry('${flow.from === 'germany' ? flow.to : flow.from}')">
-                <!-- Linie -->
-                <path 
-                    d="M ${from.x} ${from.y} Q ${midX} ${midY} ${to.x} ${to.y}"
-                    stroke="${color}" 
-                    stroke-width="${thickness}"
-                    fill="none"
-                    opacity="${isSelected ? 1 : 0.6}"
-                    stroke-linecap="round"
-                />
-                <!-- Pfeil -->
-                <polygon 
-                    points="${to.x},${to.y} ${to.x - arrowSize * Math.cos(angle - 0.4)},${to.y - arrowSize * Math.sin(angle - 0.4)} ${to.x - arrowSize * Math.cos(angle + 0.4)},${to.y - arrowSize * Math.sin(angle + 0.4)}"
-                    fill="${color}"
-                    opacity="${isSelected ? 1 : 0.6}"
-                />
-            </g>
-        `;
-    }).join('');
-}
-
-function renderCountryMarkers() {
-    return Object.entries(mapCountries).map(([id, country]) => {
-        const isSelected = state.selectedCountry === id;
-        const isMain = country.isMain;
-        const size = isMain ? 5 : 3.5;
-        
-        return `
-            <g class="country-marker ${isSelected ? 'selected' : ''}" 
-               onclick="selectCountry('${id}')"
-               style="cursor: pointer">
-                <!-- Pulsing ring für Deutschland -->
-                ${isMain ? `
-                    <circle cx="${country.x}" cy="${country.y}" r="${size + 2}" 
-                            fill="none" stroke="${country.color}" stroke-width="0.5" opacity="0.3">
-                        <animate attributeName="r" values="${size + 1};${size + 4};${size + 1}" dur="2s" repeatCount="indefinite"/>
-                        <animate attributeName="opacity" values="0.3;0;0.3" dur="2s" repeatCount="indefinite"/>
-                    </circle>
-                ` : ''}
-                
-                <!-- Selection ring -->
-                ${isSelected ? `
-                    <circle cx="${country.x}" cy="${country.y}" r="${size + 1.5}" 
-                            fill="none" stroke="#FFD700" stroke-width="0.8"/>
-                ` : ''}
-                
-                <!-- Main circle -->
-                <circle cx="${country.x}" cy="${country.y}" r="${size}" 
-                        fill="${country.color}" 
-                        stroke="white" stroke-width="0.8"
-                        filter="url(#shadow)"/>
-                
-                <!-- Flag -->
-                <text x="${country.x}" y="${country.y + 0.8}" 
-                      font-size="${isMain ? '4' : '3'}" 
-                      text-anchor="middle" 
-                      dominant-baseline="middle"
-                      style="pointer-events: none">${country.flag}</text>
-            </g>
-        `;
-    }).join('') + `
-        <defs>
-            <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%">
-                <feDropShadow dx="0" dy="0.5" stdDeviation="0.5" flood-opacity="0.3"/>
-            </filter>
-        </defs>
-    `;
-}
-
-function renderCountryCard() {
-    const country = mapCountries[state.selectedCountry];
-    if (!country) return '';
     
-    const flows = tradeFlows.filter(f => 
-        (f.from === state.selectedCountry && f.to === 'germany') ||
-        (f.to === state.selectedCountry && f.from === 'germany')
-    );
+    // Event listeners
+    document.getElementById('btn-germany')?.addEventListener('click', () => {
+        mapState.showGlobal = false;
+        renderMap();
+    });
+    document.getElementById('btn-global')?.addEventListener('click', () => {
+        mapState.showGlobal = true;
+        renderMap();
+    });
     
-    const flow = flows[0];
+    document.querySelectorAll('.tl-dot').forEach(dot => {
+        dot.addEventListener('click', () => {
+            mapState.year = parseInt(dot.dataset.year);
+            renderMap();
+        });
+    });
+    
+    document.querySelectorAll('.country-marker').forEach(marker => {
+        marker.addEventListener('click', () => {
+            const id = marker.dataset.country;
+            mapState.selected = mapState.selected === id ? null : id;
+            renderMap();
+        });
+    });
+    
+    document.querySelector('.info-close')?.addEventListener('click', () => {
+        mapState.selected = null;
+        renderMap();
+    });
+}
+
+function renderLine(flow) {
+    const from = mapCountries[flow.from];
+    const to = mapCountries[flow.to];
+    if (!from || !to) return '';
+    
+    let color = '#4ECDC4';
+    if (flow.tariff > 15) color = '#FF6B6B';
+    else if (flow.tariff > 0) color = '#ECC94B';
+    
+    const thickness = Math.max(0.8, Math.min(2.5, flow.volume / 200));
+    const midX = (from.x + to.x) / 2;
+    const midY = (from.y + to.y) / 2 - Math.abs(from.x - to.x) / 8;
+    
+    const isHighlighted = mapState.selected && 
+        (flow.from === mapState.selected || flow.to === mapState.selected);
     
     return `
-        <div class="country-card">
-            <div class="card-header">
-                <span class="card-flag">${country.flag}</span>
-                <span class="card-name">${country.name}</span>
-                <button class="card-close" onclick="selectCountry(null)">✕</button>
+        <path 
+            d="M ${from.x} ${from.y} Q ${midX} ${midY} ${to.x} ${to.y}"
+            stroke="${color}" 
+            stroke-width="${thickness}"
+            fill="none"
+            opacity="${isHighlighted ? 1 : 0.5}"
+            stroke-linecap="round"
+            class="trade-path"
+        />
+    `;
+}
+
+function renderMarker(id, country) {
+    const isSelected = mapState.selected === id;
+    const isMain = country.isMain;
+    const r = isMain ? 3.5 : 2.5;
+    
+    return `
+        <g class="country-marker" data-country="${id}" style="cursor:pointer">
+            ${isSelected ? `<circle cx="${country.x}" cy="${country.y}" r="${r + 2}" fill="none" stroke="#FFD700" stroke-width="1"/>` : ''}
+            ${isMain ? `
+                <circle cx="${country.x}" cy="${country.y}" r="${r + 3}" fill="none" stroke="${country.color}" stroke-width="0.5" opacity="0.4">
+                    <animate attributeName="r" values="${r+2};${r+5};${r+2}" dur="2s" repeatCount="indefinite"/>
+                    <animate attributeName="opacity" values="0.4;0;0.4" dur="2s" repeatCount="indefinite"/>
+                </circle>
+            ` : ''}
+            <circle cx="${country.x}" cy="${country.y}" r="${r}" fill="${country.color}" stroke="white" stroke-width="0.8"/>
+            <text x="${country.x}" y="${country.y + 0.5}" font-size="${isMain ? 3 : 2.5}" text-anchor="middle" dominant-baseline="middle">${country.flag}</text>
+        </g>
+    `;
+}
+
+function renderInfoCard() {
+    const country = mapCountries[mapState.selected];
+    if (!country) return '';
+    
+    const flow = tradeFlows.find(f => 
+        (f.from === mapState.selected && f.to === 'germany') ||
+        (f.to === mapState.selected && f.from === 'germany')
+    );
+    
+    return `
+        <div class="map-info-card">
+            <div class="info-header">
+                <span class="info-flag">${country.flag}</span>
+                <span class="info-name">${country.name}</span>
+                <button class="info-close">✕</button>
             </div>
             ${flow ? `
-                <div class="card-stats">
-                    <div class="stat-row">
-                        <span class="stat-label">🇩🇪 → ${country.flag} Export</span>
-                        <span class="stat-value">${flow.from === 'germany' ? flow.exports : flow.imports} Mrd. €</span>
+                <div class="info-stats">
+                    <div class="info-row">
+                        <span>🇩🇪→${country.flag} Export</span>
+                        <span>${flow.from === 'germany' ? flow.exports : flow.imports} Mrd €</span>
                     </div>
-                    <div class="stat-row">
-                        <span class="stat-label">${country.flag} → 🇩🇪 Import</span>
-                        <span class="stat-value">${flow.from === 'germany' ? flow.imports : flow.exports} Mrd. €</span>
+                    <div class="info-row">
+                        <span>${country.flag}→🇩🇪 Import</span>
+                        <span>${flow.from === 'germany' ? flow.imports : flow.exports} Mrd €</span>
                     </div>
-                    <div class="stat-row">
-                        <span class="stat-label">Zollsatz</span>
-                        <span class="stat-value ${flow.tariff > 15 ? 'red' : flow.tariff > 0 ? 'yellow' : 'green'}">
-                            ${flow.tariff}%
-                        </span>
+                    <div class="info-row">
+                        <span>Zoll</span>
+                        <span class="${flow.tariff > 15 ? 'red' : flow.tariff > 0 ? 'yellow' : 'green'}">${flow.tariff}%</span>
                     </div>
-                    <div class="stat-row">
-                        <span class="stat-label">Trend</span>
-                        <span class="stat-value">
-                            ${flow.trend === 'up' ? '📈 Wachsend' : flow.trend === 'down' ? '📉 Rückgang' : '➡️ Stabil'}
-                        </span>
+                    <div class="info-row">
+                        <span>Trend</span>
+                        <span>${flow.trend === 'up' ? '📈' : flow.trend === 'down' ? '📉' : '➡️'}</span>
                     </div>
                 </div>
-            ` : `
-                <div class="card-stats">
-                    <p style="color: #718096; font-size: 13px; text-align: center; padding: 12px;">
-                        Kein direkter Handel mit Deutschland erfasst
-                    </p>
-                </div>
-            `}
-            <div class="card-products">
-                <span class="products-label">Top-Exporte:</span>
-                <span class="products-list">${country.exports.top.join(' • ')}</span>
-            </div>
+            ` : '<div class="info-stats"><p style="text-align:center;color:#718096;padding:12px">Kein direkter DE-Handel</p></div>'}
+            <div class="info-products">Top: ${country.exports.top.join(', ')}</div>
         </div>
     `;
 }
 
-function selectCountry(id) {
-    state.selectedCountry = state.selectedCountry === id ? null : id;
-    renderMap();
-}
-
-function setMapView(showGlobal) {
-    state.showGlobal = showGlobal;
-    renderMap();
-}
-
-function setYear(year) {
-    state.year = year;
-    renderMap();
-}
-
-// Export
-window.tradeMap = {
-    init: initMap,
-    render: renderMap
-};
+window.tradeMap = { init: initMap, render: renderMap };
