@@ -1,19 +1,20 @@
-// === INTERAKTIVE HANDELSKARTE ===
+// === INTERAKTIVE HANDELSKARTE v2 ===
 
-// Länder-Daten mit Koordinaten (vereinfacht für SVG-Positionierung)
+// Länder-Daten mit besseren Koordinaten (Mercator-ähnlich, 0-100 skaliert)
 const mapCountries = {
     germany: {
         name: "Deutschland",
         flag: "🇩🇪",
-        x: 51, y: 28,
+        x: 52, y: 35,
         exports: { total: 1547, top: ["Autos", "Maschinen", "Chemie"] },
         imports: { total: 1371, top: ["Öl", "Gas", "Elektronik"] },
-        color: "#1E3A5F"
+        color: "#1E3A5F",
+        isMain: true
     },
     usa: {
         name: "USA",
         flag: "🇺🇸",
-        x: 22, y: 35,
+        x: 22, y: 40,
         exports: { total: 2100, top: ["Tech", "Flugzeuge", "Pharma"] },
         imports: { total: 3200, top: ["Elektronik", "Autos", "Öl"] },
         color: "#3182CE"
@@ -21,7 +22,7 @@ const mapCountries = {
     china: {
         name: "China",
         flag: "🇨🇳",
-        x: 78, y: 38,
+        x: 78, y: 42,
         exports: { total: 3500, top: ["Elektronik", "Maschinen", "Textilien"] },
         imports: { total: 2700, top: ["Chips", "Öl", "Erze"] },
         color: "#E53E3E"
@@ -29,15 +30,15 @@ const mapCountries = {
     japan: {
         name: "Japan",
         flag: "🇯🇵",
-        x: 88, y: 38,
+        x: 88, y: 40,
         exports: { total: 756, top: ["Autos", "Elektronik", "Maschinen"] },
         imports: { total: 897, top: ["Öl", "Gas", "Rohstoffe"] },
         color: "#805AD5"
     },
     uk: {
-        name: "Großbritannien",
+        name: "UK",
         flag: "🇬🇧",
-        x: 47, y: 26,
+        x: 48, y: 33,
         exports: { total: 468, top: ["Finanzen", "Pharma", "Autos"] },
         imports: { total: 689, top: ["Autos", "Maschinen", "Elektronik"] },
         color: "#2C5282"
@@ -45,7 +46,7 @@ const mapCountries = {
     france: {
         name: "Frankreich",
         flag: "🇫🇷",
-        x: 48, y: 32,
+        x: 49, y: 38,
         exports: { total: 617, top: ["Flugzeuge", "Pharma", "Wein"] },
         imports: { total: 714, top: ["Öl", "Autos", "Elektronik"] },
         color: "#2B6CB0"
@@ -53,7 +54,7 @@ const mapCountries = {
     brazil: {
         name: "Brasilien",
         flag: "🇧🇷",
-        x: 32, y: 62,
+        x: 32, y: 68,
         exports: { total: 334, top: ["Soja", "Eisenerz", "Öl"] },
         imports: { total: 251, top: ["Maschinen", "Elektronik", "Chemie"] },
         color: "#38A169"
@@ -61,7 +62,7 @@ const mapCountries = {
     india: {
         name: "Indien",
         flag: "🇮🇳",
-        x: 72, y: 45,
+        x: 72, y: 50,
         exports: { total: 453, top: ["IT-Services", "Pharma", "Textilien"] },
         imports: { total: 617, top: ["Öl", "Gold", "Elektronik"] },
         color: "#DD6B20"
@@ -69,7 +70,7 @@ const mapCountries = {
     southkorea: {
         name: "Südkorea",
         flag: "🇰🇷",
-        x: 85, y: 36,
+        x: 84, y: 40,
         exports: { total: 644, top: ["Halbleiter", "Autos", "Schiffe"] },
         imports: { total: 632, top: ["Öl", "Gas", "Rohstoffe"] },
         color: "#319795"
@@ -77,46 +78,64 @@ const mapCountries = {
     mexico: {
         name: "Mexiko",
         flag: "🇲🇽",
-        x: 18, y: 45,
+        x: 18, y: 50,
         exports: { total: 494, top: ["Autos", "Elektronik", "Öl"] },
         imports: { total: 505, top: ["Elektronik", "Maschinen", "Kunststoff"] },
         color: "#C53030"
     }
 };
 
-// Handelsbeziehungen Deutschland
+// Handelsbeziehungen
 const tradeFlows = [
-    { from: "germany", to: "usa", volume: 253, exports: 157, imports: 96, tariff: 15, trend: "↓" },
-    { from: "germany", to: "china", volume: 298, exports: 107, imports: 191, tariff: 8, trend: "→" },
-    { from: "germany", to: "france", volume: 172, exports: 102, imports: 70, tariff: 0, trend: "↑" },
-    { from: "germany", to: "uk", volume: 134, exports: 89, imports: 45, tariff: 0, trend: "→" },
-    { from: "germany", to: "japan", volume: 45, exports: 23, imports: 22, tariff: 5, trend: "↑" },
-    { from: "germany", to: "southkorea", volume: 28, exports: 14, imports: 14, tariff: 0, trend: "↑" },
-    { from: "germany", to: "brazil", volume: 21, exports: 12, imports: 9, tariff: 12, trend: "→" },
-    { from: "germany", to: "india", volume: 24, exports: 15, imports: 9, tariff: 10, trend: "↑" },
-    { from: "germany", to: "mexico", volume: 18, exports: 11, imports: 7, tariff: 0, trend: "↑" },
-    // Andere wichtige globale Handelsströme
-    { from: "usa", to: "china", volume: 758, exports: 151, imports: 607, tariff: 25, trend: "↓", highlight: true },
-    { from: "china", to: "japan", volume: 318, exports: 165, imports: 153, tariff: 5, trend: "→" },
-    { from: "usa", to: "mexico", volume: 614, exports: 276, imports: 338, tariff: 0, trend: "↑" },
+    { from: "germany", to: "usa", volume: 253, exports: 157, imports: 96, tariff: 15, trend: "down" },
+    { from: "germany", to: "china", volume: 298, exports: 107, imports: 191, tariff: 8, trend: "stable" },
+    { from: "germany", to: "france", volume: 172, exports: 102, imports: 70, tariff: 0, trend: "up" },
+    { from: "germany", to: "uk", volume: 134, exports: 89, imports: 45, tariff: 0, trend: "stable" },
+    { from: "germany", to: "japan", volume: 45, exports: 23, imports: 22, tariff: 5, trend: "up" },
+    { from: "germany", to: "southkorea", volume: 28, exports: 14, imports: 14, tariff: 0, trend: "up" },
+    { from: "germany", to: "brazil", volume: 21, exports: 12, imports: 9, tariff: 12, trend: "stable" },
+    { from: "germany", to: "india", volume: 24, exports: 15, imports: 9, tariff: 10, trend: "up" },
+    { from: "germany", to: "mexico", volume: 18, exports: 11, imports: 7, tariff: 0, trend: "up" },
+    { from: "usa", to: "china", volume: 758, exports: 151, imports: 607, tariff: 25, trend: "down", isGlobal: true },
+    { from: "usa", to: "mexico", volume: 614, exports: 276, imports: 338, tariff: 0, trend: "up", isGlobal: true },
+    { from: "china", to: "japan", volume: 318, exports: 165, imports: 153, tariff: 5, trend: "stable", isGlobal: true },
 ];
 
-// Zeitleiste Ereignisse
+// Zeitleiste
 const timelineEvents = [
-    { year: 2018, event: "USA führt Stahl-Zölle ein", impact: "EU erhebt Vergeltungszölle" },
-    { year: 2019, event: "US-China Handelskrieg eskaliert", impact: "25% Zölle auf $250 Mrd. Waren" },
-    { year: 2020, event: "Phase-1 Deal USA-China", impact: "Teilweise Entspannung" },
-    { year: 2021, event: "Lieferketten-Krise", impact: "Chip-Mangel weltweit" },
-    { year: 2022, event: "Russland-Sanktionen", impact: "Energiepreise explodieren" },
-    { year: 2023, event: "EU Chips Act", impact: "€43 Mrd. für Halbleiter" },
-    { year: 2024, event: "Trump gewinnt Wahl", impact: "Neue Zoll-Ankündigungen" },
-    { year: 2025, event: "USA erhöht Zölle auf EU", impact: "Deutsche Exporte -9,4%" },
-    { year: 2026, event: "Grönland-Krise", impact: "Weitere Zolldrohungen" }
+    { year: 2018, title: "Stahl-Zölle", desc: "USA führt 25% Stahl-Zölle ein" },
+    { year: 2019, title: "Handelskrieg", desc: "US-China Konflikt eskaliert" },
+    { year: 2020, title: "Phase-1 Deal", desc: "Teilweise Entspannung USA-China" },
+    { year: 2021, title: "Chip-Krise", desc: "Globale Lieferketten-Probleme" },
+    { year: 2022, title: "Energiekrise", desc: "Russland-Sanktionen, Gaspreise ↑" },
+    { year: 2023, title: "EU Chips Act", desc: "€43 Mrd. Halbleiter-Investition" },
+    { year: 2024, title: "Trump 2.0", desc: "Neue Zoll-Ankündigungen" },
+    { year: 2025, title: "EU-Zölle", desc: "Deutsche Exporte in USA -9,4%" },
+    { year: 2026, title: "Handelskrieg 2.0", desc: "Weitere Eskalation droht" }
 ];
 
-let selectedCountry = null;
-let showAllFlows = false;
-let currentYear = 2026;
+let state = {
+    selectedCountry: null,
+    showGlobal: false,
+    year: 2026,
+    animationFrame: null
+};
+
+// Vereinfachte Weltkarten-Pfade (stark vereinfacht für Performance)
+const worldMapPaths = `
+    <!-- Nordamerika -->
+    <path d="M5,25 Q15,20 25,22 L30,28 Q28,35 25,42 L22,50 Q18,52 15,48 L12,42 Q8,38 5,32 Z" fill="#E8EDF2" stroke="#CBD5E0" stroke-width="0.3"/>
+    <!-- Südamerika -->
+    <path d="M25,52 Q30,55 32,60 L35,72 Q33,78 28,80 L24,75 Q22,68 23,60 Z" fill="#E8EDF2" stroke="#CBD5E0" stroke-width="0.3"/>
+    <!-- Europa -->
+    <path d="M45,28 Q52,25 58,28 L60,35 Q58,40 54,42 L48,40 Q44,36 45,28 Z" fill="#E8EDF2" stroke="#CBD5E0" stroke-width="0.3"/>
+    <!-- Afrika -->
+    <path d="M48,45 Q55,44 60,48 L62,60 Q58,72 52,74 L46,70 Q44,60 48,45 Z" fill="#E8EDF2" stroke="#CBD5E0" stroke-width="0.3"/>
+    <!-- Asien -->
+    <path d="M60,25 Q75,22 90,28 L92,45 Q88,55 78,58 L68,55 Q62,48 60,38 Z" fill="#E8EDF2" stroke="#CBD5E0" stroke-width="0.3"/>
+    <!-- Australien -->
+    <path d="M82,65 Q88,62 92,66 L93,72 Q90,76 85,75 L82,70 Z" fill="#E8EDF2" stroke="#CBD5E0" stroke-width="0.3"/>
+`;
 
 function initMap() {
     renderMap();
@@ -126,254 +145,242 @@ function renderMap() {
     const container = document.getElementById('map-container');
     if (!container) return;
     
+    const germanyFlows = tradeFlows.filter(f => f.from === 'germany' || f.to === 'germany');
+    const globalFlows = tradeFlows.filter(f => f.isGlobal);
+    const activeFlows = state.showGlobal ? [...germanyFlows, ...globalFlows] : germanyFlows;
+    
     container.innerHTML = `
-        <div class="map-controls">
-            <button class="map-btn ${!showAllFlows ? 'active' : ''}" onclick="toggleFlows(false)">🇩🇪 Deutschland-Fokus</button>
-            <button class="map-btn ${showAllFlows ? 'active' : ''}" onclick="toggleFlows(true)">🌍 Alle Handelsströme</button>
-        </div>
-        
-        <div class="map-svg-container">
-            <svg viewBox="0 0 100 70" class="world-map">
-                <!-- Vereinfachte Weltkarte Hintergrund -->
-                <rect x="0" y="0" width="100" height="70" fill="#E8F4FD"/>
-                
-                <!-- Kontinente (vereinfacht) -->
-                <ellipse cx="50" cy="35" rx="48" ry="32" fill="#E2E8F0" opacity="0.5"/>
-                
-                <!-- Handelsströme -->
-                <g id="trade-flows">
-                    ${renderTradeFlows()}
-                </g>
-                
-                <!-- Länder-Punkte -->
-                <g id="country-dots">
-                    ${renderCountryDots()}
-                </g>
-            </svg>
+        <div class="trade-map-wrapper">
+            <!-- Toggle -->
+            <div class="map-toggle">
+                <button class="toggle-btn ${!state.showGlobal ? 'active' : ''}" onclick="setMapView(false)">
+                    🇩🇪 Deutschland
+                </button>
+                <button class="toggle-btn ${state.showGlobal ? 'active' : ''}" onclick="setMapView(true)">
+                    🌍 Global
+                </button>
+            </div>
             
-            <!-- Info-Overlay -->
-            <div id="country-info" class="country-info hidden">
-                <!-- Wird dynamisch gefüllt -->
+            <!-- Map SVG -->
+            <div class="map-canvas">
+                <svg viewBox="0 0 100 85" preserveAspectRatio="xMidYMid meet">
+                    <!-- Ozean -->
+                    <rect width="100" height="85" fill="#D4E9F7"/>
+                    
+                    <!-- Kontinente -->
+                    ${worldMapPaths}
+                    
+                    <!-- Handelslinien -->
+                    <g class="trade-lines">
+                        ${renderTradeLines(activeFlows)}
+                    </g>
+                    
+                    <!-- Länder-Marker -->
+                    <g class="country-markers">
+                        ${renderCountryMarkers()}
+                    </g>
+                </svg>
+                
+                <!-- Country Info Card -->
+                ${state.selectedCountry ? renderCountryCard() : ''}
             </div>
-        </div>
-        
-        <!-- Timeline -->
-        <div class="map-timeline">
-            <div class="timeline-header">
-                <span>📅 Zeitleiste</span>
-                <span class="timeline-year">${currentYear}</span>
+            
+            <!-- Timeline -->
+            <div class="map-timeline-section">
+                <div class="timeline-bar">
+                    ${timelineEvents.map(e => `
+                        <div class="timeline-dot ${e.year === state.year ? 'active' : ''}" 
+                             onclick="setYear(${e.year})"
+                             title="${e.year}: ${e.title}">
+                        </div>
+                    `).join('')}
+                </div>
+                <div class="timeline-labels">
+                    <span>2018</span>
+                    <span>2026</span>
+                </div>
+                <div class="timeline-info">
+                    <span class="timeline-year">${state.year}</span>
+                    <span class="timeline-title">${timelineEvents.find(e => e.year === state.year)?.title || ''}</span>
+                    <span class="timeline-desc">${timelineEvents.find(e => e.year === state.year)?.desc || ''}</span>
+                </div>
             </div>
-            <input type="range" min="2018" max="2026" value="${currentYear}" 
-                   class="timeline-slider" onchange="updateTimeline(this.value)">
-            <div class="timeline-event" id="timeline-event">
-                ${getTimelineEvent(currentYear)}
-            </div>
-        </div>
-        
-        <!-- Legende -->
-        <div class="map-legend">
-            <div class="legend-item">
-                <span class="legend-line thick"></span>
-                <span>Hohes Handelsvolumen</span>
-            </div>
-            <div class="legend-item">
-                <span class="legend-line thin"></span>
-                <span>Niedriges Handelsvolumen</span>
-            </div>
-            <div class="legend-item">
-                <span class="legend-dot"></span>
-                <span>Land (antippen für Details)</span>
+            
+            <!-- Legende -->
+            <div class="map-legend-bar">
+                <span class="legend-item"><span class="dot green"></span> Kein Zoll</span>
+                <span class="legend-item"><span class="dot yellow"></span> Niedriger Zoll</span>
+                <span class="legend-item"><span class="dot red"></span> Hoher Zoll</span>
             </div>
         </div>
     `;
 }
 
-function renderTradeFlows() {
-    const flows = showAllFlows 
-        ? tradeFlows 
-        : tradeFlows.filter(f => f.from === 'germany' || f.to === 'germany');
-    
+function renderTradeLines(flows) {
     return flows.map(flow => {
         const from = mapCountries[flow.from];
         const to = mapCountries[flow.to];
         if (!from || !to) return '';
         
-        const thickness = Math.max(0.3, Math.min(2, flow.volume / 200));
-        const color = flow.tariff > 10 ? '#FF6B6B' : flow.tariff > 0 ? '#ECC94B' : '#4ECDC4';
-        const opacity = flow.highlight ? 0.8 : 0.5;
+        // Farbe basierend auf Zoll
+        let color = '#4ECDC4'; // grün = kein zoll
+        if (flow.tariff > 15) color = '#FF6B6B'; // rot = hoch
+        else if (flow.tariff > 0) color = '#ECC94B'; // gelb = niedrig
         
-        // Bezier-Kurve für schönere Linien
+        // Dicke basierend auf Volumen
+        const thickness = Math.max(0.5, Math.min(2.5, flow.volume / 150));
+        
+        // Kurve berechnen (Bogen nach oben)
         const midX = (from.x + to.x) / 2;
-        const midY = (from.y + to.y) / 2 - 5;
+        const midY = (from.y + to.y) / 2 - Math.abs(from.x - to.x) / 6;
+        
+        // Pfeilspitze Position (am Ende der Kurve)
+        const angle = Math.atan2(to.y - midY, to.x - midX);
+        const arrowSize = 1.5;
+        
+        const isSelected = state.selectedCountry && 
+            (flow.from === state.selectedCountry || flow.to === state.selectedCountry);
         
         return `
-            <path 
-                d="M ${from.x} ${from.y} Q ${midX} ${midY} ${to.x} ${to.y}"
-                stroke="${color}" 
-                stroke-width="${thickness}" 
-                fill="none" 
-                opacity="${opacity}"
-                class="trade-flow"
-                onclick="showFlowInfo('${flow.from}', '${flow.to}')"
-            />
-        `;
-    }).join('');
-}
-
-function renderCountryDots() {
-    return Object.entries(mapCountries).map(([id, country]) => {
-        const isGermany = id === 'germany';
-        const radius = isGermany ? 2.5 : 1.8;
-        const isSelected = selectedCountry === id;
-        
-        return `
-            <g class="country-dot" onclick="selectCountry('${id}')">
-                <circle 
-                    cx="${country.x}" 
-                    cy="${country.y}" 
-                    r="${radius}" 
-                    fill="${country.color}"
-                    stroke="${isSelected ? '#FFD700' : 'white'}"
-                    stroke-width="${isSelected ? 0.5 : 0.3}"
-                    class="country-circle"
+            <g class="trade-line ${isSelected ? 'highlighted' : ''}" 
+               onclick="selectCountry('${flow.from === 'germany' ? flow.to : flow.from}')">
+                <!-- Linie -->
+                <path 
+                    d="M ${from.x} ${from.y} Q ${midX} ${midY} ${to.x} ${to.y}"
+                    stroke="${color}" 
+                    stroke-width="${thickness}"
+                    fill="none"
+                    opacity="${isSelected ? 1 : 0.6}"
+                    stroke-linecap="round"
                 />
-                <text 
-                    x="${country.x}" 
-                    y="${country.y - 3}" 
-                    font-size="2.5" 
-                    text-anchor="middle"
-                    class="country-label"
-                >${country.flag}</text>
+                <!-- Pfeil -->
+                <polygon 
+                    points="${to.x},${to.y} ${to.x - arrowSize * Math.cos(angle - 0.4)},${to.y - arrowSize * Math.sin(angle - 0.4)} ${to.x - arrowSize * Math.cos(angle + 0.4)},${to.y - arrowSize * Math.sin(angle + 0.4)}"
+                    fill="${color}"
+                    opacity="${isSelected ? 1 : 0.6}"
+                />
             </g>
         `;
     }).join('');
 }
 
-function selectCountry(countryId) {
-    selectedCountry = countryId;
-    const country = mapCountries[countryId];
-    const info = document.getElementById('country-info');
-    
-    if (!country) {
-        info.classList.add('hidden');
-        return;
-    }
-    
-    // Finde Handelsbeziehungen
-    const flows = tradeFlows.filter(f => 
-        (f.from === countryId || f.to === countryId) && 
-        (f.from === 'germany' || f.to === 'germany')
-    );
-    
-    const flowsHTML = flows.map(f => {
-        const partner = f.from === countryId ? 'germany' : countryId;
-        const isExport = f.from === 'germany';
+function renderCountryMarkers() {
+    return Object.entries(mapCountries).map(([id, country]) => {
+        const isSelected = state.selectedCountry === id;
+        const isMain = country.isMain;
+        const size = isMain ? 5 : 3.5;
+        
         return `
-            <div class="flow-item">
-                <span>${isExport ? '📤' : '📥'} ${isExport ? 'Export' : 'Import'}: ${isExport ? f.exports : f.imports} Mrd. €</span>
-                <span class="tariff-badge ${f.tariff > 10 ? 'high' : f.tariff > 0 ? 'medium' : 'low'}">
-                    ${f.tariff}% Zoll
-                </span>
-            </div>
+            <g class="country-marker ${isSelected ? 'selected' : ''}" 
+               onclick="selectCountry('${id}')"
+               style="cursor: pointer">
+                <!-- Pulsing ring für Deutschland -->
+                ${isMain ? `
+                    <circle cx="${country.x}" cy="${country.y}" r="${size + 2}" 
+                            fill="none" stroke="${country.color}" stroke-width="0.5" opacity="0.3">
+                        <animate attributeName="r" values="${size + 1};${size + 4};${size + 1}" dur="2s" repeatCount="indefinite"/>
+                        <animate attributeName="opacity" values="0.3;0;0.3" dur="2s" repeatCount="indefinite"/>
+                    </circle>
+                ` : ''}
+                
+                <!-- Selection ring -->
+                ${isSelected ? `
+                    <circle cx="${country.x}" cy="${country.y}" r="${size + 1.5}" 
+                            fill="none" stroke="#FFD700" stroke-width="0.8"/>
+                ` : ''}
+                
+                <!-- Main circle -->
+                <circle cx="${country.x}" cy="${country.y}" r="${size}" 
+                        fill="${country.color}" 
+                        stroke="white" stroke-width="0.8"
+                        filter="url(#shadow)"/>
+                
+                <!-- Flag -->
+                <text x="${country.x}" y="${country.y + 0.8}" 
+                      font-size="${isMain ? '4' : '3'}" 
+                      text-anchor="middle" 
+                      dominant-baseline="middle"
+                      style="pointer-events: none">${country.flag}</text>
+            </g>
         `;
-    }).join('') || '<div style="color: #718096; font-size: 12px;">Kein direkter Handel mit Deutschland</div>';
-    
-    info.innerHTML = `
-        <div class="info-header">
-            <span class="info-flag">${country.flag}</span>
-            <span class="info-name">${country.name}</span>
-            <button class="info-close" onclick="closeCountryInfo()">×</button>
-        </div>
-        <div class="info-body">
-            <div class="info-stat">
-                <span class="stat-label">Exporte weltweit</span>
-                <span class="stat-value">${country.exports.total} Mrd. €</span>
-            </div>
-            <div class="info-stat">
-                <span class="stat-label">Importe weltweit</span>
-                <span class="stat-value">${country.imports.total} Mrd. €</span>
-            </div>
-            <div class="info-section">
-                <span class="section-label">Top-Exporte:</span>
-                <span class="section-value">${country.exports.top.join(', ')}</span>
-            </div>
-            <div class="info-section">
-                <span class="section-label">🇩🇪 Handel mit Deutschland:</span>
-                ${flowsHTML}
-            </div>
-        </div>
+    }).join('') + `
+        <defs>
+            <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%">
+                <feDropShadow dx="0" dy="0.5" stdDeviation="0.5" flood-opacity="0.3"/>
+            </filter>
+        </defs>
     `;
+}
+
+function renderCountryCard() {
+    const country = mapCountries[state.selectedCountry];
+    if (!country) return '';
     
-    info.classList.remove('hidden');
-    renderMap(); // Re-render um Selektion zu zeigen
-}
-
-function closeCountryInfo() {
-    selectedCountry = null;
-    document.getElementById('country-info').classList.add('hidden');
-    renderMap();
-}
-
-function showFlowInfo(fromId, toId) {
-    const flow = tradeFlows.find(f => 
-        (f.from === fromId && f.to === toId) || 
-        (f.from === toId && f.to === fromId)
+    const flows = tradeFlows.filter(f => 
+        (f.from === state.selectedCountry && f.to === 'germany') ||
+        (f.to === state.selectedCountry && f.from === 'germany')
     );
-    if (!flow) return;
     
-    const from = mapCountries[flow.from];
-    const to = mapCountries[flow.to];
+    const flow = flows[0];
     
-    const info = document.getElementById('country-info');
-    info.innerHTML = `
-        <div class="info-header">
-            <span>${from.flag} → ${to.flag}</span>
-            <button class="info-close" onclick="closeCountryInfo()">×</button>
-        </div>
-        <div class="info-body">
-            <div class="info-stat">
-                <span class="stat-label">Handelsvolumen</span>
-                <span class="stat-value">${flow.volume} Mrd. €</span>
+    return `
+        <div class="country-card">
+            <div class="card-header">
+                <span class="card-flag">${country.flag}</span>
+                <span class="card-name">${country.name}</span>
+                <button class="card-close" onclick="selectCountry(null)">✕</button>
             </div>
-            <div class="info-stat">
-                <span class="stat-label">${from.name} → ${to.name}</span>
-                <span class="stat-value">${flow.exports} Mrd. €</span>
-            </div>
-            <div class="info-stat">
-                <span class="stat-label">${to.name} → ${from.name}</span>
-                <span class="stat-value">${flow.imports} Mrd. €</span>
-            </div>
-            <div class="info-stat">
-                <span class="stat-label">Zollsatz</span>
-                <span class="stat-value tariff-badge ${flow.tariff > 10 ? 'high' : flow.tariff > 0 ? 'medium' : 'low'}">${flow.tariff}%</span>
-            </div>
-            <div class="info-stat">
-                <span class="stat-label">Trend</span>
-                <span class="stat-value">${flow.trend === '↑' ? '📈 Wachsend' : flow.trend === '↓' ? '📉 Rückläufig' : '➡️ Stabil'}</span>
+            ${flow ? `
+                <div class="card-stats">
+                    <div class="stat-row">
+                        <span class="stat-label">🇩🇪 → ${country.flag} Export</span>
+                        <span class="stat-value">${flow.from === 'germany' ? flow.exports : flow.imports} Mrd. €</span>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label">${country.flag} → 🇩🇪 Import</span>
+                        <span class="stat-value">${flow.from === 'germany' ? flow.imports : flow.exports} Mrd. €</span>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label">Zollsatz</span>
+                        <span class="stat-value ${flow.tariff > 15 ? 'red' : flow.tariff > 0 ? 'yellow' : 'green'}">
+                            ${flow.tariff}%
+                        </span>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label">Trend</span>
+                        <span class="stat-value">
+                            ${flow.trend === 'up' ? '📈 Wachsend' : flow.trend === 'down' ? '📉 Rückgang' : '➡️ Stabil'}
+                        </span>
+                    </div>
+                </div>
+            ` : `
+                <div class="card-stats">
+                    <p style="color: #718096; font-size: 13px; text-align: center; padding: 12px;">
+                        Kein direkter Handel mit Deutschland erfasst
+                    </p>
+                </div>
+            `}
+            <div class="card-products">
+                <span class="products-label">Top-Exporte:</span>
+                <span class="products-list">${country.exports.top.join(' • ')}</span>
             </div>
         </div>
     `;
-    info.classList.remove('hidden');
 }
 
-function toggleFlows(showAll) {
-    showAllFlows = showAll;
+function selectCountry(id) {
+    state.selectedCountry = state.selectedCountry === id ? null : id;
     renderMap();
 }
 
-function updateTimeline(year) {
-    currentYear = parseInt(year);
-    document.querySelector('.timeline-year').textContent = year;
-    document.getElementById('timeline-event').innerHTML = getTimelineEvent(currentYear);
+function setMapView(showGlobal) {
+    state.showGlobal = showGlobal;
+    renderMap();
 }
 
-function getTimelineEvent(year) {
-    const event = timelineEvents.find(e => e.year === year);
-    if (!event) return '<span style="color: #718096;">Keine besonderen Ereignisse</span>';
-    return `
-        <div class="event-title">${event.event}</div>
-        <div class="event-impact">${event.impact}</div>
-    `;
+function setYear(year) {
+    state.year = year;
+    renderMap();
 }
 
 // Export
