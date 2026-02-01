@@ -1,43 +1,43 @@
-// === HANDELSKARTE v3 - Mit echter Weltkarte ===
+// === HANDELSKARTE v4 - Leaflet.js ===
 
 const mapCountries = {
-    germany: { name: "Deutschland", flag: "🇩🇪", x: 51, y: 32, color: "#1E3A5F", isMain: true,
+    germany: { name: "Deutschland", flag: "🇩🇪", lat: 51.1657, lng: 10.4515, color: "#1E3A5F", isMain: true,
         exports: { total: 1547, top: ["Autos", "Maschinen", "Chemie"] },
         imports: { total: 1371, top: ["Öl", "Gas", "Elektronik"] }
     },
-    usa: { name: "USA", flag: "🇺🇸", x: 21, y: 38, color: "#3182CE",
+    usa: { name: "USA", flag: "🇺🇸", lat: 37.0902, lng: -95.7129, color: "#3182CE",
         exports: { total: 2100, top: ["Tech", "Flugzeuge", "Pharma"] },
         imports: { total: 3200, top: ["Elektronik", "Autos", "Öl"] }
     },
-    china: { name: "China", flag: "🇨🇳", x: 77, y: 40, color: "#E53E3E",
+    china: { name: "China", flag: "🇨🇳", lat: 35.8617, lng: 104.1954, color: "#E53E3E",
         exports: { total: 3500, top: ["Elektronik", "Maschinen", "Textilien"] },
         imports: { total: 2700, top: ["Chips", "Öl", "Erze"] }
     },
-    japan: { name: "Japan", flag: "🇯🇵", x: 86, y: 38, color: "#805AD5",
+    japan: { name: "Japan", flag: "🇯🇵", lat: 36.2048, lng: 138.2529, color: "#805AD5",
         exports: { total: 756, top: ["Autos", "Elektronik", "Maschinen"] },
         imports: { total: 897, top: ["Öl", "Gas", "Rohstoffe"] }
     },
-    uk: { name: "UK", flag: "🇬🇧", x: 47, y: 30, color: "#2C5282",
+    uk: { name: "UK", flag: "🇬🇧", lat: 55.3781, lng: -3.4360, color: "#2C5282",
         exports: { total: 468, top: ["Finanzen", "Pharma", "Autos"] },
         imports: { total: 689, top: ["Autos", "Maschinen", "Elektronik"] }
     },
-    france: { name: "Frankreich", flag: "🇫🇷", x: 48, y: 35, color: "#2B6CB0",
+    france: { name: "Frankreich", flag: "🇫🇷", lat: 46.2276, lng: 2.2137, color: "#2B6CB0",
         exports: { total: 617, top: ["Flugzeuge", "Pharma", "Wein"] },
         imports: { total: 714, top: ["Öl", "Autos", "Elektronik"] }
     },
-    brazil: { name: "Brasilien", flag: "🇧🇷", x: 30, y: 65, color: "#38A169",
+    brazil: { name: "Brasilien", flag: "🇧🇷", lat: -14.2350, lng: -51.9253, color: "#38A169",
         exports: { total: 334, top: ["Soja", "Eisenerz", "Öl"] },
         imports: { total: 251, top: ["Maschinen", "Elektronik", "Chemie"] }
     },
-    india: { name: "Indien", flag: "🇮🇳", x: 70, y: 48, color: "#DD6B20",
+    india: { name: "Indien", flag: "🇮🇳", lat: 20.5937, lng: 78.9629, color: "#DD6B20",
         exports: { total: 453, top: ["IT-Services", "Pharma", "Textilien"] },
         imports: { total: 617, top: ["Öl", "Gold", "Elektronik"] }
     },
-    southkorea: { name: "Südkorea", flag: "🇰🇷", x: 82, y: 38, color: "#319795",
+    southkorea: { name: "Südkorea", flag: "🇰🇷", lat: 35.9078, lng: 127.7669, color: "#319795",
         exports: { total: 644, top: ["Halbleiter", "Autos", "Schiffe"] },
         imports: { total: 632, top: ["Öl", "Gas", "Rohstoffe"] }
     },
-    mexico: { name: "Mexiko", flag: "🇲🇽", x: 16, y: 48, color: "#C53030",
+    mexico: { name: "Mexiko", flag: "🇲🇽", lat: 23.6345, lng: -102.5528, color: "#C53030",
         exports: { total: 494, top: ["Autos", "Elektronik", "Öl"] },
         imports: { total: 505, top: ["Elektronik", "Maschinen", "Kunststoff"] }
     }
@@ -69,62 +69,30 @@ const timelineEvents = [
     { year: 2026, title: "Handelskrieg 2.0", desc: "Weitere Eskalation droht" }
 ];
 
-// State
+let map = null;
+let markersLayer = null;
+let linesLayer = null;
 let mapState = {
     selected: null,
     showGlobal: false,
     year: 2026
 };
 
-// Echte Weltkarte SVG (vereinfacht aber realistisch)
-const WORLD_MAP_SVG = `
-<path fill="#E8EDF3" stroke="#CBD5E0" stroke-width="0.3" d="
-M15,28 Q18,25 22,26 L28,24 Q32,22 35,24 L38,28 Q36,32 34,35 L30,38 Q26,42 22,45 L18,50 Q14,52 12,48 L10,42 Q8,36 10,32 Z
-M25,52 Q28,50 32,52 L36,58 Q38,65 36,72 L32,78 Q28,80 24,76 L22,68 Q20,60 22,54 Z
-M44,24 Q48,22 52,24 L56,22 Q60,20 64,22 L68,26 Q66,30 62,32 L58,30 Q54,32 50,34 L46,32 Q44,28 44,24 Z
-M44,36 Q48,34 52,36 L58,38 Q62,42 64,48 L66,56 Q64,64 60,70 L54,74 Q48,72 44,66 L42,58 Q40,48 42,40 Z
-M58,22 Q65,18 72,20 L80,22 Q88,26 92,32 L94,40 Q92,48 88,54 L82,58 Q76,56 70,52 L64,46 Q60,38 58,30 Z
-M78,60 Q82,58 86,60 L90,64 Q92,70 90,74 L86,76 Q82,74 78,72 L76,66 Z
-"/>`;
-
 function initMap() {
-    renderMap();
-}
-
-function renderMap() {
     const container = document.getElementById('map-container');
     if (!container) return;
     
-    const flows = mapState.showGlobal 
-        ? tradeFlows 
-        : tradeFlows.filter(f => f.from === 'germany' || f.to === 'germany');
-    
-    const event = timelineEvents.find(e => e.year === mapState.year) || {};
-    
+    // Render wrapper HTML
     container.innerHTML = `
         <div class="map-wrapper">
             <div class="map-buttons">
-                <button class="map-btn ${!mapState.showGlobal ? 'active' : ''}" id="btn-germany">🇩🇪 Deutschland</button>
-                <button class="map-btn ${mapState.showGlobal ? 'active' : ''}" id="btn-global">🌍 Global</button>
+                <button class="map-btn active" id="btn-germany">🇩🇪 Deutschland</button>
+                <button class="map-btn" id="btn-global">🌍 Global</button>
             </div>
             
-            <div class="map-container-inner">
-                <svg viewBox="0 0 100 80" class="world-map-svg">
-                    <!-- Ozean -->
-                    <rect width="100" height="80" fill="#B8D4E8"/>
-                    
-                    <!-- Kontinente -->
-                    ${WORLD_MAP_SVG}
-                    
-                    <!-- Handelslinien -->
-                    ${flows.map(f => renderLine(f)).join('')}
-                    
-                    <!-- Länder-Punkte -->
-                    ${Object.entries(mapCountries).map(([id, c]) => renderMarker(id, c)).join('')}
-                </svg>
-                
-                ${mapState.selected ? renderInfoCard() : ''}
-            </div>
+            <div id="leaflet-map"></div>
+            
+            <div id="country-info-panel" class="country-panel hidden"></div>
             
             <div class="map-timeline">
                 <div class="timeline-dots">
@@ -133,9 +101,9 @@ function renderMap() {
                     `).join('')}
                 </div>
                 <div class="timeline-labels"><span>2018</span><span>2026</span></div>
-                <div class="timeline-event">
-                    <strong>${mapState.year}: ${event.title || ''}</strong><br>
-                    <span>${event.desc || ''}</span>
+                <div class="timeline-event" id="timeline-display">
+                    <strong>${mapState.year}: ${timelineEvents.find(e => e.year === mapState.year)?.title || ''}</strong><br>
+                    <span>${timelineEvents.find(e => e.year === mapState.year)?.desc || ''}</span>
                 </div>
             </div>
             
@@ -147,125 +115,201 @@ function renderMap() {
         </div>
     `;
     
-    // Event listeners
-    document.getElementById('btn-germany')?.addEventListener('click', () => {
-        mapState.showGlobal = false;
-        renderMap();
+    // Initialize Leaflet
+    map = L.map('leaflet-map', {
+        center: [30, 10],
+        zoom: 2,
+        minZoom: 1,
+        maxZoom: 5,
+        zoomControl: false,
+        attributionControl: false
     });
-    document.getElementById('btn-global')?.addEventListener('click', () => {
+    
+    // Add tile layer (CartoDB Positron - clean look)
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png', {
+        maxZoom: 19
+    }).addTo(map);
+    
+    // Create layers
+    linesLayer = L.layerGroup().addTo(map);
+    markersLayer = L.layerGroup().addTo(map);
+    
+    // Draw initial state
+    drawTradeLines();
+    drawMarkers();
+    
+    // Event listeners
+    document.getElementById('btn-germany').addEventListener('click', function() {
+        mapState.showGlobal = false;
+        this.classList.add('active');
+        document.getElementById('btn-global').classList.remove('active');
+        drawTradeLines();
+        map.setView([30, 10], 2);
+    });
+    
+    document.getElementById('btn-global').addEventListener('click', function() {
         mapState.showGlobal = true;
-        renderMap();
+        this.classList.add('active');
+        document.getElementById('btn-germany').classList.remove('active');
+        drawTradeLines();
     });
     
     document.querySelectorAll('.tl-dot').forEach(dot => {
-        dot.addEventListener('click', () => {
-            mapState.year = parseInt(dot.dataset.year);
-            renderMap();
+        dot.addEventListener('click', function() {
+            document.querySelectorAll('.tl-dot').forEach(d => d.classList.remove('active'));
+            this.classList.add('active');
+            mapState.year = parseInt(this.dataset.year);
+            const event = timelineEvents.find(e => e.year === mapState.year);
+            document.getElementById('timeline-display').innerHTML = `
+                <strong>${mapState.year}: ${event?.title || ''}</strong><br>
+                <span>${event?.desc || ''}</span>
+            `;
         });
     });
+}
+
+function drawTradeLines() {
+    linesLayer.clearLayers();
     
-    document.querySelectorAll('.country-marker').forEach(marker => {
-        marker.addEventListener('click', () => {
-            const id = marker.dataset.country;
-            mapState.selected = mapState.selected === id ? null : id;
-            renderMap();
+    const flows = mapState.showGlobal 
+        ? tradeFlows 
+        : tradeFlows.filter(f => f.from === 'germany' || f.to === 'germany');
+    
+    flows.forEach(flow => {
+        const from = mapCountries[flow.from];
+        const to = mapCountries[flow.to];
+        if (!from || !to) return;
+        
+        let color = '#4ECDC4';
+        if (flow.tariff > 15) color = '#FF6B6B';
+        else if (flow.tariff > 0) color = '#ECC94B';
+        
+        const weight = Math.max(2, Math.min(6, flow.volume / 100));
+        
+        const line = L.polyline(
+            [[from.lat, from.lng], [to.lat, to.lng]], 
+            { 
+                color: color, 
+                weight: weight, 
+                opacity: 0.7,
+                dashArray: flow.tariff > 15 ? '10, 5' : null
+            }
+        );
+        
+        line.on('click', () => showFlowInfo(flow, from, to));
+        line.on('mouseover', function() { this.setStyle({ opacity: 1, weight: weight + 2 }); });
+        line.on('mouseout', function() { this.setStyle({ opacity: 0.7, weight: weight }); });
+        
+        linesLayer.addLayer(line);
+    });
+}
+
+function drawMarkers() {
+    markersLayer.clearLayers();
+    
+    Object.entries(mapCountries).forEach(([id, country]) => {
+        const size = country.isMain ? 40 : 30;
+        
+        const icon = L.divIcon({
+            className: 'country-marker-icon',
+            html: `<div class="marker-circle ${country.isMain ? 'main' : ''}" style="background:${country.color}">
+                     <span class="marker-flag">${country.flag}</span>
+                   </div>`,
+            iconSize: [size, size],
+            iconAnchor: [size/2, size/2]
         });
+        
+        const marker = L.marker([country.lat, country.lng], { icon: icon });
+        
+        marker.on('click', () => showCountryInfo(id, country));
+        
+        markersLayer.addLayer(marker);
     });
-    
-    document.querySelector('.info-close')?.addEventListener('click', () => {
-        mapState.selected = null;
-        renderMap();
-    });
 }
 
-function renderLine(flow) {
-    const from = mapCountries[flow.from];
-    const to = mapCountries[flow.to];
-    if (!from || !to) return '';
-    
-    let color = '#4ECDC4';
-    if (flow.tariff > 15) color = '#FF6B6B';
-    else if (flow.tariff > 0) color = '#ECC94B';
-    
-    const thickness = Math.max(0.8, Math.min(2.5, flow.volume / 200));
-    const midX = (from.x + to.x) / 2;
-    const midY = (from.y + to.y) / 2 - Math.abs(from.x - to.x) / 8;
-    
-    const isHighlighted = mapState.selected && 
-        (flow.from === mapState.selected || flow.to === mapState.selected);
-    
-    return `
-        <path 
-            d="M ${from.x} ${from.y} Q ${midX} ${midY} ${to.x} ${to.y}"
-            stroke="${color}" 
-            stroke-width="${thickness}"
-            fill="none"
-            opacity="${isHighlighted ? 1 : 0.5}"
-            stroke-linecap="round"
-            class="trade-path"
-        />
-    `;
-}
-
-function renderMarker(id, country) {
-    const isSelected = mapState.selected === id;
-    const isMain = country.isMain;
-    const r = isMain ? 3.5 : 2.5;
-    
-    return `
-        <g class="country-marker" data-country="${id}" style="cursor:pointer">
-            ${isSelected ? `<circle cx="${country.x}" cy="${country.y}" r="${r + 2}" fill="none" stroke="#FFD700" stroke-width="1"/>` : ''}
-            ${isMain ? `
-                <circle cx="${country.x}" cy="${country.y}" r="${r + 3}" fill="none" stroke="${country.color}" stroke-width="0.5" opacity="0.4">
-                    <animate attributeName="r" values="${r+2};${r+5};${r+2}" dur="2s" repeatCount="indefinite"/>
-                    <animate attributeName="opacity" values="0.4;0;0.4" dur="2s" repeatCount="indefinite"/>
-                </circle>
-            ` : ''}
-            <circle cx="${country.x}" cy="${country.y}" r="${r}" fill="${country.color}" stroke="white" stroke-width="0.8"/>
-            <text x="${country.x}" y="${country.y + 0.5}" font-size="${isMain ? 3 : 2.5}" text-anchor="middle" dominant-baseline="middle">${country.flag}</text>
-        </g>
-    `;
-}
-
-function renderInfoCard() {
-    const country = mapCountries[mapState.selected];
-    if (!country) return '';
+function showCountryInfo(id, country) {
+    const panel = document.getElementById('country-info-panel');
     
     const flow = tradeFlows.find(f => 
-        (f.from === mapState.selected && f.to === 'germany') ||
-        (f.to === mapState.selected && f.from === 'germany')
+        (f.from === id && f.to === 'germany') ||
+        (f.to === id && f.from === 'germany')
     );
     
-    return `
-        <div class="map-info-card">
-            <div class="info-header">
-                <span class="info-flag">${country.flag}</span>
-                <span class="info-name">${country.name}</span>
-                <button class="info-close">✕</button>
-            </div>
-            ${flow ? `
-                <div class="info-stats">
-                    <div class="info-row">
-                        <span>🇩🇪→${country.flag} Export</span>
-                        <span>${flow.from === 'germany' ? flow.exports : flow.imports} Mrd €</span>
-                    </div>
-                    <div class="info-row">
-                        <span>${country.flag}→🇩🇪 Import</span>
-                        <span>${flow.from === 'germany' ? flow.imports : flow.exports} Mrd €</span>
-                    </div>
-                    <div class="info-row">
-                        <span>Zoll</span>
-                        <span class="${flow.tariff > 15 ? 'red' : flow.tariff > 0 ? 'yellow' : 'green'}">${flow.tariff}%</span>
-                    </div>
-                    <div class="info-row">
-                        <span>Trend</span>
-                        <span>${flow.trend === 'up' ? '📈' : flow.trend === 'down' ? '📉' : '➡️'}</span>
-                    </div>
+    panel.innerHTML = `
+        <div class="panel-header" style="background:${country.color}">
+            <span class="panel-flag">${country.flag}</span>
+            <span class="panel-name">${country.name}</span>
+            <button class="panel-close" onclick="closePanel()">✕</button>
+        </div>
+        ${flow ? `
+            <div class="panel-stats">
+                <div class="panel-row">
+                    <span>🇩🇪→${country.flag} Export</span>
+                    <strong>${flow.from === 'germany' ? flow.exports : flow.imports} Mrd €</strong>
                 </div>
-            ` : '<div class="info-stats"><p style="text-align:center;color:#718096;padding:12px">Kein direkter DE-Handel</p></div>'}
-            <div class="info-products">Top: ${country.exports.top.join(', ')}</div>
+                <div class="panel-row">
+                    <span>${country.flag}→🇩🇪 Import</span>
+                    <strong>${flow.from === 'germany' ? flow.imports : flow.exports} Mrd €</strong>
+                </div>
+                <div class="panel-row">
+                    <span>Zollsatz</span>
+                    <strong class="${flow.tariff > 15 ? 'red' : flow.tariff > 0 ? 'yellow' : 'green'}">${flow.tariff}%</strong>
+                </div>
+                <div class="panel-row">
+                    <span>Trend</span>
+                    <strong>${flow.trend === 'up' ? '📈 Steigend' : flow.trend === 'down' ? '📉 Fallend' : '➡️ Stabil'}</strong>
+                </div>
+            </div>
+        ` : `<div class="panel-stats"><p style="text-align:center;padding:16px;color:#718096">Kein direkter Handel mit Deutschland</p></div>`}
+        <div class="panel-footer">
+            <strong>Top-Exporte:</strong> ${country.exports.top.join(', ')}
         </div>
     `;
+    
+    panel.classList.remove('hidden');
+    
+    // Fly to country
+    map.flyTo([country.lat, country.lng], 4, { duration: 0.5 });
 }
 
-window.tradeMap = { init: initMap, render: renderMap };
+function showFlowInfo(flow, from, to) {
+    const panel = document.getElementById('country-info-panel');
+    
+    panel.innerHTML = `
+        <div class="panel-header" style="background:#1E3A5F">
+            <span>${from.flag} ↔ ${to.flag}</span>
+            <span class="panel-name">Handelsroute</span>
+            <button class="panel-close" onclick="closePanel()">✕</button>
+        </div>
+        <div class="panel-stats">
+            <div class="panel-row">
+                <span>Volumen gesamt</span>
+                <strong>${flow.volume} Mrd €</strong>
+            </div>
+            <div class="panel-row">
+                <span>${from.name} → ${to.name}</span>
+                <strong>${flow.exports} Mrd €</strong>
+            </div>
+            <div class="panel-row">
+                <span>${to.name} → ${from.name}</span>
+                <strong>${flow.imports} Mrd €</strong>
+            </div>
+            <div class="panel-row">
+                <span>Zollsatz</span>
+                <strong class="${flow.tariff > 15 ? 'red' : flow.tariff > 0 ? 'yellow' : 'green'}">${flow.tariff}%</strong>
+            </div>
+        </div>
+    `;
+    
+    panel.classList.remove('hidden');
+}
+
+function closePanel() {
+    document.getElementById('country-info-panel').classList.add('hidden');
+    map.setView([30, 10], 2, { duration: 0.5 });
+}
+
+// Make closePanel global
+window.closePanel = closePanel;
+
+window.tradeMap = { init: initMap };
