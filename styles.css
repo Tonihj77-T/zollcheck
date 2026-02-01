@@ -979,11 +979,12 @@ body {
     background: #E2E8F0;
 }
 
-/* === Trade Map v3 === */
+/* === Trade Map v4 - Leaflet === */
 .map-wrapper {
     display: flex;
     flex-direction: column;
     gap: 12px;
+    position: relative;
 }
 
 .map-buttons {
@@ -1013,39 +1014,72 @@ body {
     color: white;
 }
 
-.map-container-inner {
-    position: relative;
+/* Leaflet Map Container */
+#leaflet-map {
+    height: 280px;
     border-radius: var(--radius-lg);
     overflow: hidden;
     box-shadow: var(--shadow);
+    z-index: 1;
 }
 
-.world-map-svg {
+/* Custom Markers */
+.country-marker-icon {
+    background: transparent !important;
+    border: none !important;
+}
+
+.marker-circle {
     width: 100%;
-    height: auto;
-    display: block;
-    background: linear-gradient(180deg, #A8D4F0 0%, #7EC8E3 100%);
+    height: 100%;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 3px solid white;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    transition: transform 0.2s;
+    cursor: pointer;
 }
 
-.country-marker:active circle {
-    transform: scale(1.2);
+.marker-circle:hover {
+    transform: scale(1.15);
 }
 
-.trade-path {
-    transition: opacity 0.2s;
+.marker-circle.main {
+    animation: pulse 2s infinite;
 }
 
-/* Info Card */
-.map-info-card {
+@keyframes pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(30, 58, 95, 0.4); }
+    50% { box-shadow: 0 0 0 10px rgba(30, 58, 95, 0); }
+}
+
+.marker-flag {
+    font-size: 16px;
+    line-height: 1;
+}
+
+.marker-circle.main .marker-flag {
+    font-size: 20px;
+}
+
+/* Country Info Panel */
+.country-panel {
     position: absolute;
-    bottom: 8px;
-    left: 8px;
-    right: 8px;
+    bottom: 60px;
+    left: 10px;
+    right: 10px;
     background: white;
     border-radius: var(--radius);
     box-shadow: 0 4px 20px rgba(0,0,0,0.2);
     overflow: hidden;
-    animation: slideUp 0.2s ease;
+    z-index: 1000;
+    animation: slideUp 0.25s ease;
+}
+
+.country-panel.hidden {
+    display: none;
 }
 
 @keyframes slideUp {
@@ -1053,47 +1087,49 @@ body {
     to { transform: translateY(0); opacity: 1; }
 }
 
-.info-header {
+.panel-header {
     display: flex;
     align-items: center;
     gap: 10px;
     padding: 12px 14px;
-    background: var(--primary);
     color: white;
 }
 
-.info-flag { font-size: 22px; }
-.info-name { flex: 1; font-weight: 600; font-size: 15px; }
+.panel-flag { font-size: 24px; }
+.panel-name { flex: 1; font-weight: 600; font-size: 15px; }
 
-.info-close {
+.panel-close {
     background: rgba(255,255,255,0.2);
     border: none;
     color: white;
-    width: 26px;
-    height: 26px;
+    width: 28px;
+    height: 28px;
     border-radius: 50%;
-    font-size: 14px;
+    font-size: 16px;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.info-stats { padding: 10px 14px; }
+.panel-stats { padding: 12px 14px; }
 
-.info-row {
+.panel-row {
     display: flex;
     justify-content: space-between;
-    padding: 6px 0;
+    padding: 8px 0;
     border-bottom: 1px solid var(--border);
-    font-size: 13px;
+    font-size: 14px;
 }
 
-.info-row:last-child { border-bottom: none; }
+.panel-row:last-child { border-bottom: none; }
 
-.info-row .green { color: #38A169; font-weight: 600; }
-.info-row .yellow { color: #D69E2E; font-weight: 600; }
-.info-row .red { color: #E53E3E; font-weight: 600; }
+.panel-row .green { color: #38A169; }
+.panel-row .yellow { color: #D69E2E; }
+.panel-row .red { color: #E53E3E; }
 
-.info-products {
-    padding: 8px 14px;
+.panel-footer {
+    padding: 10px 14px;
     background: var(--bg);
     font-size: 12px;
     color: var(--text-light);
@@ -1191,6 +1227,11 @@ body {
 .legend-dot.green { background: #4ECDC4; }
 .legend-dot.yellow { background: #ECC94B; }
 .legend-dot.red { background: #FF6B6B; }
+
+/* Hide Leaflet attribution */
+.leaflet-control-attribution {
+    display: none !important;
+}
 
 .country-info {
     position: absolute;
