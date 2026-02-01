@@ -1265,3 +1265,22 @@ body {
 .text-center { text-align: center; }
 .mt-16 { margin-top: 16px; }
 .mb-16 { margin-bottom: 16px; }
+
+/* === Footer === */
+.app-footer {
+    text-align: center;
+    padding: 8px 16px;
+    background: var(--primary);
+    border-top: 1px solid var(--border);
+    font-size: 12px;
+}
+
+.app-footer a {
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.app-footer a:hover {
+    color: var(--secondary);
+}
