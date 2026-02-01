@@ -156,22 +156,28 @@
                 </div>
                 
                 <div class="simulator-intro" id="sim-intro">
-                    <h3>Wähle deine Rolle:</h3>
+                    <h3>Wähle deinen Modus:</h3>
                     <div class="role-cards">
+                        <button class="role-card" onclick="startDynamicSimulator()" style="border: 2px solid #4ECDC4; background: linear-gradient(135deg, #1E3A5F 0%, #2D5A87 100%); color: white;">
+                            <span class="role-icon">🌍</span>
+                            <span class="role-title" style="color: #4ECDC4;">Dynamische Weltwirtschaft</span>
+                            <span class="role-desc" style="color: rgba(255,255,255,0.8);">KI-generierte Szenarien, reagierende Länder, 12 Runden</span>
+                            <span style="font-size: 11px; background: #4ECDC4; color: #1E3A5F; padding: 2px 8px; border-radius: 10px; margin-top: 8px;">⭐ NEU</span>
+                        </button>
                         <button class="role-card" onclick="startSimulator('minister')">
                             <span class="role-icon">🏛️</span>
                             <span class="role-title">Wirtschaftsminister</span>
-                            <span class="role-desc">Setze Zölle und beobachte die Auswirkungen</span>
+                            <span class="role-desc">6 feste Szenarien durchspielen</span>
                         </button>
                         <button class="role-card" onclick="startSimulator('unternehmer')">
                             <span class="role-icon">🏭</span>
                             <span class="role-title">Unternehmer*in</span>
-                            <span class="role-desc">Führe ein Exportunternehmen</span>
+                            <span class="role-desc">5 feste Szenarien durchspielen</span>
                         </button>
                         <button class="role-card" onclick="startSimulator('verbraucher')">
                             <span class="role-icon">🛒</span>
                             <span class="role-title">Verbraucher*in</span>
-                            <span class="role-desc">Erlebe wie Zölle deinen Alltag beeinflussen</span>
+                            <span class="role-desc">6 feste Szenarien durchspielen</span>
                         </button>
                     </div>
                 </div>
@@ -268,6 +274,7 @@
     </div>
     
     <script src="data.js"></script>
+    <script src="simulator.js"></script>
     <script src="app.js"></script>
 </body>
 </html>
