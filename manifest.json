@@ -1,0 +1,26 @@
+{
+    "name": "ZollCheck",
+    "short_name": "ZollCheck",
+    "description": "Verstehe, wie vernetzt unsere Welt ist - interaktive Lern-App zu Zöllen und Welthandel",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#F7F9FC",
+    "theme_color": "#1E3A5F",
+    "orientation": "portrait",
+    "icons": [
+        {
+            "src": "icons/icon-192.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "icons/icon-512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any maskable"
+        }
+    ],
+    "categories": ["education", "games"],
+    "lang": "de"
+}

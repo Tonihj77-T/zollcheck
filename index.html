@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#1E3A5F">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="ZollCheck">
+    
+    <title>ZollCheck</title>
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- Icons -->
+    <link rel="apple-touch-icon" href="icons/icon-192.png">
+    <link rel="icon" type="image/png" href="icons/icon-192.png">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="app">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-left">
+                <span class="logo">🌍 ZollCheck</span>
+            </div>
+            <div class="header-right">
+                <span class="xp-badge" id="xp-display">0 XP</span>
+            </div>
+        </header>
+        
+        <!-- Main Content -->
+        <main class="main" id="main-content">
+            <!-- Home Screen (default) -->
+            <div class="screen active" id="screen-home">
+                <div class="welcome-card">
+                    <h1>Hallo! 👋</h1>
+                    <div class="level-display">
+                        <span class="level-text">Level 1 • Zoll-Neuling</span>
+                        <div class="xp-bar">
+                            <div class="xp-fill" id="xp-bar-fill" style="width: 0%"></div>
+                        </div>
+                        <span class="xp-text"><span id="current-xp">0</span> / 100 XP</span>
+                    </div>
+                </div>
+                
+                <div class="daily-challenge">
+                    <div class="challenge-header">
+                        <span class="challenge-icon">🎯</span>
+                        <span class="challenge-title">Tägliche Challenge</span>
+                    </div>
+                    <p class="challenge-text">Beantworte 3 Quiz-Fragen richtig!</p>
+                    <div class="challenge-progress">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="daily-progress" style="width: 0%"></div>
+                        </div>
+                        <span class="progress-text"><span id="daily-count">0</span>/3 • +30 XP</span>
+                    </div>
+                </div>
+                
+                <div class="news-card" id="news-ticker">
+                    <div class="news-badge">📊 Aktuell</div>
+                    <p class="news-text">Trump-Zölle: Deutsche Exporte in die USA -9,4% eingebrochen</p>
+                    <span class="news-time">Januar 2026</span>
+                </div>
+                
+                <div class="quick-actions">
+                    <button class="action-card" onclick="showScreen('screen-haushalt')">
+                        <span class="action-icon">🏠</span>
+                        <span class="action-label">Mein Haushalt</span>
+                    </button>
+                    <button class="action-card" onclick="showScreen('screen-quiz')">
+                        <span class="action-icon">🎮</span>
+                        <span class="action-label">Quiz</span>
+                    </button>
+                    <button class="action-card" onclick="showScreen('screen-simulator')">
+                        <span class="action-icon">🏛️</span>
+                        <span class="action-label">Simulator</span>
+                    </button>
+                    <button class="action-card" onclick="showScreen('screen-lexikon')">
+                        <span class="action-icon">📖</span>
+                        <span class="action-label">Lexikon</span>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Haushalt Screen -->
+            <div class="screen" id="screen-haushalt">
+                <div class="screen-header">
+                    <button class="back-btn" onclick="showScreen('screen-home')">←</button>
+                    <h2>🏠 Mein Zoll-Haushalt</h2>
+                </div>
+                
+                <div class="globalization-index">
+                    <div class="index-circle">
+                        <span class="index-value" id="glob-index">0%</span>
+                    </div>
+                    <p class="index-label">Dein Globalisierungs-Index</p>
+                </div>
+                
+                <button class="scan-button" onclick="showProductModal()">
+                    <span class="scan-icon">📸</span>
+                    <span>Produkt hinzufügen</span>
+                </button>
+                
+                <div class="products-list" id="products-list">
+                    <p class="empty-state">Noch keine Produkte erfasst.<br>Füge dein erstes Produkt hinzu!</p>
+                </div>
+            </div>
+            
+            <!-- Quiz Screen -->
+            <div class="screen" id="screen-quiz">
+                <div class="screen-header">
+                    <button class="back-btn" onclick="showScreen('screen-home')">←</button>
+                    <h2>🎮 Zoll-Quiz</h2>
+                </div>
+                
+                <div class="quiz-stats">
+                    <div class="stat">
+                        <span class="stat-value" id="quiz-correct">0</span>
+                        <span class="stat-label">Richtig</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-value" id="quiz-streak">0</span>
+                        <span class="stat-label">Serie 🔥</span>
+                    </div>
+                </div>
+                
+                <div class="quiz-card" id="quiz-card">
+                    <p class="quiz-question" id="quiz-question">Lade Frage...</p>
+                    <div class="quiz-answers" id="quiz-answers">
+                        <!-- Answers inserted by JS -->
+                    </div>
+                </div>
+                
+                <div class="quiz-feedback hidden" id="quiz-feedback">
+                    <div class="feedback-icon" id="feedback-icon">✓</div>
+                    <p class="feedback-text" id="feedback-text">Richtig!</p>
+                    <p class="feedback-explanation" id="feedback-explanation"></p>
+                    <button class="next-btn" onclick="nextQuestion()">Nächste Frage →</button>
+                </div>
+            </div>
+            
+            <!-- Simulator Screen -->
+            <div class="screen" id="screen-simulator">
+                <div class="screen-header">
+                    <button class="back-btn" onclick="showScreen('screen-home')">←</button>
+                    <h2>🏛️ Zoll-Simulator</h2>
+                </div>
+                
+                <div class="simulator-intro" id="sim-intro">
+                    <h3>Wähle deine Rolle:</h3>
+                    <div class="role-cards">
+                        <button class="role-card" onclick="startSimulator('minister')">
+                            <span class="role-icon">🏛️</span>
+                            <span class="role-title">Wirtschaftsminister</span>
+                            <span class="role-desc">Setze Zölle und beobachte die Auswirkungen</span>
+                        </button>
+                        <button class="role-card" onclick="startSimulator('unternehmer')">
+                            <span class="role-icon">🏭</span>
+                            <span class="role-title">Unternehmer*in</span>
+                            <span class="role-desc">Führe ein Exportunternehmen</span>
+                        </button>
+                        <button class="role-card" onclick="startSimulator('verbraucher')">
+                            <span class="role-icon">🛒</span>
+                            <span class="role-title">Verbraucher*in</span>
+                            <span class="role-desc">Erlebe wie Zölle deinen Alltag beeinflussen</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="simulator-game hidden" id="sim-game">
+                    <!-- Game content inserted by JS -->
+                </div>
+            </div>
+            
+            <!-- Lexikon Screen -->
+            <div class="screen" id="screen-lexikon">
+                <div class="screen-header">
+                    <button class="back-btn" onclick="showScreen('screen-home')">←</button>
+                    <h2>📖 Zoll-Lexikon</h2>
+                </div>
+                
+                <input type="search" class="search-input" placeholder="Begriff suchen..." id="lexikon-search" oninput="filterLexikon()">
+                
+                <div class="lexikon-list" id="lexikon-list">
+                    <!-- Entries inserted by JS -->
+                </div>
+            </div>
+            
+            <!-- Karte Screen -->
+            <div class="screen" id="screen-karte">
+                <div class="screen-header">
+                    <button class="back-btn" onclick="showScreen('screen-home')">←</button>
+                    <h2>🗺️ Handelskarte</h2>
+                </div>
+                
+                <div class="map-container">
+                    <p class="coming-soon">🚧 Interaktive Karte kommt bald!</p>
+                </div>
+            </div>
+        </main>
+        
+        <!-- Bottom Navigation -->
+        <nav class="bottom-nav">
+            <button class="nav-item active" onclick="showScreen('screen-home')" data-screen="screen-home">
+                <span class="nav-icon">🏠</span>
+                <span class="nav-label">Home</span>
+            </button>
+            <button class="nav-item" onclick="showScreen('screen-haushalt')" data-screen="screen-haushalt">
+                <span class="nav-icon">📦</span>
+                <span class="nav-label">Haushalt</span>
+            </button>
+            <button class="nav-item" onclick="showScreen('screen-quiz')" data-screen="screen-quiz">
+                <span class="nav-icon">🎮</span>
+                <span class="nav-label">Quiz</span>
+            </button>
+            <button class="nav-item" onclick="showScreen('screen-karte')" data-screen="screen-karte">
+                <span class="nav-icon">🗺️</span>
+                <span class="nav-label">Karte</span>
+            </button>
+            <button class="nav-item" onclick="showScreen('screen-lexikon')" data-screen="screen-lexikon">
+                <span class="nav-icon">📖</span>
+                <span class="nav-label">Lexikon</span>
+            </button>
+        </nav>
+        
+        <!-- Product Modal -->
+        <div class="modal hidden" id="product-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Produkt hinzufügen</h3>
+                    <button class="modal-close" onclick="hideProductModal()">×</button>
+                </div>
+                <div class="modal-body">
+                    <div class="product-categories">
+                        <button class="category-btn" onclick="selectCategory('kleidung')">👕 Kleidung</button>
+                        <button class="category-btn" onclick="selectCategory('elektronik')">📱 Elektronik</button>
+                        <button class="category-btn" onclick="selectCategory('lebensmittel')">🍎 Lebensmittel</button>
+                        <button class="category-btn" onclick="selectCategory('haushalt')">🏠 Haushalt</button>
+                    </div>
+                    <div class="product-select hidden" id="product-select">
+                        <!-- Products inserted by JS -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Product Detail Modal -->
+        <div class="modal hidden" id="product-detail-modal">
+            <div class="modal-content modal-large">
+                <div class="modal-header">
+                    <button class="back-btn" onclick="hideProductDetail()">←</button>
+                    <h3 id="detail-product-name">Produkt</h3>
+                </div>
+                <div class="modal-body" id="product-detail-content">
+                    <!-- Detail content inserted by JS -->
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="data.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
