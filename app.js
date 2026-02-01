@@ -132,6 +132,11 @@ function showScreen(screenId) {
     if (screenId !== 'screen-simulator') {
         resetSimulator();
     }
+    
+    // Initialize map when showing map screen
+    if (screenId === 'screen-karte' && window.tradeMap) {
+        window.tradeMap.init();
+    }
 }
 
 // === Quiz ===
