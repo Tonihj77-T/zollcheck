@@ -164,6 +164,61 @@ const quizQuestions = [
         ],
         correct: 1,
         explanation: "Vergeltungszölle sind Zölle, die ein Land als Reaktion auf Zollerhöhungen eines anderen Landes einführt – oft der Beginn eines Handelskriegs."
+    },
+    {
+        question: "Was versteht man unter 'Dumping'?",
+        answers: [
+            "Illegale Müllentsorgung",
+            "Waren unter Produktionskosten im Ausland verkaufen",
+            "Schnelles Entladen von Containern",
+            "Abwertung einer Währung"
+        ],
+        correct: 1,
+        explanation: "Dumping liegt vor, wenn Unternehmen Waren im Ausland unter den Herstellungskosten verkaufen, um Marktanteile zu gewinnen."
+    },
+    {
+        question: "Wie viele Mitgliedsländer hat die WTO?",
+        answers: [
+            "52",
+            "98",
+            "164",
+            "193"
+        ],
+        correct: 2,
+        explanation: "Die WTO hat 164 Mitgliedsländer, die zusammen über 98% des Welthandels abwickeln."
+    },
+    {
+        question: "Was ist der EU-Binnenmarkt?",
+        answers: [
+            "Ein Markt nur für EU-Bürger",
+            "Ein Wirtschaftsraum ohne Zölle zwischen EU-Ländern",
+            "Ein Online-Marktplatz der EU",
+            "Der größte Supermarkt Europas"
+        ],
+        correct: 1,
+        explanation: "Der EU-Binnenmarkt ist ein Wirtschaftsraum mit freiem Waren-, Dienstleistungs-, Kapital- und Personenverkehr zwischen den 27 EU-Ländern."
+    },
+    {
+        question: "Welches Abkommen regelt den Handel zwischen USA, Kanada und Mexiko?",
+        answers: [
+            "TTIP",
+            "CETA",
+            "USMCA",
+            "RCEP"
+        ],
+        correct: 2,
+        explanation: "Das USMCA (United States-Mexico-Canada Agreement) ersetzte 2020 das frühere NAFTA-Abkommen."
+    },
+    {
+        question: "Warum sind viele Elektronikprodukte zollfrei?",
+        answers: [
+            "Weil sie zu kompliziert sind",
+            "Wegen des Information Technology Agreement (ITA)",
+            "Weil sie in der EU hergestellt werden",
+            "Weil sie recycelbar sind"
+        ],
+        correct: 1,
+        explanation: "Das ITA (Information Technology Agreement) der WTO schaffte Zölle auf viele IT-Produkte ab, um den globalen Technologiehandel zu fördern."
     }
 ];
 
@@ -505,7 +560,7 @@ const lexikonEntries = [
     }
 ];
 
-// === Simulator Scenarios ===
+// === Simulator Scenarios (ERWEITERT) ===
 const simulatorScenarios = {
     minister: [
         {
@@ -530,8 +585,8 @@ const simulatorScenarios = {
                 },
                 {
                     text: "💬 Verhandlungen mit China starten",
-                    effects: { jobs: 0, prices: 0, trade: 0, treasury: 0 },
-                    result: "Die Verhandlungen ziehen sich... während die Industrie weiter unter Druck steht."
+                    effects: { jobs: -5, prices: 0, trade: +5, treasury: 0 },
+                    result: "Die Verhandlungen ziehen sich... während die Industrie weiter unter Druck steht. Aber immerhin kein Handelskrieg."
                 }
             ]
         },
@@ -543,7 +598,7 @@ const simulatorScenarios = {
                 {
                     text: "⚔️ Vergeltungszölle auf US-Produkte",
                     effects: { jobs: +5, prices: -10, trade: -25, treasury: +5 },
-                    result: "Du triffst US-Unternehmen, aber der Handelskrieg eskaliert. Beide Seiten verlieren."
+                    result: "Du triffst US-Unternehmen wie Apple und Harley-Davidson, aber der Handelskrieg eskaliert. Beide Seiten verlieren."
                 },
                 {
                     text: "🤝 Verhandlungen suchen",
@@ -561,8 +616,117 @@ const simulatorScenarios = {
                     result: "Deine Unternehmen bauen Werke in den USA. Gut für den Handel, aber Jobs wandern ab."
                 }
             ]
+        },
+        {
+            id: 3,
+            title: "Stahlkrise",
+            text: "Billigstahl aus Asien flutet den Markt. Die Stahlwerke in deinem Land machen Verluste, 25.000 Jobs sind bedroht. Die Gewerkschaft protestiert.",
+            choices: [
+                {
+                    text: "🏭 Anti-Dumping-Zölle von 40%",
+                    effects: { jobs: +20, prices: -15, trade: -15, treasury: +10 },
+                    result: "Die Stahlwerke atmen auf. Aber alle Industrien, die Stahl verarbeiten (Autos, Maschinen), klagen über höhere Kosten."
+                },
+                {
+                    text: "🤝 EU-weite Lösung anstreben",
+                    effects: { jobs: +5, prices: -5, trade: 0, treasury: 0 },
+                    result: "Die EU einigt sich auf moderate Zölle. Dauert lange, ist aber international akzeptabler."
+                },
+                {
+                    text: "💰 Umschulungsprogramme für Arbeiter",
+                    effects: { jobs: -10, prices: +5, trade: +5, treasury: -10 },
+                    result: "Du akzeptierst den Strukturwandel. Jobs gehen verloren, aber du investierst in die Zukunft der Betroffenen."
+                },
+                {
+                    text: "🔬 Forschungsförderung für Spezialstahl",
+                    effects: { jobs: +5, prices: 0, trade: +10, treasury: -15 },
+                    result: "Du setzt auf Innovation statt Protektionismus. Einige Stahlwerke spezialisieren sich erfolgreich auf Hightech-Stahl."
+                }
+            ]
+        },
+        {
+            id: 4,
+            title: "Agrarsubventionen",
+            text: "Die Bauernverbände fordern höhere Agrarsubventionen, weil sie gegen billige Importe aus Südamerika nicht konkurrieren können. Umweltverbände protestieren gegen Subventionen.",
+            choices: [
+                {
+                    text: "🌾 Subventionen erhöhen",
+                    effects: { jobs: +10, prices: -5, trade: -10, treasury: -20 },
+                    result: "Die Bauern sind zufrieden, aber die Staatskasse leidet. Handelspartner kritisieren dich bei der WTO."
+                },
+                {
+                    text: "🚫 Importquoten für Agrarprodukte",
+                    effects: { jobs: +15, prices: -15, trade: -20, treasury: 0 },
+                    result: "Lebensmittel werden teurer. Entwicklungsländer, die auf Exporte angewiesen sind, leiden."
+                },
+                {
+                    text: "🌿 Öko-Subventionen statt Mengensubventionen",
+                    effects: { jobs: 0, prices: -5, trade: +5, treasury: -10 },
+                    result: "Du förderst nachhaltige Landwirtschaft. Einige Bauern stellen um, andere sind unzufrieden."
+                },
+                {
+                    text: "📉 Subventionen kürzen",
+                    effects: { jobs: -15, prices: +10, trade: +15, treasury: +15 },
+                    result: "Unpopulär bei Bauern, aber gut für den Haushalt und den Freihandel. Viele kleine Höfe geben auf."
+                }
+            ]
+        },
+        {
+            id: 5,
+            title: "Chip-Knappheit",
+            text: "90% aller High-End-Chips kommen aus Taiwan. China droht mit einer Blockade. Deine Autoindustrie könnte ohne Chips stillstehen.",
+            choices: [
+                {
+                    text: "🏭 Eigene Chipfabriken subventionieren",
+                    effects: { jobs: +10, prices: 0, trade: +5, treasury: -25 },
+                    result: "Du investierst Milliarden in heimische Produktion. Es dauert Jahre, bis sie wettbewerbsfähig ist."
+                },
+                {
+                    text: "🤝 Handelsabkommen mit Taiwan stärken",
+                    effects: { jobs: 0, prices: 0, trade: +10, treasury: -5 },
+                    result: "Du vertiefst die Beziehungen, machst dich aber noch abhängiger. China ist verärgert."
+                },
+                {
+                    text: "🌍 Diversifizieren – auch mit China kooperieren",
+                    effects: { jobs: +5, prices: +5, trade: +15, treasury: -5 },
+                    result: "Du balancierst zwischen Taiwan und China. Riskant, aber flexibel."
+                },
+                {
+                    text: "♻️ Recycling und Effizienz fördern",
+                    effects: { jobs: +5, prices: -5, trade: +5, treasury: -10 },
+                    result: "Du setzt auf Kreislaufwirtschaft. Hilft langfristig, löst das akute Problem aber nicht."
+                }
+            ]
+        },
+        {
+            id: 6,
+            title: "Währungsmanipulation?",
+            text: "Ein wichtiger Handelspartner hält seine Währung künstlich niedrig, um Exporte zu verbilligen. Deine Industrie beschwert sich über unfairen Wettbewerb.",
+            choices: [
+                {
+                    text: "💱 Ausgleichszölle einführen",
+                    effects: { jobs: +10, prices: -10, trade: -20, treasury: +5 },
+                    result: "Du gleichst den Währungsvorteil aus, aber der Handelspartner droht mit Gegenmaßnahmen."
+                },
+                {
+                    text: "🏦 Bei IWF Beschwerde einlegen",
+                    effects: { jobs: 0, prices: 0, trade: +5, treasury: 0 },
+                    result: "Ein langwieriger Prozess beginnt. Die internationale Gemeinschaft diskutiert."
+                },
+                {
+                    text: "💶 Eigene Währung abwerten",
+                    effects: { jobs: +15, prices: -20, trade: +10, treasury: -10 },
+                    result: "Deine Exporte werden günstiger, aber Importe teurer. Die Inflation steigt."
+                },
+                {
+                    text: "🤷 Akzeptieren – Wettbewerb ist Wettbewerb",
+                    effects: { jobs: -10, prices: +10, trade: +10, treasury: 0 },
+                    result: "Deine Industrie muss sich anpassen. Einige Unternehmen werden effizienter, andere gehen unter."
+                }
+            ]
         }
     ],
+    
     unternehmer: [
         {
             id: 1,
@@ -590,8 +754,117 @@ const simulatorScenarios = {
                     result: "Du entwickelst bessere Produkte, die trotz Zöllen konkurrenzfähig sind. Teuer, aber zukunftssicher."
                 }
             ]
+        },
+        {
+            id: 2,
+            title: "Lieferkettenprobleme",
+            text: "Dein wichtigster Zulieferer sitzt in China. Wegen politischer Spannungen werden Lieferungen verzögert und teurer. Die Produktion stockt.",
+            choices: [
+                {
+                    text: "🔄 Zweiten Zulieferer in Vietnam aufbauen",
+                    effects: { profit: -10, market: 0, costs: -10, employees: 0 },
+                    result: "Die Diversifizierung kostet Zeit und Geld, macht dich aber unabhängiger."
+                },
+                {
+                    text: "🇪🇺 Europäischen Zulieferer suchen",
+                    effects: { profit: -15, market: +5, costs: -5, employees: +5 },
+                    result: "Teurer, aber kürzere Wege und weniger geopolitisches Risiko. Kunden schätzen 'Made in EU'."
+                },
+                {
+                    text: "📦 Große Lagerbestände aufbauen",
+                    effects: { profit: -5, market: 0, costs: -15, employees: 0 },
+                    result: "Du hast einen Puffer, aber Kapital ist gebunden und Lagerkosten steigen."
+                },
+                {
+                    text: "🤞 Abwarten und hoffen",
+                    effects: { profit: 0, market: -10, costs: 0, employees: -5 },
+                    result: "Die Situation entspannt sich nicht. Kunden springen ab wegen Lieferverzögerungen."
+                }
+            ]
+        },
+        {
+            id: 3,
+            title: "Konkurrenz aus Billiglohnländern",
+            text: "Ein Konkurrent produziert in Bangladesch für einen Bruchteil deiner Kosten. Deine Preise sind nicht mehr wettbewerbsfähig.",
+            choices: [
+                {
+                    text: "🏭 Auch nach Asien verlagern",
+                    effects: { profit: +20, market: +15, costs: +25, employees: -25 },
+                    result: "Du senkst die Kosten massiv, aber musst hunderte Mitarbeiter entlassen. Imageschaden möglich."
+                },
+                {
+                    text: "🎨 Auf Premium/Qualität setzen",
+                    effects: { profit: +5, market: -10, costs: 0, employees: 0 },
+                    result: "Du bedienst eine Nische. Weniger Kunden, aber höhere Margen."
+                },
+                {
+                    text: "🤖 In Automatisierung investieren",
+                    effects: { profit: +10, market: +5, costs: +15, employees: -15 },
+                    result: "Roboter machen die Arbeit günstiger. Einige Jobs fallen weg, aber der Standort bleibt."
+                },
+                {
+                    text: "📣 'Made in Germany' vermarkten",
+                    effects: { profit: 0, market: +10, costs: -5, employees: +5 },
+                    result: "Du setzt auf das Qualitätsimage. Funktioniert bei manchen Kunden, nicht bei allen."
+                }
+            ]
+        },
+        {
+            id: 4,
+            title: "Freihandelsabkommen Chance",
+            text: "Die EU hat ein neues Freihandelsabkommen mit Kanada. Zölle fallen weg. Ein neuer Markt öffnet sich – aber du brauchst Investitionen.",
+            choices: [
+                {
+                    text: "🚀 Sofort groß investieren",
+                    effects: { profit: -15, market: +25, costs: -10, employees: +10 },
+                    result: "Du bist First Mover in Kanada. Hohes Risiko, aber wenn's klappt, großer Gewinn."
+                },
+                {
+                    text: "🔍 Erstmal den Markt sondieren",
+                    effects: { profit: -5, market: +10, costs: 0, employees: 0 },
+                    result: "Du gehst langsam vor. Weniger Risiko, aber Konkurrenten könnten schneller sein."
+                },
+                {
+                    text: "🤝 Lokalen Partner suchen",
+                    effects: { profit: -5, market: +15, costs: -5, employees: +5 },
+                    result: "Ein kanadisches Partnerunternehmen hilft dir. Du teilst Gewinn und Risiko."
+                },
+                {
+                    text: "❌ Fokus bleibt auf Europa",
+                    effects: { profit: 0, market: 0, costs: 0, employees: 0 },
+                    result: "Du verpasst die Chance, aber hast keine Risiken. Ob das klug war, zeigt die Zeit."
+                }
+            ]
+        },
+        {
+            id: 5,
+            title: "Rohstoffpreise explodieren",
+            text: "Der Preis für deinen wichtigsten Rohstoff hat sich verdoppelt. Deine Produkte werden unrentabel. Was tust du?",
+            choices: [
+                {
+                    text: "💰 Preise an Kunden weitergeben",
+                    effects: { profit: 0, market: -15, costs: 0, employees: 0 },
+                    result: "Du bleibst profitabel, aber Kunden sind unzufrieden und manche springen ab."
+                },
+                {
+                    text: "🔄 Alternative Materialien testen",
+                    effects: { profit: -10, market: +5, costs: +10, employees: 0 },
+                    result: "F&E kostet, aber du findest ein günstigeres Material. Die Qualität muss neu bewiesen werden."
+                },
+                {
+                    text: "📉 Gewinnmarge temporär senken",
+                    effects: { profit: -20, market: +10, costs: 0, employees: 0 },
+                    result: "Du hältst die Kunden, aber die Aktionäre sind unzufrieden. Wie lange hältst du durch?"
+                },
+                {
+                    text: "📊 Langfristige Lieferverträge abschließen",
+                    effects: { profit: -5, market: 0, costs: +15, employees: 0 },
+                    result: "Du sicherst dir stabile Preise für die Zukunft – aber bindest dich auch langfristig."
+                }
+            ]
         }
     ],
+    
     verbraucher: [
         {
             id: 1,
@@ -617,6 +890,141 @@ const simulatorScenarios = {
                     text: "🔧 Altes Handy reparieren",
                     effects: { budget: +20, satisfaction: -10, ethics: +20 },
                     result: "Am günstigsten und nachhaltigsten, aber du verzichtest auf neue Features."
+                }
+            ]
+        },
+        {
+            id: 2,
+            title: "Kleidungskauf",
+            text: "Fast Fashion ist günstig, aber ethisch fragwürdig. Ein Fair-Trade-T-Shirt kostet 3x so viel wie bei H&M. Du brauchst neue Klamotten.",
+            choices: [
+                {
+                    text: "👕 Billig bei Fast Fashion kaufen",
+                    effects: { budget: +15, satisfaction: +10, ethics: -15 },
+                    result: "Viel Kleidung für wenig Geld. Aber die Arbeitsbedingungen in den Fabriken sind miserabel."
+                },
+                {
+                    text: "🌿 Fair Trade kaufen",
+                    effects: { budget: -15, satisfaction: +10, ethics: +20 },
+                    result: "Teurer, aber du unterstützt faire Löhne und bessere Arbeitsbedingungen."
+                },
+                {
+                    text: "♻️ Second Hand shoppen",
+                    effects: { budget: +10, satisfaction: +5, ethics: +15 },
+                    result: "Einzigartige Stücke, günstiger Preis, und nachhaltig. Braucht aber Zeit zum Stöbern."
+                },
+                {
+                    text: "🧵 Selbst nähen/reparieren",
+                    effects: { budget: +20, satisfaction: -5, ethics: +20 },
+                    result: "Am nachhaltigsten! Aber zeitaufwändig und nicht jeder hat das Talent."
+                }
+            ]
+        },
+        {
+            id: 3,
+            title: "Supermarkt-Dilemma",
+            text: "Bio-Bananen aus Ecuador kosten doppelt so viel wie normale. Regionale Äpfel sind noch teurer, aber haben weniger CO2-Fußabdruck.",
+            choices: [
+                {
+                    text: "🍌 Billige Bananen kaufen",
+                    effects: { budget: +10, satisfaction: +5, ethics: -10 },
+                    result: "Am günstigsten, aber Pestizide und schlechte Löhne für Arbeiter."
+                },
+                {
+                    text: "🍌 Bio-Bananen kaufen",
+                    effects: { budget: 0, satisfaction: +10, ethics: +10 },
+                    result: "Besser für Umwelt und Arbeiter, aber der Transportweg ist immer noch weit."
+                },
+                {
+                    text: "🍎 Regionale Äpfel statt Bananen",
+                    effects: { budget: -5, satisfaction: 0, ethics: +15 },
+                    result: "Am besten für's Klima! Aber du verzichtest auf exotische Früchte."
+                },
+                {
+                    text: "🍓 Saisonal kaufen, was gerade wächst",
+                    effects: { budget: +5, satisfaction: +5, ethics: +20 },
+                    result: "Du richtest dich nach der Natur. Abwechslungsreich und nachhaltig."
+                }
+            ]
+        },
+        {
+            id: 4,
+            title: "Auto oder Alternativen?",
+            text: "Durch neue CO2-Abgaben wird Autofahren teurer. Dein altes Auto braucht viel Sprit. Was tust du?",
+            choices: [
+                {
+                    text: "🚗 Weiter Auto fahren, Kosten akzeptieren",
+                    effects: { budget: -20, satisfaction: +10, ethics: -10 },
+                    result: "Bequem, aber teuer und klimaschädlich."
+                },
+                {
+                    text: "🚌 Auf Öffentliche umsteigen",
+                    effects: { budget: +15, satisfaction: -10, ethics: +15 },
+                    result: "Günstiger und besser fürs Klima, aber weniger flexibel und manchmal nervig."
+                },
+                {
+                    text: "🚲 Fahrrad für kurze Strecken",
+                    effects: { budget: +20, satisfaction: +5, ethics: +20 },
+                    result: "Gesund, günstig, umweltfreundlich! Aber bei schlechtem Wetter anstrengend."
+                },
+                {
+                    text: "⚡ E-Auto anschaffen",
+                    effects: { budget: -25, satisfaction: +15, ethics: +10 },
+                    result: "Hohe Anschaffungskosten, aber niedrigere Betriebskosten und kein schlechtes Gewissen."
+                }
+            ]
+        },
+        {
+            id: 5,
+            title: "Streaming oder Kino?",
+            text: "Kino-Tickets sind durch höhere Energiekosten 30% teurer geworden. Streaming kostet nur einen Bruchteil davon.",
+            choices: [
+                {
+                    text: "🎬 Weiterhin ins Kino gehen",
+                    effects: { budget: -15, satisfaction: +20, ethics: +5 },
+                    result: "Das Erlebnis ist unersetzbar! Aber dein Budget für Freizeit schrumpft."
+                },
+                {
+                    text: "📺 Nur noch streamen",
+                    effects: { budget: +15, satisfaction: -5, ethics: -5 },
+                    result: "Günstiger, aber die Kinos sterben und du verpasst das große Leinwand-Erlebnis."
+                },
+                {
+                    text: "🎭 Kino nur für besondere Filme",
+                    effects: { budget: +5, satisfaction: +10, ethics: 0 },
+                    result: "Ein guter Kompromiss! Blockbuster im Kino, der Rest zu Hause."
+                },
+                {
+                    text: "📚 Mehr lesen statt schauen",
+                    effects: { budget: +20, satisfaction: +5, ethics: +10 },
+                    result: "Bücherei ist quasi gratis und Bücher haben keinen CO2-Fußabdruck (fast)."
+                }
+            ]
+        },
+        {
+            id: 6,
+            title: "Fleisch oder Vegan?",
+            text: "Durch neue Umweltabgaben kostet Rindfleisch jetzt 40% mehr. Fleischersatzprodukte sind noch ähnlich teuer, werden aber günstiger.",
+            choices: [
+                {
+                    text: "🥩 Weniger, aber gutes Fleisch",
+                    effects: { budget: 0, satisfaction: +10, ethics: +10 },
+                    result: "Qualität statt Quantität. Besser für Umwelt und Tierwohl."
+                },
+                {
+                    text: "🌱 Komplett auf vegan umstellen",
+                    effects: { budget: +5, satisfaction: -5, ethics: +20 },
+                    result: "Am besten für's Klima! Aber erfordert Umstellung und neue Rezepte lernen."
+                },
+                {
+                    text: "🍖 Günstigeres Fleisch kaufen",
+                    effects: { budget: +10, satisfaction: 0, ethics: -15 },
+                    result: "Du sparst, aber Massentierhaltung ist weder gut für Tiere noch fürs Klima."
+                },
+                {
+                    text: "🥬 Flexitarier werden",
+                    effects: { budget: +5, satisfaction: +5, ethics: +10 },
+                    result: "Manchmal Fleisch, oft vegetarisch. Ein alltagstauglicher Kompromiss."
                 }
             ]
         }
