@@ -171,3 +171,19 @@ function closePanel() {
 
 window.closePanel = closePanel;
 window.tradeMap = { init: initMap };
+
+// Auto-init when DOM ready
+document.addEventListener("DOMContentLoaded", function() {
+    var container = document.getElementById("map-container");
+    if (container && container.offsetParent !== null) {
+        initMap();
+    }
+});
+
+// Also try init after a short delay (for screen switching)
+setTimeout(function() {
+    var container = document.getElementById("map-container");
+    if (container && container.innerHTML.trim() === "" || container.innerHTML.indexOf("Karte wird") > -1) {
+        initMap();
+    }
+}, 500);
