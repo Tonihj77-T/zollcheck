@@ -1,124 +1,91 @@
-// === TRADE MAP ===
-
-var countries = {
-    germany: { name: "Deutschland", code: "🇩🇪", x: 51, y: 38 },
-    usa: { name: "USA", code: "🇺🇸", x: 20, y: 42 },
-    china: { name: "China", code: "🇨🇳", x: 77, y: 44 },
-    japan: { name: "Japan", code: "🇯🇵", x: 86, y: 43 },
-    uk: { name: "UK", code: "🇬🇧", x: 48, y: 34 },
-    france: { name: "Frankreich", code: "🇫🇷", x: 49, y: 40 },
-    brazil: { name: "Brasilien", code: "🇧🇷", x: 32, y: 62 },
-    india: { name: "Indien", code: "🇮🇳", x: 70, y: 50 },
-    korea: { name: "Südkorea", code: "🇰🇷", x: 82, y: 44 },
-    mexico: { name: "Mexiko", code: "🇲🇽", x: 15, y: 50 }
-};
-
-var trades = [
-    { from: "germany", to: "usa", vol: 253, exp: 157, imp: 96, tariff: 15 },
-    { from: "germany", to: "china", vol: 298, exp: 107, imp: 191, tariff: 8 },
-    { from: "germany", to: "france", vol: 172, exp: 102, imp: 70, tariff: 0 },
-    { from: "germany", to: "uk", vol: 134, exp: 89, imp: 45, tariff: 0 },
-    { from: "germany", to: "japan", vol: 45, exp: 23, imp: 22, tariff: 5 },
-    { from: "germany", to: "korea", vol: 28, exp: 14, imp: 14, tariff: 0 },
-    { from: "germany", to: "brazil", vol: 21, exp: 12, imp: 9, tariff: 12 },
-    { from: "germany", to: "india", vol: 24, exp: 15, imp: 9, tariff: 10 },
-    { from: "germany", to: "mexico", vol: 18, exp: 11, imp: 7, tariff: 0 }
-];
-
-var selected = null;
+// === TRADE MAP - Debug Version ===
 
 function initMap() {
     var el = document.getElementById("map-container");
-    if (!el) {
-        console.log("map-container not found");
-        return;
-    }
-    console.log("initMap called, rendering...");
-    render(el);
-}
-
-function render(el) {
-    var lines = "", dots = "", markers = "";
+    if (!el) return;
     
-    // Trade lines
-    for (var i = 0; i < trades.length; i++) {
-        var t = trades[i], f = countries.germany, o = countries[t.to];
-        var c = t.tariff > 10 ? "#ff4444" : t.tariff > 0 ? "#ffaa00" : "#44ff88";
-        var mx = (f.x + o.x) / 2, my = Math.min(f.y, o.y) - 5;
-        
-        lines += '<path d="M'+f.x+','+f.y+' Q'+mx+','+my+' '+o.x+','+o.y+'" stroke="'+c+'" stroke-width="2" fill="none" opacity="0.8" style="filter:drop-shadow(0 0 3px '+c+')"/>';
-        dots += '<circle r="2" fill="white"><animateMotion dur="'+(2+i*0.2)+'s" repeatCount="indefinite" path="M'+f.x+','+f.y+' Q'+mx+','+my+' '+o.x+','+o.y+'"/></circle>';
-    }
-    
-    // Country markers
-    var keys = Object.keys(countries);
-    for (var j = 0; j < keys.length; j++) {
-        var id = keys[j], co = countries[id];
-        var isDE = id === "germany", isSel = selected === id;
-        
-        markers += '<g class="pin" data-id="'+id+'">';
-        if (isDE) {
-            markers += '<circle cx="'+co.x+'" cy="'+co.y+'" r="6" fill="none" stroke="white" opacity="0.5"><animate attributeName="r" values="4;10;4" dur="1.5s" repeatCount="indefinite"/><animate attributeName="opacity" values="0.6;0;0.6" dur="1.5s" repeatCount="indefinite"/></circle>';
-        }
-        if (isSel) markers += '<circle cx="'+co.x+'" cy="'+co.y+'" r="6" fill="none" stroke="#ffd700" stroke-width="2"/>';
-        markers += '<circle cx="'+co.x+'" cy="'+co.y+'" r="'+(isDE?4:3)+'" fill="'+(isDE?'#3b82f6':'white')+'" stroke="#000" stroke-width="0.5"/>';
-        markers += '<text x="'+co.x+'" y="'+(co.y-5)+'" font-size="5" text-anchor="middle" style="filter:drop-shadow(0 1px 1px black)">'+co.code+'</text>';
-        markers += '</g>';
-    }
-    
-    // Stats
-    var vol = 0, tar = 0;
-    for (var k = 0; k < trades.length; k++) { vol += trades[k].vol; tar += trades[k].tariff; }
-    
-    el.innerHTML = '<div class="tmap">'+
-        '<div class="tmap-wrap">'+
-            '<img src="https://tonihj77-t.github.io/zollcheck/world.jpg" class="tmap-img" onerror="this.style.display=\'none\'">'+
-            '<svg viewBox="0 0 100 70" class="tmap-svg" preserveAspectRatio="none">'+
-                '<g>'+lines+'</g><g>'+dots+'</g><g>'+markers+'</g>'+
-            '</svg>'+
-            (selected ? panel() : '')+
-        '</div>'+
-        '<div class="tmap-stats">'+
-            '<div><b>'+trades.length+'</b><span>Routen</span></div>'+
-            '<div><b>'+vol+'</b><span>Mrd €</span></div>'+
-            '<div><b>'+Math.round(tar/trades.length)+'%</b><span>⌀ Zoll</span></div>'+
-        '</div>'+
-        '<div class="tmap-leg"><span><i class="g"></i>0%</span><span><i class="y"></i>1-10%</span><span><i class="r"></i>&gt;10%</span></div>'+
+    el.innerHTML = '<div style="background:#1a1a2e;padding:20px;border-radius:12px;color:white;text-align:center;">' +
+        '<h3 style="margin:0 0 15px 0;">🌍 Handelskarte</h3>' +
+        '<div id="map-debug" style="color:#888;">Lade Karte...</div>' +
     '</div>';
     
-    // Events
-    var pins = el.querySelectorAll(".pin");
-    for (var p = 0; p < pins.length; p++) {
-        pins[p].onclick = function(e) {
-            e.stopPropagation();
-            var id = this.getAttribute("data-id");
-            selected = selected === id ? null : id;
-            render(el);
-        };
-    }
-    var wrap = el.querySelector(".tmap-wrap");
-    if (wrap) wrap.onclick = function(e) {
-        if (!e.target.closest(".pin") && !e.target.closest(".tmap-panel")) { selected = null; render(el); }
+    setTimeout(function() {
+        var debug = document.getElementById("map-debug");
+        if (debug) {
+            debug.innerHTML = '<span style="color:#4ade80;">✓ JS funktioniert</span>';
+            setTimeout(renderMap, 300);
+        }
+    }, 200);
+}
+
+function renderMap() {
+    var el = document.getElementById("map-container");
+    if (!el) return;
+    
+    var countries = {
+        de: { name: "Deutschland", flag: "🇩🇪", x: 51, y: 38 },
+        us: { name: "USA", flag: "🇺🇸", x: 20, y: 42 },
+        cn: { name: "China", flag: "🇨🇳", x: 77, y: 44 },
+        jp: { name: "Japan", flag: "🇯🇵", x: 86, y: 43 },
+        gb: { name: "UK", flag: "🇬🇧", x: 48, y: 34 },
+        fr: { name: "Frankreich", flag: "🇫🇷", x: 49, y: 40 },
+        br: { name: "Brasilien", flag: "🇧🇷", x: 32, y: 62 },
+        in: { name: "Indien", flag: "🇮🇳", x: 70, y: 50 }
     };
-}
-
-function panel() {
-    var c = countries[selected];
-    if (!c) return "";
-    var t = null;
+    
+    var trades = [
+        { to: "us", vol: 253, tariff: 15 },
+        { to: "cn", vol: 298, tariff: 8 },
+        { to: "gb", vol: 134, tariff: 0 },
+        { to: "fr", vol: 172, tariff: 0 },
+        { to: "jp", vol: 45, tariff: 5 },
+        { to: "br", vol: 21, tariff: 12 },
+        { to: "in", vol: 24, tariff: 10 }
+    ];
+    
+    // Build SVG
+    var de = countries.de;
+    var lines = "";
+    var markers = "";
+    
     for (var i = 0; i < trades.length; i++) {
-        if (trades[i].to === selected) { t = trades[i]; break; }
+        var t = trades[i];
+        var c = countries[t.to];
+        if (!c) continue;
+        var color = t.tariff > 10 ? "#ff4444" : t.tariff > 0 ? "#ffaa00" : "#44ff88";
+        var mx = (de.x + c.x) / 2;
+        var my = Math.min(de.y, c.y) - 6;
+        lines += '<path d="M' + de.x + ',' + de.y + ' Q' + mx + ',' + my + ' ' + c.x + ',' + c.y + '" stroke="' + color + '" stroke-width="2" fill="none" opacity="0.7"/>';
     }
-    if (!t) return '<div class="tmap-panel"><div class="pp-h">'+c.code+' '+c.name+'</div><div class="pp-b"><div class="pp-r" style="justify-content:center;opacity:0.6">Keine Handelsdaten</div></div></div>';
-    var tc = t.tariff > 10 ? "r" : t.tariff > 0 ? "y" : "g";
-    return '<div class="tmap-panel"><div class="pp-h">'+c.code+' '+c.name+' <span onclick="closePanel()">✕</span></div><div class="pp-b">'+
-        '<div class="pp-r">Export 🇩🇪→ <b>'+t.exp+' Mrd €</b></div>'+
-        '<div class="pp-r">Import →🇩🇪 <b>'+t.imp+' Mrd €</b></div>'+
-        '<div class="pp-r">Zollsatz <b class="'+tc+'">'+t.tariff+'%</b></div>'+
-    '</div></div>';
+    
+    var keys = ["de", "us", "cn", "jp", "gb", "fr", "br", "in"];
+    for (var j = 0; j < keys.length; j++) {
+        var k = keys[j];
+        var co = countries[k];
+        var isDE = k === "de";
+        markers += '<circle cx="' + co.x + '" cy="' + co.y + '" r="' + (isDE ? 4 : 2.5) + '" fill="' + (isDE ? '#3b82f6' : 'white') + '" stroke="#000" stroke-width="0.5"/>';
+        markers += '<text x="' + co.x + '" y="' + (co.y - 5) + '" font-size="5" text-anchor="middle">' + co.flag + '</text>';
+    }
+    
+    el.innerHTML = '<div class="trademap">' +
+        '<div class="tm-wrap">' +
+            '<img src="https://tonihj77-t.github.io/zollcheck/world.jpg" class="tm-img" alt="Weltkarte">' +
+            '<svg viewBox="0 0 100 70" class="tm-svg">' + lines + markers + '</svg>' +
+        '</div>' +
+        '<div class="tm-stats">' +
+            '<div><b>7</b><span>Routen</span></div>' +
+            '<div><b>947</b><span>Mrd €</span></div>' +
+            '<div><b>7%</b><span>⌀ Zoll</span></div>' +
+        '</div>' +
+        '<div class="tm-leg">' +
+            '<span><i style="background:#44ff88"></i>0%</span>' +
+            '<span><i style="background:#ffaa00"></i>1-10%</span>' +
+            '<span><i style="background:#ff4444"></i>>10%</span>' +
+        '</div>' +
+    '</div>';
 }
 
-function closePanel() { selected = null; render(document.getElementById("map-container")); }
-window.closePanel = closePanel;
 window.tradeMap = { init: initMap };
-document.addEventListener("DOMContentLoaded", function() { setTimeout(initMap, 50); });
+document.addEventListener("DOMContentLoaded", function() { 
+    setTimeout(initMap, 100); 
+});
