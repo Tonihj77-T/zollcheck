@@ -981,102 +981,97 @@ body {
 
 /* === Trade Map === */
 .tmap {
-    background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
+    background: #111;
     border-radius: var(--radius-lg);
-    padding: 12px;
-    position: relative;
+    padding: 10px;
 }
 
-.tmap-svg {
+.tmap-wrap {
+    position: relative;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.tmap-img {
     width: 100%;
     height: auto;
     display: block;
-    border-radius: 10px;
-    box-shadow: inset 0 0 30px rgba(0,0,0,0.5);
+    filter: brightness(0.85) contrast(1.1);
+}
+
+.tmap-svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
 }
 
 .pin { cursor: pointer; }
-.pin:hover circle { filter: brightness(1.2); }
+.pin:hover circle { filter: brightness(1.3); }
 
 /* Panel */
 .tmap-panel {
     position: absolute;
-    bottom: 70px;
-    left: 12px;
-    right: 12px;
-    background: rgba(15, 23, 42, 0.95);
+    bottom: 8px;
+    left: 8px;
+    right: 8px;
+    background: rgba(0, 0, 0, 0.9);
     backdrop-filter: blur(8px);
-    border-radius: 12px;
-    border: 1px solid #334155;
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.15);
     overflow: hidden;
-    animation: fadeUp 0.2s ease;
-}
-
-@keyframes fadeUp {
-    from { opacity: 0; transform: translateY(8px); }
-    to { opacity: 1; transform: translateY(0); }
 }
 
 .pp-h {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 14px;
-    background: #1e293b;
-    color: #f1f5f9;
+    padding: 10px 12px;
+    background: rgba(255,255,255,0.1);
+    color: white;
     font-weight: 600;
     font-size: 14px;
 }
 
 .pp-h span { cursor: pointer; opacity: 0.6; }
 
-.pp-b { padding: 8px 14px; }
+.pp-b { padding: 8px 12px; }
 
 .pp-r {
     display: flex;
     justify-content: space-between;
-    padding: 6px 0;
+    padding: 5px 0;
     font-size: 12px;
-    color: #94a3b8;
-    border-bottom: 1px solid #334155;
+    color: rgba(255,255,255,0.7);
+    border-bottom: 1px solid rgba(255,255,255,0.1);
 }
 
 .pp-r:last-child { border: none; }
-.pp-r b { color: #f1f5f9; }
-.pp-r b.g { color: #22c55e; }
-.pp-r b.y { color: #f59e0b; }
-.pp-r b.r { color: #ef4444; }
+.pp-r b { color: white; }
+.pp-r b.g { color: #44ff88; }
+.pp-r b.y { color: #ffaa00; }
+.pp-r b.r { color: #ff4444; }
 
 /* Stats */
 .tmap-stats {
     display: flex;
     justify-content: space-around;
-    padding: 12px 0 6px;
+    padding: 12px 0 4px;
 }
 
-.tmap-stats > div {
-    text-align: center;
-}
-
-.tmap-stats b {
-    display: block;
-    color: #f1f5f9;
-    font-size: 18px;
-}
-
-.tmap-stats span {
-    font-size: 10px;
-    color: #64748b;
-}
+.tmap-stats > div { text-align: center; }
+.tmap-stats b { display: block; color: white; font-size: 18px; }
+.tmap-stats span { font-size: 10px; color: #888; }
 
 /* Legend */
 .tmap-leg {
     display: flex;
     justify-content: center;
-    gap: 12px;
-    padding-top: 6px;
+    gap: 14px;
+    padding-top: 4px;
     font-size: 10px;
-    color: #64748b;
+    color: #888;
 }
 
 .tmap-leg i {
@@ -1087,9 +1082,9 @@ body {
     margin-right: 4px;
 }
 
-.tmap-leg i.g { background: #22c55e; }
-.tmap-leg i.y { background: #f59e0b; }
-.tmap-leg i.r { background: #ef4444; }
+.tmap-leg i.g { background: #44ff88; }
+.tmap-leg i.y { background: #ffaa00; }
+.tmap-leg i.r { background: #ff4444; }
 
 /* End of styles */
 
