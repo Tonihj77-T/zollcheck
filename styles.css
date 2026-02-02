@@ -979,139 +979,117 @@ body {
     background: #E2E8F0;
 }
 
-/* === World Map === */
-.world-map {
-    background: #0a0a0a;
+/* === Trade Map === */
+.tmap {
+    background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
     border-radius: var(--radius-lg);
-    padding: 14px;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-
-.wm-title {
-    color: #F1F5F9;
-    font-weight: 700;
-    font-size: 14px;
-    text-align: center;
-}
-
-/* Map Container with real image */
-.wm-container {
+    padding: 12px;
     position: relative;
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.5);
 }
 
-.wm-image {
+.tmap-svg {
     width: 100%;
     height: auto;
     display: block;
-    filter: brightness(0.7) saturate(1.2);
+    border-radius: 10px;
+    box-shadow: inset 0 0 30px rgba(0,0,0,0.5);
 }
 
-.wm-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-}
-
-/* Markers */
-.map-marker {
-    cursor: pointer;
-}
-
-.map-marker:hover circle {
-    filter: brightness(1.3);
-}
+.pin { cursor: pointer; }
+.pin:hover circle { filter: brightness(1.2); }
 
 /* Panel */
-.wm-panel {
+.tmap-panel {
     position: absolute;
-    bottom: 8px;
-    left: 8px;
-    right: 8px;
-    background: rgba(0, 0, 0, 0.85);
-    backdrop-filter: blur(10px);
-    border-radius: 10px;
-    border: 1px solid rgba(255,255,255,0.1);
+    bottom: 70px;
+    left: 12px;
+    right: 12px;
+    background: rgba(15, 23, 42, 0.95);
+    backdrop-filter: blur(8px);
+    border-radius: 12px;
+    border: 1px solid #334155;
     overflow: hidden;
+    animation: fadeUp 0.2s ease;
 }
 
-.phead {
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.pp-h {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 10px 14px;
-    background: rgba(255,255,255,0.1);
-    color: white;
+    background: #1e293b;
+    color: #f1f5f9;
     font-weight: 600;
     font-size: 14px;
 }
 
-.phead span {
-    cursor: pointer;
-    opacity: 0.7;
-}
+.pp-h span { cursor: pointer; opacity: 0.6; }
 
-.pbody {
-    padding: 10px 14px;
-}
+.pp-b { padding: 8px 14px; }
 
-.prow {
+.pp-r {
     display: flex;
     justify-content: space-between;
     padding: 6px 0;
-    font-size: 13px;
-    color: rgba(255,255,255,0.8);
+    font-size: 12px;
+    color: #94a3b8;
+    border-bottom: 1px solid #334155;
 }
 
-.prow b { color: white; }
-.prow b.green { color: #34D399; }
-.prow b.yellow { color: #FBBF24; }
-.prow b.red { color: #FF6B6B; }
+.pp-r:last-child { border: none; }
+.pp-r b { color: #f1f5f9; }
+.pp-r b.g { color: #22c55e; }
+.pp-r b.y { color: #f59e0b; }
+.pp-r b.r { color: #ef4444; }
 
 /* Stats */
-.wm-stats {
+.tmap-stats {
     display: flex;
     justify-content: space-around;
-    background: rgba(255,255,255,0.05);
-    border-radius: 10px;
-    padding: 12px;
+    padding: 12px 0 6px;
 }
 
-.wm-stat {
+.tmap-stats > div {
     text-align: center;
-    color: rgba(255,255,255,0.5);
-    font-size: 11px;
 }
 
-.wm-stat span {
+.tmap-stats b {
     display: block;
-    color: white;
+    color: #f1f5f9;
     font-size: 18px;
-    font-weight: 700;
+}
+
+.tmap-stats span {
+    font-size: 10px;
+    color: #64748b;
 }
 
 /* Legend */
-.wm-legend {
+.tmap-leg {
     display: flex;
     justify-content: center;
-    gap: 14px;
-    font-size: 11px;
-    color: rgba(255,255,255,0.5);
+    gap: 12px;
+    padding-top: 6px;
+    font-size: 10px;
+    color: #64748b;
 }
 
-.wm-legend i {
+.tmap-leg i {
     display: inline-block;
     width: 8px;
     height: 8px;
     border-radius: 50%;
     margin-right: 4px;
 }
+
+.tmap-leg i.g { background: #22c55e; }
+.tmap-leg i.y { background: #f59e0b; }
+.tmap-leg i.r { background: #ef4444; }
 
 /* End of styles */
 
