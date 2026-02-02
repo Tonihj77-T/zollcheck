@@ -1,16 +1,16 @@
 // === TRADE MAP - Dark Modern Style ===
 
 const countries = {
-    germany: { name: "Deutschland", code: "DE", lat: 51.2, lng: 10.4, x: 51, y: 35 },
-    usa: { name: "USA", code: "US", lat: 39.8, lng: -98.6, x: 20, y: 42 },
-    china: { name: "China", code: "CN", lat: 35.9, lng: 104.2, x: 77, y: 44 },
-    japan: { name: "Japan", code: "JP", lat: 36.2, lng: 138.3, x: 87, y: 42 },
-    uk: { name: "UK", code: "GB", lat: 54.0, lng: -2.0, x: 47, y: 32 },
-    france: { name: "Frankreich", code: "FR", lat: 46.6, lng: 2.3, x: 48, y: 37 },
-    brazil: { name: "Brasilien", code: "BR", lat: -14.2, lng: -51.9, x: 30, y: 68 },
-    india: { name: "Indien", code: "IN", lat: 20.6, lng: 79.0, x: 71, y: 50 },
-    southkorea: { name: "Südkorea", code: "KR", lat: 36.5, lng: 128.0, x: 83, y: 42 },
-    mexico: { name: "Mexiko", code: "MX", lat: 23.6, lng: -102.6, x: 14, y: 50 }
+    germany: { name: "Deutschland", code: "DE", x: 51, y: 35 },
+    usa: { name: "USA", code: "US", x: 20, y: 42 },
+    china: { name: "China", code: "CN", x: 77, y: 44 },
+    japan: { name: "Japan", code: "JP", x: 87, y: 42 },
+    uk: { name: "UK", code: "GB", x: 47, y: 32 },
+    france: { name: "Frankreich", code: "FR", x: 48, y: 37 },
+    brazil: { name: "Brasilien", code: "BR", x: 30, y: 68 },
+    india: { name: "Indien", code: "IN", x: 71, y: 50 },
+    southkorea: { name: "Südkorea", code: "KR", x: 83, y: 42 },
+    mexico: { name: "Mexiko", code: "MX", x: 14, y: 50 }
 };
 
 const trades = [
@@ -28,206 +28,146 @@ const trades = [
 ];
 
 const timeline = [
-    { y: 2018, t: "Stahl-Zölle", d: "USA: 25%" },
-    { y: 2019, t: "Handelskrieg", d: "US-China" },
-    { y: 2020, t: "Phase-1", d: "Deal" },
-    { y: 2021, t: "Chip-Krise", d: "Global" },
-    { y: 2022, t: "Energie", d: "Krise" },
-    { y: 2023, t: "Chips Act", d: "€43Mrd" },
-    { y: 2024, t: "Trump 2.0", d: "Zölle" },
-    { y: 2025, t: "EU-Zölle", d: "-9%" },
-    { y: 2026, t: "Eskalation", d: "2.0" }
+    { y: 2018, t: "Stahl-Zölle" },
+    { y: 2019, t: "Handelskrieg" },
+    { y: 2020, t: "Phase-1 Deal" },
+    { y: 2021, t: "Chip-Krise" },
+    { y: 2022, t: "Energiekrise" },
+    { y: 2023, t: "Chips Act" },
+    { y: 2024, t: "Trump 2.0" },
+    { y: 2025, t: "EU-Zölle" },
+    { y: 2026, t: "Eskalation" }
 ];
 
-let state = { global: false, year: 2026, selected: null };
-let animationId = null;
-
-// Simple world map SVG path (simplified continents)
-const WORLD_PATH = `M 10,42 Q 15,38 20,40 L 28,36 Q 32,32 35,34 L 38,40 Q 35,48 30,52 L 22,55 Q 16,52 12,48 Z
-M 28,58 Q 32,56 35,60 L 38,72 Q 35,80 30,82 L 25,78 Q 22,68 25,60 Z
-M 44,30 Q 50,26 56,28 L 62,26 Q 68,28 70,32 L 68,38 Q 62,42 56,40 L 50,38 Q 46,34 44,30 Z
-M 46,42 Q 52,40 58,44 L 64,50 Q 66,60 62,70 L 54,76 Q 46,72 44,64 L 44,54 Q 44,46 46,42 Z
-M 62,28 Q 72,24 82,28 L 90,34 Q 92,44 88,52 L 80,56 Q 72,52 66,46 L 64,38 Q 62,32 62,28 Z
-M 80,62 Q 86,60 90,64 L 92,72 Q 88,78 82,76 L 78,70 Q 78,64 80,62 Z`;
+var mapState = { global: false, year: 2026, selected: null };
 
 function initMap() {
-    const container = document.getElementById('map-container');
+    var container = document.getElementById("map-container");
     if (!container) return;
-    
-    render();
+    renderMap();
 }
 
-function render() {
-    const container = document.getElementById('map-container');
-    const activeFlows = state.global ? trades : trades.filter(t => !t.global);
-    const ev = timeline.find(t => t.y === state.year) || {};
+function renderMap() {
+    var container = document.getElementById("map-container");
+    var flows = mapState.global ? trades : trades.filter(function(t) { return !t.global; });
+    var ev = timeline.find(function(t) { return t.y === mapState.year; }) || {};
     
-    container.innerHTML = `
-        <div class="dmap">
-            <div class="dmap-head">
-                <div class="dmap-title">🌍 WELTHANDEL LIVE</div>
-                <div class="dmap-toggle">
-                    <button class="${!state.global ? 'on' : ''}" id="tbtn-de">🇩🇪 DE</button>
-                    <button class="${state.global ? 'on' : ''}" id="tbtn-gl">🌐 Global</button>
-                </div>
-            </div>
-            
-            <div class="dmap-canvas">
-                <svg viewBox="0 0 100 90" preserveAspectRatio="xMidYMid meet">
-                    <defs>
-                        <linearGradient id="lineGrad0" x1="0%" y1="0%" x2="100%" y2="0%">
-                            <stop offset="0%" style="stop-color:#10B981"/>
-                            <stop offset="100%" style="stop-color:#34D399"/>
-                        </linearGradient>
-                        <linearGradient id="lineGrad1" x1="0%" y1="0%" x2="100%" y2="0%">
-                            <stop offset="0%" style="stop-color:#F59E0B"/>
-                            <stop offset="100%" style="stop-color:#FBBF24"/>
-                        </linearGradient>
-                        <linearGradient id="lineGrad2" x1="0%" y1="0%" x2="100%" y2="0%">
-                            <stop offset="0%" style="stop-color:#EF4444"/>
-                            <stop offset="100%" style="stop-color:#F87171"/>
-                        </linearGradient>
-                        <filter id="glow">
-                            <feGaussianBlur stdDeviation="1" result="blur"/>
-                            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
-                        </filter>
-                    </defs>
-                    
-                    <!-- World map -->
-                    <path d="${WORLD_PATH}" fill="#1F2937" stroke="#374151" stroke-width="0.3"/>
-                    
-                    <!-- Trade lines -->
-                    <g class="trade-lines">
-                        ${activeFlows.map((t, i) => renderLine(t, i)).join('')}
-                    </g>
-                    
-                    <!-- Country markers -->
-                    <g class="markers">
-                        ${Object.entries(countries).map(([id, c]) => renderMarker(id, c)).join('')}
-                    </g>
-                </svg>
-                
-                ${state.selected ? renderPanel() : ''}
-            </div>
-            
-            <div class="dmap-stats">
-                ${renderStats(activeFlows)}
-            </div>
-            
-            <div class="dmap-timeline">
-                <div class="dtl-track">
-                    ${timeline.map(t => `<button class="dtl-dot ${t.y === state.year ? 'on' : ''}" data-y="${t.y}"><span>${t.y}</span></button>`).join('')}
-                </div>
-                <div class="dtl-info">${ev.t}: ${ev.d}</div>
-            </div>
-            
-            <div class="dmap-legend">
-                <span><i style="background:#10B981"></i> 0% Zoll</span>
-                <span><i style="background:#F59E0B"></i> 1-15%</span>
-                <span><i style="background:#EF4444"></i> >15%</span>
-            </div>
-        </div>
-    `;
+    var linesHtml = flows.map(function(t, i) {
+        var f = countries[t.from];
+        var o = countries[t.to];
+        if (!f || !o) return "";
+        
+        var color = t.tariff > 15 ? "#EF4444" : t.tariff > 0 ? "#F59E0B" : "#10B981";
+        var mx = (f.x + o.x) / 2;
+        var my = Math.min(f.y, o.y) - 8;
+        
+        return '<path d="M ' + f.x + ' ' + f.y + ' Q ' + mx + ' ' + my + ' ' + o.x + ' ' + o.y + '" fill="none" stroke="' + color + '" stroke-width="1" opacity="0.6" stroke-linecap="round"/>';
+    }).join("");
+    
+    var markersHtml = Object.keys(countries).map(function(id) {
+        var c = countries[id];
+        var isDE = id === "germany";
+        var r = isDE ? 3 : 2;
+        var fill = isDE ? "#3B82F6" : "#6B7280";
+        
+        return '<g class="marker" data-id="' + id + '" style="cursor:pointer">' +
+            '<circle cx="' + c.x + '" cy="' + c.y + '" r="' + r + '" fill="' + fill + '" stroke="#1F2937" stroke-width="0.5"/>' +
+            '<text x="' + c.x + '" y="' + (c.y + 5) + '" font-size="2.5" fill="#9CA3AF" text-anchor="middle">' + c.code + '</text>' +
+            '</g>';
+    }).join("");
+    
+    var dotsHtml = timeline.map(function(t) {
+        var isOn = t.y === mapState.year;
+        return '<span class="tl-dot' + (isOn ? ' on' : '') + '" data-y="' + t.y + '"></span>';
+    }).join("");
+    
+    var statsHtml = '<div class="stat"><span>' + flows.length + '</span>Routen</div>' +
+        '<div class="stat"><span>' + flows.reduce(function(s,t){return s+t.vol;},0) + '</span>Mrd €</div>' +
+        '<div class="stat"><span>' + Math.round(flows.reduce(function(s,t){return s+t.tariff;},0)/flows.length) + '%</span>⌀ Zoll</div>';
+    
+    container.innerHTML = 
+        '<div class="dark-map">' +
+            '<div class="dm-header">' +
+                '<span class="dm-title">🌍 WELTHANDEL</span>' +
+                '<div class="dm-btns">' +
+                    '<button id="btn-de" class="' + (!mapState.global ? 'on' : '') + '">🇩🇪 DE</button>' +
+                    '<button id="btn-gl" class="' + (mapState.global ? 'on' : '') + '">🌐 Alle</button>' +
+                '</div>' +
+            '</div>' +
+            '<div class="dm-canvas">' +
+                '<svg viewBox="0 0 100 90">' +
+                    '<rect width="100" height="90" fill="#0F172A"/>' +
+                    '<path d="M8,40 Q18,35 25,38 L32,35 Q38,38 35,45 L28,52 Q20,55 15,50 L10,45 Z M28,56 Q32,54 36,58 L38,70 Q34,78 28,76 L24,68 Z M44,30 Q52,26 60,30 L65,28 Q72,30 70,36 L64,40 Q56,42 50,38 Z M46,44 Q54,42 62,48 L66,58 Q62,70 54,72 L46,66 Q44,54 46,44 Z M62,28 Q74,24 86,30 L92,38 Q90,50 82,54 L72,50 Q64,42 64,34 Z M80,60 Q86,58 90,62 L92,70 Q88,76 82,74 Z" fill="#1E293B" stroke="#334155" stroke-width="0.3"/>' +
+                    '<g class="lines">' + linesHtml + '</g>' +
+                    '<g class="markers">' + markersHtml + '</g>' +
+                '</svg>' +
+                (mapState.selected ? renderPanel() : '') +
+            '</div>' +
+            '<div class="dm-stats">' + statsHtml + '</div>' +
+            '<div class="dm-timeline">' +
+                '<div class="tl-track">' + dotsHtml + '</div>' +
+                '<div class="tl-label">' + mapState.year + ': ' + (ev.t || '') + '</div>' +
+            '</div>' +
+            '<div class="dm-legend">' +
+                '<span><i class="green"></i>0%</span>' +
+                '<span><i class="yellow"></i>1-15%</span>' +
+                '<span><i class="red"></i>>15%</span>' +
+            '</div>' +
+        '</div>';
     
     // Events
-    document.getElementById('tbtn-de')?.addEventListener('click', () => { state.global = false; render(); });
-    document.getElementById('tbtn-gl')?.addEventListener('click', () => { state.global = true; render(); });
+    document.getElementById("btn-de").onclick = function() { mapState.global = false; renderMap(); };
+    document.getElementById("btn-gl").onclick = function() { mapState.global = true; renderMap(); };
     
-    document.querySelectorAll('.dtl-dot').forEach(d => {
-        d.addEventListener('click', () => { state.year = +d.dataset.y; render(); });
-    });
+    var dots = document.querySelectorAll(".tl-dot");
+    for (var i = 0; i < dots.length; i++) {
+        dots[i].onclick = function() {
+            mapState.year = parseInt(this.getAttribute("data-y"));
+            renderMap();
+        };
+    }
     
-    document.querySelectorAll('.dmap-marker').forEach(m => {
-        m.addEventListener('click', e => {
+    var markers = document.querySelectorAll(".marker");
+    for (var j = 0; j < markers.length; j++) {
+        markers[j].onclick = function(e) {
             e.stopPropagation();
-            state.selected = state.selected === m.dataset.id ? null : m.dataset.id;
-            render();
-        });
-    });
-    
-    document.querySelector('.dmap-canvas')?.addEventListener('click', e => {
-        if (e.target.closest('.dmap-marker') || e.target.closest('.dmap-panel')) return;
-        state.selected = null;
-        render();
-    });
-    
-    startAnimation();
-}
-
-function renderLine(t, idx) {
-    const f = countries[t.from], o = countries[t.to];
-    if (!f || !o) return '';
-    
-    const grad = t.tariff > 15 ? 2 : t.tariff > 0 ? 1 : 0;
-    const w = Math.max(0.4, Math.min(1.5, t.vol / 400));
-    const hi = state.selected && (t.from === state.selected || t.to === state.selected);
-    
-    // Curved path
-    const mx = (f.x + o.x) / 2;
-    const my = Math.min(f.y, o.y) - 8 - Math.abs(f.x - o.x) / 10;
-    
-    return `
-        <g class="trade-line ${hi ? 'highlight' : ''}" style="--delay: ${idx * 0.1}s">
-            <path d="M ${f.x} ${f.y} Q ${mx} ${my} ${o.x} ${o.y}" 
-                  fill="none" stroke="url(#lineGrad${grad})" stroke-width="${w}" 
-                  opacity="${hi ? 1 : 0.6}" stroke-linecap="round" filter="${hi ? 'url(#glow)' : ''}"/>
-            <circle r="0.8" fill="${['#10B981','#F59E0B','#EF4444'][grad]}">
-                <animateMotion dur="${2 + idx * 0.3}s" repeatCount="indefinite" path="M ${f.x} ${f.y} Q ${mx} ${my} ${o.x} ${o.y}"/>
-            </circle>
-        </g>
-    `;
-}
-
-function renderMarker(id, c) {
-    const isDE = id === 'germany';
-    const sel = state.selected === id;
-    const r = isDE ? 2.5 : 1.8;
-    
-    return `
-        <g class="dmap-marker ${isDE ? 'main' : ''} ${sel ? 'selected' : ''}" data-id="${id}">
-            ${sel ? `<circle cx="${c.x}" cy="${c.y}" r="${r + 2}" fill="none" stroke="#FBBF24" stroke-width="0.5" opacity="0.8"/>` : ''}
-            ${isDE ? `<circle cx="${c.x}" cy="${c.y}" r="${r + 1.5}" fill="none" stroke="#3B82F6" stroke-width="0.3" opacity="0.6">
-                <animate attributeName="r" values="${r+1};${r+3};${r+1}" dur="2s" repeatCount="indefinite"/>
-                <animate attributeName="opacity" values="0.6;0;0.6" dur="2s" repeatCount="indefinite"/>
-            </circle>` : ''}
-            <circle cx="${c.x}" cy="${c.y}" r="${r}" fill="${isDE ? '#3B82F6' : '#6B7280'}" stroke="#1F2937" stroke-width="0.4"/>
-            <text x="${c.x}" y="${c.y + 4.5}" font-size="2" fill="#9CA3AF" text-anchor="middle">${c.code}</text>
-        </g>
-    `;
+            var id = this.getAttribute("data-id");
+            mapState.selected = mapState.selected === id ? null : id;
+            renderMap();
+        };
+    }
 }
 
 function renderPanel() {
-    const c = countries[state.selected];
-    if (!c) return '';
+    var c = countries[mapState.selected];
+    if (!c) return "";
     
-    const t = trades.find(x => (x.from === state.selected && x.to === 'germany') || (x.to === state.selected && x.from === 'germany'));
+    var t = trades.find(function(x) {
+        return (x.from === mapState.selected && x.to === "germany") || 
+               (x.to === mapState.selected && x.from === "germany");
+    });
     
-    return `
-        <div class="dmap-panel">
-            <div class="dp-head">${c.name} <span onclick="window._closePanel()">✕</span></div>
-            ${t ? `
-                <div class="dp-row"><span>Export nach 🇩🇪</span><b>${t.from === 'germany' ? t.imp : t.exp} Mrd€</b></div>
-                <div class="dp-row"><span>Import aus 🇩🇪</span><b>${t.from === 'germany' ? t.exp : t.imp} Mrd€</b></div>
-                <div class="dp-row"><span>Zollsatz</span><b class="${t.tariff > 15 ? 'red' : t.tariff > 0 ? 'yellow' : 'green'}">${t.tariff}%</b></div>
-            ` : '<div class="dp-row" style="justify-content:center;color:#6B7280">Kein DE-Handel</div>'}
-        </div>
-    `;
+    var content = "";
+    if (t) {
+        var tariffClass = t.tariff > 15 ? "red" : t.tariff > 0 ? "yellow" : "green";
+        content = 
+            '<div class="panel-row"><span>Export→🇩🇪</span><b>' + (t.from === "germany" ? t.imp : t.exp) + ' Mrd€</b></div>' +
+            '<div class="panel-row"><span>Import←🇩🇪</span><b>' + (t.from === "germany" ? t.exp : t.imp) + ' Mrd€</b></div>' +
+            '<div class="panel-row"><span>Zoll</span><b class="' + tariffClass + '">' + t.tariff + '%</b></div>';
+    } else {
+        content = '<div class="panel-row" style="justify-content:center;opacity:0.5">Kein DE-Handel</div>';
+    }
+    
+    return '<div class="dm-panel">' +
+        '<div class="panel-head">' + c.name + '<span onclick="closePanel()">✕</span></div>' +
+        '<div class="panel-body">' + content + '</div>' +
+    '</div>';
 }
 
-function renderStats(flows) {
-    const totalVol = flows.reduce((s, t) => s + t.vol, 0);
-    const avgTariff = Math.round(flows.reduce((s, t) => s + t.tariff, 0) / flows.length);
-    
-    return `
-        <div class="dstat"><span>${flows.length}</span>Routen</div>
-        <div class="dstat"><span>${totalVol}</span>Mrd € Vol.</div>
-        <div class="dstat"><span>${avgTariff}%</span>⌀ Zoll</div>
-    `;
+function closePanel() {
+    mapState.selected = null;
+    renderMap();
 }
 
-function startAnimation() {
-    // Animation is handled by CSS/SVG animateMotion
-}
-
-window._closePanel = () => { state.selected = null; render(); };
+window.closePanel = closePanel;
 window.tradeMap = { init: initMap };
