@@ -29,7 +29,11 @@ var selected = null;
 
 function initMap() {
     var el = document.getElementById("map-container");
-    if (!el) return;
+    if (!el) {
+        console.log("map-container not found");
+        return;
+    }
+    console.log("initMap called, rendering...");
     render(el);
 }
 
@@ -68,7 +72,7 @@ function render(el) {
     
     el.innerHTML = '<div class="tmap">'+
         '<div class="tmap-wrap">'+
-            '<img src="world.jpg" class="tmap-img">'+
+            '<img src="https://tonihj77-t.github.io/zollcheck/world.jpg" class="tmap-img" onerror="this.style.display=\'none\'">'+
             '<svg viewBox="0 0 100 70" class="tmap-svg" preserveAspectRatio="none">'+
                 '<g>'+lines+'</g><g>'+dots+'</g><g>'+markers+'</g>'+
             '</svg>'+
