@@ -33,6 +33,19 @@ function initMap() {
     var container = document.getElementById("map-container");
     if (!container) return;
     
+    // Check if Leaflet is loaded
+    if (typeof L === "undefined") {
+        container.innerHTML = '<div style="padding:20px;text-align:center;color:#888;">Karte lädt...</div>';
+        setTimeout(initMap, 500);
+        return;
+    }
+    
+    // Don't reinitialize if map already exists
+    if (map) {
+        map.invalidateSize();
+        return;
+    }
+    
     // Set container height
     container.style.height = "350px";
     container.innerHTML = '<div id="leaflet-map" style="width:100%;height:100%;border-radius:12px;"></div>';
@@ -186,9 +199,25 @@ function addStats() {
     container.appendChild(statsDiv);
 }
 
-window.tradeMap = { init: initMap };
+window.tradeMap = { 
+    init: function() {
+        // Small delay to ensure container is visible
+        setTimeout(initMap, 150);
+    }
+};
 
+// Also try auto-init after page load
 document.addEventListener("DOMContentLoaded", function() {
-    // Init when tab is shown
-    setTimeout(initMap, 100);
+    // Check periodically if map container is visible
+    var checkInterval = setInterval(function() {
+        var container = document.getElementById("map-container");
+        var screen = document.getElementById("screen-karte");
+        if (container && screen && screen.classList.contains("active")) {
+            clearInterval(checkInterval);
+            initMap();
+        }
+    }, 500);
+    
+    // Stop checking after 30 seconds
+    setTimeout(function() { clearInterval(checkInterval); }, 30000);
 });
