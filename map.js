@@ -1,16 +1,16 @@
-// === TRADE MAP - Final Version ===
+// === TRADE MAP - Real World Map ===
 
 var countries = {
-    germany: { name: "Deutschland", code: "DE", x: 51, y: 32, main: true },
-    usa: { name: "USA", code: "US", x: 22, y: 38 },
-    china: { name: "China", code: "CN", x: 76, y: 40 },
-    japan: { name: "Japan", code: "JP", x: 86, y: 38 },
-    uk: { name: "UK", code: "GB", x: 47, y: 28 },
-    france: { name: "Frankreich", code: "FR", x: 48, y: 34 },
-    brazil: { name: "Brasilien", code: "BR", x: 32, y: 62 },
-    india: { name: "Indien", code: "IN", x: 70, y: 45 },
-    korea: { name: "Südkorea", code: "KR", x: 82, y: 38 },
-    mexico: { name: "Mexiko", code: "MX", x: 18, y: 45 }
+    germany: { name: "Deutschland", code: "DE", x: 52, y: 35, main: true },
+    usa: { name: "USA", code: "US", x: 22, y: 42 },
+    china: { name: "China", code: "CN", x: 78, y: 44 },
+    japan: { name: "Japan", code: "JP", x: 88, y: 42 },
+    uk: { name: "UK", code: "GB", x: 48, y: 32 },
+    france: { name: "Frankreich", code: "FR", x: 50, y: 38 },
+    brazil: { name: "Brasilien", code: "BR", x: 32, y: 68 },
+    india: { name: "Indien", code: "IN", x: 72, y: 50 },
+    korea: { name: "Südkorea", code: "KR", x: 84, y: 43 },
+    mexico: { name: "Mexiko", code: "MX", x: 17, y: 50 }
 };
 
 var trades = [
@@ -27,32 +27,35 @@ var trades = [
 
 var mapState = { selected: null };
 
+// Real world map image (NASA Blue Marble style, public domain)
+var MAP_URL = "https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Blue_Marble_2002.png/1280px-Blue_Marble_2002.png";
+
 function initMap() {
     var container = document.getElementById("map-container");
     if (!container) return;
-    
     renderTradeMap(container);
 }
 
 function renderTradeMap(container) {
-    // Build trade lines
+    // Build SVG overlay content
     var lines = "";
+    var dots = "";
+    
     for (var i = 0; i < trades.length; i++) {
         var t = trades[i];
         var f = countries[t.from];
         var o = countries[t.to];
         if (!f || !o) continue;
         
-        var color = t.tariff > 10 ? "#EF4444" : t.tariff > 0 ? "#F59E0B" : "#10B981";
+        var color = t.tariff > 10 ? "#FF6B6B" : t.tariff > 0 ? "#FBBF24" : "#34D399";
         var mx = (f.x + o.x) / 2;
-        var my = Math.min(f.y, o.y) - 8 - Math.abs(f.x - o.x) / 15;
-        var width = Math.max(0.8, t.vol / 200);
+        var my = Math.min(f.y, o.y) - 6 - Math.abs(f.x - o.x) / 12;
+        var w = Math.max(1, t.vol / 150);
         
-        lines += '<path class="trade-line" d="M' + f.x + ',' + f.y + ' Q' + mx + ',' + my + ' ' + o.x + ',' + o.y + '" fill="none" stroke="' + color + '" stroke-width="' + width + '" stroke-linecap="round" opacity="0.7"/>';
+        lines += '<path d="M' + f.x + ',' + f.y + ' Q' + mx + ',' + my + ' ' + o.x + ',' + o.y + '" fill="none" stroke="' + color + '" stroke-width="' + w + '" stroke-linecap="round" opacity="0.8" style="filter:drop-shadow(0 0 2px ' + color + ')"/>';
         
-        // Animated dot
-        lines += '<circle class="trade-dot" r="1.2" fill="' + color + '">' +
-            '<animateMotion dur="' + (3 + i * 0.2) + 's" repeatCount="indefinite" path="M' + f.x + ',' + f.y + ' Q' + mx + ',' + my + ' ' + o.x + ',' + o.y + '"/>' +
+        dots += '<circle r="1.5" fill="' + color + '" style="filter:drop-shadow(0 0 4px ' + color + ')">' +
+            '<animateMotion dur="' + (2.5 + i * 0.15) + 's" repeatCount="indefinite" path="M' + f.x + ',' + f.y + ' Q' + mx + ',' + my + ' ' + o.x + ',' + o.y + '"/>' +
         '</circle>';
     }
     
@@ -63,31 +66,25 @@ function renderTradeMap(container) {
         var id = keys[j];
         var c = countries[id];
         var isMain = c.main;
-        var r = isMain ? 4 : 2.5;
-        var fill = isMain ? "#3B82F6" : "#64748B";
+        var r = isMain ? 3.5 : 2;
+        var fill = isMain ? "#3B82F6" : "#F1F5F9";
         var sel = mapState.selected === id;
         
-        markers += '<g class="marker" data-id="' + id + '">';
+        markers += '<g class="map-marker" data-id="' + id + '">';
         
-        // Pulse for Germany
         if (isMain) {
-            markers += '<circle cx="' + c.x + '" cy="' + c.y + '" r="' + (r + 2) + '" fill="none" stroke="#3B82F6" stroke-width="0.5" opacity="0.4">' +
-                '<animate attributeName="r" values="' + (r+1) + ';' + (r+6) + ';' + (r+1) + '" dur="2s" repeatCount="indefinite"/>' +
-                '<animate attributeName="opacity" values="0.4;0;0.4" dur="2s" repeatCount="indefinite"/>' +
+            markers += '<circle cx="' + c.x + '" cy="' + c.y + '" r="' + (r + 4) + '" fill="none" stroke="' + fill + '" stroke-width="0.5" opacity="0.5">' +
+                '<animate attributeName="r" values="' + (r+2) + ';' + (r+7) + ';' + (r+2) + '" dur="2s" repeatCount="indefinite"/>' +
+                '<animate attributeName="opacity" values="0.6;0;0.6" dur="2s" repeatCount="indefinite"/>' +
             '</circle>';
         }
         
-        // Selection ring
         if (sel) {
-            markers += '<circle cx="' + c.x + '" cy="' + c.y + '" r="' + (r + 2) + '" fill="none" stroke="#FBBF24" stroke-width="1"/>';
+            markers += '<circle cx="' + c.x + '" cy="' + c.y + '" r="' + (r + 3) + '" fill="none" stroke="#FBBF24" stroke-width="1.5"/>';
         }
         
-        // Main dot
-        markers += '<circle cx="' + c.x + '" cy="' + c.y + '" r="' + r + '" fill="' + fill + '" stroke="#0F172A" stroke-width="0.8"/>';
-        
-        // Label
-        markers += '<text x="' + c.x + '" y="' + (c.y + r + 4) + '" font-size="3" fill="#94A3B8" text-anchor="middle" font-weight="500">' + c.code + '</text>';
-        
+        markers += '<circle cx="' + c.x + '" cy="' + c.y + '" r="' + r + '" fill="' + fill + '" stroke="rgba(0,0,0,0.5)" stroke-width="0.5" style="filter:drop-shadow(0 1px 3px rgba(0,0,0,0.5))"/>';
+        markers += '<text x="' + c.x + '" y="' + (c.y + r + 4) + '" font-size="2.8" fill="white" text-anchor="middle" font-weight="600" style="text-shadow:0 1px 2px rgba(0,0,0,0.8)">' + c.code + '</text>';
         markers += '</g>';
     }
     
@@ -99,54 +96,35 @@ function renderTradeMap(container) {
     }
     var avgTariff = Math.round(totalTariff / trades.length);
     
-    // Build HTML
     container.innerHTML = 
-        '<div class="trademap">' +
-            '<div class="tm-header">' +
-                '<div class="tm-title">🌍 Welthandel Deutschland</div>' +
-            '</div>' +
+        '<div class="world-map">' +
+            '<div class="wm-title">🌍 Handelsrouten Deutschland</div>' +
             
-            '<div class="tm-map">' +
-                '<svg viewBox="0 0 100 75">' +
-                    // Background
-                    '<rect width="100" height="75" fill="#0F172A"/>' +
-                    
-                    // Continents (simplified)
-                    '<path d="M12,32 Q20,28 28,30 L34,28 Q40,32 36,40 L28,46 Q18,48 14,42 Z" fill="#1E293B"/>' +  // North America
-                    '<path d="M28,50 Q34,48 38,54 L40,66 Q36,72 30,70 L26,62 Q26,54 28,50 Z" fill="#1E293B"/>' +  // South America
-                    '<path d="M44,24 Q52,20 58,24 L62,22 Q68,26 66,32 L60,36 Q52,38 48,34 Z" fill="#1E293B"/>' +  // Europe
-                    '<path d="M46,40 Q54,38 62,44 L66,54 Q62,66 54,68 L46,62 Q44,50 46,40 Z" fill="#1E293B"/>' +  // Africa
-                    '<path d="M62,24 Q74,20 86,26 L92,34 Q90,46 82,50 L72,46 Q64,38 64,30 Z" fill="#1E293B"/>' +  // Asia
-                    '<path d="M80,56 Q86,54 90,58 L92,66 Q88,72 82,70 L78,64 Z" fill="#1E293B"/>' +  // Australia
-                    
-                    // Grid lines (subtle)
-                    '<line x1="0" y1="37.5" x2="100" y2="37.5" stroke="#1E293B" stroke-width="0.3" stroke-dasharray="2,2"/>' +
-                    
-                    // Trade lines
-                    '<g class="lines">' + lines + '</g>' +
-                    
-                    // Markers
-                    '<g class="markers">' + markers + '</g>' +
+            '<div class="wm-container">' +
+                '<img src="' + MAP_URL + '" alt="Weltkarte" class="wm-image" crossorigin="anonymous">' +
+                '<svg class="wm-overlay" viewBox="0 0 100 100" preserveAspectRatio="none">' +
+                    '<g class="wm-lines">' + lines + '</g>' +
+                    '<g class="wm-dots">' + dots + '</g>' +
+                    '<g class="wm-markers">' + markers + '</g>' +
                 '</svg>' +
-                
                 (mapState.selected ? buildPanel() : '') +
             '</div>' +
             
-            '<div class="tm-stats">' +
-                '<div class="tm-stat"><div class="stat-val">' + trades.length + '</div><div class="stat-lbl">Routen</div></div>' +
-                '<div class="tm-stat"><div class="stat-val">' + totalVol + '</div><div class="stat-lbl">Mrd € Vol.</div></div>' +
-                '<div class="tm-stat"><div class="stat-val">' + avgTariff + '%</div><div class="stat-lbl">⌀ Zoll</div></div>' +
+            '<div class="wm-stats">' +
+                '<div class="wm-stat"><span>' + trades.length + '</span>Routen</div>' +
+                '<div class="wm-stat"><span>' + totalVol + '</span>Mrd €</div>' +
+                '<div class="wm-stat"><span>' + avgTariff + '%</span>⌀ Zoll</div>' +
             '</div>' +
             
-            '<div class="tm-legend">' +
-                '<span class="leg-item"><i style="background:#10B981"></i>0% Zoll</span>' +
-                '<span class="leg-item"><i style="background:#F59E0B"></i>1-10%</span>' +
-                '<span class="leg-item"><i style="background:#EF4444"></i>>10%</span>' +
+            '<div class="wm-legend">' +
+                '<span><i style="background:#34D399"></i>0%</span>' +
+                '<span><i style="background:#FBBF24"></i>1-10%</span>' +
+                '<span><i style="background:#FF6B6B"></i>>10%</span>' +
             '</div>' +
         '</div>';
     
-    // Attach events
-    var markerEls = container.querySelectorAll(".marker");
+    // Events
+    var markerEls = container.querySelectorAll(".map-marker");
     for (var m = 0; m < markerEls.length; m++) {
         markerEls[m].onclick = function(e) {
             e.stopPropagation();
@@ -156,10 +134,10 @@ function renderTradeMap(container) {
         };
     }
     
-    var mapEl = container.querySelector(".tm-map");
+    var mapEl = container.querySelector(".wm-container");
     if (mapEl) {
         mapEl.onclick = function(e) {
-            if (!e.target.closest(".marker") && !e.target.closest(".tm-panel")) {
+            if (!e.target.closest(".map-marker") && !e.target.closest(".wm-panel")) {
                 mapState.selected = null;
                 renderTradeMap(container);
             }
@@ -181,16 +159,16 @@ function buildPanel() {
     
     var content = "";
     if (trade) {
-        var tariffClass = trade.tariff > 10 ? "red" : trade.tariff > 0 ? "yellow" : "green";
-        content = '<div class="panel-row">Handelsvolumen <b>' + trade.vol + ' Mrd €</b></div>' +
-                  '<div class="panel-row">Zollsatz <b class="' + tariffClass + '">' + trade.tariff + '%</b></div>';
+        var tc = trade.tariff > 10 ? "red" : trade.tariff > 0 ? "yellow" : "green";
+        content = '<div class="prow">Volumen <b>' + trade.vol + ' Mrd €</b></div>' +
+                  '<div class="prow">Zoll <b class="' + tc + '">' + trade.tariff + '%</b></div>';
     } else {
-        content = '<div class="panel-row" style="opacity:0.5">Keine Daten</div>';
+        content = '<div class="prow" style="opacity:0.5">Keine Daten</div>';
     }
     
-    return '<div class="tm-panel">' +
-        '<div class="panel-head">' + c.name + ' <span onclick="closePanel()">✕</span></div>' +
-        '<div class="panel-body">' + content + '</div>' +
+    return '<div class="wm-panel">' +
+        '<div class="phead">' + c.name + ' <span onclick="closePanel()">✕</span></div>' +
+        '<div class="pbody">' + content + '</div>' +
     '</div>';
 }
 
@@ -203,7 +181,6 @@ function closePanel() {
 window.closePanel = closePanel;
 window.tradeMap = { init: initMap };
 
-// Auto-init
 document.addEventListener("DOMContentLoaded", function() {
     setTimeout(initMap, 100);
 });
