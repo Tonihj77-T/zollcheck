@@ -979,161 +979,138 @@ body {
     background: #E2E8F0;
 }
 
-/* === Trade Map === */
-.trademap {
-    background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
+/* === World Map === */
+.world-map {
+    background: #0a0a0a;
     border-radius: var(--radius-lg);
-    padding: 16px;
+    padding: 14px;
     display: flex;
     flex-direction: column;
-    gap: 14px;
+    gap: 12px;
 }
 
-.tm-header {
+.wm-title {
+    color: #F1F5F9;
+    font-weight: 700;
+    font-size: 14px;
     text-align: center;
 }
 
-.tm-title {
-    color: #F1F5F9;
-    font-weight: 700;
-    font-size: 15px;
-    letter-spacing: 0.3px;
-}
-
-/* Map Container */
-.tm-map {
+/* Map Container with real image */
+.wm-container {
     position: relative;
-    border-radius: 12px;
+    border-radius: 10px;
     overflow: hidden;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.5);
 }
 
-.tm-map svg {
+.wm-image {
     width: 100%;
     height: auto;
     display: block;
+    filter: brightness(0.7) saturate(1.2);
+}
+
+.wm-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
 }
 
 /* Markers */
-.marker {
+.map-marker {
     cursor: pointer;
-    transition: transform 0.15s;
 }
 
-.marker:hover {
-    transform: scale(1.1);
+.map-marker:hover circle {
+    filter: brightness(1.3);
 }
 
-/* Trade Lines */
-.trade-line {
-    transition: opacity 0.2s;
-}
-
-.trade-dot {
-    filter: drop-shadow(0 0 3px currentColor);
-}
-
-/* Info Panel */
-.tm-panel {
+/* Panel */
+.wm-panel {
     position: absolute;
-    bottom: 10px;
-    left: 10px;
-    right: 10px;
-    background: rgba(30, 41, 59, 0.95);
+    bottom: 8px;
+    left: 8px;
+    right: 8px;
+    background: rgba(0, 0, 0, 0.85);
     backdrop-filter: blur(10px);
     border-radius: 10px;
-    border: 1px solid #334155;
+    border: 1px solid rgba(255,255,255,0.1);
     overflow: hidden;
-    animation: panelSlide 0.2s ease;
 }
 
-@keyframes panelSlide {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-.panel-head {
+.phead {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 12px 14px;
-    background: #334155;
-    color: #F1F5F9;
+    padding: 10px 14px;
+    background: rgba(255,255,255,0.1);
+    color: white;
     font-weight: 600;
     font-size: 14px;
 }
 
-.panel-head span {
+.phead span {
     cursor: pointer;
     opacity: 0.7;
-    font-size: 18px;
-    line-height: 1;
 }
 
-.panel-body {
+.pbody {
     padding: 10px 14px;
 }
 
-.panel-row {
+.prow {
     display: flex;
     justify-content: space-between;
-    padding: 8px 0;
+    padding: 6px 0;
     font-size: 13px;
-    color: #CBD5E1;
-    border-bottom: 1px solid #334155;
+    color: rgba(255,255,255,0.8);
 }
 
-.panel-row:last-child { border: none; }
-.panel-row b { color: #F1F5F9; font-weight: 600; }
-.panel-row b.green { color: #10B981; }
-.panel-row b.yellow { color: #F59E0B; }
-.panel-row b.red { color: #EF4444; }
+.prow b { color: white; }
+.prow b.green { color: #34D399; }
+.prow b.yellow { color: #FBBF24; }
+.prow b.red { color: #FF6B6B; }
 
-/* Stats Bar */
-.tm-stats {
+/* Stats */
+.wm-stats {
     display: flex;
     justify-content: space-around;
-    background: rgba(30, 41, 59, 0.6);
+    background: rgba(255,255,255,0.05);
     border-radius: 10px;
     padding: 12px;
 }
 
-.tm-stat {
+.wm-stat {
     text-align: center;
+    color: rgba(255,255,255,0.5);
+    font-size: 11px;
 }
 
-.stat-val {
-    color: #F1F5F9;
-    font-size: 20px;
+.wm-stat span {
+    display: block;
+    color: white;
+    font-size: 18px;
     font-weight: 700;
 }
 
-.stat-lbl {
-    color: #64748B;
-    font-size: 11px;
-    margin-top: 2px;
-}
-
 /* Legend */
-.tm-legend {
+.wm-legend {
     display: flex;
     justify-content: center;
-    gap: 16px;
+    gap: 14px;
     font-size: 11px;
-    color: #64748B;
+    color: rgba(255,255,255,0.5);
 }
 
-.leg-item {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-}
-
-.leg-item i {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
+.wm-legend i {
     display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    margin-right: 4px;
 }
 
 /* End of styles */
