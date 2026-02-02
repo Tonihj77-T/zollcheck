@@ -1,26 +1,16 @@
-// === HANDELSKARTE - Leaflet ===
+// === TRADE MAP - Dark Modern Style ===
 
 const countries = {
-    germany: { name: "Deutschland", flag: "🇩🇪", lat: 51.2, lng: 10.4, color: "#1E3A5F", main: true,
-        exp: { total: 1547, top: ["Autos", "Maschinen", "Chemie"] }, imp: { total: 1371, top: ["Öl", "Gas", "Elektronik"] }},
-    usa: { name: "USA", flag: "🇺🇸", lat: 39.8, lng: -98.6, color: "#3182CE",
-        exp: { total: 2100, top: ["Tech", "Flugzeuge", "Pharma"] }, imp: { total: 3200, top: ["Elektronik", "Autos"] }},
-    china: { name: "China", flag: "🇨🇳", lat: 35.9, lng: 104.2, color: "#E53E3E",
-        exp: { total: 3500, top: ["Elektronik", "Maschinen"] }, imp: { total: 2700, top: ["Chips", "Öl"] }},
-    japan: { name: "Japan", flag: "🇯🇵", lat: 36.2, lng: 138.3, color: "#805AD5",
-        exp: { total: 756, top: ["Autos", "Elektronik"] }, imp: { total: 897, top: ["Öl", "Gas"] }},
-    uk: { name: "UK", flag: "🇬🇧", lat: 54.0, lng: -2.0, color: "#2C5282",
-        exp: { total: 468, top: ["Finanzen", "Pharma"] }, imp: { total: 689, top: ["Autos", "Maschinen"] }},
-    france: { name: "Frankreich", flag: "🇫🇷", lat: 46.6, lng: 2.3, color: "#2B6CB0",
-        exp: { total: 617, top: ["Flugzeuge", "Wein"] }, imp: { total: 714, top: ["Öl", "Autos"] }},
-    brazil: { name: "Brasilien", flag: "🇧🇷", lat: -14.2, lng: -51.9, color: "#38A169",
-        exp: { total: 334, top: ["Soja", "Eisenerz"] }, imp: { total: 251, top: ["Maschinen", "Chemie"] }},
-    india: { name: "Indien", flag: "🇮🇳", lat: 20.6, lng: 79.0, color: "#DD6B20",
-        exp: { total: 453, top: ["IT", "Pharma"] }, imp: { total: 617, top: ["Öl", "Gold"] }},
-    southkorea: { name: "Südkorea", flag: "🇰🇷", lat: 36.5, lng: 128.0, color: "#319795",
-        exp: { total: 644, top: ["Halbleiter", "Autos"] }, imp: { total: 632, top: ["Öl", "Gas"] }},
-    mexico: { name: "Mexiko", flag: "🇲🇽", lat: 23.6, lng: -102.6, color: "#C53030",
-        exp: { total: 494, top: ["Autos", "Elektronik"] }, imp: { total: 505, top: ["Maschinen"] }}
+    germany: { name: "Deutschland", code: "DE", lat: 51.2, lng: 10.4, x: 51, y: 35 },
+    usa: { name: "USA", code: "US", lat: 39.8, lng: -98.6, x: 20, y: 42 },
+    china: { name: "China", code: "CN", lat: 35.9, lng: 104.2, x: 77, y: 44 },
+    japan: { name: "Japan", code: "JP", lat: 36.2, lng: 138.3, x: 87, y: 42 },
+    uk: { name: "UK", code: "GB", lat: 54.0, lng: -2.0, x: 47, y: 32 },
+    france: { name: "Frankreich", code: "FR", lat: 46.6, lng: 2.3, x: 48, y: 37 },
+    brazil: { name: "Brasilien", code: "BR", lat: -14.2, lng: -51.9, x: 30, y: 68 },
+    india: { name: "Indien", code: "IN", lat: 20.6, lng: 79.0, x: 71, y: 50 },
+    southkorea: { name: "Südkorea", code: "KR", lat: 36.5, lng: 128.0, x: 83, y: 42 },
+    mexico: { name: "Mexiko", code: "MX", lat: 23.6, lng: -102.6, x: 14, y: 50 }
 };
 
 const trades = [
@@ -38,153 +28,206 @@ const trades = [
 ];
 
 const timeline = [
-    { y: 2018, t: "Stahl-Zölle", d: "USA führt 25% ein" },
-    { y: 2019, t: "Handelskrieg", d: "US-China eskaliert" },
-    { y: 2020, t: "Phase-1", d: "Entspannung" },
-    { y: 2021, t: "Chip-Krise", d: "Lieferketten" },
-    { y: 2022, t: "Energie", d: "Sanktionen" },
-    { y: 2023, t: "Chips Act", d: "€43 Mrd" },
-    { y: 2024, t: "Trump 2.0", d: "Neue Zölle" },
-    { y: 2025, t: "EU-Zölle", d: "-9% Export" },
-    { y: 2026, t: "Krieg 2.0", d: "Eskalation" }
+    { y: 2018, t: "Stahl-Zölle", d: "USA: 25%" },
+    { y: 2019, t: "Handelskrieg", d: "US-China" },
+    { y: 2020, t: "Phase-1", d: "Deal" },
+    { y: 2021, t: "Chip-Krise", d: "Global" },
+    { y: 2022, t: "Energie", d: "Krise" },
+    { y: 2023, t: "Chips Act", d: "€43Mrd" },
+    { y: 2024, t: "Trump 2.0", d: "Zölle" },
+    { y: 2025, t: "EU-Zölle", d: "-9%" },
+    { y: 2026, t: "Eskalation", d: "2.0" }
 ];
 
-let map, markers = [], lines = [];
 let state = { global: false, year: 2026, selected: null };
+let animationId = null;
+
+// Simple world map SVG path (simplified continents)
+const WORLD_PATH = `M 10,42 Q 15,38 20,40 L 28,36 Q 32,32 35,34 L 38,40 Q 35,48 30,52 L 22,55 Q 16,52 12,48 Z
+M 28,58 Q 32,56 35,60 L 38,72 Q 35,80 30,82 L 25,78 Q 22,68 25,60 Z
+M 44,30 Q 50,26 56,28 L 62,26 Q 68,28 70,32 L 68,38 Q 62,42 56,40 L 50,38 Q 46,34 44,30 Z
+M 46,42 Q 52,40 58,44 L 64,50 Q 66,60 62,70 L 54,76 Q 46,72 44,64 L 44,54 Q 44,46 46,42 Z
+M 62,28 Q 72,24 82,28 L 90,34 Q 92,44 88,52 L 80,56 Q 72,52 66,46 L 64,38 Q 62,32 62,28 Z
+M 80,62 Q 86,60 90,64 L 92,72 Q 88,78 82,76 L 78,70 Q 78,64 80,62 Z`;
 
 function initMap() {
-    const c = document.getElementById('map-container');
-    if (!c) return;
+    const container = document.getElementById('map-container');
+    if (!container) return;
+    
+    render();
+}
 
-    c.innerHTML = `
-        <div class="lmap-wrap">
-            <div class="lmap-btns">
-                <button class="lmap-btn on" id="lbtn-de">🇩🇪 Deutschland</button>
-                <button class="lmap-btn" id="lbtn-gl">🌍 Global</button>
+function render() {
+    const container = document.getElementById('map-container');
+    const activeFlows = state.global ? trades : trades.filter(t => !t.global);
+    const ev = timeline.find(t => t.y === state.year) || {};
+    
+    container.innerHTML = `
+        <div class="dmap">
+            <div class="dmap-head">
+                <div class="dmap-title">🌍 WELTHANDEL LIVE</div>
+                <div class="dmap-toggle">
+                    <button class="${!state.global ? 'on' : ''}" id="tbtn-de">🇩🇪 DE</button>
+                    <button class="${state.global ? 'on' : ''}" id="tbtn-gl">🌐 Global</button>
+                </div>
             </div>
-            <div id="lmap"></div>
-            <div id="lmap-info" class="lmap-info hidden"></div>
-            <div class="lmap-tl">
-                <div class="ltl-dots">${timeline.map(t => `<span class="ltl-dot${t.y === state.year ? ' on' : ''}" data-y="${t.y}"></span>`).join('')}</div>
-                <div class="ltl-txt"><b>${state.year}</b> — ${timeline.find(t => t.y === state.year)?.t}</div>
+            
+            <div class="dmap-canvas">
+                <svg viewBox="0 0 100 90" preserveAspectRatio="xMidYMid meet">
+                    <defs>
+                        <linearGradient id="lineGrad0" x1="0%" y1="0%" x2="100%" y2="0%">
+                            <stop offset="0%" style="stop-color:#10B981"/>
+                            <stop offset="100%" style="stop-color:#34D399"/>
+                        </linearGradient>
+                        <linearGradient id="lineGrad1" x1="0%" y1="0%" x2="100%" y2="0%">
+                            <stop offset="0%" style="stop-color:#F59E0B"/>
+                            <stop offset="100%" style="stop-color:#FBBF24"/>
+                        </linearGradient>
+                        <linearGradient id="lineGrad2" x1="0%" y1="0%" x2="100%" y2="0%">
+                            <stop offset="0%" style="stop-color:#EF4444"/>
+                            <stop offset="100%" style="stop-color:#F87171"/>
+                        </linearGradient>
+                        <filter id="glow">
+                            <feGaussianBlur stdDeviation="1" result="blur"/>
+                            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+                        </filter>
+                    </defs>
+                    
+                    <!-- World map -->
+                    <path d="${WORLD_PATH}" fill="#1F2937" stroke="#374151" stroke-width="0.3"/>
+                    
+                    <!-- Trade lines -->
+                    <g class="trade-lines">
+                        ${activeFlows.map((t, i) => renderLine(t, i)).join('')}
+                    </g>
+                    
+                    <!-- Country markers -->
+                    <g class="markers">
+                        ${Object.entries(countries).map(([id, c]) => renderMarker(id, c)).join('')}
+                    </g>
+                </svg>
+                
+                ${state.selected ? renderPanel() : ''}
             </div>
-            <div class="lmap-leg"><span>🟢 0%</span><span>🟡 1-15%</span><span>🔴 >15%</span></div>
+            
+            <div class="dmap-stats">
+                ${renderStats(activeFlows)}
+            </div>
+            
+            <div class="dmap-timeline">
+                <div class="dtl-track">
+                    ${timeline.map(t => `<button class="dtl-dot ${t.y === state.year ? 'on' : ''}" data-y="${t.y}"><span>${t.y}</span></button>`).join('')}
+                </div>
+                <div class="dtl-info">${ev.t}: ${ev.d}</div>
+            </div>
+            
+            <div class="dmap-legend">
+                <span><i style="background:#10B981"></i> 0% Zoll</span>
+                <span><i style="background:#F59E0B"></i> 1-15%</span>
+                <span><i style="background:#EF4444"></i> >15%</span>
+            </div>
         </div>
     `;
-
-    // Init Leaflet
-    if (typeof L === 'undefined') {
-        document.getElementById('lmap').innerHTML = '<p style="padding:40px;text-align:center;color:#666">Karte lädt...</p>';
-        return;
-    }
-
-    map = L.map('lmap', {
-        center: [30, 10],
-        zoom: 2,
-        minZoom: 1,
-        maxZoom: 6,
-        zoomControl: true,
-        attributionControl: false
-    });
-
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
-        maxZoom: 19
-    }).addTo(map);
-
-    drawLines();
-    drawMarkers();
-
+    
     // Events
-    document.getElementById('lbtn-de').onclick = () => { state.global = false; update(); };
-    document.getElementById('lbtn-gl').onclick = () => { state.global = true; update(); };
-    document.querySelectorAll('.ltl-dot').forEach(d => {
-        d.onclick = () => {
-            state.year = +d.dataset.y;
-            document.querySelectorAll('.ltl-dot').forEach(x => x.classList.remove('on'));
-            d.classList.add('on');
-            document.querySelector('.ltl-txt').innerHTML = `<b>${state.year}</b> — ${timeline.find(t => t.y === state.year)?.t}`;
-        };
+    document.getElementById('tbtn-de')?.addEventListener('click', () => { state.global = false; render(); });
+    document.getElementById('tbtn-gl')?.addEventListener('click', () => { state.global = true; render(); });
+    
+    document.querySelectorAll('.dtl-dot').forEach(d => {
+        d.addEventListener('click', () => { state.year = +d.dataset.y; render(); });
     });
-}
-
-function update() {
-    document.getElementById('lbtn-de').classList.toggle('on', !state.global);
-    document.getElementById('lbtn-gl').classList.toggle('on', state.global);
-    drawLines();
-}
-
-function drawLines() {
-    lines.forEach(l => map.removeLayer(l));
-    lines = [];
-
-    const data = state.global ? trades : trades.filter(t => !t.global);
-
-    data.forEach(t => {
-        const f = countries[t.from], o = countries[t.to];
-        if (!f || !o) return;
-
-        const color = t.tariff > 15 ? '#FF6B6B' : t.tariff > 0 ? '#F6AD55' : '#48BB78';
-        const weight = Math.max(2, Math.min(6, t.vol / 120));
-
-        const line = L.polyline([[f.lat, f.lng], [o.lat, o.lng]], {
-            color, weight, opacity: 0.7
-        }).addTo(map);
-
-        line.on('click', () => showTrade(t));
-        lines.push(line);
-    });
-}
-
-function drawMarkers() {
-    Object.entries(countries).forEach(([id, c]) => {
-        const size = c.main ? 36 : 28;
-        const icon = L.divIcon({
-            className: 'lmap-marker',
-            html: `<div class="lm-dot${c.main ? ' main' : ''}" style="background:${c.color}">${c.flag}</div>`,
-            iconSize: [size, size],
-            iconAnchor: [size/2, size/2]
+    
+    document.querySelectorAll('.dmap-marker').forEach(m => {
+        m.addEventListener('click', e => {
+            e.stopPropagation();
+            state.selected = state.selected === m.dataset.id ? null : m.dataset.id;
+            render();
         });
-
-        const m = L.marker([c.lat, c.lng], { icon }).addTo(map);
-        m.on('click', () => showCountry(id, c));
-        markers.push(m);
     });
+    
+    document.querySelector('.dmap-canvas')?.addEventListener('click', e => {
+        if (e.target.closest('.dmap-marker') || e.target.closest('.dmap-panel')) return;
+        state.selected = null;
+        render();
+    });
+    
+    startAnimation();
 }
 
-function showCountry(id, c) {
-    const t = trades.find(x => (x.from === id && x.to === 'germany') || (x.to === id && x.from === 'germany'));
-    const info = document.getElementById('lmap-info');
-
-    info.innerHTML = `
-        <div class="li-head" style="background:${c.color}">${c.flag} <b>${c.name}</b> <span onclick="hideInfo()">✕</span></div>
-        ${t ? `<div class="li-body">
-            <div>🇩🇪→${c.flag} Export: <b>${t.from === 'germany' ? t.exp : t.imp} Mrd€</b></div>
-            <div>${c.flag}→🇩🇪 Import: <b>${t.from === 'germany' ? t.imp : t.exp} Mrd€</b></div>
-            <div>Zoll: <b style="color:${t.tariff > 15 ? '#E53E3E' : t.tariff > 0 ? '#DD6B20' : '#38A169'}">${t.tariff}%</b></div>
-        </div>` : '<div class="li-body">Kein direkter DE-Handel</div>'}
-        <div class="li-foot">Top: ${c.exp.top.join(', ')}</div>
-    `;
-    info.classList.remove('hidden');
-    map.flyTo([c.lat, c.lng], 4, { duration: 0.5 });
-}
-
-function showTrade(t) {
+function renderLine(t, idx) {
     const f = countries[t.from], o = countries[t.to];
-    const info = document.getElementById('lmap-info');
+    if (!f || !o) return '';
+    
+    const grad = t.tariff > 15 ? 2 : t.tariff > 0 ? 1 : 0;
+    const w = Math.max(0.4, Math.min(1.5, t.vol / 400));
+    const hi = state.selected && (t.from === state.selected || t.to === state.selected);
+    
+    // Curved path
+    const mx = (f.x + o.x) / 2;
+    const my = Math.min(f.y, o.y) - 8 - Math.abs(f.x - o.x) / 10;
+    
+    return `
+        <g class="trade-line ${hi ? 'highlight' : ''}" style="--delay: ${idx * 0.1}s">
+            <path d="M ${f.x} ${f.y} Q ${mx} ${my} ${o.x} ${o.y}" 
+                  fill="none" stroke="url(#lineGrad${grad})" stroke-width="${w}" 
+                  opacity="${hi ? 1 : 0.6}" stroke-linecap="round" filter="${hi ? 'url(#glow)' : ''}"/>
+            <circle r="0.8" fill="${['#10B981','#F59E0B','#EF4444'][grad]}">
+                <animateMotion dur="${2 + idx * 0.3}s" repeatCount="indefinite" path="M ${f.x} ${f.y} Q ${mx} ${my} ${o.x} ${o.y}"/>
+            </circle>
+        </g>
+    `;
+}
 
-    info.innerHTML = `
-        <div class="li-head" style="background:#1E3A5F">${f.flag}↔${o.flag} <b>Handel</b> <span onclick="hideInfo()">✕</span></div>
-        <div class="li-body">
-            <div>Volumen: <b>${t.vol} Mrd€</b></div>
-            <div>Zoll: <b style="color:${t.tariff > 15 ? '#E53E3E' : t.tariff > 0 ? '#DD6B20' : '#38A169'}">${t.tariff}%</b></div>
+function renderMarker(id, c) {
+    const isDE = id === 'germany';
+    const sel = state.selected === id;
+    const r = isDE ? 2.5 : 1.8;
+    
+    return `
+        <g class="dmap-marker ${isDE ? 'main' : ''} ${sel ? 'selected' : ''}" data-id="${id}">
+            ${sel ? `<circle cx="${c.x}" cy="${c.y}" r="${r + 2}" fill="none" stroke="#FBBF24" stroke-width="0.5" opacity="0.8"/>` : ''}
+            ${isDE ? `<circle cx="${c.x}" cy="${c.y}" r="${r + 1.5}" fill="none" stroke="#3B82F6" stroke-width="0.3" opacity="0.6">
+                <animate attributeName="r" values="${r+1};${r+3};${r+1}" dur="2s" repeatCount="indefinite"/>
+                <animate attributeName="opacity" values="0.6;0;0.6" dur="2s" repeatCount="indefinite"/>
+            </circle>` : ''}
+            <circle cx="${c.x}" cy="${c.y}" r="${r}" fill="${isDE ? '#3B82F6' : '#6B7280'}" stroke="#1F2937" stroke-width="0.4"/>
+            <text x="${c.x}" y="${c.y + 4.5}" font-size="2" fill="#9CA3AF" text-anchor="middle">${c.code}</text>
+        </g>
+    `;
+}
+
+function renderPanel() {
+    const c = countries[state.selected];
+    if (!c) return '';
+    
+    const t = trades.find(x => (x.from === state.selected && x.to === 'germany') || (x.to === state.selected && x.from === 'germany'));
+    
+    return `
+        <div class="dmap-panel">
+            <div class="dp-head">${c.name} <span onclick="window._closePanel()">✕</span></div>
+            ${t ? `
+                <div class="dp-row"><span>Export nach 🇩🇪</span><b>${t.from === 'germany' ? t.imp : t.exp} Mrd€</b></div>
+                <div class="dp-row"><span>Import aus 🇩🇪</span><b>${t.from === 'germany' ? t.exp : t.imp} Mrd€</b></div>
+                <div class="dp-row"><span>Zollsatz</span><b class="${t.tariff > 15 ? 'red' : t.tariff > 0 ? 'yellow' : 'green'}">${t.tariff}%</b></div>
+            ` : '<div class="dp-row" style="justify-content:center;color:#6B7280">Kein DE-Handel</div>'}
         </div>
     `;
-    info.classList.remove('hidden');
 }
 
-window.hideInfo = () => {
-    document.getElementById('lmap-info').classList.add('hidden');
-    map.flyTo([30, 10], 2, { duration: 0.5 });
-};
+function renderStats(flows) {
+    const totalVol = flows.reduce((s, t) => s + t.vol, 0);
+    const avgTariff = Math.round(flows.reduce((s, t) => s + t.tariff, 0) / flows.length);
+    
+    return `
+        <div class="dstat"><span>${flows.length}</span>Routen</div>
+        <div class="dstat"><span>${totalVol}</span>Mrd € Vol.</div>
+        <div class="dstat"><span>${avgTariff}%</span>⌀ Zoll</div>
+    `;
+}
 
+function startAnimation() {
+    // Animation is handled by CSS/SVG animateMotion
+}
+
+window._closePanel = () => { state.selected = null; render(); };
 window.tradeMap = { init: initMap };
