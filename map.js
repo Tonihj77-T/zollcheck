@@ -1,186 +1,124 @@
-// === TRADE MAP - Real World Map ===
+// === TRADE MAP ===
 
 var countries = {
-    germany: { name: "Deutschland", code: "DE", x: 52, y: 35, main: true },
-    usa: { name: "USA", code: "US", x: 22, y: 42 },
-    china: { name: "China", code: "CN", x: 78, y: 44 },
-    japan: { name: "Japan", code: "JP", x: 88, y: 42 },
-    uk: { name: "UK", code: "GB", x: 48, y: 32 },
-    france: { name: "Frankreich", code: "FR", x: 50, y: 38 },
-    brazil: { name: "Brasilien", code: "BR", x: 32, y: 68 },
-    india: { name: "Indien", code: "IN", x: 72, y: 50 },
-    korea: { name: "Südkorea", code: "KR", x: 84, y: 43 },
-    mexico: { name: "Mexiko", code: "MX", x: 17, y: 50 }
+    germany: { name: "Deutschland", code: "🇩🇪", x: 52, y: 35 },
+    usa: { name: "USA", code: "🇺🇸", x: 22, y: 40 },
+    china: { name: "China", code: "🇨🇳", x: 78, y: 42 },
+    japan: { name: "Japan", code: "🇯🇵", x: 88, y: 40 },
+    uk: { name: "UK", code: "🇬🇧", x: 48, y: 30 },
+    france: { name: "Frankreich", code: "🇫🇷", x: 49, y: 37 },
+    brazil: { name: "Brasilien", code: "🇧🇷", x: 32, y: 65 },
+    india: { name: "Indien", code: "🇮🇳", x: 72, y: 48 },
+    korea: { name: "Südkorea", code: "🇰🇷", x: 84, y: 42 },
+    mexico: { name: "Mexiko", code: "🇲🇽", x: 16, y: 48 }
 };
 
 var trades = [
-    { from: "germany", to: "usa", vol: 253, tariff: 15 },
-    { from: "germany", to: "china", vol: 298, tariff: 8 },
-    { from: "germany", to: "france", vol: 172, tariff: 0 },
-    { from: "germany", to: "uk", vol: 134, tariff: 0 },
-    { from: "germany", to: "japan", vol: 45, tariff: 5 },
-    { from: "germany", to: "korea", vol: 28, tariff: 0 },
-    { from: "germany", to: "brazil", vol: 21, tariff: 12 },
-    { from: "germany", to: "india", vol: 24, tariff: 10 },
-    { from: "germany", to: "mexico", vol: 18, tariff: 0 }
+    { from: "germany", to: "usa", vol: 253, exp: 157, imp: 96, tariff: 15 },
+    { from: "germany", to: "china", vol: 298, exp: 107, imp: 191, tariff: 8 },
+    { from: "germany", to: "france", vol: 172, exp: 102, imp: 70, tariff: 0 },
+    { from: "germany", to: "uk", vol: 134, exp: 89, imp: 45, tariff: 0 },
+    { from: "germany", to: "japan", vol: 45, exp: 23, imp: 22, tariff: 5 },
+    { from: "germany", to: "korea", vol: 28, exp: 14, imp: 14, tariff: 0 },
+    { from: "germany", to: "brazil", vol: 21, exp: 12, imp: 9, tariff: 12 },
+    { from: "germany", to: "india", vol: 24, exp: 15, imp: 9, tariff: 10 },
+    { from: "germany", to: "mexico", vol: 18, exp: 11, imp: 7, tariff: 0 }
 ];
 
-var mapState = { selected: null };
-
-// Real world map image (NASA Blue Marble style, public domain)
-var MAP_URL = "https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Blue_Marble_2002.png/1280px-Blue_Marble_2002.png";
+var selected = null;
 
 function initMap() {
-    var container = document.getElementById("map-container");
-    if (!container) return;
-    renderTradeMap(container);
+    var el = document.getElementById("map-container");
+    if (!el) return;
+    render(el);
 }
 
-function renderTradeMap(container) {
-    // Build SVG overlay content
-    var lines = "";
-    var dots = "";
+function render(el) {
+    var lines = "", dots = "", markers = "";
     
+    // Trade lines
     for (var i = 0; i < trades.length; i++) {
-        var t = trades[i];
-        var f = countries[t.from];
-        var o = countries[t.to];
-        if (!f || !o) continue;
+        var t = trades[i], f = countries.germany, o = countries[t.to];
+        var c = t.tariff > 10 ? "#ef4444" : t.tariff > 0 ? "#f59e0b" : "#22c55e";
+        var mx = (f.x + o.x) / 2, my = Math.min(f.y, o.y) - 8;
         
-        var color = t.tariff > 10 ? "#FF6B6B" : t.tariff > 0 ? "#FBBF24" : "#34D399";
-        var mx = (f.x + o.x) / 2;
-        var my = Math.min(f.y, o.y) - 6 - Math.abs(f.x - o.x) / 12;
-        var w = Math.max(1, t.vol / 150);
-        
-        lines += '<path d="M' + f.x + ',' + f.y + ' Q' + mx + ',' + my + ' ' + o.x + ',' + o.y + '" fill="none" stroke="' + color + '" stroke-width="' + w + '" stroke-linecap="round" opacity="0.8" style="filter:drop-shadow(0 0 2px ' + color + ')"/>';
-        
-        dots += '<circle r="1.5" fill="' + color + '" style="filter:drop-shadow(0 0 4px ' + color + ')">' +
-            '<animateMotion dur="' + (2.5 + i * 0.15) + 's" repeatCount="indefinite" path="M' + f.x + ',' + f.y + ' Q' + mx + ',' + my + ' ' + o.x + ',' + o.y + '"/>' +
-        '</circle>';
+        lines += '<path d="M'+f.x+','+f.y+' Q'+mx+','+my+' '+o.x+','+o.y+'" stroke="'+c+'" stroke-width="1.5" fill="none" opacity="0.7"/>';
+        dots += '<circle r="1.5" fill="'+c+'"><animateMotion dur="'+(2+i*0.2)+'s" repeatCount="indefinite" path="M'+f.x+','+f.y+' Q'+mx+','+my+' '+o.x+','+o.y+'"/></circle>';
     }
     
-    // Build markers
-    var markers = "";
+    // Country markers
     var keys = Object.keys(countries);
     for (var j = 0; j < keys.length; j++) {
-        var id = keys[j];
-        var c = countries[id];
-        var isMain = c.main;
-        var r = isMain ? 3.5 : 2;
-        var fill = isMain ? "#3B82F6" : "#F1F5F9";
-        var sel = mapState.selected === id;
+        var id = keys[j], co = countries[id];
+        var isDE = id === "germany", isSel = selected === id;
+        var r = isDE ? 4 : 2.5;
         
-        markers += '<g class="map-marker" data-id="' + id + '">';
-        
-        if (isMain) {
-            markers += '<circle cx="' + c.x + '" cy="' + c.y + '" r="' + (r + 4) + '" fill="none" stroke="' + fill + '" stroke-width="0.5" opacity="0.5">' +
-                '<animate attributeName="r" values="' + (r+2) + ';' + (r+7) + ';' + (r+2) + '" dur="2s" repeatCount="indefinite"/>' +
-                '<animate attributeName="opacity" values="0.6;0;0.6" dur="2s" repeatCount="indefinite"/>' +
-            '</circle>';
-        }
-        
-        if (sel) {
-            markers += '<circle cx="' + c.x + '" cy="' + c.y + '" r="' + (r + 3) + '" fill="none" stroke="#FBBF24" stroke-width="1.5"/>';
-        }
-        
-        markers += '<circle cx="' + c.x + '" cy="' + c.y + '" r="' + r + '" fill="' + fill + '" stroke="rgba(0,0,0,0.5)" stroke-width="0.5" style="filter:drop-shadow(0 1px 3px rgba(0,0,0,0.5))"/>';
-        markers += '<text x="' + c.x + '" y="' + (c.y + r + 4) + '" font-size="2.8" fill="white" text-anchor="middle" font-weight="600" style="text-shadow:0 1px 2px rgba(0,0,0,0.8)">' + c.code + '</text>';
+        markers += '<g class="pin" data-id="'+id+'">';
+        if (isDE) markers += '<circle cx="'+co.x+'" cy="'+co.y+'" r="8" fill="none" stroke="#3b82f6" opacity="0.3"><animate attributeName="r" values="5;12;5" dur="2s" repeatCount="indefinite"/><animate attributeName="opacity" values="0.5;0;0.5" dur="2s" repeatCount="indefinite"/></circle>';
+        if (isSel) markers += '<circle cx="'+co.x+'" cy="'+co.y+'" r="'+(r+3)+'" fill="none" stroke="#fbbf24" stroke-width="2"/>';
+        markers += '<circle cx="'+co.x+'" cy="'+co.y+'" r="'+r+'" fill="'+(isDE?'#3b82f6':'#e2e8f0')+'" stroke="#1e293b" stroke-width="1"/>';
+        markers += '<text x="'+co.x+'" y="'+(co.y-r-2)+'" font-size="4" text-anchor="middle">'+co.code+'</text>';
         markers += '</g>';
     }
     
     // Stats
-    var totalVol = 0, totalTariff = 0;
-    for (var k = 0; k < trades.length; k++) {
-        totalVol += trades[k].vol;
-        totalTariff += trades[k].tariff;
-    }
-    var avgTariff = Math.round(totalTariff / trades.length);
+    var vol = 0, tar = 0;
+    for (var k = 0; k < trades.length; k++) { vol += trades[k].vol; tar += trades[k].tariff; }
     
-    container.innerHTML = 
-        '<div class="world-map">' +
-            '<div class="wm-title">🌍 Handelsrouten Deutschland</div>' +
-            
-            '<div class="wm-container">' +
-                '<img src="' + MAP_URL + '" alt="Weltkarte" class="wm-image" crossorigin="anonymous">' +
-                '<svg class="wm-overlay" viewBox="0 0 100 100" preserveAspectRatio="none">' +
-                    '<g class="wm-lines">' + lines + '</g>' +
-                    '<g class="wm-dots">' + dots + '</g>' +
-                    '<g class="wm-markers">' + markers + '</g>' +
-                '</svg>' +
-                (mapState.selected ? buildPanel() : '') +
-            '</div>' +
-            
-            '<div class="wm-stats">' +
-                '<div class="wm-stat"><span>' + trades.length + '</span>Routen</div>' +
-                '<div class="wm-stat"><span>' + totalVol + '</span>Mrd €</div>' +
-                '<div class="wm-stat"><span>' + avgTariff + '%</span>⌀ Zoll</div>' +
-            '</div>' +
-            
-            '<div class="wm-legend">' +
-                '<span><i style="background:#34D399"></i>0%</span>' +
-                '<span><i style="background:#FBBF24"></i>1-10%</span>' +
-                '<span><i style="background:#FF6B6B"></i>>10%</span>' +
-            '</div>' +
-        '</div>';
+    el.innerHTML = '<div class="tmap">'+
+        '<svg viewBox="0 0 100 80" class="tmap-svg">'+
+            '<defs><linearGradient id="sea" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#0c4a6e"/><stop offset="100%" stop-color="#082f49"/></linearGradient></defs>'+
+            '<rect width="100" height="80" fill="url(#sea)"/>'+
+            // Simplified world continents
+            '<path d="M8,28 L12,25 L18,26 L24,24 L28,26 L30,30 L28,36 L24,40 L20,42 L14,40 L10,36 L8,32 Z" fill="#1e3a5f" stroke="#2d4a6f" stroke-width="0.3"/>'+  // North America
+            '<path d="M22,44 L26,42 L30,44 L32,50 L34,58 L32,66 L28,70 L24,68 L22,60 L20,52 Z" fill="#1e3a5f" stroke="#2d4a6f" stroke-width="0.3"/>'+  // South America
+            '<path d="M44,22 L48,20 L54,22 L58,24 L56,30 L52,34 L48,36 L44,34 L42,28 Z" fill="#1e3a5f" stroke="#2d4a6f" stroke-width="0.3"/>'+  // Europe
+            '<path d="M44,38 L50,36 L56,40 L58,48 L56,58 L52,64 L46,62 L42,54 L44,46 Z" fill="#1e3a5f" stroke="#2d4a6f" stroke-width="0.3"/>'+  // Africa
+            '<path d="M60,20 L70,18 L82,22 L90,26 L92,34 L88,42 L80,46 L72,44 L66,40 L62,32 L60,24 Z" fill="#1e3a5f" stroke="#2d4a6f" stroke-width="0.3"/>'+  // Asia
+            '<path d="M82,54 L88,52 L92,56 L90,64 L84,66 L80,62 Z" fill="#1e3a5f" stroke="#2d4a6f" stroke-width="0.3"/>'+  // Australia
+            '<g>'+lines+'</g><g>'+dots+'</g><g>'+markers+'</g>'+
+        '</svg>'+
+        (selected ? panel() : '')+
+        '<div class="tmap-stats">'+
+            '<div><b>'+trades.length+'</b><span>Routen</span></div>'+
+            '<div><b>'+vol+'</b><span>Mrd €</span></div>'+
+            '<div><b>'+Math.round(tar/trades.length)+'%</b><span>⌀ Zoll</span></div>'+
+        '</div>'+
+        '<div class="tmap-leg"><span><i class="g"></i>0%</span><span><i class="y"></i>1-10%</span><span><i class="r"></i>&gt;10%</span></div>'+
+    '</div>';
     
     // Events
-    var markerEls = container.querySelectorAll(".map-marker");
-    for (var m = 0; m < markerEls.length; m++) {
-        markerEls[m].onclick = function(e) {
+    var pins = el.querySelectorAll(".pin");
+    for (var p = 0; p < pins.length; p++) {
+        pins[p].onclick = function(e) {
             e.stopPropagation();
             var id = this.getAttribute("data-id");
-            mapState.selected = (mapState.selected === id) ? null : id;
-            renderTradeMap(container);
+            selected = selected === id ? null : id;
+            render(el);
         };
     }
-    
-    var mapEl = container.querySelector(".wm-container");
-    if (mapEl) {
-        mapEl.onclick = function(e) {
-            if (!e.target.closest(".map-marker") && !e.target.closest(".wm-panel")) {
-                mapState.selected = null;
-                renderTradeMap(container);
-            }
-        };
-    }
+    el.querySelector(".tmap-svg").onclick = function(e) {
+        if (!e.target.closest(".pin")) { selected = null; render(el); }
+    };
 }
 
-function buildPanel() {
-    var c = countries[mapState.selected];
+function panel() {
+    var c = countries[selected];
     if (!c) return "";
-    
-    var trade = null;
+    var t = null;
     for (var i = 0; i < trades.length; i++) {
-        if (trades[i].to === mapState.selected || trades[i].from === mapState.selected) {
-            trade = trades[i];
-            break;
-        }
+        if (trades[i].to === selected) { t = trades[i]; break; }
     }
-    
-    var content = "";
-    if (trade) {
-        var tc = trade.tariff > 10 ? "red" : trade.tariff > 0 ? "yellow" : "green";
-        content = '<div class="prow">Volumen <b>' + trade.vol + ' Mrd €</b></div>' +
-                  '<div class="prow">Zoll <b class="' + tc + '">' + trade.tariff + '%</b></div>';
-    } else {
-        content = '<div class="prow" style="opacity:0.5">Keine Daten</div>';
-    }
-    
-    return '<div class="wm-panel">' +
-        '<div class="phead">' + c.name + ' <span onclick="closePanel()">✕</span></div>' +
-        '<div class="pbody">' + content + '</div>' +
-    '</div>';
+    if (!t) return '<div class="tmap-panel"><div class="pp-h">'+c.code+' '+c.name+'</div><div class="pp-b"><div class="pp-r">Haupthandelspartner der EU</div></div></div>';
+    var tc = t.tariff > 10 ? "r" : t.tariff > 0 ? "y" : "g";
+    return '<div class="tmap-panel"><div class="pp-h">'+c.code+' '+c.name+' <span onclick="closePanel()">✕</span></div><div class="pp-b">'+
+        '<div class="pp-r">Export 🇩🇪→ <b>'+t.exp+' Mrd €</b></div>'+
+        '<div class="pp-r">Import →🇩🇪 <b>'+t.imp+' Mrd €</b></div>'+
+        '<div class="pp-r">Zollsatz <b class="'+tc+'">'+t.tariff+'%</b></div>'+
+    '</div></div>';
 }
 
-function closePanel() {
-    mapState.selected = null;
-    var container = document.getElementById("map-container");
-    if (container) renderTradeMap(container);
-}
-
+function closePanel() { selected = null; render(document.getElementById("map-container")); }
 window.closePanel = closePanel;
 window.tradeMap = { init: initMap };
-
-document.addEventListener("DOMContentLoaded", function() {
-    setTimeout(initMap, 100);
-});
+document.addEventListener("DOMContentLoaded", function() { setTimeout(initMap, 50); });
