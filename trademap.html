@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: #111; font-family: -apple-system, sans-serif; }
+#map { width: 100%; height: 60vh; min-height: 250px; }
+.stats { display: flex; justify-content: space-around; padding: 14px; background: #1e293b; }
+.stats div { text-align: center; }
+.stats b { display: block; color: white; font-size: 18px; }
+.stats span { font-size: 10px; color: #94a3b8; }
+.map-flag { background: none !important; border: none !important; }
+</style>
+</head>
+<body>
+<div id="map"></div>
+<div class="stats">
+    <div><b>9</b><span>Routen</span></div>
+    <div><b>993</b><span>Mrd €</span></div>
+    <div><b>6%</b><span>⌀ Zoll</span></div>
+</div>
+<script>
+var countries = {
+    de: { n: "Deutschland", f: "🇩🇪", lat: 51.17, lng: 10.45 },
+    us: { n: "USA", f: "🇺🇸", lat: 37.09, lng: -95.71 },
+    cn: { n: "China", f: "🇨🇳", lat: 35.86, lng: 104.20 },
+    jp: { n: "Japan", f: "🇯🇵", lat: 36.20, lng: 138.25 },
+    gb: { n: "UK", f: "🇬🇧", lat: 55.38, lng: -3.44 },
+    fr: { n: "Frankreich", f: "🇫🇷", lat: 46.23, lng: 2.21 },
+    br: { n: "Brasilien", f: "🇧🇷", lat: -14.24, lng: -51.93 },
+    ind: { n: "Indien", f: "🇮🇳", lat: 20.59, lng: 78.96 },
+    kr: { n: "Südkorea", f: "🇰🇷", lat: 35.91, lng: 127.77 },
+    mx: { n: "Mexiko", f: "🇲🇽", lat: 23.63, lng: -102.55 }
+};
+
+var trades = [
+    { to: "us", vol: 253, exp: 157, imp: 96, tariff: 15 },
+    { to: "cn", vol: 298, exp: 107, imp: 191, tariff: 8 },
+    { to: "gb", vol: 134, exp: 89, imp: 45, tariff: 0 },
+    { to: "fr", vol: 172, exp: 102, imp: 70, tariff: 0 },
+    { to: "jp", vol: 45, exp: 23, imp: 22, tariff: 5 },
+    { to: "kr", vol: 28, exp: 14, imp: 14, tariff: 0 },
+    { to: "br", vol: 21, exp: 12, imp: 9, tariff: 12 },
+    { to: "ind", vol: 24, exp: 15, imp: 9, tariff: 10 },
+    { to: "mx", vol: 18, exp: 11, imp: 7, tariff: 0 }
+];
+
+var m = L.map("map", { center: [30, 10], zoom: 2, minZoom: 2, maxZoom: 6, attributionControl: false });
+L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png").addTo(m);
+
+var de = countries.de;
+var keys = Object.keys(countries);
+
+for (var i = 0; i < trades.length; i++) {
+    var t = trades[i], c = countries[t.to];
+    if (!c) continue;
+    var color = t.tariff > 10 ? "#ff4444" : t.tariff > 0 ? "#ffaa00" : "#44ff88";
+    var w = Math.max(2, Math.min(5, t.vol / 80));
+    var pts = [];
+    for (var p = 0; p <= 20; p++) {
+        var f = p / 20;
+        pts.push([de.lat + (c.lat - de.lat) * f + Math.sin(Math.PI * f) * 12, de.lng + (c.lng - de.lng) * f]);
+    }
+    L.polyline(pts, { color: color, weight: w, opacity: 0.6 }).addTo(m);
+}
+
+for (var j = 0; j < keys.length; j++) {
+    var id = keys[j], co = countries[id], isDE = id === "de";
+    var sz = isDE ? 32 : 24;
+    var icon = L.divIcon({
+        className: "map-flag",
+        html: '<span style="font-size:' + (isDE ? 26 : 20) + 'px">' + co.f + '</span>',
+        iconSize: [sz, sz], iconAnchor: [sz/2, sz/2]
+    });
+    var mk = L.marker([co.lat, co.lng], { icon: icon }).addTo(m);
+    var td = null;
+    for (var k = 0; k < trades.length; k++) { if (trades[k].to === id) { td = trades[k]; break; } }
+    var html = '<b>' + co.f + ' ' + co.n + '</b>';
+    if (td) {
+        var tc = td.tariff > 10 ? "#ff4444" : td.tariff > 0 ? "#ffaa00" : "#44ff88";
+        html += '<br><span style="font-size:12px;line-height:1.8">Export 🇩🇪→ <b>' + td.exp + ' Mrd €</b><br>Import →🇩🇪 <b>' + td.imp + ' Mrd €</b><br>Zoll: <b style="color:'+tc+'">' + td.tariff + '%</b></span>';
+    } else if (isDE) {
+        html += '<br><span style="font-size:12px">Exportweltmeister 🏆</span>';
+    }
+    mk.bindPopup(html);
+}
+
+var leg = L.control({ position: "bottomleft" });
+leg.onAdd = function() {
+    var d = L.DomUtil.create("div");
+    d.style.cssText = "background:rgba(0,0,0,0.8);padding:8px 12px;border-radius:8px;color:white;font-size:11px;";
+    d.innerHTML = '<b>Zollsätze</b><br><span style="color:#44ff88">█</span> 0%&nbsp;<span style="color:#ffaa00">█</span> 1-10%&nbsp;<span style="color:#ff4444">█</span> >10%';
+    return d;
+};
+leg.addTo(m);
+</script>
+</body>
+</html>
