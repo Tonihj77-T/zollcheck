@@ -1,20 +1,19 @@
 // === TRADE MAP with Leaflet.js ===
 
-var map = null;
-var tradeLines = [];
-var markers = [];
+var tradeMap = null;
+var mapReady = false;
 
 var countries = {
-    de: { name: "Deutschland", flag: "🇩🇪", lat: 51.1657, lng: 10.4515 },
-    us: { name: "USA", flag: "🇺🇸", lat: 37.0902, lng: -95.7129 },
-    cn: { name: "China", flag: "🇨🇳", lat: 35.8617, lng: 104.1954 },
-    jp: { name: "Japan", flag: "🇯🇵", lat: 36.2048, lng: 138.2529 },
-    gb: { name: "UK", flag: "🇬🇧", lat: 55.3781, lng: -3.4360 },
-    fr: { name: "Frankreich", flag: "🇫🇷", lat: 46.2276, lng: 2.2137 },
-    br: { name: "Brasilien", flag: "🇧🇷", lat: -14.2350, lng: -51.9253 },
-    in: { name: "Indien", flag: "🇮🇳", lat: 20.5937, lng: 78.9629 },
-    kr: { name: "Südkorea", flag: "🇰🇷", lat: 35.9078, lng: 127.7669 },
-    mx: { name: "Mexiko", flag: "🇲🇽", lat: 23.6345, lng: -102.5528 }
+    de: { name: "Deutschland", flag: "\u{1F1E9}\u{1F1EA}", lat: 51.17, lng: 10.45 },
+    us: { name: "USA", flag: "\u{1F1FA}\u{1F1F8}", lat: 37.09, lng: -95.71 },
+    cn: { name: "China", flag: "\u{1F1E8}\u{1F1F3}", lat: 35.86, lng: 104.20 },
+    jp: { name: "Japan", flag: "\u{1F1EF}\u{1F1F5}", lat: 36.20, lng: 138.25 },
+    gb: { name: "UK", flag: "\u{1F1EC}\u{1F1E7}", lat: 55.38, lng: -3.44 },
+    fr: { name: "Frankreich", flag: "\u{1F1EB}\u{1F1F7}", lat: 46.23, lng: 2.21 },
+    br: { name: "Brasilien", flag: "\u{1F1E7}\u{1F1F7}", lat: -14.24, lng: -51.93 },
+    ind: { name: "Indien", flag: "\u{1F1EE}\u{1F1F3}", lat: 20.59, lng: 78.96 },
+    kr: { name: "S\u00fcdkorea", flag: "\u{1F1F0}\u{1F1F7}", lat: 35.91, lng: 127.77 },
+    mx: { name: "Mexiko", flag: "\u{1F1F2}\u{1F1FD}", lat: 23.63, lng: -102.55 }
 };
 
 var trades = [
@@ -25,199 +24,176 @@ var trades = [
     { to: "jp", vol: 45, exp: 23, imp: 22, tariff: 5 },
     { to: "kr", vol: 28, exp: 14, imp: 14, tariff: 0 },
     { to: "br", vol: 21, exp: 12, imp: 9, tariff: 12 },
-    { to: "in", vol: 24, exp: 15, imp: 9, tariff: 10 },
+    { to: "ind", vol: 24, exp: 15, imp: 9, tariff: 10 },
     { to: "mx", vol: 18, exp: 11, imp: 7, tariff: 0 }
 ];
 
 function initMap() {
-    var container = document.getElementById("map-container");
-    if (!container) return;
-    
-    // Check if Leaflet is loaded
-    if (typeof L === "undefined") {
-        container.innerHTML = '<div style="padding:20px;text-align:center;color:#888;">Karte lädt...</div>';
-        setTimeout(initMap, 500);
-        return;
+    try {
+        var container = document.getElementById("map-container");
+        if (!container) return;
+
+        // Already initialized
+        if (mapReady && tradeMap) {
+            tradeMap.invalidateSize();
+            return;
+        }
+
+        // Check Leaflet
+        if (typeof L === "undefined") {
+            container.innerHTML = '<div style="padding:40px;text-align:center;color:white;background:#1a1a2e;border-radius:12px;"><p>Karte l\u00e4dt...</p></div>';
+            setTimeout(initMap, 500);
+            return;
+        }
+
+        // Setup container
+        container.innerHTML = '<div id="leaflet-map" style="width:100%;height:350px;border-radius:12px;z-index:1;"></div><div id="map-stats-area"></div>';
+
+        // Small delay for DOM
+        setTimeout(buildMap, 200);
+    } catch (e) {
+        var c = document.getElementById("map-container");
+        if (c) c.innerHTML = '<div style="padding:20px;color:red;">Fehler: ' + e.message + '</div>';
     }
-    
-    // Don't reinitialize if map already exists
-    if (map) {
-        map.invalidateSize();
-        return;
-    }
-    
-    // Set container height
-    container.style.height = "350px";
-    container.innerHTML = '<div id="leaflet-map" style="width:100%;height:100%;border-radius:12px;"></div>';
-    
-    // Wait for container to be ready
-    setTimeout(function() {
-        createMap();
-    }, 100);
 }
 
-function createMap() {
-    // Initialize Leaflet map
-    map = L.map("leaflet-map", {
-        center: [30, 10],
-        zoom: 2,
-        minZoom: 1,
-        maxZoom: 6,
-        zoomControl: true,
-        attributionControl: false
-    });
-    
-    // Dark tile layer
-    L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png", {
-        maxZoom: 19
-    }).addTo(map);
-    
-    // Add trade routes
-    var de = countries.de;
-    
-    for (var i = 0; i < trades.length; i++) {
-        var t = trades[i];
-        var c = countries[t.to];
-        if (!c) continue;
-        
-        var color = t.tariff > 10 ? "#ff4444" : t.tariff > 0 ? "#ffaa00" : "#44ff88";
-        var weight = Math.max(2, t.vol / 80);
-        
-        // Curved line (great circle approximation)
-        var latlngs = getCurvedPath([de.lat, de.lng], [c.lat, c.lng]);
-        
-        var line = L.polyline(latlngs, {
-            color: color,
-            weight: weight,
-            opacity: 0.7,
-            smoothFactor: 1
-        }).addTo(map);
-        
-        tradeLines.push(line);
-    }
-    
-    // Add country markers
-    var keys = Object.keys(countries);
-    for (var j = 0; j < keys.length; j++) {
-        var id = keys[j];
-        var co = countries[id];
-        var isDE = id === "de";
-        
-        var trade = null;
-        for (var k = 0; k < trades.length; k++) {
-            if (trades[k].to === id) { trade = trades[k]; break; }
-        }
-        
-        // Custom icon
-        var iconSize = isDE ? 32 : 24;
-        var icon = L.divIcon({
-            className: "custom-marker",
-            html: '<div class="marker-inner' + (isDE ? ' marker-de' : '') + '">' + co.flag + '</div>',
-            iconSize: [iconSize, iconSize],
-            iconAnchor: [iconSize/2, iconSize/2]
+function buildMap() {
+    try {
+        var mapEl = document.getElementById("leaflet-map");
+        if (!mapEl) return;
+
+        // Create map
+        tradeMap = L.map("leaflet-map", {
+            center: [30, 10],
+            zoom: 2,
+            minZoom: 2,
+            maxZoom: 6,
+            zoomControl: true,
+            attributionControl: false
         });
-        
-        var marker = L.marker([co.lat, co.lng], { icon: icon }).addTo(map);
-        
-        // Popup content
-        var popupContent = '<div class="map-popup">' +
-            '<div class="popup-header">' + co.flag + ' ' + co.name + '</div>';
-        
-        if (trade) {
-            var tariffClass = trade.tariff > 10 ? "tariff-high" : trade.tariff > 0 ? "tariff-med" : "tariff-low";
-            popupContent += '<div class="popup-body">' +
-                '<div class="popup-row">Export 🇩🇪→ <b>' + trade.exp + ' Mrd €</b></div>' +
-                '<div class="popup-row">Import →🇩🇪 <b>' + trade.imp + ' Mrd €</b></div>' +
-                '<div class="popup-row">Zollsatz <b class="' + tariffClass + '">' + trade.tariff + '%</b></div>' +
+
+        // Dark tiles
+        L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png").addTo(tradeMap);
+
+        var de = countries.de;
+
+        // Trade lines
+        var keys = Object.keys(countries);
+        for (var i = 0; i < trades.length; i++) {
+            var t = trades[i];
+            var c = countries[t.to];
+            if (!c) continue;
+
+            var color = t.tariff > 10 ? "#ff4444" : t.tariff > 0 ? "#ffaa00" : "#44ff88";
+            var weight = Math.max(2, Math.min(6, t.vol / 60));
+
+            // Simple curved path
+            var pts = [];
+            for (var p = 0; p <= 20; p++) {
+                var frac = p / 20;
+                var lat = de.lat + (c.lat - de.lat) * frac + Math.sin(Math.PI * frac) * 15;
+                var lng = de.lng + (c.lng - de.lng) * frac;
+                pts.push([lat, lng]);
+            }
+
+            L.polyline(pts, {
+                color: color,
+                weight: weight,
+                opacity: 0.6,
+                dashArray: null
+            }).addTo(tradeMap);
+        }
+
+        // Country markers
+        for (var j = 0; j < keys.length; j++) {
+            var id = keys[j];
+            var co = countries[id];
+            var isDE = (id === "de");
+            var sz = isDE ? 36 : 28;
+
+            var icon = L.divIcon({
+                className: "map-flag",
+                html: '<span style="font-size:' + (isDE ? 28 : 22) + 'px">' + co.flag + '</span>',
+                iconSize: [sz, sz],
+                iconAnchor: [sz / 2, sz / 2]
+            });
+
+            var marker = L.marker([co.lat, co.lng], { icon: icon }).addTo(tradeMap);
+
+            // Find trade data
+            var td = null;
+            for (var k = 0; k < trades.length; k++) {
+                if (trades[k].to === id) { td = trades[k]; break; }
+            }
+
+            var popupHtml = '<div style="min-width:150px"><b style="font-size:14px">' + co.flag + ' ' + co.name + '</b>';
+            if (td) {
+                var tColor = td.tariff > 10 ? "#ff4444" : td.tariff > 0 ? "#ffaa00" : "#44ff88";
+                popupHtml += '<div style="margin-top:8px;font-size:12px;line-height:1.8">' +
+                    'Export \u{1F1E9}\u{1F1EA}\u2192 <b>' + td.exp + ' Mrd \u20ac</b><br>' +
+                    'Import \u2192\u{1F1E9}\u{1F1EA} <b>' + td.imp + ' Mrd \u20ac</b><br>' +
+                    'Zoll: <b style="color:' + tColor + '">' + td.tariff + '%</b>' +
+                '</div>';
+            } else if (isDE) {
+                popupHtml += '<div style="margin-top:8px;font-size:12px">Exportweltmeister \u{1F3C6}</div>';
+            }
+            popupHtml += '</div>';
+
+            marker.bindPopup(popupHtml);
+        }
+
+        // Legend
+        var legend = L.control({ position: "bottomleft" });
+        legend.onAdd = function() {
+            var d = L.DomUtil.create("div");
+            d.style.cssText = "background:rgba(0,0,0,0.8);padding:8px 12px;border-radius:8px;color:white;font-size:11px;";
+            d.innerHTML = '<b>Zolls\u00e4tze</b><br>' +
+                '<span style="color:#44ff88">\u2588</span> 0%&nbsp;&nbsp;' +
+                '<span style="color:#ffaa00">\u2588</span> 1-10%&nbsp;&nbsp;' +
+                '<span style="color:#ff4444">\u2588</span> >10%';
+            return d;
+        };
+        legend.addTo(tradeMap);
+
+        mapReady = true;
+
+        // Stats
+        var totalVol = 0, totalTar = 0;
+        for (var s = 0; s < trades.length; s++) {
+            totalVol += trades[s].vol;
+            totalTar += trades[s].tariff;
+        }
+
+        var statsArea = document.getElementById("map-stats-area");
+        if (statsArea) {
+            statsArea.innerHTML = '<div class="map-stats-bar">' +
+                '<div class="map-stat"><span class="stat-val">' + trades.length + '</span><span class="stat-label">Routen</span></div>' +
+                '<div class="map-stat"><span class="stat-val">' + totalVol + '</span><span class="stat-label">Mrd \u20ac</span></div>' +
+                '<div class="map-stat"><span class="stat-val">' + Math.round(totalTar / trades.length) + '%</span><span class="stat-label">\u2300 Zoll</span></div>' +
             '</div>';
-        } else if (isDE) {
-            popupContent += '<div class="popup-body"><div class="popup-row">Exportweltmeister 🏆</div></div>';
         }
-        
-        popupContent += '</div>';
-        
-        marker.bindPopup(popupContent, {
-            className: "custom-popup"
-        });
-        
-        markers.push(marker);
+
+        // Fix size after render
+        setTimeout(function() { tradeMap.invalidateSize(); }, 300);
+
+    } catch (e) {
+        var el = document.getElementById("map-container");
+        if (el) el.innerHTML = '<div style="padding:20px;color:#ff6666;background:#1a1a2e;border-radius:12px;">Kartenfehler: ' + e.message + '</div>';
     }
-    
-    // Add legend
-    addLegend();
-    
-    // Add stats below map
-    addStats();
 }
 
-function getCurvedPath(start, end) {
-    // Create curved path between two points
-    var latlngs = [];
-    var offsetX = (end[1] - start[1]) * 0.2;
-    var offsetY = Math.abs(end[0] - start[0]) * 0.3 + 10;
-    
-    for (var i = 0; i <= 20; i++) {
-        var t = i / 20;
-        var lat = start[0] + (end[0] - start[0]) * t + Math.sin(Math.PI * t) * offsetY * (start[0] > 0 ? -1 : 1);
-        var lng = start[1] + (end[1] - start[1]) * t;
-        latlngs.push([lat, lng]);
-    }
-    
-    return latlngs;
-}
-
-function addLegend() {
-    var legend = L.control({ position: "bottomleft" });
-    
-    legend.onAdd = function() {
-        var div = L.DomUtil.create("div", "map-legend");
-        div.innerHTML = '<div class="legend-title">Zollsätze</div>' +
-            '<div class="legend-item"><span class="legend-color" style="background:#44ff88"></span>0%</div>' +
-            '<div class="legend-item"><span class="legend-color" style="background:#ffaa00"></span>1-10%</div>' +
-            '<div class="legend-item"><span class="legend-color" style="background:#ff4444"></span>>10%</div>';
-        return div;
-    };
-    
-    legend.addTo(map);
-}
-
-function addStats() {
-    var container = document.getElementById("map-container");
-    var totalVol = 0, totalTariff = 0;
-    
-    for (var i = 0; i < trades.length; i++) {
-        totalVol += trades[i].vol;
-        totalTariff += trades[i].tariff;
-    }
-    
-    var statsDiv = document.createElement("div");
-    statsDiv.className = "map-stats-bar";
-    statsDiv.innerHTML = '<div class="map-stat"><span class="stat-val">' + trades.length + '</span><span class="stat-label">Routen</span></div>' +
-        '<div class="map-stat"><span class="stat-val">' + totalVol + '</span><span class="stat-label">Mrd € Volumen</span></div>' +
-        '<div class="map-stat"><span class="stat-val">' + Math.round(totalTariff / trades.length) + '%</span><span class="stat-label">⌀ Zollsatz</span></div>';
-    
-    container.appendChild(statsDiv);
-}
-
-window.tradeMap = { 
+window.tradeMap = {
     init: function() {
-        // Small delay to ensure container is visible
-        setTimeout(initMap, 150);
+        setTimeout(initMap, 200);
     }
 };
 
-// Also try auto-init after page load
 document.addEventListener("DOMContentLoaded", function() {
-    // Check periodically if map container is visible
-    var checkInterval = setInterval(function() {
-        var container = document.getElementById("map-container");
+    // Preload check
+    setTimeout(function() {
         var screen = document.getElementById("screen-karte");
-        if (container && screen && screen.classList.contains("active")) {
-            clearInterval(checkInterval);
+        if (screen && screen.classList.contains("active")) {
             initMap();
         }
     }, 500);
-    
-    // Stop checking after 30 seconds
-    setTimeout(function() { clearInterval(checkInterval); }, 30000);
 });
