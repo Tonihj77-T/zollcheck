@@ -1,14 +1,17 @@
-const CACHE_NAME = 'zollcheck-v1';
+const CACHE_NAME = 'zollcheck-v3';
 const ASSETS = [
     '/',
     '/index.html',
     '/styles.css',
     '/app.js',
     '/data.js',
+    '/map.js',
+    '/simulator.js',
+    '/trademap.html',
     '/manifest.json'
 ];
 
-// Install
+// Install - cache new version
 self.addEventListener('install', (e) => {
     e.waitUntil(
         caches.open(CACHE_NAME)
@@ -17,7 +20,7 @@ self.addEventListener('install', (e) => {
     );
 });
 
-// Activate
+// Activate - delete old caches immediately
 self.addEventListener('activate', (e) => {
     e.waitUntil(
         caches.keys().then(keys => {
@@ -25,14 +28,20 @@ self.addEventListener('activate', (e) => {
                 keys.filter(key => key !== CACHE_NAME)
                     .map(key => caches.delete(key))
             );
-        })
+        }).then(() => self.clients.claim())
     );
 });
 
-// Fetch
+// Fetch - Network first, fallback to cache
 self.addEventListener('fetch', (e) => {
     e.respondWith(
-        caches.match(e.request)
-            .then(cached => cached || fetch(e.request))
+        fetch(e.request)
+            .then(response => {
+                // Update cache with fresh version
+                const clone = response.clone();
+                caches.open(CACHE_NAME).then(cache => cache.put(e.request, clone));
+                return response;
+            })
+            .catch(() => caches.match(e.request))
     );
 });
