@@ -8,22 +8,16 @@
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body { background: #0f172a; font-family: 'Inter', -apple-system, sans-serif; overflow: hidden; }
+body.fullscreen { position: fixed; inset: 0; z-index: 9999; }
+body.fullscreen #map { height: 100vh !important; }
+body.fullscreen .controls { position: absolute; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(30,41,59,0.95); }
+body.fullscreen .stats { position: absolute; bottom: 0; left: 0; right: 0; z-index: 1000; background: rgba(30,41,59,0.95); }
+body.fullscreen .legend { bottom: 70px; }
 
 #map { width: 100%; height: calc(100vh - 140px); min-height: 280px; }
 
-/* Animated flowing lines */
-.flow-line {
-    stroke-dasharray: 8, 12;
-    animation: flowDash 1.5s linear infinite;
-}
-@keyframes flowDash {
-    to { stroke-dashoffset: -40; }
-}
-
-/* Glow effect on lines */
-.glow-line {
-    filter: drop-shadow(0 0 3px currentColor);
-}
+.flow-line { stroke-dasharray: 8, 12; animation: flowDash 1.5s linear infinite; }
+@keyframes flowDash { to { stroke-dashoffset: -40; } }
 
 /* Controls */
 .controls {
@@ -32,6 +26,7 @@ body { background: #0f172a; font-family: 'Inter', -apple-system, sans-serif; ove
     padding: 10px 12px;
     background: #1e293b;
     overflow-x: auto;
+    align-items: center;
 }
 .ctrl-btn {
     padding: 8px 14px;
@@ -48,10 +43,15 @@ body { background: #0f172a; font-family: 'Inter', -apple-system, sans-serif; ove
 .ctrl-btn.active {
     background: linear-gradient(135deg, #3b82f6, #2563eb);
     color: white;
-    box-shadow: 0 2px 8px rgba(59, 130, 246, 0.4);
 }
+.ctrl-btn.fullscreen-btn {
+    margin-left: auto;
+    background: #475569;
+    padding: 8px 12px;
+}
+.ctrl-btn.fullscreen-btn:hover { background: #3b82f6; }
 
-/* Custom markers */
+/* Markers */
 .country-marker { background: none !important; border: none !important; }
 .marker-dot {
     width: 100%;
@@ -94,9 +94,9 @@ body { background: #0f172a; font-family: 'Inter', -apple-system, sans-serif; ove
     padding: 16px;
     transform: translateY(100%);
     transition: transform 0.3s ease;
-    z-index: 1000;
+    z-index: 1001;
     border-radius: 20px 20px 0 0;
-    max-height: 50vh;
+    max-height: 70vh;
     overflow-y: auto;
 }
 .info-panel.open { transform: translateY(0); }
@@ -134,9 +134,44 @@ body { background: #0f172a; font-family: 'Inter', -apple-system, sans-serif; ove
 .info-item .val.green { color: #22c55e; }
 .info-item .val.yellow { color: #f59e0b; }
 .info-item .val.red { color: #ef4444; }
-.info-item .label { font-size: 10px; color: #64748b; margin-top: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
-.info-note {
+.info-item .label { font-size: 10px; color: #64748b; margin-top: 4px; text-transform: uppercase; }
+
+/* Products section */
+.info-products {
     margin-top: 14px;
+    padding: 12px;
+    background: rgba(15, 23, 42, 0.6);
+    border-radius: 12px;
+    border: 1px solid #334155;
+}
+.info-products-title {
+    font-size: 11px;
+    color: #64748b;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+.info-products-row {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+.info-products-row:last-child { margin-bottom: 0; }
+.product-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 6px 10px;
+    background: #334155;
+    border-radius: 8px;
+    font-size: 12px;
+    color: #e2e8f0;
+}
+.product-tag.export { background: rgba(34, 197, 94, 0.2); border: 1px solid rgba(34, 197, 94, 0.3); }
+.product-tag.import { background: rgba(59, 130, 246, 0.2); border: 1px solid rgba(59, 130, 246, 0.3); }
+
+.info-note {
+    margin-top: 12px;
     padding: 10px 14px;
     background: rgba(59, 130, 246, 0.1);
     border-left: 3px solid #3b82f6;
@@ -170,7 +205,7 @@ body { background: #0f172a; font-family: 'Inter', -apple-system, sans-serif; ove
     z-index: 500;
     border: 1px solid #334155;
 }
-.legend-title { font-weight: 600; color: white; margin-bottom: 8px; font-size: 12px; }
+.legend-title { font-weight: 600; color: white; margin-bottom: 8px; }
 .legend-row { display: flex; align-items: center; gap: 10px; margin: 6px 0; }
 .legend-line { width: 24px; height: 4px; border-radius: 2px; }
 .legend-line.green { background: #22c55e; box-shadow: 0 0 6px #22c55e; }
@@ -187,6 +222,7 @@ body { background: #0f172a; font-family: 'Inter', -apple-system, sans-serif; ove
     <button class="ctrl-btn" data-filter="tariff">💰 Mit Zöllen</button>
     <button class="ctrl-btn" data-filter="eu">🇪🇺 EU</button>
     <button class="ctrl-btn" data-filter="top5">📊 Top 5</button>
+    <button class="ctrl-btn fullscreen-btn" onclick="toggleFullscreen()">⛶</button>
 </div>
 
 <div id="map"></div>
@@ -227,24 +263,91 @@ var countries = {
     at: { n: "Österreich", f: "🇦🇹", lat: 47.5, lng: 14.5, eu: true }
 };
 
+// Handelsdaten inkl. Top-Produkte (Stand 2025/26)
 var trades = [
-    { to: "us", vol: 253, exp: 157, imp: 96, tariff: 15, note: "Trump 2.0: 15% auf Autos, 10% Baseline-Zoll auf alle EU-Waren" },
-    { to: "cn", vol: 298, exp: 107, imp: 191, tariff: 25, note: "Chinas Gegenzölle auf EU-Produkte, besonders Autos & Maschinenbau" },
-    { to: "gb", vol: 134, exp: 89, imp: 45, tariff: 0, note: "EU-UK Trade and Cooperation Agreement (TCA) seit 2021" },
-    { to: "jp", vol: 45, exp: 23, imp: 22, tariff: 0, note: "EU-Japan Economic Partnership Agreement seit 2019" },
-    { to: "kr", vol: 28, exp: 14, imp: 14, tariff: 0, note: "EU-Korea Freihandelsabkommen seit 2011" },
-    { to: "br", vol: 21, exp: 12, imp: 9, tariff: 18, note: "Mercosur-Zölle, neues EU-Mercosur Abkommen noch nicht ratifiziert" },
-    { to: "ind", vol: 24, exp: 15, imp: 9, tariff: 22, note: "WTO MFN-Zölle, EU-Indien FTA in Verhandlung" },
-    { to: "mx", vol: 18, exp: 11, imp: 7, tariff: 5, note: "EU-Mexiko Global Agreement (modernisiert 2020)" },
-    { to: "fr", vol: 172, exp: 102, imp: 70, tariff: 0, note: "EU-Binnenmarkt: Keine Zölle zwischen Mitgliedstaaten" },
-    { to: "nl", vol: 198, exp: 95, imp: 103, tariff: 0, note: "EU-Binnenmarkt: Keine Zölle zwischen Mitgliedstaaten" },
-    { to: "pl", vol: 156, exp: 82, imp: 74, tariff: 0, note: "EU-Binnenmarkt: Keine Zölle zwischen Mitgliedstaaten" },
-    { to: "it", vol: 142, exp: 78, imp: 64, tariff: 0, note: "EU-Binnenmarkt: Keine Zölle zwischen Mitgliedstaaten" },
-    { to: "at", vol: 125, exp: 72, imp: 53, tariff: 0, note: "EU-Binnenmarkt: Keine Zölle zwischen Mitgliedstaaten" }
+    { 
+        to: "us", vol: 253, exp: 157, imp: 96, tariff: 15, 
+        note: "Trump 2.0: 15% auf Autos, 10% Baseline auf alle EU-Waren",
+        topExports: ["🚗 Autos & Teile", "⚙️ Maschinen", "💊 Pharma"],
+        topImports: ["✈️ Flugzeuge", "💻 Software", "🛢️ Öl/Gas"]
+    },
+    { 
+        to: "cn", vol: 298, exp: 107, imp: 191, tariff: 25, 
+        note: "Chinas Gegenzölle auf EU-Produkte",
+        topExports: ["🚗 Autos", "⚙️ Maschinen", "🔬 Optik/Medizin"],
+        topImports: ["📱 Elektronik", "🔋 Batterien", "👕 Textilien"]
+    },
+    { 
+        to: "gb", vol: 134, exp: 89, imp: 45, tariff: 0, 
+        note: "EU-UK Trade and Cooperation Agreement (TCA)",
+        topExports: ["🚗 Autos", "⚙️ Maschinen", "💊 Pharma"],
+        topImports: ["🛢️ Öl/Gas", "💎 Gold", "✈️ Flugzeugteile"]
+    },
+    { 
+        to: "jp", vol: 45, exp: 23, imp: 22, tariff: 0, 
+        note: "EU-Japan Economic Partnership seit 2019",
+        topExports: ["🚗 Autos", "💊 Pharma", "⚙️ Maschinen"],
+        topImports: ["🚗 Autos", "📱 Elektronik", "⚙️ Maschinen"]
+    },
+    { 
+        to: "kr", vol: 28, exp: 14, imp: 14, tariff: 0, 
+        note: "EU-Korea Freihandelsabkommen seit 2011",
+        topExports: ["🚗 Autos", "⚙️ Maschinen", "🧪 Chemie"],
+        topImports: ["📱 Elektronik", "🚗 Autos", "🔋 Batterien"]
+    },
+    { 
+        to: "br", vol: 21, exp: 12, imp: 9, tariff: 18, 
+        note: "Mercosur-Zölle, EU-Abkommen noch nicht ratifiziert",
+        topExports: ["⚙️ Maschinen", "🚗 Autoteile", "🧪 Chemie"],
+        topImports: ["🥩 Fleisch", "☕ Kaffee", "🌱 Soja"]
+    },
+    { 
+        to: "ind", vol: 24, exp: 15, imp: 9, tariff: 22, 
+        note: "WTO MFN-Zölle, EU-Indien FTA in Verhandlung",
+        topExports: ["⚙️ Maschinen", "🧪 Chemie", "✈️ Flugzeugteile"],
+        topImports: ["💊 Pharma", "👕 Textilien", "💎 Schmuck"]
+    },
+    { 
+        to: "mx", vol: 18, exp: 11, imp: 7, tariff: 5, 
+        note: "EU-Mexiko Global Agreement (2020)",
+        topExports: ["🚗 Autos", "⚙️ Maschinen", "🧪 Chemie"],
+        topImports: ["🚗 Autoteile", "📱 Elektronik", "🥑 Lebensmittel"]
+    },
+    { 
+        to: "fr", vol: 172, exp: 102, imp: 70, tariff: 0, 
+        note: "EU-Binnenmarkt",
+        topExports: ["🚗 Autos", "⚙️ Maschinen", "🧪 Chemie"],
+        topImports: ["✈️ Flugzeuge (Airbus)", "🍷 Wein", "💊 Pharma"]
+    },
+    { 
+        to: "nl", vol: 198, exp: 95, imp: 103, tariff: 0, 
+        note: "EU-Binnenmarkt + wichtiger Logistik-Hub",
+        topExports: ["⚙️ Maschinen", "🧪 Chemie", "🚗 Autos"],
+        topImports: ["🛢️ Öl (Rotterdam)", "📱 Elektronik", "🧪 Chemie"]
+    },
+    { 
+        to: "pl", vol: 156, exp: 82, imp: 74, tariff: 0, 
+        note: "EU-Binnenmarkt + wichtiger Produktionsstandort",
+        topExports: ["🚗 Autoteile", "⚙️ Maschinen", "🧪 Chemie"],
+        topImports: ["🚗 Autoteile", "🪑 Möbel", "🥩 Lebensmittel"]
+    },
+    { 
+        to: "it", vol: 142, exp: 78, imp: 64, tariff: 0, 
+        note: "EU-Binnenmarkt",
+        topExports: ["🚗 Autos", "⚙️ Maschinen", "🧪 Chemie"],
+        topImports: ["⚙️ Maschinen", "👗 Mode/Textil", "🍝 Lebensmittel"]
+    },
+    { 
+        to: "at", vol: 125, exp: 72, imp: 53, tariff: 0, 
+        note: "EU-Binnenmarkt + enge Wirtschaftsbeziehung",
+        topExports: ["🚗 Autos", "⚙️ Maschinen", "🧪 Chemie"],
+        topImports: ["⚙️ Maschinen", "🔩 Metallwaren", "🪵 Holz"]
+    }
 ];
 
 var map, lines = [], markers = [];
 var currentFilter = 'all';
+var isFullscreen = false;
 
 function init() {
     map = L.map("map", {
@@ -262,12 +365,24 @@ function init() {
     setupFilters();
 }
 
+function toggleFullscreen() {
+    isFullscreen = !isFullscreen;
+    document.body.classList.toggle('fullscreen', isFullscreen);
+    document.querySelector('.fullscreen-btn').textContent = isFullscreen ? '✕' : '⛶';
+    
+    // Notify parent iframe
+    if (window.parent !== window) {
+        window.parent.postMessage({ type: 'fullscreen', value: isFullscreen }, '*');
+    }
+    
+    setTimeout(function() { map.invalidateSize(); }, 100);
+}
+
 function renderTrades() {
     clearMap();
     var de = countries.de;
     var filtered = getFilteredTrades();
 
-    // Draw lines with CSS animation
     filtered.forEach(function(t) {
         var c = countries[t.to];
         if (!c) return;
@@ -275,49 +390,28 @@ function renderTrades() {
         var color = t.tariff > 15 ? "#ef4444" : t.tariff > 0 ? "#f59e0b" : "#22c55e";
         var weight = Math.max(2, Math.min(5, t.vol / 60));
 
-        // Calculate curved path using quadratic bezier approximation
         var pts = [];
         var midLat = (de.lat + c.lat) / 2;
         var midLng = (de.lng + c.lng) / 2;
-        
-        // Curve offset based on distance
         var dist = Math.sqrt(Math.pow(de.lat - c.lat, 2) + Math.pow(de.lng - c.lng, 2));
         var curveOffset = dist * 0.2;
-        
-        // Curve direction: north for east-west routes, varies for others
         var curveLat = midLat + curveOffset;
         
         for (var i = 0; i <= 30; i++) {
             var t2 = i / 30;
-            // Quadratic bezier
             var lat = Math.pow(1-t2, 2) * de.lat + 2 * (1-t2) * t2 * curveLat + Math.pow(t2, 2) * c.lat;
             var lng = Math.pow(1-t2, 2) * de.lng + 2 * (1-t2) * t2 * midLng + Math.pow(t2, 2) * c.lng;
             pts.push([lat, lng]);
         }
 
-        // Base line (solid, dimmer)
-        var baseLine = L.polyline(pts, {
-            color: color,
-            weight: weight + 2,
-            opacity: 0.15,
-            lineCap: 'round'
-        }).addTo(map);
+        var baseLine = L.polyline(pts, { color: color, weight: weight + 2, opacity: 0.15, lineCap: 'round' }).addTo(map);
         lines.push(baseLine);
 
-        // Animated line (dashed, flowing)
-        var flowLine = L.polyline(pts, {
-            color: color,
-            weight: weight,
-            opacity: 0.9,
-            lineCap: 'round',
-            dashArray: '8, 12',
-            className: 'flow-line glow-line'
-        }).addTo(map);
+        var flowLine = L.polyline(pts, { color: color, weight: weight, opacity: 0.9, lineCap: 'round', dashArray: '8, 12', className: 'flow-line' }).addTo(map);
         flowLine.tradeData = t;
         lines.push(flowLine);
     });
 
-    // Draw country markers
     var drawnCountries = ['de'];
     filtered.forEach(function(t) { drawnCountries.push(t.to); });
     drawnCountries = [...new Set(drawnCountries)];
@@ -365,9 +459,9 @@ function getFilteredTrades() {
 }
 
 function setupFilters() {
-    document.querySelectorAll('.ctrl-btn').forEach(function(btn) {
+    document.querySelectorAll('.ctrl-btn[data-filter]').forEach(function(btn) {
         btn.onclick = function() {
-            document.querySelectorAll('.ctrl-btn').forEach(function(b) { b.classList.remove('active'); });
+            document.querySelectorAll('.ctrl-btn[data-filter]').forEach(function(b) { b.classList.remove('active'); });
             btn.classList.add('active');
             currentFilter = btn.dataset.filter;
             renderTrades();
@@ -398,6 +492,15 @@ function showPanel(id) {
             '<div class="info-item"><div class="val">' + t.imp + '</div><div class="label">Import Mrd €</div></div>' +
             '<div class="info-item"><div class="val ' + tariffColor + '">' + t.tariff + '%</div><div class="label">Zollsatz</div></div>' +
         '</div>';
+        
+        // Products section
+        html += '<div class="info-products">';
+        html += '<div class="info-products-title">🇩🇪 Top Exporte nach ' + c.n + '</div>';
+        html += '<div class="info-products-row">' + t.topExports.map(function(p) { return '<span class="product-tag export">' + p + '</span>'; }).join('') + '</div>';
+        html += '<div class="info-products-title" style="margin-top:10px">📥 Top Importe aus ' + c.n + '</div>';
+        html += '<div class="info-products-row">' + t.topImports.map(function(p) { return '<span class="product-tag import">' + p + '</span>'; }).join('') + '</div>';
+        html += '</div>';
+        
         html += '<div class="info-note">ℹ️ ' + t.note + '</div>';
     } else if (isDE) {
         html += '<div class="info-grid">' +
@@ -405,6 +508,11 @@ function showPanel(id) {
             '<div class="info-item"><div class="val">1.371</div><div class="label">Import Mrd €</div></div>' +
             '<div class="info-item"><div class="val green">#3</div><div class="label">Weltweit</div></div>' +
         '</div>';
+        html += '<div class="info-products">';
+        html += '<div class="info-products-title">🇩🇪 Top Export-Güter weltweit</div>';
+        html += '<div class="info-products-row"><span class="product-tag export">🚗 Autos</span><span class="product-tag export">⚙️ Maschinen</span><span class="product-tag export">🧪 Chemie</span></div>';
+        html += '<div class="info-products-row"><span class="product-tag export">💊 Pharma</span><span class="product-tag export">📱 Elektro</span></div>';
+        html += '</div>';
         html += '<div class="info-note">ℹ️ Deutschland ist die drittgrößte Exportnation der Welt nach China und den USA.</div>';
     }
 
@@ -418,6 +526,11 @@ function closePanel() {
 
 document.getElementById('map').addEventListener('click', function(e) {
     if (!e.target.closest('.marker-dot')) closePanel();
+});
+
+// Handle escape key for fullscreen
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && isFullscreen) toggleFullscreen();
 });
 
 init();
