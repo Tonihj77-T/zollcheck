@@ -106,9 +106,8 @@ body.fullscreen .fullscreen-close { display: flex; }
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 15px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.4);
-    transition: transform 0.2s;
+    transition: transform 0.2s, width 0.2s, height 0.2s, font-size 0.2s;
     cursor: pointer;
     background: #1e293b;
     border: 3px solid;
@@ -481,6 +480,17 @@ var compareSlots = [null, null];
 var quizScore = 0, quizQuestion = 0;
 var isFullscreen = false;
 
+// Scale markers based on zoom
+function getMarkerSize(isDE, zoom) {
+    var baseSize = isDE ? 48 : 38;
+    var scale = Math.max(0.5, Math.min(1, (zoom - 1) / 2));
+    return Math.round(baseSize * scale);
+}
+
+function getCargoSize(zoom) {
+    return Math.max(12, Math.min(20, zoom * 4));
+}
+
 function getTrades() {
     var yearTariffs = tariffHistory[currentYear] || tariffHistory[2026];
     return baseTrades.map(function(t) {
@@ -493,6 +503,37 @@ function init() {
     map = L.map("map", { center: [25, 10], zoom: 1, minZoom: 1, maxZoom: 8, zoomControl: false });
     L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png").addTo(map);
     L.control.zoom({ position: 'topright' }).addTo(map);
+    
+    // Update marker sizes on zoom
+    map.on('zoomend', function() {
+        var zoom = map.getZoom();
+        markers.forEach(function(m) {
+            var size = getMarkerSize(m.isDE, zoom);
+            var fontSize = Math.round(size * 0.4);
+            var el = m.getElement();
+            if (el) {
+                var dot = el.querySelector('.marker-dot');
+                if (dot) {
+                    dot.style.width = size + 'px';
+                    dot.style.height = size + 'px';
+                    dot.style.fontSize = fontSize + 'px';
+                }
+                el.style.width = size + 'px';
+                el.style.height = size + 'px';
+                el.style.marginLeft = (-size/2) + 'px';
+                el.style.marginTop = (-size/2) + 'px';
+            }
+        });
+        cargoMarkers.forEach(function(m) {
+            var cargoSize = getCargoSize(zoom);
+            var el = m.getElement();
+            if (el) {
+                el.style.fontSize = cargoSize + 'px';
+                var span = el.querySelector('span');
+                if (span) span.style.fontSize = cargoSize + 'px';
+            }
+        });
+    });
     
     renderTrades();
     setupFilters();
@@ -544,6 +585,7 @@ function renderTrades() {
     }
     drawnCountries = [...new Set(drawnCountries)];
 
+    var zoom = map.getZoom();
     drawnCountries.forEach(function(id) {
         var c = countries[id];
         if (!c) return;
@@ -552,16 +594,18 @@ function renderTrades() {
         var isSelected = compareSlots.includes(id);
         var tariffClass = !t ? 'tariff-none' : t.tariff > 15 ? 'tariff-high' : t.tariff > 0 ? 'tariff-med' : 'tariff-none';
 
-        var size = isDE ? 48 : 38;
+        var size = getMarkerSize(isDE, zoom);
+        var fontSize = Math.round(size * 0.4);
         var icon = L.divIcon({
             className: 'country-marker',
-            html: '<div class="marker-dot ' + (isDE ? 'de' : tariffClass) + (isSelected ? ' selected' : '') + '">' + c.f + '</div>',
+            html: '<div class="marker-dot ' + (isDE ? 'de' : tariffClass) + (isSelected ? ' selected' : '') + '" style="font-size:' + fontSize + 'px">' + c.f + '</div>',
             iconSize: [size, size],
             iconAnchor: [size/2, size/2]
         });
 
         var marker = L.marker([c.lat, c.lng], { icon: icon }).addTo(map);
         marker.countryId = id;
+        marker.isDE = isDE;
         marker.on('click', function() { onMarkerClick(id); });
         markers.push(marker);
     });
@@ -592,13 +636,16 @@ function drawRoute(from, to, tariff, vol, cargo, forceColor) {
     // Cargo icon at midpoint
     if (cargo) {
         var midPt = pts[15];
+        var cargoSize = getCargoSize(map.getZoom());
         var cargoIcon = L.divIcon({
             className: 'cargo-icon',
-            html: cargo,
-            iconSize: [20, 20],
-            iconAnchor: [10, 10]
+            html: '<span style="font-size:' + cargoSize + 'px">' + cargo + '</span>',
+            iconSize: [cargoSize + 4, cargoSize + 4],
+            iconAnchor: [(cargoSize + 4)/2, (cargoSize + 4)/2]
         });
-        cargoMarkers.push(L.marker(midPt, { icon: cargoIcon, interactive: false }).addTo(map));
+        var cm = L.marker(midPt, { icon: cargoIcon, interactive: false }).addTo(map);
+        cm.cargoEmoji = cargo;
+        cargoMarkers.push(cm);
     }
 }
 
