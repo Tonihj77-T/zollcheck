@@ -23,7 +23,8 @@ body.fullscreen .legend { bottom: 70px; }
 .controls {
     display: flex;
     gap: 6px;
-    padding: 10px 12px;
+    padding: 14px 12px;
+    padding-top: 18px;
     background: #1e293b;
     overflow-x: auto;
     align-items: center;
@@ -50,6 +51,26 @@ body.fullscreen .legend { bottom: 70px; }
     padding: 8px 12px;
 }
 .ctrl-btn.fullscreen-btn:hover { background: #3b82f6; }
+
+/* Fullscreen close button */
+.fullscreen-close {
+    display: none;
+    position: fixed;
+    top: 16px;
+    right: 16px;
+    z-index: 2000;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: rgba(239, 68, 68, 0.9);
+    color: white;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+body.fullscreen .fullscreen-close { display: flex; align-items: center; justify-content: center; }
+body.fullscreen .fullscreen-btn { display: none; }
 
 /* Markers */
 .country-marker { background: none !important; border: none !important; }
@@ -225,6 +246,7 @@ body.fullscreen .legend { bottom: 70px; }
     <button class="ctrl-btn fullscreen-btn" onclick="toggleFullscreen()">⛶</button>
 </div>
 
+<button class="fullscreen-close" onclick="toggleFullscreen()">✕</button>
 <div id="map"></div>
 
 <div class="legend">
