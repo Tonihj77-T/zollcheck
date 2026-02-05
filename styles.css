@@ -1589,6 +1589,11 @@ body {
     flex-direction: column;
 }
 
+/* Override .screen.active { display: block } for lesson screen */
+#screen-lesson.active {
+    display: flex;
+}
+
 .lesson-header {
     display: flex;
     align-items: center;
