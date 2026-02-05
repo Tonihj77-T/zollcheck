@@ -7,19 +7,18 @@
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
-body { background: #0f172a; font-family: 'Inter', -apple-system, sans-serif; overflow: hidden; }
-body.fullscreen { position: fixed; inset: 0; z-index: 9999; }
-body.fullscreen #map { height: 100vh !important; }
-body.fullscreen .controls { position: absolute; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(30,41,59,0.95); }
-body.fullscreen .stats { position: absolute; bottom: 0; left: 0; right: 0; z-index: 1000; background: rgba(30,41,59,0.95); }
-body.fullscreen .legend { bottom: 70px; }
+body { background: #0f172a; font-family: 'Inter', -apple-system, sans-serif; overflow-x: hidden; }
+body.fullscreen { position: fixed; inset: 0; z-index: 9999; overflow: hidden; }
+body.fullscreen #map { height: calc(100vh - 100px) !important; }
+body.fullscreen .controls { position: relative; z-index: 1000; }
+body.fullscreen .bottom-bar { position: fixed; bottom: 0; left: 0; right: 0; z-index: 1000; }
 
-#map { width: 100%; height: calc(100vh - 140px); min-height: 280px; }
+#map { width: 100%; height: 320px; }
 
 .flow-line { stroke-dasharray: 8, 12; animation: flowDash 1.5s linear infinite; }
 @keyframes flowDash { to { stroke-dashoffset: -40; } }
 
-/* Controls */
+/* Top Controls */
 .controls {
     display: flex;
     gap: 6px;
@@ -28,31 +27,25 @@ body.fullscreen .legend { bottom: 70px; }
     background: #1e293b;
     overflow-x: auto;
     align-items: center;
+    flex-wrap: nowrap;
 }
 .ctrl-btn {
-    padding: 8px 14px;
+    padding: 8px 12px;
     border: none;
-    border-radius: 20px;
-    font-size: 12px;
+    border-radius: 16px;
+    font-size: 11px;
     font-weight: 600;
     cursor: pointer;
     white-space: nowrap;
     transition: all 0.2s;
     background: #334155;
     color: #94a3b8;
+    flex-shrink: 0;
 }
-.ctrl-btn.active {
-    background: linear-gradient(135deg, #3b82f6, #2563eb);
-    color: white;
-}
-.ctrl-btn.fullscreen-btn {
-    margin-left: auto;
-    background: #475569;
-    padding: 8px 12px;
-}
-.ctrl-btn.fullscreen-btn:hover { background: #3b82f6; }
+.ctrl-btn.active { background: linear-gradient(135deg, #3b82f6, #2563eb); color: white; }
+.ctrl-btn.mode-btn { background: #475569; }
+.ctrl-btn.mode-btn.active { background: linear-gradient(135deg, #8b5cf6, #7c3aed); }
 
-/* Fullscreen close button */
 .fullscreen-close {
     display: none;
     position: fixed;
@@ -67,12 +60,44 @@ body.fullscreen .legend { bottom: 70px; }
     border: none;
     font-size: 24px;
     cursor: pointer;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    align-items: center;
+    justify-content: center;
 }
-body.fullscreen .fullscreen-close { display: flex; align-items: center; justify-content: center; }
-body.fullscreen .fullscreen-btn { display: none; }
+body.fullscreen .fullscreen-close { display: flex; }
 
-/* Markers */
+/* Timeline Slider */
+.timeline {
+    background: #1e293b;
+    padding: 10px 16px;
+    border-top: 1px solid #334155;
+}
+.timeline-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    color: #64748b;
+    margin-bottom: 6px;
+}
+.timeline-year { color: #3b82f6; font-weight: 700; font-size: 14px; }
+.timeline input[type="range"] {
+    width: 100%;
+    height: 6px;
+    border-radius: 3px;
+    background: #334155;
+    outline: none;
+    -webkit-appearance: none;
+}
+.timeline input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #3b82f6;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(59,130,246,0.5);
+}
+
+/* Country Markers */
 .country-marker { background: none !important; border: none !important; }
 .marker-dot {
     width: 100%;
@@ -81,7 +106,7 @@ body.fullscreen .fullscreen-btn { display: none; }
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 16px;
+    font-size: 15px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.4);
     transition: transform 0.2s;
     cursor: pointer;
@@ -89,20 +114,182 @@ body.fullscreen .fullscreen-btn { display: none; }
     border: 3px solid;
 }
 .marker-dot:hover { transform: scale(1.15); }
-.marker-dot.de {
-    background: linear-gradient(135deg, #3b82f6, #1d4ed8);
-    border-color: #60a5fa;
-    animation: pulse-de 2s infinite;
-    font-size: 20px;
-}
+.marker-dot.de { background: linear-gradient(135deg, #3b82f6, #1d4ed8); border-color: #60a5fa; font-size: 18px; }
+.marker-dot.selected { transform: scale(1.2); box-shadow: 0 0 0 4px rgba(251,191,36,0.5); }
 .marker-dot.tariff-high { border-color: #ef4444; background: linear-gradient(135deg, #1e293b, #2d1f1f); }
 .marker-dot.tariff-med { border-color: #f59e0b; background: linear-gradient(135deg, #1e293b, #2d2a1f); }
 .marker-dot.tariff-none { border-color: #22c55e; background: linear-gradient(135deg, #1e293b, #1f2d1f); }
 
-@keyframes pulse-de {
-    0%, 100% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.6), 0 2px 8px rgba(0,0,0,0.4); }
-    50% { box-shadow: 0 0 0 10px rgba(59, 130, 246, 0), 0 2px 8px rgba(0,0,0,0.4); }
+/* Animated cargo icons */
+.cargo-icon {
+    font-size: 14px;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+    animation: float 0.5s ease-in-out infinite alternate;
 }
+@keyframes float {
+    from { transform: translateY(-2px); }
+    to { transform: translateY(2px); }
+}
+
+/* Bottom Bar with tabs */
+.bottom-bar {
+    background: #1e293b;
+    border-top: 1px solid #334155;
+}
+.tab-buttons {
+    display: flex;
+    border-bottom: 1px solid #334155;
+}
+.tab-btn {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    background: transparent;
+    color: #64748b;
+    font-size: 11px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.tab-btn.active { color: #3b82f6; border-bottom: 2px solid #3b82f6; background: rgba(59,130,246,0.1); }
+
+.tab-content { display: none; padding: 12px; }
+.tab-content.active { display: block; }
+
+/* Stats Tab */
+.stats-row {
+    display: flex;
+    justify-content: space-around;
+}
+.stat { text-align: center; }
+.stat b { display: block; color: white; font-size: 18px; font-weight: 700; }
+.stat span { font-size: 10px; color: #64748b; }
+
+/* Compare Tab */
+.compare-container {
+    display: flex;
+    gap: 10px;
+}
+.compare-card {
+    flex: 1;
+    background: #0f172a;
+    border-radius: 12px;
+    padding: 12px;
+    text-align: center;
+    border: 2px dashed #334155;
+    min-height: 120px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.compare-card.filled { border-style: solid; border-color: #3b82f6; }
+.compare-card .flag { font-size: 32px; }
+.compare-card .name { color: white; font-weight: 600; margin: 4px 0; }
+.compare-card .val { font-size: 20px; font-weight: 700; }
+.compare-card .val.green { color: #22c55e; }
+.compare-card .val.yellow { color: #f59e0b; }
+.compare-card .val.red { color: #ef4444; }
+.compare-card .label { font-size: 10px; color: #64748b; }
+.compare-hint { color: #64748b; font-size: 12px; }
+.compare-vs { color: #64748b; font-size: 20px; font-weight: 700; align-self: center; }
+
+/* Quiz Tab */
+.quiz-question {
+    background: #0f172a;
+    border-radius: 12px;
+    padding: 14px;
+    margin-bottom: 10px;
+}
+.quiz-q { color: white; font-size: 14px; font-weight: 600; margin-bottom: 10px; }
+.quiz-options { display: flex; flex-direction: column; gap: 6px; }
+.quiz-opt {
+    padding: 10px 14px;
+    background: #334155;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-size: 13px;
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.2s;
+}
+.quiz-opt:hover { background: #475569; }
+.quiz-opt.correct { background: #22c55e; }
+.quiz-opt.wrong { background: #ef4444; }
+.quiz-score { text-align: center; color: #64748b; font-size: 12px; margin-top: 8px; }
+.quiz-next { width: 100%; padding: 10px; background: #3b82f6; border: none; border-radius: 8px; color: white; font-weight: 600; cursor: pointer; margin-top: 8px; }
+
+/* Calculator Tab */
+.calc-row {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 10px;
+}
+.calc-input {
+    flex: 1;
+    padding: 10px 12px;
+    background: #0f172a;
+    border: 1px solid #334155;
+    border-radius: 8px;
+    color: white;
+    font-size: 14px;
+}
+.calc-input::placeholder { color: #64748b; }
+.calc-select {
+    padding: 10px 12px;
+    background: #0f172a;
+    border: 1px solid #334155;
+    border-radius: 8px;
+    color: white;
+    font-size: 14px;
+    min-width: 120px;
+}
+.calc-result {
+    background: linear-gradient(135deg, #0f172a, #1e293b);
+    border-radius: 12px;
+    padding: 14px;
+    text-align: center;
+    border: 1px solid #334155;
+}
+.calc-result .price { font-size: 28px; font-weight: 700; color: white; }
+.calc-result .breakdown { font-size: 11px; color: #64748b; margin-top: 6px; }
+
+/* Global View */
+.global-routes { margin-top: 8px; }
+.route-toggle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px;
+    background: #0f172a;
+    border-radius: 8px;
+    margin-bottom: 6px;
+}
+.route-toggle input { width: 16px; height: 16px; }
+.route-toggle label { color: #e2e8f0; font-size: 12px; flex: 1; }
+.route-toggle .vol { color: #64748b; font-size: 11px; }
+
+/* Legend */
+.legend {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    background: rgba(15, 23, 42, 0.95);
+    padding: 10px 12px;
+    border-radius: 10px;
+    font-size: 10px;
+    color: #94a3b8;
+    z-index: 500;
+    border: 1px solid #334155;
+}
+.legend-row { display: flex; align-items: center; gap: 6px; margin: 4px 0; }
+.legend-line { width: 16px; height: 3px; border-radius: 2px; }
+.legend-line.green { background: #22c55e; }
+.legend-line.yellow { background: #f59e0b; }
+.legend-line.red { background: #ef4444; }
+
+.leaflet-control-attribution { display: none !important; }
 
 /* Info Panel */
 .info-panel {
@@ -111,13 +298,12 @@ body.fullscreen .fullscreen-btn { display: none; }
     left: 0;
     right: 0;
     background: linear-gradient(180deg, #1e293b, #0f172a);
-    border-top: 1px solid #334155;
     padding: 16px;
     transform: translateY(100%);
     transition: transform 0.3s ease;
     z-index: 1001;
     border-radius: 20px 20px 0 0;
-    max-height: 70vh;
+    max-height: 60vh;
     overflow-y: auto;
 }
 .info-panel.open { transform: translateY(0); }
@@ -131,140 +317,110 @@ body.fullscreen .fullscreen-btn { display: none; }
     font-size: 24px;
     cursor: pointer;
 }
-.info-header {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 14px;
-}
-.info-flag { font-size: 36px; }
-.info-name { color: white; font-size: 20px; font-weight: 700; }
-.info-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
-}
-.info-item {
-    background: rgba(15, 23, 42, 0.8);
-    border-radius: 12px;
-    padding: 14px 10px;
-    text-align: center;
-    border: 1px solid #334155;
-}
-.info-item .val { font-size: 22px; font-weight: 700; color: white; }
+.info-header { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+.info-flag { font-size: 32px; }
+.info-name { color: white; font-size: 18px; font-weight: 700; }
+.info-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.info-item { background: rgba(15,23,42,0.8); border-radius: 10px; padding: 12px 8px; text-align: center; }
+.info-item .val { font-size: 20px; font-weight: 700; color: white; }
 .info-item .val.green { color: #22c55e; }
 .info-item .val.yellow { color: #f59e0b; }
 .info-item .val.red { color: #ef4444; }
-.info-item .label { font-size: 10px; color: #64748b; margin-top: 4px; text-transform: uppercase; }
-
-/* Products section */
-.info-products {
-    margin-top: 14px;
-    padding: 12px;
-    background: rgba(15, 23, 42, 0.6);
-    border-radius: 12px;
-    border: 1px solid #334155;
-}
-.info-products-title {
-    font-size: 11px;
-    color: #64748b;
-    text-transform: uppercase;
-    margin-bottom: 10px;
-    font-weight: 600;
-}
-.info-products-row {
-    display: flex;
-    gap: 8px;
-    margin-bottom: 8px;
-}
-.info-products-row:last-child { margin-bottom: 0; }
-.product-tag {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    padding: 6px 10px;
-    background: #334155;
-    border-radius: 8px;
-    font-size: 12px;
-    color: #e2e8f0;
-}
-.product-tag.export { background: rgba(34, 197, 94, 0.2); border: 1px solid rgba(34, 197, 94, 0.3); }
-.product-tag.import { background: rgba(59, 130, 246, 0.2); border: 1px solid rgba(59, 130, 246, 0.3); }
-
-.info-note {
-    margin-top: 12px;
-    padding: 10px 14px;
-    background: rgba(59, 130, 246, 0.1);
-    border-left: 3px solid #3b82f6;
-    border-radius: 0 8px 8px 0;
-    font-size: 12px;
-    color: #94a3b8;
-}
-
-/* Stats Bar */
-.stats {
-    display: flex;
-    justify-content: space-around;
-    padding: 12px;
-    background: #1e293b;
-    border-top: 1px solid #334155;
-}
-.stats .stat { text-align: center; }
-.stats .stat b { display: block; color: white; font-size: 18px; font-weight: 700; }
-.stats .stat span { font-size: 10px; color: #64748b; }
-
-/* Legend */
-.legend {
-    position: absolute;
-    bottom: 20px;
-    left: 10px;
-    background: rgba(15, 23, 42, 0.95);
-    padding: 12px 14px;
-    border-radius: 12px;
-    font-size: 11px;
-    color: #94a3b8;
-    z-index: 500;
-    border: 1px solid #334155;
-}
-.legend-title { font-weight: 600; color: white; margin-bottom: 8px; }
-.legend-row { display: flex; align-items: center; gap: 10px; margin: 6px 0; }
-.legend-line { width: 24px; height: 4px; border-radius: 2px; }
-.legend-line.green { background: #22c55e; box-shadow: 0 0 6px #22c55e; }
-.legend-line.yellow { background: #f59e0b; box-shadow: 0 0 6px #f59e0b; }
-.legend-line.red { background: #ef4444; box-shadow: 0 0 6px #ef4444; }
-
-.leaflet-control-attribution { display: none !important; }
+.info-item .label { font-size: 9px; color: #64748b; margin-top: 2px; text-transform: uppercase; }
+.info-products { margin-top: 10px; padding: 10px; background: rgba(15,23,42,0.6); border-radius: 10px; }
+.info-products-title { font-size: 10px; color: #64748b; text-transform: uppercase; margin-bottom: 6px; }
+.product-tag { display: inline-block; padding: 4px 8px; background: #334155; border-radius: 6px; font-size: 11px; color: #e2e8f0; margin: 2px; }
 </style>
 </head>
 <body>
 
+<button class="fullscreen-close" onclick="toggleFullscreen()">✕</button>
+
 <div class="controls">
-    <button class="ctrl-btn active" data-filter="all">🌍 Alle</button>
-    <button class="ctrl-btn" data-filter="tariff">💰 Mit Zöllen</button>
-    <button class="ctrl-btn" data-filter="eu">🇪🇺 EU</button>
-    <button class="ctrl-btn" data-filter="top5">📊 Top 5</button>
-    <button class="ctrl-btn fullscreen-btn" onclick="toggleFullscreen()">⛶</button>
+    <button class="ctrl-btn active" data-filter="all">🌍</button>
+    <button class="ctrl-btn" data-filter="tariff">💰</button>
+    <button class="ctrl-btn" data-filter="eu">🇪🇺</button>
+    <button class="ctrl-btn mode-btn" data-mode="compare">⚖️ Vergleich</button>
+    <button class="ctrl-btn mode-btn" data-mode="global">🌐 Global</button>
+    <button class="ctrl-btn" onclick="toggleFullscreen()" style="margin-left:auto;background:#475569;">⛶</button>
 </div>
 
-<button class="fullscreen-close" onclick="toggleFullscreen()">✕</button>
+<div class="timeline">
+    <div class="timeline-label">
+        <span>2020</span>
+        <span class="timeline-year" id="yearDisplay">2026</span>
+        <span>2026</span>
+    </div>
+    <input type="range" id="yearSlider" min="2020" max="2026" value="2026" oninput="changeYear(this.value)">
+</div>
+
 <div id="map"></div>
 
 <div class="legend">
-    <div class="legend-title">Zollsätze</div>
-    <div class="legend-row"><div class="legend-line green"></div> Zollfrei</div>
+    <div class="legend-row"><div class="legend-line green"></div> 0%</div>
     <div class="legend-row"><div class="legend-line yellow"></div> 1-15%</div>
-    <div class="legend-row"><div class="legend-line red"></div> Über 15%</div>
+    <div class="legend-row"><div class="legend-line red"></div> >15%</div>
+</div>
+
+<div class="bottom-bar">
+    <div class="tab-buttons">
+        <button class="tab-btn active" data-tab="stats">📊 Stats</button>
+        <button class="tab-btn" data-tab="compare">⚖️ Vergleich</button>
+        <button class="tab-btn" data-tab="quiz">🎯 Quiz</button>
+        <button class="tab-btn" data-tab="calc">💶 Rechner</button>
+    </div>
+    
+    <div class="tab-content active" id="tab-stats">
+        <div class="stats-row">
+            <div class="stat"><b id="stat-routes">13</b><span>Routen</span></div>
+            <div class="stat"><b id="stat-volume">1.614</b><span>Mrd €</span></div>
+            <div class="stat"><b id="stat-tariff">4%</b><span>⌀ Zoll</span></div>
+            <div class="stat"><b id="stat-year">2026</b><span>Jahr</span></div>
+        </div>
+    </div>
+    
+    <div class="tab-content" id="tab-compare">
+        <div class="compare-container">
+            <div class="compare-card" id="compare1">
+                <span class="compare-hint">Tippe Land 1</span>
+            </div>
+            <span class="compare-vs">VS</span>
+            <div class="compare-card" id="compare2">
+                <span class="compare-hint">Tippe Land 2</span>
+            </div>
+        </div>
+    </div>
+    
+    <div class="tab-content" id="tab-quiz">
+        <div class="quiz-question" id="quizContainer">
+            <div class="quiz-q" id="quizQ">Welches Land hat den höchsten Zollsatz?</div>
+            <div class="quiz-options" id="quizOpts"></div>
+        </div>
+        <div class="quiz-score">Punkte: <span id="quizScore">0</span>/5</div>
+        <button class="quiz-next" id="quizNext" onclick="nextQuiz()" style="display:none;">Nächste Frage →</button>
+    </div>
+    
+    <div class="tab-content" id="tab-calc">
+        <div class="calc-row">
+            <input type="number" class="calc-input" id="calcPrice" placeholder="Preis in €" value="999">
+            <select class="calc-select" id="calcCountry" onchange="calculate()">
+                <option value="cn">🇨🇳 China</option>
+                <option value="us">🇺🇸 USA</option>
+                <option value="ind">🇮🇳 Indien</option>
+                <option value="br">🇧🇷 Brasilien</option>
+                <option value="jp">🇯🇵 Japan</option>
+            </select>
+        </div>
+        <div class="calc-result">
+            <div class="price" id="calcResult">1.248,75 €</div>
+            <div class="breakdown" id="calcBreakdown">999€ + 25% Zoll (249,75€) = Endpreis</div>
+        </div>
+    </div>
 </div>
 
 <div class="info-panel" id="infoPanel">
     <button class="close-btn" onclick="closePanel()">×</button>
     <div id="infoPanelContent"></div>
-</div>
-
-<div class="stats">
-    <div class="stat"><b id="stat-routes">13</b><span>Handelsrouten</span></div>
-    <div class="stat"><b id="stat-volume">1.614</b><span>Mrd € Volumen</span></div>
-    <div class="stat"><b id="stat-tariff">4%</b><span>⌀ Zollsatz</span></div>
 </div>
 
 <script>
@@ -285,197 +441,179 @@ var countries = {
     at: { n: "Österreich", f: "🇦🇹", lat: 47.5, lng: 14.5, eu: true }
 };
 
-// Handelsdaten inkl. Top-Produkte (Stand 2025/26)
-var trades = [
-    { 
-        to: "us", vol: 253, exp: 157, imp: 96, tariff: 15, 
-        note: "Trump 2.0: 15% auf Autos, 10% Baseline auf alle EU-Waren",
-        topExports: ["🚗 Autos & Teile", "⚙️ Maschinen", "💊 Pharma"],
-        topImports: ["✈️ Flugzeuge", "💻 Software", "🛢️ Öl/Gas"]
-    },
-    { 
-        to: "cn", vol: 298, exp: 107, imp: 191, tariff: 25, 
-        note: "Chinas Gegenzölle auf EU-Produkte",
-        topExports: ["🚗 Autos", "⚙️ Maschinen", "🔬 Optik/Medizin"],
-        topImports: ["📱 Elektronik", "🔋 Batterien", "👕 Textilien"]
-    },
-    { 
-        to: "gb", vol: 134, exp: 89, imp: 45, tariff: 0, 
-        note: "EU-UK Trade and Cooperation Agreement (TCA)",
-        topExports: ["🚗 Autos", "⚙️ Maschinen", "💊 Pharma"],
-        topImports: ["🛢️ Öl/Gas", "💎 Gold", "✈️ Flugzeugteile"]
-    },
-    { 
-        to: "jp", vol: 45, exp: 23, imp: 22, tariff: 0, 
-        note: "EU-Japan Economic Partnership seit 2019",
-        topExports: ["🚗 Autos", "💊 Pharma", "⚙️ Maschinen"],
-        topImports: ["🚗 Autos", "📱 Elektronik", "⚙️ Maschinen"]
-    },
-    { 
-        to: "kr", vol: 28, exp: 14, imp: 14, tariff: 0, 
-        note: "EU-Korea Freihandelsabkommen seit 2011",
-        topExports: ["🚗 Autos", "⚙️ Maschinen", "🧪 Chemie"],
-        topImports: ["📱 Elektronik", "🚗 Autos", "🔋 Batterien"]
-    },
-    { 
-        to: "br", vol: 21, exp: 12, imp: 9, tariff: 18, 
-        note: "Mercosur-Zölle, EU-Abkommen noch nicht ratifiziert",
-        topExports: ["⚙️ Maschinen", "🚗 Autoteile", "🧪 Chemie"],
-        topImports: ["🥩 Fleisch", "☕ Kaffee", "🌱 Soja"]
-    },
-    { 
-        to: "ind", vol: 24, exp: 15, imp: 9, tariff: 22, 
-        note: "WTO MFN-Zölle, EU-Indien FTA in Verhandlung",
-        topExports: ["⚙️ Maschinen", "🧪 Chemie", "✈️ Flugzeugteile"],
-        topImports: ["💊 Pharma", "👕 Textilien", "💎 Schmuck"]
-    },
-    { 
-        to: "mx", vol: 18, exp: 11, imp: 7, tariff: 5, 
-        note: "EU-Mexiko Global Agreement (2020)",
-        topExports: ["🚗 Autos", "⚙️ Maschinen", "🧪 Chemie"],
-        topImports: ["🚗 Autoteile", "📱 Elektronik", "🥑 Lebensmittel"]
-    },
-    { 
-        to: "fr", vol: 172, exp: 102, imp: 70, tariff: 0, 
-        note: "EU-Binnenmarkt",
-        topExports: ["🚗 Autos", "⚙️ Maschinen", "🧪 Chemie"],
-        topImports: ["✈️ Flugzeuge (Airbus)", "🍷 Wein", "💊 Pharma"]
-    },
-    { 
-        to: "nl", vol: 198, exp: 95, imp: 103, tariff: 0, 
-        note: "EU-Binnenmarkt + wichtiger Logistik-Hub",
-        topExports: ["⚙️ Maschinen", "🧪 Chemie", "🚗 Autos"],
-        topImports: ["🛢️ Öl (Rotterdam)", "📱 Elektronik", "🧪 Chemie"]
-    },
-    { 
-        to: "pl", vol: 156, exp: 82, imp: 74, tariff: 0, 
-        note: "EU-Binnenmarkt + wichtiger Produktionsstandort",
-        topExports: ["🚗 Autoteile", "⚙️ Maschinen", "🧪 Chemie"],
-        topImports: ["🚗 Autoteile", "🪑 Möbel", "🥩 Lebensmittel"]
-    },
-    { 
-        to: "it", vol: 142, exp: 78, imp: 64, tariff: 0, 
-        note: "EU-Binnenmarkt",
-        topExports: ["🚗 Autos", "⚙️ Maschinen", "🧪 Chemie"],
-        topImports: ["⚙️ Maschinen", "👗 Mode/Textil", "🍝 Lebensmittel"]
-    },
-    { 
-        to: "at", vol: 125, exp: 72, imp: 53, tariff: 0, 
-        note: "EU-Binnenmarkt + enge Wirtschaftsbeziehung",
-        topExports: ["🚗 Autos", "⚙️ Maschinen", "🧪 Chemie"],
-        topImports: ["⚙️ Maschinen", "🔩 Metallwaren", "🪵 Holz"]
-    }
+// Historical tariff data by year
+var tariffHistory = {
+    2020: { us: 5, cn: 10, br: 14, ind: 18, mx: 5 },
+    2021: { us: 5, cn: 12, br: 15, ind: 19, mx: 5 },
+    2022: { us: 8, cn: 15, br: 16, ind: 20, mx: 5 },
+    2023: { us: 10, cn: 18, br: 17, ind: 21, mx: 5 },
+    2024: { us: 10, cn: 20, br: 17, ind: 21, mx: 5 },
+    2025: { us: 15, cn: 25, br: 18, ind: 22, mx: 5 },
+    2026: { us: 15, cn: 25, br: 18, ind: 22, mx: 5 }
+};
+
+var baseTrades = [
+    { to: "us", vol: 253, exp: 157, imp: 96, cargo: "🚗", topExp: ["🚗 Autos", "⚙️ Maschinen", "💊 Pharma"], topImp: ["✈️ Flugzeuge", "💻 Software"] },
+    { to: "cn", vol: 298, exp: 107, imp: 191, cargo: "📱", topExp: ["🚗 Autos", "⚙️ Maschinen"], topImp: ["📱 Elektronik", "🔋 Batterien"] },
+    { to: "gb", vol: 134, exp: 89, imp: 45, tariff: 0, cargo: "🚗", topExp: ["🚗 Autos", "💊 Pharma"], topImp: ["🛢️ Öl/Gas", "💎 Gold"] },
+    { to: "jp", vol: 45, exp: 23, imp: 22, tariff: 0, cargo: "⚙️", topExp: ["🚗 Autos", "💊 Pharma"], topImp: ["📱 Elektronik", "🚗 Autos"] },
+    { to: "kr", vol: 28, exp: 14, imp: 14, tariff: 0, cargo: "🔋", topExp: ["🚗 Autos", "⚙️ Maschinen"], topImp: ["📱 Elektronik", "🔋 Batterien"] },
+    { to: "br", vol: 21, exp: 12, imp: 9, cargo: "⚙️", topExp: ["⚙️ Maschinen", "🧪 Chemie"], topImp: ["🥩 Fleisch", "☕ Kaffee"] },
+    { to: "ind", vol: 24, exp: 15, imp: 9, cargo: "⚙️", topExp: ["⚙️ Maschinen", "🧪 Chemie"], topImp: ["💊 Pharma", "👕 Textilien"] },
+    { to: "mx", vol: 18, exp: 11, imp: 7, cargo: "🚗", topExp: ["🚗 Autos", "⚙️ Maschinen"], topImp: ["🚗 Autoteile", "🥑 Lebensmittel"] },
+    { to: "fr", vol: 172, exp: 102, imp: 70, tariff: 0, cargo: "✈️", topExp: ["🚗 Autos", "⚙️ Maschinen"], topImp: ["✈️ Airbus", "🍷 Wein"] },
+    { to: "nl", vol: 198, exp: 95, imp: 103, tariff: 0, cargo: "🧪", topExp: ["⚙️ Maschinen", "🧪 Chemie"], topImp: ["🛢️ Öl", "📱 Elektronik"] },
+    { to: "pl", vol: 156, exp: 82, imp: 74, tariff: 0, cargo: "🚗", topExp: ["🚗 Autoteile", "⚙️ Maschinen"], topImp: ["🚗 Autoteile", "🪑 Möbel"] },
+    { to: "it", vol: 142, exp: 78, imp: 64, tariff: 0, cargo: "👗", topExp: ["🚗 Autos", "⚙️ Maschinen"], topImp: ["👗 Mode", "🍝 Lebensmittel"] },
+    { to: "at", vol: 125, exp: 72, imp: 53, tariff: 0, cargo: "⚙️", topExp: ["🚗 Autos", "⚙️ Maschinen"], topImp: ["⚙️ Maschinen", "🪵 Holz"] }
 ];
 
-var map, lines = [], markers = [];
-var currentFilter = 'all';
+// Global trade routes (not just DE)
+var globalRoutes = [
+    { from: "us", to: "cn", vol: 758, tariff: 60, cargo: "📦", label: "USA ↔ China" },
+    { from: "us", to: "mx", vol: 614, tariff: 25, cargo: "🚗", label: "USA ↔ Mexiko" },
+    { from: "cn", to: "jp", vol: 312, tariff: 8, cargo: "📱", label: "China ↔ Japan" }
+];
+
+var map, lines = [], markers = [], cargoMarkers = [];
+var currentFilter = 'all', currentYear = 2026, currentMode = 'normal';
+var compareSlots = [null, null];
+var quizScore = 0, quizQuestion = 0;
 var isFullscreen = false;
 
-function init() {
-    map = L.map("map", {
-        center: [30, 10],
-        zoom: 2,
-        minZoom: 2,
-        maxZoom: 8,
-        zoomControl: false
+function getTrades() {
+    var yearTariffs = tariffHistory[currentYear] || tariffHistory[2026];
+    return baseTrades.map(function(t) {
+        var tariff = t.tariff !== undefined ? t.tariff : (yearTariffs[t.to] || 0);
+        return Object.assign({}, t, { tariff: tariff });
     });
+}
 
+function init() {
+    map = L.map("map", { center: [30, 10], zoom: 2, minZoom: 2, maxZoom: 8, zoomControl: false });
     L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png").addTo(map);
     L.control.zoom({ position: 'topright' }).addTo(map);
-
+    
     renderTrades();
     setupFilters();
+    setupTabs();
+    initQuiz();
+    calculate();
 }
 
 function toggleFullscreen() {
     isFullscreen = !isFullscreen;
     document.body.classList.toggle('fullscreen', isFullscreen);
-    document.querySelector('.fullscreen-btn').textContent = isFullscreen ? '✕' : '⛶';
-    
-    // Notify parent iframe
-    if (window.parent !== window) {
-        window.parent.postMessage({ type: 'fullscreen', value: isFullscreen }, '*');
-    }
-    
+    if (window.parent !== window) window.parent.postMessage({ type: 'fullscreen', value: isFullscreen }, '*');
     setTimeout(function() { map.invalidateSize(); }, 100);
+}
+
+function changeYear(year) {
+    currentYear = parseInt(year);
+    document.getElementById('yearDisplay').textContent = year;
+    document.getElementById('stat-year').textContent = year;
+    renderTrades();
 }
 
 function renderTrades() {
     clearMap();
     var de = countries.de;
-    var filtered = getFilteredTrades();
+    var trades = getTrades();
+    var filtered = getFilteredTrades(trades);
 
+    // Draw DE routes
     filtered.forEach(function(t) {
         var c = countries[t.to];
         if (!c) return;
-
-        var color = t.tariff > 15 ? "#ef4444" : t.tariff > 0 ? "#f59e0b" : "#22c55e";
-        var weight = Math.max(2, Math.min(5, t.vol / 60));
-
-        var pts = [];
-        var midLat = (de.lat + c.lat) / 2;
-        var midLng = (de.lng + c.lng) / 2;
-        var dist = Math.sqrt(Math.pow(de.lat - c.lat, 2) + Math.pow(de.lng - c.lng, 2));
-        var curveOffset = dist * 0.2;
-        var curveLat = midLat + curveOffset;
-        
-        for (var i = 0; i <= 30; i++) {
-            var t2 = i / 30;
-            var lat = Math.pow(1-t2, 2) * de.lat + 2 * (1-t2) * t2 * curveLat + Math.pow(t2, 2) * c.lat;
-            var lng = Math.pow(1-t2, 2) * de.lng + 2 * (1-t2) * t2 * midLng + Math.pow(t2, 2) * c.lng;
-            pts.push([lat, lng]);
-        }
-
-        var baseLine = L.polyline(pts, { color: color, weight: weight + 2, opacity: 0.15, lineCap: 'round' }).addTo(map);
-        lines.push(baseLine);
-
-        var flowLine = L.polyline(pts, { color: color, weight: weight, opacity: 0.9, lineCap: 'round', dashArray: '8, 12', className: 'flow-line' }).addTo(map);
-        flowLine.tradeData = t;
-        lines.push(flowLine);
+        drawRoute(de, c, t.tariff, t.vol, t.cargo);
     });
 
+    // Draw global routes if enabled
+    if (currentMode === 'global') {
+        globalRoutes.forEach(function(r) {
+            var from = countries[r.from], to = countries[r.to];
+            if (from && to) drawRoute(from, to, r.tariff, r.vol, r.cargo, '#a855f7');
+        });
+    }
+
+    // Draw markers
     var drawnCountries = ['de'];
     filtered.forEach(function(t) { drawnCountries.push(t.to); });
+    if (currentMode === 'global') {
+        globalRoutes.forEach(function(r) { drawnCountries.push(r.from, r.to); });
+    }
     drawnCountries = [...new Set(drawnCountries)];
 
     drawnCountries.forEach(function(id) {
         var c = countries[id];
         if (!c) return;
-
         var t = trades.find(function(x) { return x.to === id; });
         var isDE = id === 'de';
+        var isSelected = compareSlots.includes(id);
         var tariffClass = !t ? 'tariff-none' : t.tariff > 15 ? 'tariff-high' : t.tariff > 0 ? 'tariff-med' : 'tariff-none';
 
-        var size = isDE ? 48 : 40;
+        var size = isDE ? 48 : 38;
         var icon = L.divIcon({
             className: 'country-marker',
-            html: '<div class="marker-dot ' + (isDE ? 'de' : tariffClass) + '">' + c.f + '</div>',
+            html: '<div class="marker-dot ' + (isDE ? 'de' : tariffClass) + (isSelected ? ' selected' : '') + '">' + c.f + '</div>',
             iconSize: [size, size],
             iconAnchor: [size/2, size/2]
         });
 
         var marker = L.marker([c.lat, c.lng], { icon: icon }).addTo(map);
         marker.countryId = id;
-        marker.on('click', function() { showPanel(id); });
+        marker.on('click', function() { onMarkerClick(id); });
         markers.push(marker);
     });
 
     updateStats(filtered);
 }
 
+function drawRoute(from, to, tariff, vol, cargo, forceColor) {
+    var color = forceColor || (tariff > 15 ? "#ef4444" : tariff > 0 ? "#f59e0b" : "#22c55e");
+    var weight = Math.max(2, Math.min(5, vol / 80));
+
+    var pts = [];
+    var mid = [(from.lat + to.lat) / 2, (from.lng + to.lng) / 2];
+    var dist = Math.sqrt(Math.pow(from.lat - to.lat, 2) + Math.pow(from.lng - to.lng, 2));
+    var curve = mid[0] + dist * 0.15;
+    
+    for (var i = 0; i <= 30; i++) {
+        var t = i / 30;
+        pts.push([
+            Math.pow(1-t,2)*from.lat + 2*(1-t)*t*curve + Math.pow(t,2)*to.lat,
+            Math.pow(1-t,2)*from.lng + 2*(1-t)*t*mid[1] + Math.pow(t,2)*to.lng
+        ]);
+    }
+
+    lines.push(L.polyline(pts, { color: color, weight: weight + 2, opacity: 0.15 }).addTo(map));
+    lines.push(L.polyline(pts, { color: color, weight: weight, opacity: 0.8, dashArray: '8,12', className: 'flow-line' }).addTo(map));
+
+    // Cargo icon at midpoint
+    if (cargo) {
+        var midPt = pts[15];
+        var cargoIcon = L.divIcon({
+            className: 'cargo-icon',
+            html: cargo,
+            iconSize: [20, 20],
+            iconAnchor: [10, 10]
+        });
+        cargoMarkers.push(L.marker(midPt, { icon: cargoIcon, interactive: false }).addTo(map));
+    }
+}
+
 function clearMap() {
     lines.forEach(function(l) { map.removeLayer(l); });
     markers.forEach(function(m) { map.removeLayer(m); });
-    lines = []; markers = [];
+    cargoMarkers.forEach(function(m) { map.removeLayer(m); });
+    lines = []; markers = []; cargoMarkers = [];
 }
 
-function getFilteredTrades() {
-    var sorted = trades.slice().sort(function(a,b) { return b.vol - a.vol; });
+function getFilteredTrades(trades) {
     return trades.filter(function(t) {
         var c = countries[t.to];
         if (currentFilter === 'tariff') return t.tariff > 0;
         if (currentFilter === 'eu') return c && c.eu;
-        if (currentFilter === 'top5') return sorted.indexOf(t) < 5;
         return true;
     });
 }
@@ -489,71 +627,171 @@ function setupFilters() {
             renderTrades();
         };
     });
+    document.querySelectorAll('.ctrl-btn[data-mode]').forEach(function(btn) {
+        btn.onclick = function() {
+            var mode = btn.dataset.mode;
+            if (currentMode === mode) {
+                currentMode = 'normal';
+                btn.classList.remove('active');
+            } else {
+                document.querySelectorAll('.ctrl-btn[data-mode]').forEach(function(b) { b.classList.remove('active'); });
+                btn.classList.add('active');
+                currentMode = mode;
+            }
+            if (mode === 'compare') {
+                document.querySelector('[data-tab="compare"]').click();
+            }
+            renderTrades();
+        };
+    });
+}
+
+function setupTabs() {
+    document.querySelectorAll('.tab-btn').forEach(function(btn) {
+        btn.onclick = function() {
+            document.querySelectorAll('.tab-btn').forEach(function(b) { b.classList.remove('active'); });
+            document.querySelectorAll('.tab-content').forEach(function(c) { c.classList.remove('active'); });
+            btn.classList.add('active');
+            document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+        };
+    });
+}
+
+function onMarkerClick(id) {
+    if (currentMode === 'compare') {
+        addToCompare(id);
+    } else {
+        showPanel(id);
+    }
+}
+
+function addToCompare(id) {
+    if (compareSlots[0] === id) { compareSlots[0] = null; }
+    else if (compareSlots[1] === id) { compareSlots[1] = null; }
+    else if (!compareSlots[0]) { compareSlots[0] = id; }
+    else if (!compareSlots[1]) { compareSlots[1] = id; }
+    else { compareSlots = [id, null]; }
+    
+    renderTrades();
+    updateCompareCards();
+}
+
+function updateCompareCards() {
+    var trades = getTrades();
+    [0, 1].forEach(function(i) {
+        var el = document.getElementById('compare' + (i+1));
+        var id = compareSlots[i];
+        if (!id) {
+            el.className = 'compare-card';
+            el.innerHTML = '<span class="compare-hint">Tippe Land ' + (i+1) + '</span>';
+        } else {
+            var c = countries[id];
+            var t = trades.find(function(x) { return x.to === id; });
+            var tariff = t ? t.tariff : 0;
+            var tariffColor = tariff > 15 ? 'red' : tariff > 0 ? 'yellow' : 'green';
+            el.className = 'compare-card filled';
+            el.innerHTML = '<span class="flag">' + c.f + '</span><span class="name">' + c.n + '</span>' +
+                '<span class="val ' + tariffColor + '">' + tariff + '%</span><span class="label">Zollsatz</span>';
+        }
+    });
 }
 
 function updateStats(filtered) {
-    var vol = 0, tar = 0, count = 0;
-    filtered.forEach(function(t) { vol += t.vol; tar += t.tariff; count++; });
-    document.getElementById('stat-routes').textContent = count;
+    var vol = 0, tar = 0;
+    filtered.forEach(function(t) { vol += t.vol; tar += t.tariff; });
+    document.getElementById('stat-routes').textContent = filtered.length;
     document.getElementById('stat-volume').textContent = vol.toLocaleString('de-DE');
-    document.getElementById('stat-tariff').textContent = count ? Math.round(tar / count) + '%' : '0%';
+    document.getElementById('stat-tariff').textContent = filtered.length ? Math.round(tar / filtered.length) + '%' : '0%';
 }
 
+// Quiz
+var quizQuestions = [
+    { q: "Welches Land hat den höchsten Zoll auf deutsche Waren?", a: "cn", opts: ["us", "cn", "jp", "gb"] },
+    { q: "Mit welchem Land hat Deutschland den größten Handelsüberschuss?", a: "us", opts: ["us", "cn", "fr", "nl"] },
+    { q: "Welches EU-Land ist Deutschlands größter Handelspartner?", a: "nl", opts: ["fr", "nl", "pl", "it"] },
+    { q: "Wann wurden die Trump-Zölle auf EU-Autos eingeführt?", a: "2025", opts: ["2023", "2024", "2025", "2026"], type: "year" },
+    { q: "Was exportiert Deutschland hauptsächlich in die USA?", a: "🚗", opts: ["🚗 Autos", "☕ Kaffee", "👕 Textilien", "🌾 Weizen"], type: "product" }
+];
+
+function initQuiz() {
+    showQuizQuestion();
+}
+
+function showQuizQuestion() {
+    if (quizQuestion >= quizQuestions.length) {
+        document.getElementById('quizContainer').innerHTML = '<div class="quiz-q">🎉 Quiz beendet!</div><div style="text-align:center;font-size:24px;color:white;margin-top:10px;">' + quizScore + '/' + quizQuestions.length + ' richtig</div>';
+        document.getElementById('quizNext').style.display = 'none';
+        return;
+    }
+    var q = quizQuestions[quizQuestion];
+    document.getElementById('quizQ').textContent = q.q;
+    var optsHtml = q.opts.map(function(o) {
+        var label = q.type === 'year' || q.type === 'product' ? o : countries[o].f + ' ' + countries[o].n;
+        return '<button class="quiz-opt" data-val="' + o + '" onclick="checkQuiz(\'' + o + '\')">' + label + '</button>';
+    }).join('');
+    document.getElementById('quizOpts').innerHTML = optsHtml;
+    document.getElementById('quizNext').style.display = 'none';
+}
+
+function checkQuiz(val) {
+    var q = quizQuestions[quizQuestion];
+    var correct = val === q.a || val.includes(q.a);
+    document.querySelectorAll('.quiz-opt').forEach(function(btn) {
+        btn.disabled = true;
+        if (btn.dataset.val === q.a || btn.dataset.val.includes(q.a)) btn.classList.add('correct');
+        else if (btn.dataset.val === val) btn.classList.add('wrong');
+    });
+    if (correct) quizScore++;
+    document.getElementById('quizScore').textContent = quizScore;
+    document.getElementById('quizNext').style.display = 'block';
+}
+
+function nextQuiz() {
+    quizQuestion++;
+    showQuizQuestion();
+}
+
+// Calculator
+function calculate() {
+    var price = parseFloat(document.getElementById('calcPrice').value) || 0;
+    var country = document.getElementById('calcCountry').value;
+    var trades = getTrades();
+    var t = trades.find(function(x) { return x.to === country; });
+    var tariff = t ? t.tariff : 0;
+    var duty = price * tariff / 100;
+    var total = price + duty;
+    document.getElementById('calcResult').textContent = total.toLocaleString('de-DE', { minimumFractionDigits: 2 }) + ' €';
+    document.getElementById('calcBreakdown').textContent = price + '€ + ' + tariff + '% Zoll (' + duty.toFixed(2) + '€) = Endpreis';
+}
+document.getElementById('calcPrice').addEventListener('input', calculate);
+
+// Info Panel
 function showPanel(id) {
     var c = countries[id];
+    var trades = getTrades();
     var t = trades.find(function(x) { return x.to === id; });
-    var isDE = id === 'de';
-
     var tariffColor = !t ? 'green' : t.tariff > 15 ? 'red' : t.tariff > 0 ? 'yellow' : 'green';
 
     var html = '<div class="info-header"><span class="info-flag">' + c.f + '</span><span class="info-name">' + c.n + '</span></div>';
-    
     if (t) {
         html += '<div class="info-grid">' +
             '<div class="info-item"><div class="val">' + t.exp + '</div><div class="label">Export Mrd €</div></div>' +
             '<div class="info-item"><div class="val">' + t.imp + '</div><div class="label">Import Mrd €</div></div>' +
-            '<div class="info-item"><div class="val ' + tariffColor + '">' + t.tariff + '%</div><div class="label">Zollsatz</div></div>' +
-        '</div>';
-        
-        // Products section
-        html += '<div class="info-products">';
-        html += '<div class="info-products-title">🇩🇪 Top Exporte nach ' + c.n + '</div>';
-        html += '<div class="info-products-row">' + t.topExports.map(function(p) { return '<span class="product-tag export">' + p + '</span>'; }).join('') + '</div>';
-        html += '<div class="info-products-title" style="margin-top:10px">📥 Top Importe aus ' + c.n + '</div>';
-        html += '<div class="info-products-row">' + t.topImports.map(function(p) { return '<span class="product-tag import">' + p + '</span>'; }).join('') + '</div>';
-        html += '</div>';
-        
-        html += '<div class="info-note">ℹ️ ' + t.note + '</div>';
-    } else if (isDE) {
-        html += '<div class="info-grid">' +
-            '<div class="info-item"><div class="val">1.655</div><div class="label">Export Mrd €</div></div>' +
-            '<div class="info-item"><div class="val">1.371</div><div class="label">Import Mrd €</div></div>' +
-            '<div class="info-item"><div class="val green">#3</div><div class="label">Weltweit</div></div>' +
-        '</div>';
-        html += '<div class="info-products">';
-        html += '<div class="info-products-title">🇩🇪 Top Export-Güter weltweit</div>';
-        html += '<div class="info-products-row"><span class="product-tag export">🚗 Autos</span><span class="product-tag export">⚙️ Maschinen</span><span class="product-tag export">🧪 Chemie</span></div>';
-        html += '<div class="info-products-row"><span class="product-tag export">💊 Pharma</span><span class="product-tag export">📱 Elektro</span></div>';
-        html += '</div>';
-        html += '<div class="info-note">ℹ️ Deutschland ist die drittgrößte Exportnation der Welt nach China und den USA.</div>';
+            '<div class="info-item"><div class="val ' + tariffColor + '">' + t.tariff + '%</div><div class="label">Zoll ' + currentYear + '</div></div></div>';
+        if (t.topExp) {
+            html += '<div class="info-products"><div class="info-products-title">🇩🇪→ Export</div>' + t.topExp.map(function(p) { return '<span class="product-tag">' + p + '</span>'; }).join('') + '</div>';
+        }
+        if (t.topImp) {
+            html += '<div class="info-products"><div class="info-products-title">→🇩🇪 Import</div>' + t.topImp.map(function(p) { return '<span class="product-tag">' + p + '</span>'; }).join('') + '</div>';
+        }
     }
-
     document.getElementById('infoPanelContent').innerHTML = html;
     document.getElementById('infoPanel').classList.add('open');
 }
 
-function closePanel() {
-    document.getElementById('infoPanel').classList.remove('open');
-}
-
-document.getElementById('map').addEventListener('click', function(e) {
-    if (!e.target.closest('.marker-dot')) closePanel();
-});
-
-// Handle escape key for fullscreen
-document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape' && isFullscreen) toggleFullscreen();
-});
+function closePanel() { document.getElementById('infoPanel').classList.remove('open'); }
+document.getElementById('map').addEventListener('click', function(e) { if (!e.target.closest('.marker-dot')) closePanel(); });
+document.addEventListener('keydown', function(e) { if (e.key === 'Escape') { if (isFullscreen) toggleFullscreen(); closePanel(); } });
 
 init();
 </script>
