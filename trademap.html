@@ -528,6 +528,8 @@ function init() {
             var cargoSize = getCargoSize(zoom);
             var el = m.getElement();
             if (el) {
+                // Hide cargo icons at low zoom
+                el.style.display = zoom < 2 ? 'none' : '';
                 el.style.fontSize = cargoSize + 'px';
                 var span = el.querySelector('span');
                 if (span) span.style.fontSize = cargoSize + 'px';
@@ -633,7 +635,7 @@ function drawRoute(from, to, tariff, vol, cargo, forceColor) {
     lines.push(L.polyline(pts, { color: color, weight: weight + 2, opacity: 0.15 }).addTo(map));
     lines.push(L.polyline(pts, { color: color, weight: weight, opacity: 0.8, dashArray: '8,12', className: 'flow-line' }).addTo(map));
 
-    // Cargo icon at midpoint
+    // Cargo icon at midpoint - only show at zoom >= 2
     if (cargo) {
         var midPt = pts[15];
         var cargoSize = getCargoSize(map.getZoom());
@@ -645,6 +647,10 @@ function drawRoute(from, to, tariff, vol, cargo, forceColor) {
         });
         var cm = L.marker(midPt, { icon: cargoIcon, interactive: false }).addTo(map);
         cm.cargoEmoji = cargo;
+        // Hide at low zoom
+        if (map.getZoom() < 2) {
+            cm.getElement().style.display = 'none';
+        }
         cargoMarkers.push(cm);
     }
 }
