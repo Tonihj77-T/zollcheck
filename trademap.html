@@ -38,10 +38,7 @@ body { background: #0f172a; font-family: 'Inter', -apple-system, sans-serif; ove
 }
 
 /* Custom markers */
-.country-marker {
-    background: none !important;
-    border: none !important;
-}
+.country-marker { background: none !important; border: none !important; }
 .marker-dot {
     width: 100%;
     height: 100%;
@@ -53,13 +50,10 @@ body { background: #0f172a; font-family: 'Inter', -apple-system, sans-serif; ove
     font-size: 11px;
     color: white;
     box-shadow: 0 2px 8px rgba(0,0,0,0.4);
-    transition: transform 0.2s, box-shadow 0.2s;
+    transition: transform 0.2s;
     cursor: pointer;
 }
-.marker-dot:hover {
-    transform: scale(1.2);
-    box-shadow: 0 4px 16px rgba(0,0,0,0.5);
-}
+.marker-dot:hover { transform: scale(1.15); }
 .marker-dot.de {
     background: linear-gradient(135deg, #3b82f6, #1d4ed8);
     animation: pulse-de 2s infinite;
@@ -68,13 +62,25 @@ body { background: #0f172a; font-family: 'Inter', -apple-system, sans-serif; ove
     background: linear-gradient(135deg, #475569, #334155);
     border: 2px solid rgba(255,255,255,0.2);
 }
-.marker-dot.tariff-high { border: 2px solid #ef4444; }
-.marker-dot.tariff-med { border: 2px solid #f59e0b; }
-.marker-dot.tariff-none { border: 2px solid #22c55e; }
+.marker-dot.tariff-high { border-color: #ef4444; }
+.marker-dot.tariff-med { border-color: #f59e0b; }
+.marker-dot.tariff-none { border-color: #22c55e; }
 
 @keyframes pulse-de {
     0%, 100% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.5); }
     50% { box-shadow: 0 0 0 12px rgba(59, 130, 246, 0); }
+}
+
+/* Animated dots - now as Leaflet markers */
+.anim-dot {
+    background: none !important;
+    border: none !important;
+}
+.anim-dot-inner {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    box-shadow: 0 0 8px currentColor;
 }
 
 /* Info Panel */
@@ -121,19 +127,11 @@ body { background: #0f172a; font-family: 'Inter', -apple-system, sans-serif; ove
     padding: 12px;
     text-align: center;
 }
-.info-item .val {
-    font-size: 20px;
-    font-weight: 700;
-    color: white;
-}
+.info-item .val { font-size: 20px; font-weight: 700; color: white; }
 .info-item .val.green { color: #22c55e; }
 .info-item .val.yellow { color: #f59e0b; }
 .info-item .val.red { color: #ef4444; }
-.info-item .label {
-    font-size: 10px;
-    color: #64748b;
-    margin-top: 4px;
-}
+.info-item .label { font-size: 10px; color: #64748b; margin-top: 4px; }
 
 /* Stats Bar */
 .stats {
@@ -158,7 +156,6 @@ body { background: #0f172a; font-family: 'Inter', -apple-system, sans-serif; ove
     font-size: 11px;
     color: #94a3b8;
     z-index: 500;
-    backdrop-filter: blur(8px);
 }
 .legend-title { font-weight: 600; color: white; margin-bottom: 6px; }
 .legend-row { display: flex; align-items: center; gap: 8px; margin: 4px 0; }
@@ -167,7 +164,6 @@ body { background: #0f172a; font-family: 'Inter', -apple-system, sans-serif; ove
 .legend-line.yellow { background: #f59e0b; }
 .legend-line.red { background: #ef4444; }
 
-/* Hide Leaflet attribution */
 .leaflet-control-attribution { display: none !important; }
 </style>
 </head>
@@ -183,7 +179,7 @@ body { background: #0f172a; font-family: 'Inter', -apple-system, sans-serif; ove
 <div id="map"></div>
 
 <div class="legend">
-    <div class="legend-title">Zollsätze</div>
+    <div class="legend-title">Zollsätze (DE→Land)</div>
     <div class="legend-row"><div class="legend-line green"></div> Zollfrei (0%)</div>
     <div class="legend-row"><div class="legend-line yellow"></div> Niedrig (1-10%)</div>
     <div class="legend-row"><div class="legend-line red"></div> Hoch (>10%)</div>
@@ -195,12 +191,16 @@ body { background: #0f172a; font-family: 'Inter', -apple-system, sans-serif; ove
 </div>
 
 <div class="stats">
-    <div class="stat"><b id="stat-routes">9</b><span>Handelsrouten</span></div>
-    <div class="stat"><b id="stat-volume">993</b><span>Mrd € Volumen</span></div>
-    <div class="stat"><b id="stat-tariff">6%</b><span>⌀ Zollsatz</span></div>
+    <div class="stat"><b id="stat-routes">13</b><span>Handelsrouten</span></div>
+    <div class="stat"><b id="stat-volume">1.614</b><span>Mrd € Volumen</span></div>
+    <div class="stat"><b id="stat-tariff">4%</b><span>⌀ Zollsatz</span></div>
 </div>
 
 <script>
+// === DATEN (Stand: Feb 2026) ===
+// Zölle: Was das Zielland auf deutsche Exporte erhebt
+// Quellen: WTO, EU Kommission, US Trade Representative
+
 var countries = {
     de: { n: "Deutschland", f: "🇩🇪", lat: 51.17, lng: 10.45, eu: true },
     us: { n: "USA", f: "🇺🇸", lat: 37.09, lng: -95.71 },
@@ -218,23 +218,41 @@ var countries = {
     at: { n: "Österreich", f: "🇦🇹", lat: 47.52, lng: 14.55, eu: true }
 };
 
+// Handelsdaten 2025/26 (Mrd €) + Zollsätze auf deutsche Exporte
 var trades = [
-    { to: "us", vol: 253, exp: 157, imp: 96, tariff: 15 },
-    { to: "cn", vol: 298, exp: 107, imp: 191, tariff: 8 },
-    { to: "gb", vol: 134, exp: 89, imp: 45, tariff: 0 },
-    { to: "fr", vol: 172, exp: 102, imp: 70, tariff: 0 },
-    { to: "jp", vol: 45, exp: 23, imp: 22, tariff: 5 },
-    { to: "kr", vol: 28, exp: 14, imp: 14, tariff: 0 },
-    { to: "br", vol: 21, exp: 12, imp: 9, tariff: 12 },
-    { to: "ind", vol: 24, exp: 15, imp: 9, tariff: 10 },
-    { to: "mx", vol: 18, exp: 11, imp: 7, tariff: 0 },
-    { to: "nl", vol: 198, exp: 95, imp: 103, tariff: 0 },
-    { to: "pl", vol: 156, exp: 82, imp: 74, tariff: 0 },
-    { to: "it", vol: 142, exp: 78, imp: 64, tariff: 0 },
-    { to: "at", vol: 125, exp: 72, imp: 53, tariff: 0 }
+    // USA: Trump-Zölle 2025 - 15% auf Autos, 10% Baseline "reciprocal"
+    { to: "us", vol: 253, exp: 157, imp: 96, tariff: 15, note: "Trump-Zölle: 15% Autos, 10% Baseline" },
+    
+    // China: Gegenzölle auf EU-Produkte
+    { to: "cn", vol: 298, exp: 107, imp: 191, tariff: 25, note: "Gegenzölle auf Autos & Maschinenbau" },
+    
+    // UK: Post-Brexit, TCA Handelsabkommen - weitgehend zollfrei
+    { to: "gb", vol: 134, exp: 89, imp: 45, tariff: 0, note: "EU-UK Trade Agreement (TCA)" },
+    
+    // Japan: EU-Japan EPA (2019) - fast alles zollfrei
+    { to: "jp", vol: 45, exp: 23, imp: 22, tariff: 0, note: "EU-Japan Wirtschaftspartnerschaft" },
+    
+    // Südkorea: EU-Korea FTA (2011) - zollfrei
+    { to: "kr", vol: 28, exp: 14, imp: 14, tariff: 0, note: "EU-Korea Freihandelsabkommen" },
+    
+    // Brasilien: Mercosur - noch hohe Zölle, neues Abkommen pending
+    { to: "br", vol: 21, exp: 12, imp: 9, tariff: 18, note: "Mercosur, Ø 18% auf Industriegüter" },
+    
+    // Indien: Kein FTA, WTO-Zölle
+    { to: "ind", vol: 24, exp: 15, imp: 9, tariff: 22, note: "WTO MFN-Zölle, Ø 22%" },
+    
+    // Mexiko: EU-Mexiko Global Agreement - niedrige Zölle
+    { to: "mx", vol: 18, exp: 11, imp: 7, tariff: 5, note: "EU-Mexiko Abkommen (2020)" },
+    
+    // EU-Länder: Binnenmarkt = 0% Zoll
+    { to: "fr", vol: 172, exp: 102, imp: 70, tariff: 0, note: "EU-Binnenmarkt" },
+    { to: "nl", vol: 198, exp: 95, imp: 103, tariff: 0, note: "EU-Binnenmarkt" },
+    { to: "pl", vol: 156, exp: 82, imp: 74, tariff: 0, note: "EU-Binnenmarkt" },
+    { to: "it", vol: 142, exp: 78, imp: 64, tariff: 0, note: "EU-Binnenmarkt" },
+    { to: "at", vol: 125, exp: 72, imp: 53, tariff: 0, note: "EU-Binnenmarkt" }
 ];
 
-var map, lines = [], markers = [], animDots = [];
+var map, lines = [], markers = [], animMarkers = [];
 var currentFilter = 'all';
 
 function init() {
@@ -251,7 +269,6 @@ function init() {
 
     renderTrades();
     setupFilters();
-    updateStats();
 }
 
 function renderTrades() {
@@ -259,41 +276,57 @@ function renderTrades() {
     var de = countries.de;
     var filtered = getFilteredTrades();
 
-    // Draw lines
-    filtered.forEach(function(t, i) {
+    // Draw lines and animated markers
+    filtered.forEach(function(t, idx) {
         var c = countries[t.to];
         if (!c) return;
 
         var color = t.tariff > 10 ? "#ef4444" : t.tariff > 0 ? "#f59e0b" : "#22c55e";
         var weight = Math.max(2, Math.min(6, t.vol / 50));
 
+        // Build curved path
         var pts = [];
-        for (var p = 0; p <= 30; p++) {
-            var f = p / 30;
-            var curve = Math.sin(Math.PI * f) * (15 + Math.abs(de.lng - c.lng) / 20);
+        for (var p = 0; p <= 40; p++) {
+            var f = p / 40;
+            var curve = Math.sin(Math.PI * f) * (12 + Math.abs(de.lng - c.lng) / 25);
             pts.push([
-                de.lat + (c.lat - de.lat) * f + curve * (de.lat > 0 ? -0.5 : 0.5),
+                de.lat + (c.lat - de.lat) * f + curve * (de.lat > c.lat ? -0.3 : 0.3),
                 de.lng + (c.lng - de.lng) * f
             ]);
         }
 
+        // Draw line
         var line = L.polyline(pts, {
             color: color,
             weight: weight,
-            opacity: 0.6,
-            className: 'trade-line'
+            opacity: 0.5
         }).addTo(map);
-        
         line.tradeData = t;
         lines.push(line);
 
-        // Animated dot
-        createAnimatedDot(pts, color, 3 + i * 0.3);
+        // Animated dot as Leaflet CircleMarker
+        var animMarker = L.circleMarker(pts[0], {
+            radius: 4,
+            fillColor: color,
+            fillOpacity: 1,
+            color: color,
+            weight: 0,
+            className: 'anim-dot'
+        }).addTo(map);
+        
+        animMarker.pathPoints = pts;
+        animMarker.pathIndex = 0;
+        animMarker.pathColor = color;
+        animMarkers.push(animMarker);
     });
 
-    // Draw markers
+    // Start animation loop
+    requestAnimationFrame(animateMarkers);
+
+    // Draw country markers
     var drawnCountries = ['de'];
     filtered.forEach(function(t) { drawnCountries.push(t.to); });
+    drawnCountries = [...new Set(drawnCountries)];
 
     drawnCountries.forEach(function(id) {
         var c = countries[id];
@@ -305,8 +338,7 @@ function renderTrades() {
 
         var icon = L.divIcon({
             className: 'country-marker',
-            html: '<div class="marker-dot ' + (isDE ? 'de' : 'partner ' + tariffClass) + '">' + 
-                  (isDE ? '🇩🇪' : c.f) + '</div>',
+            html: '<div class="marker-dot ' + (isDE ? 'de' : 'partner ' + tariffClass) + '">' + c.f + '</div>',
             iconSize: [isDE ? 44 : 36, isDE ? 44 : 36],
             iconAnchor: [isDE ? 22 : 18, isDE ? 22 : 18]
         });
@@ -320,38 +352,33 @@ function renderTrades() {
     updateStats(filtered);
 }
 
-function createAnimatedDot(path, color, duration) {
-    var dot = document.createElement('div');
-    dot.style.cssText = 'position:absolute;width:8px;height:8px;background:' + color + 
-        ';border-radius:50%;box-shadow:0 0 10px ' + color + ';pointer-events:none;z-index:600;';
-    document.body.appendChild(dot);
-    animDots.push(dot);
-
-    var idx = 0;
-    function animate() {
-        if (!dot.parentNode) return;
-        var pt = map.latLngToContainerPoint(path[idx]);
-        dot.style.left = pt.x - 4 + 'px';
-        dot.style.top = pt.y + document.querySelector('.controls').offsetHeight - 4 + 'px';
-        idx = (idx + 1) % path.length;
-        setTimeout(animate, duration * 1000 / path.length);
+var animFrame = 0;
+function animateMarkers() {
+    animFrame++;
+    if (animFrame % 3 === 0) { // Slow down animation
+        animMarkers.forEach(function(m, i) {
+            if (!m.pathPoints) return;
+            m.pathIndex = (m.pathIndex + 1) % m.pathPoints.length;
+            m.setLatLng(m.pathPoints[m.pathIndex]);
+        });
     }
-    animate();
+    requestAnimationFrame(animateMarkers);
 }
 
 function clearMap() {
     lines.forEach(function(l) { map.removeLayer(l); });
     markers.forEach(function(m) { map.removeLayer(m); });
-    animDots.forEach(function(d) { if(d.parentNode) d.parentNode.removeChild(d); });
-    lines = []; markers = []; animDots = [];
+    animMarkers.forEach(function(m) { map.removeLayer(m); });
+    lines = []; markers = []; animMarkers = [];
 }
 
 function getFilteredTrades() {
-    return trades.filter(function(t) {
+    var sorted = trades.slice().sort(function(a,b) { return b.vol - a.vol; });
+    return trades.filter(function(t, i) {
         var c = countries[t.to];
         if (currentFilter === 'tariff') return t.tariff > 0;
         if (currentFilter === 'eu') return c && c.eu;
-        if (currentFilter === 'top5') return trades.indexOf(t) < 5;
+        if (currentFilter === 'top5') return sorted.indexOf(t) < 5;
         return true;
     });
 }
@@ -372,7 +399,7 @@ function updateStats(filtered) {
     var vol = 0, tar = 0, count = 0;
     filtered.forEach(function(t) { vol += t.vol; tar += t.tariff; count++; });
     document.getElementById('stat-routes').textContent = count;
-    document.getElementById('stat-volume').textContent = vol;
+    document.getElementById('stat-volume').textContent = vol.toLocaleString('de-DE');
     document.getElementById('stat-tariff').textContent = count ? Math.round(tar / count) + '%' : '0%';
 }
 
@@ -391,11 +418,14 @@ function showPanel(id) {
             '<div class="info-item"><div class="val">' + t.imp + '</div><div class="label">Import Mrd €</div></div>' +
             '<div class="info-item"><div class="val ' + tariffColor + '">' + t.tariff + '%</div><div class="label">Zollsatz</div></div>' +
         '</div>';
+        if (t.note) {
+            html += '<p style="margin-top:12px;font-size:11px;color:#64748b;text-align:center;">' + t.note + '</p>';
+        }
     } else if (isDE) {
         html += '<div class="info-grid">' +
-            '<div class="info-item"><div class="val">1.655</div><div class="label">Export Mrd €</div></div>' +
-            '<div class="info-item"><div class="val">1.371</div><div class="label">Import Mrd €</div></div>' +
-            '<div class="info-item"><div class="val green">3.</div><div class="label">Exportnation</div></div>' +
+            '<div class="info-item"><div class="val">1.655</div><div class="label">Gesamt-Export Mrd €</div></div>' +
+            '<div class="info-item"><div class="val">1.371</div><div class="label">Gesamt-Import Mrd €</div></div>' +
+            '<div class="info-item"><div class="val green">3.</div><div class="label">Exportnation weltweit</div></div>' +
         '</div>';
     }
 
@@ -407,7 +437,6 @@ function closePanel() {
     document.getElementById('infoPanel').classList.remove('open');
 }
 
-// Close panel on map click
 document.getElementById('map').addEventListener('click', function(e) {
     if (!e.target.closest('.marker-dot')) closePanel();
 });
