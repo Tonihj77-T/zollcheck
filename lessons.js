@@ -359,7 +359,7 @@ const LESSONS = {
 
     // MODUL 3: AKTUELLE KONFLIKTE
     "3-1": {
-        title: "Trump-Zölle 2025",
+        title: "Trump-Zölle 2025/26",
         xp: 15,
         cards: [
             {
@@ -371,6 +371,13 @@ const LESSONS = {
             },
             {
                 type: "info",
+                emoji: "🎭",
+                title: "Das Zoll-Chaos",
+                text: "Trumps Taktik: **Ankündigen, Zurücknehmen, Neu verhandeln**. Börsianer nennen das den 'Taco-Trade' — sie wetten darauf, dass Trump einknickt.",
+                highlight: "Effektive Zölle Ende 2025: China 37,7%, EU 8,6%"
+            },
+            {
+                type: "info",
                 emoji: "🚗",
                 title: "15% auf Autos",
                 text: "Europäische **Autos** werden mit **15% Zoll** belegt. Das macht einen BMW 45.000€ → ~52.000€ teurer!",
@@ -378,26 +385,26 @@ const LESSONS = {
             },
             {
                 type: "info",
-                emoji: "📦",
-                title: "10% auf alles",
-                text: "Zusätzlich gibt es einen **10% Baseline-Zoll** auf fast alle EU-Waren.",
-                highlight: "Von Waschmaschinen bis Wein"
+                emoji: "🏝️",
+                title: "Grönland-Drohung (Jan 2026)",
+                text: "Trump drohte **8 EU-Ländern mit 25% Zöllen** falls sie seinen Grönland-Kauf nicht unterstützen. Die Drohung wurde später fallengelassen.",
+                highlight: "Typisch Trump: Maximaldruck, dann Deal"
             },
             {
                 type: "quiz",
-                question: "Wie hoch ist der Trump-Zoll auf EU-Autos?",
-                options: ["5%", "10%", "15%", "25%"],
-                correct: 2,
-                explanation: "15% auf Autos plus 10% Baseline auf andere Produkte."
+                question: "Was ist der 'Taco-Trade'?",
+                options: ["Zölle auf mexikanisches Essen", "Börsianer wetten auf Trumps Rückzieher", "Ein Freihandelsabkommen", "Illegaler Handel"],
+                correct: 1,
+                explanation: "'Trump always chickens out' (TACO) - Händler wetten darauf, dass Trump seine Zoll-Drohungen zurücknimmt."
             },
             {
                 type: "summary",
                 emoji: "✅",
                 title: "Zusammenfassung",
                 points: [
-                    "Trump 2.0 = massive Zölle auf EU",
-                    "15% auf Autos, 10% Baseline auf alles",
-                    "Deutsche Autoexporte stark betroffen"
+                    "Trump 2.0 = Zoll-Chaos mit ständigem Hin und Her",
+                    "Effektiv: China ~38%, EU ~9% Zölle",
+                    "Taktik: Maximaldruck → Verhandeln → Deal"
                 ]
             }
         ]
