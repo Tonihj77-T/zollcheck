@@ -1,4 +1,4 @@
-const CACHE_NAME = 'zollcheck-v9';
+const CACHE_NAME = 'zollcheck-v10';
 const ASSETS = [
     '/',
     '/index.html',
