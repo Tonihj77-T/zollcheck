@@ -112,6 +112,10 @@ function updateUI() {
     updateGlobIndex();
 }
 
+// === Charts Instance ===
+let zollCharts = null;
+let chartsInitialized = false;
+
 // === Navigation ===
 function showScreen(screenId) {
     // Hide all screens
@@ -136,6 +140,48 @@ function showScreen(screenId) {
     // Initialize map when showing map screen
     if (screenId === 'screen-karte' && window.tradeMap) {
         window.tradeMap.init();
+    }
+    
+    // Initialize charts when showing statistiken screen
+    if (screenId === 'screen-statistiken' && !chartsInitialized) {
+        initCharts();
+    }
+}
+
+// === Charts Initialization ===
+function initCharts() {
+    if (window.ZollCharts && !chartsInitialized) {
+        zollCharts = new ZollCharts();
+        zollCharts.renderAll();
+        chartsInitialized = true;
+    }
+}
+
+// Render a single chart in a container (for lessons)
+function renderLessonChart(chartType, containerId) {
+    if (!window.ZollCharts) return;
+    
+    const tempCharts = new ZollCharts();
+    
+    switch(chartType) {
+        case 'exportquote':
+            tempCharts.renderExportquote(containerId);
+            break;
+        case 'handelspartner':
+            tempCharts.renderHandelspartner(containerId);
+            break;
+        case 'handelsabkommen':
+            tempCharts.renderHandelsabkommen(containerId);
+            break;
+        case 'importbeschraenkungen':
+            tempCharts.renderImportbeschraenkungen(containerId);
+            break;
+        case 'euUsaHandel':
+            tempCharts.renderEuUsaHandel(containerId);
+            break;
+        case 'trumpZoelle':
+            tempCharts.renderTrumpZoelle(containerId);
+            break;
     }
 }
 

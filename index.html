@@ -19,6 +19,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
     
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="charts.css">
+    
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     <div id="app">
@@ -335,6 +339,61 @@
                 
                 <div id="map-container"></div>
             </div>
+            
+            <!-- Statistiken Screen -->
+            <div class="screen" id="screen-statistiken">
+                <div class="screen-header">
+                    <button class="back-btn" onclick="showScreen('screen-home')">←</button>
+                    <h2>📊 Statistiken</h2>
+                </div>
+                
+                <div class="stats-intro">
+                    <p>Interaktive Diagramme zu Handel & Zöllen</p>
+                </div>
+                
+                <!-- Chart 1: Exportquote -->
+                <div class="chart-container">
+                    <div class="chart-wrapper" style="height: 300px;">
+                        <canvas id="chart-exportquote"></canvas>
+                    </div>
+                    <p class="chart-source">Quelle: Statistisches Bundesamt</p>
+                </div>
+                
+                <!-- Chart 2: Handelspartner -->
+                <div class="chart-container">
+                    <div class="chart-wrapper" style="height: 400px;">
+                        <canvas id="chart-handelspartner"></canvas>
+                    </div>
+                    <p class="chart-source">Quelle: Statistisches Bundesamt, 2024</p>
+                </div>
+                
+                <!-- Chart 3: Trump-Zölle (HTML-basiert) -->
+                <div id="trump-zoelle"></div>
+                
+                <!-- Chart 4: EU-USA Handel -->
+                <div class="chart-container">
+                    <div class="chart-wrapper" style="height: 300px;">
+                        <canvas id="chart-eu-usa"></canvas>
+                    </div>
+                    <p class="chart-source">Quelle: Eurostat, 2024</p>
+                </div>
+                
+                <!-- Chart 5: Handelsabkommen -->
+                <div class="chart-container">
+                    <div class="chart-wrapper" style="height: 300px;">
+                        <canvas id="chart-handelsabkommen"></canvas>
+                    </div>
+                    <p class="chart-source">Quelle: WTO, 2024</p>
+                </div>
+                
+                <!-- Chart 6: Importbeschränkungen -->
+                <div class="chart-container">
+                    <div class="chart-wrapper" style="height: 300px;">
+                        <canvas id="chart-importbeschraenkungen"></canvas>
+                    </div>
+                    <p class="chart-source">Quelle: Global Trade Alert, 2024</p>
+                </div>
+            </div>
         </main>
         
         <!-- Bottom Navigation -->
@@ -343,9 +402,9 @@
                 <span class="nav-icon">📚</span>
                 <span class="nav-label">Lernen</span>
             </button>
-            <button class="nav-item" onclick="showScreen('screen-karte')" data-screen="screen-karte">
-                <span class="nav-icon">🗺️</span>
-                <span class="nav-label">Karte</span>
+            <button class="nav-item" onclick="showScreen('screen-statistiken')" data-screen="screen-statistiken">
+                <span class="nav-icon">📊</span>
+                <span class="nav-label">Stats</span>
             </button>
             <button class="nav-item" onclick="showScreen('screen-quiz')" data-screen="screen-quiz">
                 <span class="nav-icon">🎮</span>
@@ -355,9 +414,9 @@
                 <span class="nav-icon">🏛️</span>
                 <span class="nav-label">Simulator</span>
             </button>
-            <button class="nav-item" onclick="showScreen('screen-lexikon')" data-screen="screen-lexikon">
-                <span class="nav-icon">📖</span>
-                <span class="nav-label">Lexikon</span>
+            <button class="nav-item" onclick="showScreen('screen-karte')" data-screen="screen-karte">
+                <span class="nav-icon">🗺️</span>
+                <span class="nav-label">Karte</span>
             </button>
         </nav>
         
@@ -370,6 +429,7 @@
     <script src="lessons.js"></script>
     <script src="simulator.js"></script>
     <script src="map.js"></script>
+    <script src="charts.js"></script>
     <script src="app.js"></script>
 </body>
 </html>

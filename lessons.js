@@ -356,6 +356,143 @@ const LESSONS = {
             }
         ]
     },
+    "2-5": {
+        title: "Exportquote im Wandel",
+        xp: 15,
+        cards: [
+            {
+                type: "info",
+                emoji: "📊",
+                title: "Was ist die Exportquote?",
+                text: "Die **Exportquote** zeigt, wie viel Prozent der Wirtschaftsleistung (BIP) exportiert wird.",
+                highlight: "Je höher, desto abhängiger vom Ausland"
+            },
+            {
+                type: "chart",
+                chartId: "exportquote",
+                title: "Deutschlands Exportquote 1991-2023",
+                description: "Anteil der Exporte am Bruttoinlandsprodukt in Prozent:"
+            },
+            {
+                type: "info",
+                emoji: "📈",
+                title: "Rasanter Anstieg",
+                text: "1991 lag die Quote bei **25,7%**. Bis 2008 stieg sie auf **48%** — fast die Hälfte der Wirtschaft!",
+                highlight: "Von 1/4 auf fast 1/2 in 17 Jahren"
+            },
+            {
+                type: "info",
+                emoji: "💥",
+                title: "Finanzkrise 2008",
+                text: "Der **Höchststand 2008** wurde durch die Finanzkrise abrupt beendet. Die Quote fiel auf 42,5%.",
+                highlight: "Welthandel brach kurzzeitig ein"
+            },
+            {
+                type: "info",
+                emoji: "🔄",
+                title: "Heute: Stabil hoch",
+                text: "Aktuell liegt die Quote bei etwa **43%** — immer noch sehr hoch im internationalen Vergleich!",
+                highlight: "USA: nur ~12%, Frankreich: ~30%"
+            },
+            {
+                type: "quiz",
+                question: "Wann erreichte Deutschlands Exportquote ihren Höchststand?",
+                options: ["1991", "2000", "2008", "2023"],
+                correct: 2,
+                explanation: "2008 erreichte die Exportquote 48% — dann kam die Finanzkrise."
+            },
+            {
+                type: "quiz",
+                question: "Wie hoch ist Deutschlands Exportquote aktuell ungefähr?",
+                options: ["25%", "35%", "43%", "55%"],
+                correct: 2,
+                explanation: "Die Exportquote liegt bei etwa 43% — fast die Hälfte der Wirtschaft hängt vom Export ab!"
+            },
+            {
+                type: "summary",
+                emoji: "✅",
+                title: "Zusammenfassung",
+                points: [
+                    "Exportquote: Anteil der Exporte am BIP",
+                    "1991: 25,7% → 2008: 48% (Höchststand)",
+                    "Heute: ~43% — hohe Auslandsabhängigkeit",
+                    "Deutlich höher als USA (12%) oder Frankreich (30%)"
+                ]
+            }
+        ]
+    },
+    "2-6": {
+        title: "Top-Handelspartner 2024",
+        xp: 15,
+        cards: [
+            {
+                type: "info",
+                emoji: "🌍",
+                title: "Mit wem handelt Deutschland?",
+                text: "Deutschland ist eine der größten **Handelsnationen** der Welt. Aber wer sind die wichtigsten Partner?",
+                highlight: "2024: Neue Zahlen vom Statistischen Bundesamt"
+            },
+            {
+                type: "chart",
+                chartId: "handelspartner",
+                title: "Deutschlands Top-8 Handelspartner",
+                description: "Exporte und Importe in Milliarden Euro (2024):"
+            },
+            {
+                type: "info",
+                emoji: "🇺🇸",
+                title: "USA: Export-Champion",
+                text: "Die USA sind der **größte Abnehmer** deutscher Waren: **161,1 Mrd €** Exporte vs. nur 95,4 Mrd € Importe.",
+                highlight: "Handelsüberschuss: +65,7 Mrd €"
+            },
+            {
+                type: "info",
+                emoji: "🇨🇳",
+                title: "China: Größter Lieferant",
+                text: "Bei China ist es umgekehrt: Deutschland **importiert mehr** (163,4 Mrd €) als es exportiert (97,0 Mrd €).",
+                highlight: "Handelsdefizit: -66,4 Mrd €"
+            },
+            {
+                type: "info",
+                emoji: "🇪🇺",
+                title: "EU-Nachbarn dominieren",
+                text: "Niederlande, Frankreich, Polen, Italien, Österreich — die **EU-Partner** machen den Großteil des Handels aus.",
+                highlight: "~60% des deutschen Handels ist innereuropäisch"
+            },
+            {
+                type: "info",
+                emoji: "🇬🇧",
+                title: "UK nach Brexit",
+                text: "Das **Vereinigte Königreich** ist abgerutscht: Nur noch Platz 8 mit 76,2 Mrd € Exporten.",
+                highlight: "Vor Brexit war UK unter den Top 5"
+            },
+            {
+                type: "quiz",
+                question: "Mit welchem Land hat Deutschland das größte Handelsdefizit?",
+                options: ["USA", "China", "Frankreich", "UK"],
+                correct: 1,
+                explanation: "Mit China: Deutschland importiert 66 Mrd € mehr aus China als es dorthin exportiert."
+            },
+            {
+                type: "quiz",
+                question: "Wie viel Prozent des deutschen Handels ist innereuropäisch?",
+                options: ["30%", "45%", "60%", "80%"],
+                correct: 2,
+                explanation: "Etwa 60% des deutschen Handels findet mit anderen EU-Ländern statt."
+            },
+            {
+                type: "summary",
+                emoji: "✅",
+                title: "Zusammenfassung",
+                points: [
+                    "USA: größter Exportmarkt (161 Mrd €)",
+                    "China: größter Lieferant (163 Mrd €)",
+                    "EU-Länder: ~60% des Gesamthandels",
+                    "UK nach Brexit abgerutscht auf Platz 8"
+                ]
+            }
+        ]
+    },
 
     // MODUL 3: AKTUELLE KONFLIKTE
     "3-1": {
@@ -405,6 +542,144 @@ const LESSONS = {
                     "Trump 2.0 = Zoll-Chaos mit ständigem Hin und Her",
                     "Effektiv: China ~38%, EU ~9% Zölle",
                     "Taktik: Maximaldruck → Verhandeln → Deal"
+                ]
+            }
+        ]
+    },
+    "3-5": {
+        title: "Liberation Day (April 2025)",
+        xp: 20,
+        cards: [
+            {
+                type: "info",
+                emoji: "🗽",
+                title: "Liberation Day",
+                text: "Am **2. April 2025** verkündete Trump den 'Liberation Day' — den Tag der 'wirtschaftlichen Befreiung' Amerikas.",
+                highlight: "Der radikalste Zoll-Tag in US-Geschichte"
+            },
+            {
+                type: "info",
+                emoji: "🌍",
+                title: "10% auf ALLES",
+                text: "Trump führte einen **Basiszoll von 10%** auf ALLE Importe ein — egal aus welchem Land.",
+                highlight: "Tritt am 5. April 2025 in Kraft"
+            },
+            {
+                type: "chart",
+                chartId: "trumpZoelle",
+                title: "Länderspezifische Strafzölle",
+                description: "Zusätzlich zum 10% Basiszoll erheben die USA Strafzölle auf bestimmte Länder:"
+            },
+            {
+                type: "info",
+                emoji: "🇨🇳",
+                title: "China am härtesten",
+                text: "**China** wird mit **34% Zusatzzoll** belegt — insgesamt also 44% auf chinesische Waren!",
+                highlight: "Begründung: 'Jahrzehnte unfairer Handelspraktiken'"
+            },
+            {
+                type: "info",
+                emoji: "🇪🇺",
+                title: "EU: 20% Strafzoll",
+                text: "Die **EU** erhält **20% Zusatzzoll**. Trump nennt die EU 'eine der schlimmsten Handelsbarrieren'.",
+                highlight: "Gesamt: 10% + 20% = 30% auf EU-Waren"
+            },
+            {
+                type: "info",
+                emoji: "🚗",
+                title: "Autos: 25%",
+                text: "Auf **alle importierten Autos** gilt ein Spezialzoll von **25%** — egal aus welchem Land.",
+                highlight: "Ein VW Golf wird ~10.000€ teurer in den USA"
+            },
+            {
+                type: "quiz",
+                question: "Wie hoch ist der Basiszoll ab 'Liberation Day'?",
+                options: ["5%", "10%", "20%", "25%"],
+                correct: 1,
+                explanation: "Der Basiszoll beträgt 10% auf ALLE Importe — plus länderspezifische Zusatzzölle."
+            },
+            {
+                type: "quiz",
+                question: "Welches Land hat den höchsten Zusatzzoll bekommen?",
+                options: ["EU (20%)", "Japan (24%)", "China (34%)", "Schweiz (31%)"],
+                correct: 2,
+                explanation: "China erhält 34% Zusatzzoll — insgesamt 44% auf chinesische Waren."
+            },
+            {
+                type: "info",
+                emoji: "📅",
+                title: "Timeline",
+                text: "**2. April**: Ankündigung\n**5. April**: 10% Basiszoll aktiv\n**9. April**: Länderspezifische Zölle aktiv",
+                highlight: "Nur 7 Tage von Ankündigung bis volle Umsetzung"
+            },
+            {
+                type: "summary",
+                emoji: "✅",
+                title: "Zusammenfassung",
+                points: [
+                    "Liberation Day: 2. April 2025",
+                    "10% Basiszoll auf ALLE Importe",
+                    "Zusatzzölle: China 34%, EU 20%, Japan 24%",
+                    "Autos: 25% Spezialzoll",
+                    "Umsetzung in nur 7 Tagen"
+                ]
+            }
+        ]
+    },
+    "3-6": {
+        title: "Protektionismus-Welle",
+        xp: 15,
+        cards: [
+            {
+                type: "info",
+                emoji: "🌊",
+                title: "Eine globale Welle",
+                text: "Seit 2018 erleben wir einen **massiven Anstieg** von Handelsbeschränkungen weltweit.",
+                highlight: "Von 454 (2009) auf 3.247 (2024) neue Maßnahmen pro Jahr!"
+            },
+            {
+                type: "chart",
+                chartId: "importbeschraenkungen",
+                title: "Importbeschränkungen explodieren",
+                description: "Neue protektionistische Maßnahmen pro Jahr weltweit:"
+            },
+            {
+                type: "info",
+                emoji: "🔴",
+                title: "2018: Der Wendepunkt",
+                text: "Als Trump 2018 seinen ersten **Handelskrieg** startete, sprang die Zahl von 1.049 auf 1.478 neue Beschränkungen.",
+                highlight: "Seitdem hat sie sich mehr als verdoppelt!"
+            },
+            {
+                type: "info",
+                emoji: "🦠",
+                title: "Corona verstärkt den Trend",
+                text: "2020 kamen **2.031 neue Beschränkungen** dazu — Länder schützten ihre Märkte in der Krise.",
+                highlight: "Masken, Medikamente, Lebensmittel: alles wurde kontrolliert"
+            },
+            {
+                type: "info",
+                emoji: "📈",
+                title: "2024: Neuer Rekord",
+                text: "**3.247** neue Handelsbeschränkungen in einem Jahr — mehr als je zuvor.",
+                highlight: "Das ist das 7-fache von 2009!"
+            },
+            {
+                type: "quiz",
+                question: "Wann begann der starke Anstieg der Handelsbeschränkungen?",
+                options: ["2009", "2014", "2018", "2020"],
+                correct: 2,
+                explanation: "2018 startete Trump seinen ersten Handelskrieg — seitdem explodieren die Zahlen."
+            },
+            {
+                type: "summary",
+                emoji: "✅",
+                title: "Zusammenfassung",
+                points: [
+                    "Handelsbeschränkungen: von 454 (2009) auf 3.247 (2024)",
+                    "Wendepunkt 2018: Trumps erster Handelskrieg",
+                    "Corona 2020 verstärkte den Trend",
+                    "Protektionismus nimmt weltweit zu"
                 ]
             }
         ]
@@ -785,6 +1060,39 @@ function renderLessonCard() {
                 </ul>
             </div>
         `;
+    } else if (card.type === 'chart') {
+        // Generate unique ID for this chart canvas
+        const chartCanvasId = `lesson-chart-${card.chartId}-${Date.now()}`;
+        
+        // Check if this chart type uses HTML rendering (trumpZoelle)
+        if (card.chartId === 'trumpZoelle') {
+            html = `
+                <div class="lesson-card chart-card">
+                    <div class="card-emoji">📊</div>
+                    <h3 class="card-title">${card.title}</h3>
+                    ${card.description ? `<p class="card-text">${card.description}</p>` : ''}
+                    <div id="${chartCanvasId}" class="lesson-chart-container"></div>
+                </div>
+            `;
+        } else {
+            html = `
+                <div class="lesson-card chart-card">
+                    <div class="card-emoji">📊</div>
+                    <h3 class="card-title">${card.title}</h3>
+                    ${card.description ? `<p class="card-text">${card.description}</p>` : ''}
+                    <div class="lesson-chart-wrapper">
+                        <canvas id="${chartCanvasId}"></canvas>
+                    </div>
+                </div>
+            `;
+        }
+        
+        // Render chart after DOM update
+        setTimeout(() => {
+            if (window.renderLessonChart) {
+                renderLessonChart(card.chartId, chartCanvasId);
+            }
+        }, 100);
     }
     
     container.innerHTML = html;
@@ -812,6 +1120,107 @@ function formatText(text) {
         .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
         .replace(/\n/g, '<br>');
 }
+
+// Render charts in lessons using CHART_DATA from charts.js
+function renderLessonChart(chartId, canvasId) {
+    if (!window.CHART_DATA || !CHART_DATA[chartId]) {
+        console.warn(`Chart data not found for: ${chartId}`);
+        return;
+    }
+    
+    const data = CHART_DATA[chartId];
+    
+    // Special handling for Trump-Zölle (HTML-based)
+    if (chartId === 'trumpZoelle') {
+        const container = document.getElementById(canvasId);
+        if (!container) return;
+        
+        container.innerHTML = `
+            <div class="trump-zoelle-mini">
+                <div class="base-rate-badge">Basiszoll: ${data.baseRate}%</div>
+                <div class="country-list">
+                    ${data.countryRates.slice(0, 5).map(c => `
+                        <div class="country-item">
+                            <span>${c.flag} ${c.country}</span>
+                            <span class="rate-badge">+${c.rate}%</span>
+                        </div>
+                    `).join('')}
+                </div>
+                <div class="auto-badge">🚗 Autos: ${data.autoZoll}%</div>
+            </div>
+        `;
+        return;
+    }
+    
+    // Chart.js-based charts
+    const canvas = document.getElementById(canvasId);
+    if (!canvas || !window.Chart) {
+        console.warn('Canvas or Chart.js not found');
+        return;
+    }
+    
+    const ctx = canvas.getContext('2d');
+    
+    if (chartId === 'exportquote') {
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: data.labels,
+                datasets: [{
+                    label: 'Exportquote %',
+                    data: data.data,
+                    borderColor: data.color,
+                    backgroundColor: data.color + '20',
+                    fill: true,
+                    tension: 0.3
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: { y: { beginAtZero: true, max: 55 } }
+            }
+        });
+    } else if (chartId === 'handelspartner') {
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: data.countries.map(c => `${c.flag} ${c.code}`),
+                datasets: [
+                    { label: 'Exporte', data: data.countries.map(c => c.exports), backgroundColor: '#00a86b' },
+                    { label: 'Importe', data: data.countries.map(c => c.imports), backgroundColor: '#ff6b6b' }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                indexAxis: 'y',
+                plugins: { legend: { position: 'bottom' } }
+            }
+        });
+    } else if (chartId === 'importbeschraenkungen') {
+        const colors = data.labels.map(year => year >= 2018 ? '#e74c3c' : '#95a5a6');
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: data.labels,
+                datasets: [{
+                    label: 'Neue Beschränkungen',
+                    data: data.data,
+                    backgroundColor: colors
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: { y: { beginAtZero: true } }
+            }
+        });
+    }
+}
+window.renderLessonChart = renderLessonChart;
 
 function checkLessonAnswer(selected, correct) {
     const options = document.querySelectorAll('.quiz-option');
