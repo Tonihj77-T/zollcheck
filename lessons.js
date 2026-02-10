@@ -1286,14 +1286,29 @@ function exitLesson() {
     }
 }
 
+// Count lessons per module dynamically
+function getLessonsPerModule() {
+    const counts = { 1: 0, 2: 0, 3: 0, 4: 0 };
+    for (const key of Object.keys(LESSONS)) {
+        const module = parseInt(key.split('-')[0]);
+        if (counts[module] !== undefined) counts[module]++;
+    }
+    return counts;
+}
+
 function updateAllLessonStatuses() {
     loadLessonProgress();
     
+    const lessonsPerModule = getLessonsPerModule();
     let totalDone = 0;
+    let totalLessons = 0;
     
     for (let m = 1; m <= 4; m++) {
         let moduleDone = 0;
-        for (let l = 1; l <= 4; l++) {
+        const maxLessons = lessonsPerModule[m] || 4;
+        totalLessons += maxLessons;
+        
+        for (let l = 1; l <= maxLessons; l++) {
             const key = `${m}-${l}`;
             const status = document.getElementById(`lesson-${m}-${l}-status`);
             if (status) {
@@ -1310,12 +1325,15 @@ function updateAllLessonStatuses() {
         }
         
         const modProgress = document.getElementById(`mod${m}-progress`);
-        if (modProgress) modProgress.textContent = `${moduleDone}/4`;
+        if (modProgress) modProgress.textContent = `${moduleDone}/${maxLessons}`;
     }
     
     // Update total progress
-    document.getElementById('lessons-done').textContent = totalDone;
-    document.getElementById('total-progress').style.width = (totalDone / 16 * 100) + '%';
+    const lessonsDoneEl = document.getElementById('lessons-done');
+    if (lessonsDoneEl) lessonsDoneEl.textContent = totalDone;
+    
+    const totalProgressEl = document.getElementById('total-progress');
+    if (totalProgressEl) totalProgressEl.style.width = (totalDone / totalLessons * 100) + '%';
 }
 
 // Initialize on load
