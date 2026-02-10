@@ -1,0 +1,334 @@
+/* === ZOLLCHECK CHARTS STYLING === */
+
+/* Chart Container */
+.chart-container {
+    background: white;
+    border-radius: 16px;
+    padding: 20px;
+    margin: 16px 0;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+}
+
+.chart-container canvas {
+    max-height: 350px;
+}
+
+.chart-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #1a1a2e;
+    margin-bottom: 4px;
+}
+
+.chart-subtitle {
+    font-size: 0.875rem;
+    color: #666;
+    margin-bottom: 16px;
+}
+
+.chart-source {
+    font-size: 0.75rem;
+    color: #999;
+    margin-top: 12px;
+    text-align: right;
+}
+
+/* Trump Zölle Visualization */
+.trump-zoelle-container {
+    background: linear-gradient(135deg, #1a1a2e 0%, #2d2d44 100%);
+    color: white;
+    border-radius: 16px;
+    padding: 24px;
+    margin: 16px 0;
+}
+
+.trump-zoelle-container h3 {
+    font-size: 1.5rem;
+    margin-bottom: 4px;
+}
+
+.trump-zoelle-container .subtitle {
+    color: #aaa;
+    margin-bottom: 20px;
+}
+
+.base-rate {
+    background: #e74c3c;
+    padding: 16px 20px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.base-rate .rate-label {
+    font-weight: 500;
+}
+
+.base-rate .rate-value {
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+.country-rates {
+    margin-bottom: 20px;
+}
+
+.country-rates h4 {
+    font-size: 1rem;
+    color: #aaa;
+    margin-bottom: 12px;
+}
+
+.country-rate {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.country-rate .country {
+    width: 120px;
+    font-weight: 500;
+}
+
+.country-rate .rate-bar {
+    height: 24px;
+    background: linear-gradient(90deg, #e74c3c, #ff6b6b);
+    border-radius: 4px;
+    min-width: 10px;
+    transition: width 0.5s ease;
+}
+
+.country-rate .rate {
+    font-weight: 700;
+    color: #ff6b6b;
+    width: 50px;
+    text-align: right;
+}
+
+.auto-zoll {
+    background: rgba(255,255,255,0.1);
+    padding: 12px 16px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.timeline {
+    border-left: 3px solid #e74c3c;
+    padding-left: 16px;
+}
+
+.timeline h4 {
+    font-size: 1rem;
+    color: #aaa;
+    margin-bottom: 12px;
+}
+
+.timeline-item {
+    display: flex;
+    gap: 12px;
+    padding: 8px 0;
+}
+
+.timeline-item .date {
+    color: #e74c3c;
+    font-weight: 600;
+    width: 100px;
+    flex-shrink: 0;
+}
+
+.timeline-item .event {
+    color: #ddd;
+}
+
+/* Chart Cards in Lesson View */
+.lesson-chart {
+    background: #f8f9fa;
+    border-radius: 12px;
+    padding: 16px;
+    margin: 16px 0;
+}
+
+.lesson-chart .chart-wrapper {
+    height: 280px;
+    position: relative;
+}
+
+/* Interactive Elements */
+.chart-interactive-hint {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #666;
+    font-size: 0.8rem;
+    margin-top: 8px;
+}
+
+.chart-interactive-hint::before {
+    content: '👆';
+}
+
+/* Comparison Cards */
+.comparison-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin: 16px 0;
+}
+
+.comparison-card {
+    background: white;
+    border-radius: 12px;
+    padding: 16px;
+    text-align: center;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.comparison-card.positive {
+    border-left: 4px solid #00a86b;
+}
+
+.comparison-card.negative {
+    border-left: 4px solid #e74c3c;
+}
+
+.comparison-card .value {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #1a1a2e;
+}
+
+.comparison-card .label {
+    font-size: 0.875rem;
+    color: #666;
+    margin-top: 4px;
+}
+
+/* Fact Boxes */
+.fact-box {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-radius: 12px;
+    padding: 20px;
+    margin: 16px 0;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.fact-box .emoji {
+    font-size: 2.5rem;
+}
+
+.fact-box .content .number {
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+.fact-box .content .description {
+    font-size: 0.9rem;
+    opacity: 0.9;
+}
+
+/* Stats Row */
+.stats-row {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    padding: 8px 0;
+    margin: 16px 0;
+}
+
+.stat-card {
+    flex: 0 0 auto;
+    background: white;
+    border-radius: 12px;
+    padding: 16px 20px;
+    min-width: 140px;
+    text-align: center;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.stat-card .icon {
+    font-size: 1.5rem;
+    margin-bottom: 8px;
+}
+
+.stat-card .value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #1a1a2e;
+}
+
+.stat-card .label {
+    font-size: 0.75rem;
+    color: #666;
+    margin-top: 4px;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+    .comparison-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .chart-container {
+        padding: 16px;
+    }
+    
+    .trump-zoelle-container {
+        padding: 16px;
+    }
+    
+    .country-rate .country {
+        width: 80px;
+        font-size: 0.875rem;
+    }
+}
+
+/* Animation */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.chart-container, .trump-zoelle-container {
+    animation: fadeInUp 0.5s ease;
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+    .chart-container {
+        background: #2d2d44;
+    }
+    
+    .chart-title {
+        color: white;
+    }
+    
+    .comparison-card {
+        background: #2d2d44;
+    }
+    
+    .comparison-card .value {
+        color: white;
+    }
+    
+    .stat-card {
+        background: #2d2d44;
+    }
+    
+    .stat-card .value {
+        color: white;
+    }
+}

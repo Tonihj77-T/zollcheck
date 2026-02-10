@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZollCheck Charts Demo</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="charts.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: #f0f2f5;
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 8px;
+            color: #1a1a2e;
+        }
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 32px;
+        }
+        h2 {
+            margin: 32px 0 16px;
+            color: #1a1a2e;
+            font-size: 1.25rem;
+        }
+        .chart-container {
+            margin-bottom: 24px;
+        }
+        .chart-wrapper {
+            height: 350px;
+            position: relative;
+        }
+    </style>
+</head>
+<body>
+    <h1>📊 ZollCheck Charts</h1>
+    <p class="subtitle">Interaktive Visualisierungen für den econo=me Wettbewerb</p>
+
+    <!-- Trump Zölle -->
+    <h2>🇺🇸 Trump "Liberation Day" Zölle</h2>
+    <div id="trump-zoelle"></div>
+
+    <!-- EU-USA Handel -->
+    <h2>🇪🇺 EU-USA Warenhandel</h2>
+    <div class="chart-container">
+        <div class="chart-wrapper">
+            <canvas id="chart-eu-usa"></canvas>
+        </div>
+    </div>
+
+    <!-- Exportquote -->
+    <h2>🇩🇪 Deutschlands Exportquote</h2>
+    <div class="chart-container">
+        <div class="chart-wrapper">
+            <canvas id="chart-exportquote"></canvas>
+        </div>
+        <p class="chart-source">Quelle: Statistisches Bundesamt</p>
+    </div>
+
+    <!-- Handelspartner -->
+    <h2>🤝 Top-Handelspartner 2024</h2>
+    <div class="chart-container">
+        <div class="chart-wrapper" style="height: 450px;">
+            <canvas id="chart-handelspartner"></canvas>
+        </div>
+        <p class="chart-source">Quelle: Statistisches Bundesamt, 2024</p>
+    </div>
+
+    <!-- Handelsabkommen -->
+    <h2>📜 Regionale Handelsabkommen</h2>
+    <div class="chart-container">
+        <div class="chart-wrapper">
+            <canvas id="chart-handelsabkommen"></canvas>
+        </div>
+        <p class="chart-source">Quelle: WTO, 2024</p>
+    </div>
+
+    <!-- Importbeschränkungen -->
+    <h2>🚫 Globale Importbeschränkungen</h2>
+    <div class="chart-container">
+        <div class="chart-wrapper">
+            <canvas id="chart-importbeschraenkungen"></canvas>
+        </div>
+        <p class="chart-source">Quelle: Global Trade Alert, 2024</p>
+    </div>
+
+    <!-- Stats Row Demo -->
+    <h2>📈 Key Facts</h2>
+    <div class="stats-row">
+        <div class="stat-card">
+            <div class="icon">🇩🇪</div>
+            <div class="value">42.8%</div>
+            <div class="label">Exportquote 2023</div>
+        </div>
+        <div class="stat-card">
+            <div class="icon">🇺🇸</div>
+            <div class="value">161 Mrd.</div>
+            <div class="label">DE→USA Export</div>
+        </div>
+        <div class="stat-card">
+            <div class="icon">📜</div>
+            <div class="value">372</div>
+            <div class="label">Handelsabkommen</div>
+        </div>
+        <div class="stat-card">
+            <div class="icon">⚠️</div>
+            <div class="value">3.247</div>
+            <div class="label">Beschränkungen 2024</div>
+        </div>
+    </div>
+
+    <!-- Fact Box Demo -->
+    <div class="fact-box">
+        <div class="emoji">💰</div>
+        <div class="content">
+            <div class="number">198 Mrd. €</div>
+            <div class="description">EU-Handelsüberschuss mit den USA (2024)</div>
+        </div>
+    </div>
+
+    <!-- Comparison Demo -->
+    <h2>📊 Vergleich: Freihandel vs Protektionismus</h2>
+    <div class="comparison-grid">
+        <div class="comparison-card positive">
+            <div class="value">+2.3%</div>
+            <div class="label">BIP-Wachstum durch Freihandel (EU)</div>
+        </div>
+        <div class="comparison-card negative">
+            <div class="value">-0.8%</div>
+            <div class="label">BIP-Verlust durch Trump-Zölle (DE)</div>
+        </div>
+    </div>
+
+    <script src="charts.js"></script>
+    <script>
+        // Initialize charts
+        document.addEventListener('DOMContentLoaded', () => {
+            const charts = new ZollCharts();
+            charts.renderAll();
+        });
+    </script>
+</body>
+</html>
