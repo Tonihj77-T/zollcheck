@@ -1,9 +1,9 @@
 {
-    "name": "ZollCheck",
-    "short_name": "ZollCheck",
+    "name": "Tarrific",
+    "short_name": "Tarrific",
     "description": "Verstehe, wie vernetzt unsere Welt ist - interaktive Lern-App zu Zöllen und Welthandel",
-    "start_url": "/zollcheck/",
-    "scope": "/zollcheck/",
+    "start_url": "/",
+    "scope": "/",
     "display": "standalone",
     "background_color": "#1E3A5F",
     "theme_color": "#1E3A5F",
