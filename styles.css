@@ -1028,3 +1028,26 @@ html, body {
         border-right: 1px solid var(--border);
     }
 }
+
+/* ========== DESKTOP BLOCK ========== */
+#desktop-block {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: var(--bg);
+    z-index: 9999;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 40px;
+    gap: 16px;
+}
+#desktop-block .block-emoji { font-size: 64px; }
+#desktop-block h2 { font-size: 22px; color: var(--text); }
+#desktop-block p { font-size: 14px; color: var(--text-dim); max-width: 300px; }
+
+@media (min-width: 600px) {
+    #desktop-block { display: flex; }
+    #app { display: none !important; }
+}
