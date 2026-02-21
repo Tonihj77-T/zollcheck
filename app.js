@@ -36,14 +36,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // === State Management ===
 function loadState() {
-    const saved = localStorage.getItem('zollcheck_state');
+    const saved = localStorage.getItem('tarrific_state');
     if (saved) {
         state = { ...state, ...JSON.parse(saved) };
     }
 }
 
 function saveState() {
-    localStorage.setItem('zollcheck_state', JSON.stringify(state));
+    localStorage.setItem('tarrific_state', JSON.stringify(state));
 }
 
 function addXP(amount) {
