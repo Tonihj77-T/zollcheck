@@ -1,7 +1,9 @@
 // === LEKTIONEN-CONTENT ===
 
 const LESSONS = {
+    // =============================================
     // MODUL 1: GRUNDLAGEN
+    // =============================================
     "1-1": {
         title: "Was sind Zölle?",
         xp: 10,
@@ -179,7 +181,9 @@ const LESSONS = {
         ]
     },
 
+    // =============================================
     // MODUL 2: DEUTSCHLAND & HANDEL
+    // =============================================
     "2-1": {
         title: "Exportweltmeister?",
         xp: 10,
@@ -356,145 +360,10 @@ const LESSONS = {
             }
         ]
     },
-    "2-5": {
-        title: "Exportquote im Wandel",
-        xp: 15,
-        cards: [
-            {
-                type: "info",
-                emoji: "📊",
-                title: "Was ist die Exportquote?",
-                text: "Die **Exportquote** zeigt, wie viel Prozent der Wirtschaftsleistung (BIP) exportiert wird.",
-                highlight: "Je höher, desto abhängiger vom Ausland"
-            },
-            {
-                type: "chart",
-                chartId: "exportquote",
-                title: "Deutschlands Exportquote 1991-2023",
-                description: "Anteil der Exporte am Bruttoinlandsprodukt in Prozent:"
-            },
-            {
-                type: "info",
-                emoji: "📈",
-                title: "Rasanter Anstieg",
-                text: "1991 lag die Quote bei **25,7%**. Bis 2008 stieg sie auf **48%** — fast die Hälfte der Wirtschaft!",
-                highlight: "Von 1/4 auf fast 1/2 in 17 Jahren"
-            },
-            {
-                type: "info",
-                emoji: "💥",
-                title: "Finanzkrise 2008",
-                text: "Der **Höchststand 2008** wurde durch die Finanzkrise abrupt beendet. Die Quote fiel auf 42,5%.",
-                highlight: "Welthandel brach kurzzeitig ein"
-            },
-            {
-                type: "info",
-                emoji: "🔄",
-                title: "Heute: Stabil hoch",
-                text: "Aktuell liegt die Quote bei etwa **43%** — immer noch sehr hoch im internationalen Vergleich!",
-                highlight: "USA: nur ~12%, Frankreich: ~30%"
-            },
-            {
-                type: "quiz",
-                question: "Wann erreichte Deutschlands Exportquote ihren Höchststand?",
-                options: ["1991", "2000", "2008", "2023"],
-                correct: 2,
-                explanation: "2008 erreichte die Exportquote 48% — dann kam die Finanzkrise."
-            },
-            {
-                type: "quiz",
-                question: "Wie hoch ist Deutschlands Exportquote aktuell ungefähr?",
-                options: ["25%", "35%", "43%", "55%"],
-                correct: 2,
-                explanation: "Die Exportquote liegt bei etwa 43% — fast die Hälfte der Wirtschaft hängt vom Export ab!"
-            },
-            {
-                type: "summary",
-                emoji: "✅",
-                title: "Zusammenfassung",
-                points: [
-                    "Exportquote: Anteil der Exporte am BIP",
-                    "1991: 25,7% → 2008: 48% (Höchststand)",
-                    "Heute: ~43% — hohe Auslandsabhängigkeit",
-                    "Deutlich höher als USA (12%) oder Frankreich (30%)"
-                ]
-            }
-        ]
-    },
-    "2-6": {
-        title: "Top-Handelspartner 2024",
-        xp: 15,
-        cards: [
-            {
-                type: "info",
-                emoji: "🌍",
-                title: "Mit wem handelt Deutschland?",
-                text: "Deutschland ist eine der größten **Handelsnationen** der Welt. Aber wer sind die wichtigsten Partner?",
-                highlight: "2024: Neue Zahlen vom Statistischen Bundesamt"
-            },
-            {
-                type: "chart",
-                chartId: "handelspartner",
-                title: "Deutschlands Top-8 Handelspartner",
-                description: "Exporte und Importe in Milliarden Euro (2024):"
-            },
-            {
-                type: "info",
-                emoji: "🇺🇸",
-                title: "USA: Export-Champion",
-                text: "Die USA sind der **größte Abnehmer** deutscher Waren: **161,1 Mrd €** Exporte vs. nur 95,4 Mrd € Importe.",
-                highlight: "Handelsüberschuss: +65,7 Mrd €"
-            },
-            {
-                type: "info",
-                emoji: "🇨🇳",
-                title: "China: Größter Lieferant",
-                text: "Bei China ist es umgekehrt: Deutschland **importiert mehr** (163,4 Mrd €) als es exportiert (97,0 Mrd €).",
-                highlight: "Handelsdefizit: -66,4 Mrd €"
-            },
-            {
-                type: "info",
-                emoji: "🇪🇺",
-                title: "EU-Nachbarn dominieren",
-                text: "Niederlande, Frankreich, Polen, Italien, Österreich — die **EU-Partner** machen den Großteil des Handels aus.",
-                highlight: "~60% des deutschen Handels ist innereuropäisch"
-            },
-            {
-                type: "info",
-                emoji: "🇬🇧",
-                title: "UK nach Brexit",
-                text: "Das **Vereinigte Königreich** ist abgerutscht: Nur noch Platz 8 mit 76,2 Mrd € Exporten.",
-                highlight: "Vor Brexit war UK unter den Top 5"
-            },
-            {
-                type: "quiz",
-                question: "Mit welchem Land hat Deutschland das größte Handelsdefizit?",
-                options: ["USA", "China", "Frankreich", "UK"],
-                correct: 1,
-                explanation: "Mit China: Deutschland importiert 66 Mrd € mehr aus China als es dorthin exportiert."
-            },
-            {
-                type: "quiz",
-                question: "Wie viel Prozent des deutschen Handels ist innereuropäisch?",
-                options: ["30%", "45%", "60%", "80%"],
-                correct: 2,
-                explanation: "Etwa 60% des deutschen Handels findet mit anderen EU-Ländern statt."
-            },
-            {
-                type: "summary",
-                emoji: "✅",
-                title: "Zusammenfassung",
-                points: [
-                    "USA: größter Exportmarkt (161 Mrd €)",
-                    "China: größter Lieferant (163 Mrd €)",
-                    "EU-Länder: ~60% des Gesamthandels",
-                    "UK nach Brexit abgerutscht auf Platz 8"
-                ]
-            }
-        ]
-    },
 
+    // =============================================
     // MODUL 3: AKTUELLE KONFLIKTE
+    // =============================================
     "3-1": {
         title: "Trump-Zölle 2025/26",
         xp: 15,
@@ -542,144 +411,6 @@ const LESSONS = {
                     "Trump 2.0 = Zoll-Chaos mit ständigem Hin und Her",
                     "Effektiv: China ~38%, EU ~9% Zölle",
                     "Taktik: Maximaldruck → Verhandeln → Deal"
-                ]
-            }
-        ]
-    },
-    "3-5": {
-        title: "Liberation Day (April 2025)",
-        xp: 20,
-        cards: [
-            {
-                type: "info",
-                emoji: "🗽",
-                title: "Liberation Day",
-                text: "Am **2. April 2025** verkündete Trump den 'Liberation Day' — den Tag der 'wirtschaftlichen Befreiung' Amerikas.",
-                highlight: "Der radikalste Zoll-Tag in US-Geschichte"
-            },
-            {
-                type: "info",
-                emoji: "🌍",
-                title: "10% auf ALLES",
-                text: "Trump führte einen **Basiszoll von 10%** auf ALLE Importe ein — egal aus welchem Land.",
-                highlight: "Tritt am 5. April 2025 in Kraft"
-            },
-            {
-                type: "chart",
-                chartId: "trumpZoelle",
-                title: "Länderspezifische Strafzölle",
-                description: "Zusätzlich zum 10% Basiszoll erheben die USA Strafzölle auf bestimmte Länder:"
-            },
-            {
-                type: "info",
-                emoji: "🇨🇳",
-                title: "China am härtesten",
-                text: "**China** wird mit **34% Zusatzzoll** belegt — insgesamt also 44% auf chinesische Waren!",
-                highlight: "Begründung: 'Jahrzehnte unfairer Handelspraktiken'"
-            },
-            {
-                type: "info",
-                emoji: "🇪🇺",
-                title: "EU: 20% Strafzoll",
-                text: "Die **EU** erhält **20% Zusatzzoll**. Trump nennt die EU 'eine der schlimmsten Handelsbarrieren'.",
-                highlight: "Gesamt: 10% + 20% = 30% auf EU-Waren"
-            },
-            {
-                type: "info",
-                emoji: "🚗",
-                title: "Autos: 25%",
-                text: "Auf **alle importierten Autos** gilt ein Spezialzoll von **25%** — egal aus welchem Land.",
-                highlight: "Ein VW Golf wird ~10.000€ teurer in den USA"
-            },
-            {
-                type: "quiz",
-                question: "Wie hoch ist der Basiszoll ab 'Liberation Day'?",
-                options: ["5%", "10%", "20%", "25%"],
-                correct: 1,
-                explanation: "Der Basiszoll beträgt 10% auf ALLE Importe — plus länderspezifische Zusatzzölle."
-            },
-            {
-                type: "quiz",
-                question: "Welches Land hat den höchsten Zusatzzoll bekommen?",
-                options: ["EU (20%)", "Japan (24%)", "China (34%)", "Schweiz (31%)"],
-                correct: 2,
-                explanation: "China erhält 34% Zusatzzoll — insgesamt 44% auf chinesische Waren."
-            },
-            {
-                type: "info",
-                emoji: "📅",
-                title: "Timeline",
-                text: "**2. April**: Ankündigung\n**5. April**: 10% Basiszoll aktiv\n**9. April**: Länderspezifische Zölle aktiv",
-                highlight: "Nur 7 Tage von Ankündigung bis volle Umsetzung"
-            },
-            {
-                type: "summary",
-                emoji: "✅",
-                title: "Zusammenfassung",
-                points: [
-                    "Liberation Day: 2. April 2025",
-                    "10% Basiszoll auf ALLE Importe",
-                    "Zusatzzölle: China 34%, EU 20%, Japan 24%",
-                    "Autos: 25% Spezialzoll",
-                    "Umsetzung in nur 7 Tagen"
-                ]
-            }
-        ]
-    },
-    "3-6": {
-        title: "Protektionismus-Welle",
-        xp: 15,
-        cards: [
-            {
-                type: "info",
-                emoji: "🌊",
-                title: "Eine globale Welle",
-                text: "Seit 2018 erleben wir einen **massiven Anstieg** von Handelsbeschränkungen weltweit.",
-                highlight: "Von 454 (2009) auf 3.247 (2024) neue Maßnahmen pro Jahr!"
-            },
-            {
-                type: "chart",
-                chartId: "importbeschraenkungen",
-                title: "Importbeschränkungen explodieren",
-                description: "Neue protektionistische Maßnahmen pro Jahr weltweit:"
-            },
-            {
-                type: "info",
-                emoji: "🔴",
-                title: "2018: Der Wendepunkt",
-                text: "Als Trump 2018 seinen ersten **Handelskrieg** startete, sprang die Zahl von 1.049 auf 1.478 neue Beschränkungen.",
-                highlight: "Seitdem hat sie sich mehr als verdoppelt!"
-            },
-            {
-                type: "info",
-                emoji: "🦠",
-                title: "Corona verstärkt den Trend",
-                text: "2020 kamen **2.031 neue Beschränkungen** dazu — Länder schützten ihre Märkte in der Krise.",
-                highlight: "Masken, Medikamente, Lebensmittel: alles wurde kontrolliert"
-            },
-            {
-                type: "info",
-                emoji: "📈",
-                title: "2024: Neuer Rekord",
-                text: "**3.247** neue Handelsbeschränkungen in einem Jahr — mehr als je zuvor.",
-                highlight: "Das ist das 7-fache von 2009!"
-            },
-            {
-                type: "quiz",
-                question: "Wann begann der starke Anstieg der Handelsbeschränkungen?",
-                options: ["2009", "2014", "2018", "2020"],
-                correct: 2,
-                explanation: "2018 startete Trump seinen ersten Handelskrieg — seitdem explodieren die Zahlen."
-            },
-            {
-                type: "summary",
-                emoji: "✅",
-                title: "Zusammenfassung",
-                points: [
-                    "Handelsbeschränkungen: von 454 (2009) auf 3.247 (2024)",
-                    "Wendepunkt 2018: Trumps erster Handelskrieg",
-                    "Corona 2020 verstärkte den Trend",
-                    "Protektionismus nimmt weltweit zu"
                 ]
             }
         ]
@@ -817,7 +548,9 @@ const LESSONS = {
         ]
     },
 
+    // =============================================
     // MODUL 4: AUSWIRKUNGEN
+    // =============================================
     "4-1": {
         title: "Preise & Verbraucher",
         xp: 15,
@@ -993,7 +726,376 @@ const LESSONS = {
                 ]
             }
         ]
+    },
+
+    // =============================================
+    // MODUL 5: AUFGABE 1 – PDF CONTENT (WORD FOR WORD)
+    // =============================================
+    "5-1": {
+        title: "Neue US-Zollpolitik & Protektionismus",
+        xp: 20,
+        cards: [
+            {
+                type: "info",
+                emoji: "🌍",
+                title: "Aktuelle Entwicklungsprozesse",
+                text: "Seit Anfang 2025 befinden sich die weltweiten Handelsbeziehungen in einer Phase deutlicher Umbrüche und Umstrukturierungen, die weit über „normale Schwankungen" hinausgehen. Grund dafür sind vor allem massive Änderungen in der Handelspolitik großer Wirtschaftsmächte, allen voran die USA, und die daraus entstehenden Reaktionen anderer Staaten und Wirtschaftsbündnisse wie der Europäischen Union (EU). Diese Entwicklungen haben weitreichende wirtschaftliche, politische und gesellschaftliche Auswirkungen, die den internationalen Handel grundlegend beeinflussen."
+            },
+            {
+                type: "info",
+                emoji: "🇺🇸",
+                title: "Protektionistische Zollpolitik der USA",
+                text: "Ein zentraler Trend ist die stark ausgeweitet protektionistische Zollpolitik der USA. Seit 2025 hat die US-Regierung grundlegend höhere Einfuhrzölle eingeführt, insbesondere auf Produkte aus der EU und anderen Handelspartnern. Ursprünglich lag der durchschnittliche Zollsatz für EU-Importe in die USA bei nur etwa 2 %, heute gelten Mindestzölle von rund 15 %, teilweise sogar bis 50 % oder mehr auf Stahl, Aluminium oder bestimmte Industriegüter. Dies hat die Situation für exportorientierte Unternehmen, insbesondere aus Deutschland, spürbar verändert.",
+                highlight: "Von 2% auf mindestens 15% – bis zu 50% auf Stahl und Aluminium"
+            },
+            {
+                type: "info",
+                emoji: "⚖️",
+                title: "Schutz oder Gefahr?",
+                text: "Diese Zölle sollen laut US-Regierung die heimische Industrie vor „unfairem Wettbewerb" schützen und Arbeitsplätze sichern. Kritiker hingegen sehen darin eine Abkehr von offenen Märkten und eine Gefahr für das multilaterale Handelssystem. Die WeltZollOrganisation (WTO) warnt, dass solche Maßnahmen globales Handelsvolumen einschränken und das Vertrauen in freie Märkte schwächen könnten.",
+                source: "Quellen: dihk.de, euronews.com/business"
+            },
+            {
+                type: "quiz",
+                question: "Von wie viel Prozent auf wie viel Prozent stiegen die US-Zölle auf EU-Importe?",
+                options: ["Von 5% auf 10%", "Von 2% auf mind. 15%", "Von 10% auf 25%", "Von 0% auf 5%"],
+                correct: 1,
+                explanation: "Der durchschnittliche Zollsatz stieg von etwa 2% auf Mindestzölle von rund 15%, teilweise bis 50%."
+            },
+            {
+                type: "summary",
+                emoji: "✅",
+                title: "Zusammenfassung",
+                points: [
+                    "Seit 2025: massive Umbrüche in den Handelsbeziehungen",
+                    "USA: protektionistische Zollpolitik mit stark erhöhten Einfuhrzöllen",
+                    "Zollsätze: von ~2% auf 15-50%",
+                    "WTO warnt vor Einschränkung des globalen Handelsvolumens"
+                ]
+            }
+        ]
+    },
+    "5-2": {
+        title: "Reaktionen und Gegenstrategien der EU",
+        xp: 20,
+        cards: [
+            {
+                type: "info",
+                emoji: "🇪🇺",
+                title: "EU stark betroffen",
+                text: "Auch die EU ist von diesen Zollerhöhungen stark betroffen, da sie historisch einer der größten Handelspartner der USA ist. Deutsche Exporte in die USA reduzierten sich massiv, was vor allem auf die höheren Kosten infolge der Zölle zurückzuführen ist. Einige Sektoren wie Automobil- und Maschinenbau, Chemie oder Metallverarbeitung stehen damit vor bedeutenden wirtschaftlichen Herausforderungen.",
+                highlight: "Besonders betroffen: Automobil, Maschinenbau, Chemie, Metallverarbeitung"
+            },
+            {
+                type: "info",
+                emoji: "🛡️",
+                title: "EU-Strategien (1/3)",
+                text: "Die EU hat mehrere Gegenstrategien entwickelt:\n\n**1)** Gemeinsame Verhandlungen mit den USA zur Stabilisierung der Handelssituation, z.b. durch Abkommen mit klaren Zollregeln"
+            },
+            {
+                type: "info",
+                emoji: "📋",
+                title: "EU-Strategien (2/3)",
+                text: "**2)** Zollkontigente und befristete Zollsenkungen für bestimmte Güter als Ausgleich\n\n**3)** Ausbau eigener Wettbewersstrategien wie „Made in Europe", um die Wettbewerbsfähigkeit der europäischen Industrie zu stärken und weniger abhängig von Importen und Exporten in unsichere Märkte zu werden",
+                source: "Quelle: welt.de – EU-Kommissar will „Made in Europe" etablieren"
+            },
+            {
+                type: "info",
+                emoji: "🤝",
+                title: "Gemeinsame Erklärung EU-USA",
+                text: "Ein bedeutender Schritt in diesem Prozess war die Gemeinsame Erklärung zwischen EU und USA im August 2025, durch die die Zölle auf bestimmten Warengruppen vereinheitlicht und Zollobergrenzen eingeführt werden sollen, um „Vorhersehbarkeit und Stabilität in den transatlantischen Handelsbeziehungen" zu schaffen.",
+                source: "Quelle: consilium.europa.eu – EU-US Trade Relations, Nov. 2025"
+            },
+            {
+                type: "quiz",
+                question: "Welche Strategie ist KEINE EU-Gegenstrategie?",
+                options: ["Verhandlungen mit den USA", "Eigene Zollerhöhungen auf 100%", "Zollkontingente als Ausgleich", "\"Made in Europe\" Strategie"],
+                correct: 1,
+                explanation: "Die EU setzt auf Verhandlungen, Zollkontingente und „Made in Europe" – nicht auf maximale Zollerhöhungen."
+            },
+            {
+                type: "summary",
+                emoji: "✅",
+                title: "Zusammenfassung",
+                points: [
+                    "EU als historisch größter Handelspartner der USA stark betroffen",
+                    "Drei Strategien: Verhandlungen, Zollkontingente, Made in Europe",
+                    "August 2025: Gemeinsame Erklärung EU-USA für Stabilität"
+                ]
+            }
+        ]
+    },
+    "5-3": {
+        title: "Globale Auswirkungen & neue Handelsbeziehungen",
+        xp: 20,
+        cards: [
+            {
+                type: "info",
+                emoji: "📉",
+                title: "Schwächeres Wachstum",
+                text: "Internationale Organisationen wie die WTO und die UN Conference on Trade and Development (UNCTAD) berichten von einer Abkühlung des globalen Wachstums im Warenhandel, die unter anderem durch die zunehmenden Handelsspannungen bedingt ist.",
+                source: "Quellen: euronews.com, unctad.org – Global Trade Update Jan. 2026"
+            },
+            {
+                type: "info",
+                emoji: "🇮🇳",
+                title: "Diversifizierung: EU-Indien",
+                text: "Ein wichtiger Trend ist die verstärkte Suche nach neuen „Freihandelszonen", um Abhängigkeiten zu reduzieren. Ein prominentes Beispiel dafür ist das große Freihandelsabkommen zwischen der EU und Indien (Januar 2026), bei dem Zölle auf zahlreiche Produkte reduziert oder aufgehoben werden sollen – ein Schritt, der auch als Antwort auf den protektionistischen Druck aus den USA gesehen wird.",
+                highlight: "EU-Indien Freihandelsabkommen: Januar 2026",
+                source: "Quelle: barrons.com – EU India Trade Deal"
+            },
+            {
+                type: "info",
+                emoji: "🏭",
+                title: "Strategische Autonomie",
+                text: "Gleichzeitig verschiebt sich die Weltwirtschaftspolitik in Richtung „strategischer Autonomie", d. h. Länder oder Bündnisse versuchen, ihre eigenen industriellen Kapazitäten zu stärken und unabhängiger von internationalen Lieferketten zu werden. Dies zeigt sich sowohl bei den USA als auch bei der EU.",
+                source: "Quelle: think.ing.com – Global Trade in 2026"
+            },
+            {
+                type: "quiz",
+                question: "Was bedeutet 'strategische Autonomie'?",
+                options: ["Isolation vom Welthandel", "Stärkung eigener Kapazitäten und weniger Abhängigkeit", "Nur mit Nachbarländern handeln", "Alle Zölle abschaffen"],
+                correct: 1,
+                explanation: "Strategische Autonomie heißt, eigene industrielle Kapazitäten zu stärken und unabhängiger von internationalen Lieferketten zu werden."
+            },
+            {
+                type: "summary",
+                emoji: "✅",
+                title: "Zusammenfassung",
+                points: [
+                    "WTO und UNCTAD: Abkühlung des globalen Handelswachstums",
+                    "Neue Freihandelszonen, z.B. EU-Indien (Jan. 2026)",
+                    "Trend zur strategischen Autonomie bei USA und EU"
+                ]
+            }
+        ]
+    },
+    "5-4": {
+        title: "Fazit: Aktuelle Entwicklungen",
+        xp: 20,
+        cards: [
+            {
+                type: "info",
+                emoji: "1️⃣",
+                title: "Fazit – Punkt 1 & 2",
+                text: "**1)** Zunahme protektionistischer Maßnahmen, vorallem durch höhere Zölle und Importbarrieren in den USA\n\n**2)** Abschwächung und Neuorientierung traditioneller Handelsbeziehungen, insbesondere zwischen Europa und Nordamerika"
+            },
+            {
+                type: "info",
+                emoji: "3️⃣",
+                title: "Fazit – Punkt 3 & 4",
+                text: "**3)** Ausbau alternativer Freihandelsstrukturen, z.b. zwischen EU und Indien\n\n**4)** Veränderte Wettbewerbsbedingungen für Unternehmen weltweit, die strategisch auf neue Märkte und Lieferketten reagieren müssen."
+            },
+            {
+                type: "info",
+                emoji: "5️⃣",
+                title: "Fazit – Punkt 5",
+                text: "**5)** Globale Volatilität im Handel aufgrund geopolitischer Spannungen, die das bisherige System offener Märkte in Frage stellen.",
+                highlight: "Das bisherige System offener Märkte steht unter Druck"
+            },
+            {
+                type: "quiz",
+                question: "Welcher Trend prägt den internationalen Handel seit 2025?",
+                options: ["Alle Zölle werden abgeschafft", "Zunahme protektionistischer Maßnahmen", "Nur Europa handelt noch", "Handel wird unwichtiger"],
+                correct: 1,
+                explanation: "Zunahme protektionistischer Maßnahmen, besonders durch höhere Zölle der USA."
+            },
+            {
+                type: "summary",
+                emoji: "✅",
+                title: "Zusammenfassung Aufgabe 1",
+                points: [
+                    "Protektionismus nimmt zu (v.a. USA)",
+                    "Traditionelle Handelsbeziehungen im Umbruch",
+                    "Alternative Freihandelsstrukturen (EU-Indien)",
+                    "Unternehmen müssen strategisch reagieren",
+                    "Globale Volatilität stellt offene Märkte in Frage"
+                ]
+            }
+        ]
+    },
+
+    // =============================================
+    // MODUL 6: M11 – REGIONALE HANDELSABKOMMEN (PDF)
+    // =============================================
+    "6-1": {
+        title: "Entwicklung regionaler Handelsabkommen",
+        xp: 20,
+        cards: [
+            {
+                type: "info",
+                emoji: "📊",
+                title: "Material M11: RTAs weltweit",
+                text: "Material M11 zeigt die weltweite Entwicklung regionaler Handelsabkommen (Regional Trade Agreements, RTAs). Auffällig ist der starke Anstieg seit den 1990er-Jahren, insbesondere nach 2000. Die Zahl der gemeldeten Abkommen steigt kontinuierlich und erreicht heute mehrere hundert aktive Vereinbarungen weltweit. Diese Entwicklung ist jedoch nicht gleichmäßig verlaufen, sondern steht in engem Zusammenhang mit politischen und wirtschaftlichen Ereignissen."
+            },
+            {
+                type: "info",
+                emoji: "🇺🇸",
+                title: "Trump & America First (2016/17)",
+                text: "Mit der Wahl Donald Trumps 2016 und seinem Amtsantritt 2017 änderte sich die Handelspolitik der USA grundlegend. Trump vertrat eine klar protektionistische Linie („America First"). Er trat aus dem transpazifischen Freihandelsabkommen (TPP), verhandelte neu von NAFTA –> USMCA, führte Strafzölle auf Stahl und Aluminium ein und begann ein Handelskonflikt mit China.",
+                highlight: "TPP-Ausstieg, NAFTA → USMCA, Strafzölle, Handelskonflikt mit China",
+                source: "Quelle: bpb.de – Trumps Handelspolitik"
+            },
+            {
+                type: "info",
+                emoji: "🔄",
+                title: "Reaktion anderer Staaten",
+                text: "Staaten reagierten auf die Unsicherheit der US-Handelspolitik, indem sie eigene regionale Abkommen vorantrieben. Während die USA sich teilweise aus multilateralen Strukturen zurückgezogen, intensivierten andere Regionen, wie zum Beispiel die EU oder Asien ihre Wirtschaftliche Zusammenarbeit."
+            },
+            {
+                type: "quiz",
+                question: "Was war Trumps Handelspolitik ab 2017?",
+                options: ["Freihandel für alle", "America First – Protektionismus", "Nur mit China handeln", "Alle Zölle abschaffen"],
+                correct: 1,
+                explanation: "Trump verfolgte eine klar protektionistische Linie: TPP-Ausstieg, Strafzölle, NAFTA-Neuverhandlung."
+            },
+            {
+                type: "summary",
+                emoji: "✅",
+                title: "Zusammenfassung",
+                points: [
+                    "Starker Anstieg regionaler Handelsabkommen seit den 1990ern",
+                    "Trump 2017: Protektionismus und America First",
+                    "Andere Staaten reagierten mit eigenen regionalen Abkommen"
+                ]
+            }
+        ]
+    },
+    "6-2": {
+        title: "Corona-Krise & Handelsabkommen",
+        xp: 20,
+        cards: [
+            {
+                type: "info",
+                emoji: "🦠",
+                title: "Corona & Welthandel",
+                text: "Die Corona Pandemie stellte ab 2019/2020 einen massiven Rückschritt für den Welthandel dar. Folgen waren unter anderem die Unterbrechung globaler Lieferketten, Produktionsausfälle, Exportbeschränkungen (z.b. medizinische Ausrüstung) und stärkere nationale Eingriffe in Handelsstrukturen. Viele Staaten erkannten in dieser Phase ihre Abhängigkeit von globalen Lieferketten, insbesondere von China. Dies verstärkte die Diskussion um strategische Autonomie und De-Risking. De-Risking beschreibt indem Zusammenhang die übermäßige Abhängigkeit vom chinesischen Markt und die Intention sich von diesem zu lösen, um in andere Märkte zu investieren.",
+                highlight: "De-Risking: Lösung von übermäßiger Abhängigkeit vom chinesischen Markt"
+            },
+            {
+                type: "info",
+                emoji: "📈",
+                title: "Regionale Abkommen trotz Krise",
+                text: "Trotz der Krise wurden regionale Handelsabkommen weiter ausgebaut. Saaten suchten verlässliche Partner in geografischer Nähe, um Risiken globaler Abhängigkeiten zu reduzieren. Die Corona-Krise hat also nicht zum Stilstand regionaler Handesabkommen geführt, sondern ihre strategische Bedeutung sogar verstärkt.",
+                highlight: "Corona verstärkte die Bedeutung regionaler Handelsabkommen"
+            },
+            {
+                type: "quiz",
+                question: "Was bedeutet 'De-Risking'?",
+                options: ["Alle Risiken eliminieren", "Abhängigkeit vom chinesischen Markt reduzieren", "Nur noch lokal handeln", "Versicherungen abschließen"],
+                correct: 1,
+                explanation: "De-Risking beschreibt die Reduktion der übermäßigen Abhängigkeit vom chinesischen Markt, um in andere Märkte zu investieren."
+            },
+            {
+                type: "summary",
+                emoji: "✅",
+                title: "Zusammenfassung",
+                points: [
+                    "Corona: Unterbrechung von Lieferketten, Exportbeschränkungen",
+                    "Erkenntnis: zu hohe Abhängigkeit von China",
+                    "De-Risking als neue Strategie",
+                    "Regionale Abkommen wurden sogar verstärkt"
+                ]
+            }
+        ]
+    },
+    "6-3": {
+        title: "Die drei Phasen",
+        xp: 20,
+        cards: [
+            {
+                type: "info",
+                emoji: "1️⃣",
+                title: "Phase 1: Globalisierung (1990–2008)",
+                text: "**Globalisierungsphase (1990 - 2008):** Starker Anstieg durch Liberalisierung und WTO Expansion",
+                highlight: "Starker Anstieg regionaler Handelsabkommen durch wirtschaftliche Liberalisierung"
+            },
+            {
+                type: "info",
+                emoji: "2️⃣",
+                title: "Phase 2: Finanzkrise (ab 2008)",
+                text: "**Finanzkrise und geopolitische Spannungen (ab 2008):** Verlangsamung des multilateralen Handels, stärkere regionale Kooperation.",
+                highlight: "Weniger globaler, mehr regionaler Handel"
+            },
+            {
+                type: "info",
+                emoji: "3️⃣",
+                title: "Phase 3: Trump & Corona (ab 2017/2020)",
+                text: "**Trump-Ära & Corona-Krise (ab 2017/2020):** Zunehmende Unsicherheit im Welthandel ––> Ausbau regionaler Bündnisse als Absicherungsstrategie",
+                highlight: "Regionale Bündnisse als Schutz gegen globale Unsicherheit"
+            },
+            {
+                type: "quiz",
+                question: "In welcher Phase nahmen regionale Handelsabkommen stark zu?",
+                options: ["Vor 1990", "1990-2008 (Globalisierung)", "Nur nach Corona", "Gar nicht"],
+                correct: 1,
+                explanation: "In der Globalisierungsphase 1990-2008 stiegen regionale Handelsabkommen durch Liberalisierung und WTO-Expansion stark an."
+            },
+            {
+                type: "summary",
+                emoji: "✅",
+                title: "Zusammenfassung M11",
+                points: [
+                    "Phase 1 (1990-2008): Globalisierung & WTO-Expansion",
+                    "Phase 2 (ab 2008): Finanzkrise → mehr regionale Kooperation",
+                    "Phase 3 (ab 2017/2020): Trump & Corona → regionale Bündnisse als Absicherung"
+                ]
+            }
+        ]
+    },
+
+    // =============================================
+    // MODUL 7: M12 – ZÖLLE, PREISE & KONSUM (PDF)
+    // =============================================
+    "7-1": {
+        title: "Auswirkungen auf Preise & Konsum",
+        xp: 20,
+        cards: [
+            {
+                type: "info",
+                emoji: "💰",
+                title: "Material M12: Zölle & Verbraucher",
+                text: "Material M 12 verdeutlicht die wirtschaftlichen Folgen von Zöllen für Verbraucherinnen und Verbraucher. Durch höhere Importpreise steigen häufig auch die Endpreise für Konsumgüter. Dies führt zu einer geringeren Auswahl, steigenden Lebenshaltungskosten und sinkender Kaufkraft. Die Grafik zeigt damit, dass Zölle zwar Vorteile für inländische Produzenten haben können, gleichzeitig jedoch die Konsumentinnen und Konsumenten belasten. Es entsteht ein Zielkonflikt zwischen wirtschaftlichem Schutz und sozialer Gerechtigkeit.",
+                highlight: "Zielkonflikt: Wirtschaftlicher Schutz vs. soziale Gerechtigkeit",
+                source: "Quelle: de.statista.com"
+            },
+            {
+                type: "info",
+                emoji: "📊",
+                title: "Die Kette der Auswirkungen",
+                text: "**Höhere Importpreise** → Steigende Endpreise → Geringere Auswahl → Steigende Lebenshaltungskosten → Sinkende Kaufkraft",
+                highlight: "Verbraucher tragen am Ende die Kosten der Zölle"
+            },
+            {
+                type: "quiz",
+                question: "Was ist der Zielkonflikt bei Zöllen?",
+                options: ["Import vs. Export", "Wirtschaftlicher Schutz vs. soziale Gerechtigkeit", "Stadt vs. Land", "Produktion vs. Konsum"],
+                correct: 1,
+                explanation: "Zölle können inländische Produzenten schützen, belasten aber Verbraucher durch höhere Preise und weniger Auswahl."
+            },
+            {
+                type: "summary",
+                emoji: "✅",
+                title: "Zusammenfassung M12",
+                points: [
+                    "Zölle erhöhen Importpreise und Endpreise",
+                    "Folgen: weniger Auswahl, höhere Lebenshaltungskosten",
+                    "Zielkonflikt: Schutz der Industrie vs. Belastung der Verbraucher"
+                ]
+            }
+        ]
     }
+};
+
+// Module configuration for dynamic lesson counting
+const MODULE_CONFIG = {
+    1: { count: 4 },
+    2: { count: 4 },
+    3: { count: 4 },
+    4: { count: 4 },
+    5: { count: 4 },
+    6: { count: 3 },
+    7: { count: 1 }
 };
 
 // Lesson state
@@ -1035,6 +1137,7 @@ function renderLessonCard() {
                 <h3 class="card-title">${card.title}</h3>
                 <p class="card-text">${formatText(card.text)}</p>
                 ${card.highlight ? `<div class="card-highlight">${card.highlight}</div>` : ''}
+                ${card.source ? `<div class="card-source">${card.source}</div>` : ''}
             </div>
         `;
     } else if (card.type === 'quiz') {
@@ -1060,39 +1163,6 @@ function renderLessonCard() {
                 </ul>
             </div>
         `;
-    } else if (card.type === 'chart') {
-        // Generate unique ID for this chart canvas
-        const chartCanvasId = `lesson-chart-${card.chartId}-${Date.now()}`;
-        
-        // Check if this chart type uses HTML rendering (trumpZoelle)
-        if (card.chartId === 'trumpZoelle') {
-            html = `
-                <div class="lesson-card chart-card">
-                    <div class="card-emoji">📊</div>
-                    <h3 class="card-title">${card.title}</h3>
-                    ${card.description ? `<p class="card-text">${card.description}</p>` : ''}
-                    <div id="${chartCanvasId}" class="lesson-chart-container"></div>
-                </div>
-            `;
-        } else {
-            html = `
-                <div class="lesson-card chart-card">
-                    <div class="card-emoji">📊</div>
-                    <h3 class="card-title">${card.title}</h3>
-                    ${card.description ? `<p class="card-text">${card.description}</p>` : ''}
-                    <div class="lesson-chart-wrapper">
-                        <canvas id="${chartCanvasId}"></canvas>
-                    </div>
-                </div>
-            `;
-        }
-        
-        // Render chart after DOM update
-        setTimeout(() => {
-            if (window.renderLessonChart) {
-                renderLessonChart(card.chartId, chartCanvasId);
-            }
-        }, 100);
     }
     
     container.innerHTML = html;
@@ -1120,107 +1190,6 @@ function formatText(text) {
         .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
         .replace(/\n/g, '<br>');
 }
-
-// Render charts in lessons using CHART_DATA from charts.js
-function renderLessonChart(chartId, canvasId) {
-    if (!window.CHART_DATA || !CHART_DATA[chartId]) {
-        console.warn(`Chart data not found for: ${chartId}`);
-        return;
-    }
-    
-    const data = CHART_DATA[chartId];
-    
-    // Special handling for Trump-Zölle (HTML-based)
-    if (chartId === 'trumpZoelle') {
-        const container = document.getElementById(canvasId);
-        if (!container) return;
-        
-        container.innerHTML = `
-            <div class="trump-zoelle-mini">
-                <div class="base-rate-badge">Basiszoll: ${data.baseRate}%</div>
-                <div class="country-list">
-                    ${data.countryRates.slice(0, 5).map(c => `
-                        <div class="country-item">
-                            <span>${c.flag} ${c.country}</span>
-                            <span class="rate-badge">+${c.rate}%</span>
-                        </div>
-                    `).join('')}
-                </div>
-                <div class="auto-badge">🚗 Autos: ${data.autoZoll}%</div>
-            </div>
-        `;
-        return;
-    }
-    
-    // Chart.js-based charts
-    const canvas = document.getElementById(canvasId);
-    if (!canvas || !window.Chart) {
-        console.warn('Canvas or Chart.js not found');
-        return;
-    }
-    
-    const ctx = canvas.getContext('2d');
-    
-    if (chartId === 'exportquote') {
-        new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: data.labels,
-                datasets: [{
-                    label: 'Exportquote %',
-                    data: data.data,
-                    borderColor: data.color,
-                    backgroundColor: data.color + '20',
-                    fill: true,
-                    tension: 0.3
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: { legend: { display: false } },
-                scales: { y: { beginAtZero: true, max: 55 } }
-            }
-        });
-    } else if (chartId === 'handelspartner') {
-        new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: data.countries.map(c => `${c.flag} ${c.code}`),
-                datasets: [
-                    { label: 'Exporte', data: data.countries.map(c => c.exports), backgroundColor: '#00a86b' },
-                    { label: 'Importe', data: data.countries.map(c => c.imports), backgroundColor: '#ff6b6b' }
-                ]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                indexAxis: 'y',
-                plugins: { legend: { position: 'bottom' } }
-            }
-        });
-    } else if (chartId === 'importbeschraenkungen') {
-        const colors = data.labels.map(year => year >= 2018 ? '#e74c3c' : '#95a5a6');
-        new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: data.labels,
-                datasets: [{
-                    label: 'Neue Beschränkungen',
-                    data: data.data,
-                    backgroundColor: colors
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: { legend: { display: false } },
-                scales: { y: { beginAtZero: true } }
-            }
-        });
-    }
-}
-window.renderLessonChart = renderLessonChart;
 
 function checkLessonAnswer(selected, correct) {
     const options = document.querySelectorAll('.quiz-option');
@@ -1286,31 +1255,35 @@ function exitLesson() {
     }
 }
 
-// Count lessons per module dynamically
-function getLessonsPerModule() {
-    const counts = { 1: 0, 2: 0, 3: 0, 4: 0 };
-    for (const key of Object.keys(LESSONS)) {
-        const module = parseInt(key.split('-')[0]);
-        if (counts[module] !== undefined) counts[module]++;
+function toggleModule(num) {
+    const lessons = document.getElementById(`module-${num}-lessons`);
+    const chevron = document.getElementById(`chevron-${num}`);
+    if (!lessons) return;
+    
+    const isCollapsed = lessons.classList.contains('collapsed');
+    if (isCollapsed) {
+        lessons.classList.remove('collapsed');
+        lessons.style.maxHeight = lessons.scrollHeight + 'px';
+        chevron.classList.add('open');
+    } else {
+        lessons.classList.add('collapsed');
+        lessons.style.maxHeight = '0';
+        chevron.classList.remove('open');
     }
-    return counts;
 }
 
 function updateAllLessonStatuses() {
     loadLessonProgress();
     
-    const lessonsPerModule = getLessonsPerModule();
     let totalDone = 0;
     let totalLessons = 0;
     
-    for (let m = 1; m <= 4; m++) {
+    for (const [mod, config] of Object.entries(MODULE_CONFIG)) {
         let moduleDone = 0;
-        const maxLessons = lessonsPerModule[m] || 4;
-        totalLessons += maxLessons;
-        
-        for (let l = 1; l <= maxLessons; l++) {
-            const key = `${m}-${l}`;
-            const status = document.getElementById(`lesson-${m}-${l}-status`);
+        for (let l = 1; l <= config.count; l++) {
+            const key = `${mod}-${l}`;
+            totalLessons++;
+            const status = document.getElementById(`lesson-${mod}-${l}-status`);
             if (status) {
                 if (lessonProgress[key]) {
                     status.textContent = '✓';
@@ -1324,8 +1297,8 @@ function updateAllLessonStatuses() {
             }
         }
         
-        const modProgress = document.getElementById(`mod${m}-progress`);
-        if (modProgress) modProgress.textContent = `${moduleDone}/${maxLessons}`;
+        const modProgress = document.getElementById(`mod${mod}-progress`);
+        if (modProgress) modProgress.textContent = `${moduleDone}/${config.count}`;
     }
     
     // Update total progress
