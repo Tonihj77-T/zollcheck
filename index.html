@@ -68,196 +68,132 @@
                         <div id="total-progress" class="progress-bar-fill"></div>
                     </div>
 
-                    <!-- Module 1 -->
+                    <!-- Module 0: Grundlagen -->
+                    <div class="module-card">
+                        <div class="module-header" onclick="toggleModule(0)">
+                            <div class="module-title-row">
+                                <span class="module-icon">📘</span>
+                                <div>
+                                    <h3>Modul 0: Grundlagen</h3>
+                                    <span class="module-sub" id="mod0-progress">0/10</span>
+                                </div>
+                            </div>
+                            <span class="chevron" id="chevron-0">▸</span>
+                        </div>
+                        <div class="module-lessons collapsed" id="module-0-lessons">
+                            <button class="lesson-btn" onclick="startLesson(0,1)"><span id="lesson-0-1-status" class="lesson-status">○</span> Geschichte der Zölle</button>
+                            <button class="lesson-btn" onclick="startLesson(0,2)"><span id="lesson-0-2-status" class="lesson-status">○</span> Wer erhebt Zölle?</button>
+                            <button class="lesson-btn" onclick="startLesson(0,3)"><span id="lesson-0-3-status" class="lesson-status">○</span> Exportweltmeister?</button>
+                            <button class="lesson-btn" onclick="startLesson(0,4)"><span id="lesson-0-4-status" class="lesson-status">○</span> Handelspartner</button>
+                            <button class="lesson-btn" onclick="startLesson(0,5)"><span id="lesson-0-5-status" class="lesson-status">○</span> Made in Germany</button>
+                            <button class="lesson-btn" onclick="startLesson(0,6)"><span id="lesson-0-6-status" class="lesson-status">○</span> Handelsbilanz</button>
+                            <button class="lesson-btn" onclick="startLesson(0,7)"><span id="lesson-0-7-status" class="lesson-status">○</span> Preise & Verbraucher</button>
+                            <button class="lesson-btn" onclick="startLesson(0,8)"><span id="lesson-0-8-status" class="lesson-status">○</span> Jobs & Wirtschaft</button>
+                            <button class="lesson-btn" onclick="startLesson(0,9)"><span id="lesson-0-9-status" class="lesson-status">○</span> Umwelt & Klima</button>
+                            <button class="lesson-btn" onclick="startLesson(0,10)"><span id="lesson-0-10-status" class="lesson-status">○</span> Zukunft des Handels</button>
+                        </div>
+                    </div>
+
+                    <!-- Module 1: Aufgabe 1 -->
                     <div class="module-card">
                         <div class="module-header" onclick="toggleModule(1)">
                             <div class="module-title-row">
-                                <span class="module-icon">🔰</span>
+                                <span class="module-icon">📄</span>
                                 <div>
-                                    <h3>Grundlagen</h3>
-                                    <span class="module-sub" id="mod1-progress">0/4</span>
+                                    <h3>Modul 1: Aufgabe 1 — Entwicklungsprozesse</h3>
+                                    <span class="module-sub" id="mod1-progress">0/11</span>
                                 </div>
                             </div>
                             <span class="chevron" id="chevron-1">▸</span>
                         </div>
                         <div class="module-lessons collapsed" id="module-1-lessons">
-                            <button class="lesson-btn" onclick="startLesson(1,1)"><span id="lesson-1-1-status" class="lesson-status">○</span> Was sind Zölle?</button>
-                            <button class="lesson-btn" onclick="startLesson(1,2)"><span id="lesson-1-2-status" class="lesson-status">○</span> Geschichte der Zölle</button>
-                            <button class="lesson-btn" onclick="startLesson(1,3)"><span id="lesson-1-3-status" class="lesson-status">○</span> Arten von Zöllen</button>
-                            <button class="lesson-btn" onclick="startLesson(1,4)"><span id="lesson-1-4-status" class="lesson-status">○</span> Wer erhebt Zölle?</button>
+                            <button class="lesson-btn" onclick="startLesson(1,1)"><span id="lesson-1-1-status" class="lesson-status">○</span> Neue US-Zollpolitik & Protektionismus</button>
+                            <button class="lesson-btn" onclick="startLesson(1,2)"><span id="lesson-1-2-status" class="lesson-status">○</span> Reaktionen der EU</button>
+                            <button class="lesson-btn" onclick="startLesson(1,3)"><span id="lesson-1-3-status" class="lesson-status">○</span> Globale Auswirkungen</button>
+                            <button class="lesson-btn" onclick="startLesson(1,4)"><span id="lesson-1-4-status" class="lesson-status">○</span> Fazit: Aktuelle Entwicklungen</button>
+                            <button class="lesson-btn" onclick="startLesson(1,5)"><span id="lesson-1-5-status" class="lesson-status">○</span> Trump-Zölle 2025/26</button>
+                            <button class="lesson-btn" onclick="startLesson(1,6)"><span id="lesson-1-6-status" class="lesson-status">○</span> USA vs. China</button>
+                            <button class="lesson-btn" onclick="startLesson(1,7)"><span id="lesson-1-7-status" class="lesson-status">○</span> Brexit-Folgen</button>
+                            <button class="lesson-btn" onclick="startLesson(1,8)"><span id="lesson-1-8-status" class="lesson-status">○</span> EU-Handelsabkommen</button>
+                            <button class="lesson-btn" onclick="startLesson(1,9)"><span id="lesson-1-9-status" class="lesson-status">○</span> M11: Entwicklung regionaler Abkommen</button>
+                            <button class="lesson-btn" onclick="startLesson(1,10)"><span id="lesson-1-10-status" class="lesson-status">○</span> M11: Corona-Krise & Handelsabkommen</button>
+                            <button class="lesson-btn" onclick="startLesson(1,11)"><span id="lesson-1-11-status" class="lesson-status">○</span> M11: Die drei Phasen</button>
                         </div>
                     </div>
 
-                    <!-- Module 2 -->
+                    <!-- Module 2: Aufgabe 2 -->
                     <div class="module-card">
                         <div class="module-header" onclick="toggleModule(2)">
                             <div class="module-title-row">
-                                <span class="module-icon">🇩🇪</span>
+                                <span class="module-icon">⚖️</span>
                                 <div>
-                                    <h3>Deutschland & Handel</h3>
-                                    <span class="module-sub" id="mod2-progress">0/4</span>
+                                    <h3>Modul 2: Aufgabe 2 — Zölle & Zielsetzungen</h3>
+                                    <span class="module-sub" id="mod2-progress">0/3</span>
                                 </div>
                             </div>
                             <span class="chevron" id="chevron-2">▸</span>
                         </div>
                         <div class="module-lessons collapsed" id="module-2-lessons">
-                            <button class="lesson-btn" onclick="startLesson(2,1)"><span id="lesson-2-1-status" class="lesson-status">○</span> Exportweltmeister?</button>
-                            <button class="lesson-btn" onclick="startLesson(2,2)"><span id="lesson-2-2-status" class="lesson-status">○</span> Handelspartner</button>
-                            <button class="lesson-btn" onclick="startLesson(2,3)"><span id="lesson-2-3-status" class="lesson-status">○</span> Made in Germany</button>
-                            <button class="lesson-btn" onclick="startLesson(2,4)"><span id="lesson-2-4-status" class="lesson-status">○</span> Handelsbilanz</button>
+                            <button class="lesson-btn" onclick="startLesson(2,1)"><span id="lesson-2-1-status" class="lesson-status">○</span> Was sind Zölle?</button>
+                            <button class="lesson-btn" onclick="startLesson(2,2)"><span id="lesson-2-2-status" class="lesson-status">○</span> Arten von Zöllen & politische Ziele</button>
+                            <button class="lesson-btn" onclick="startLesson(2,3)"><span id="lesson-2-3-status" class="lesson-status">○</span> M12: Auswirkungen auf Preise & Konsum</button>
                         </div>
                     </div>
 
-                    <!-- Module 3 -->
+                    <!-- Module 3: Aufgabe 3 -->
                     <div class="module-card">
                         <div class="module-header" onclick="toggleModule(3)">
                             <div class="module-title-row">
-                                <span class="module-icon">⚡</span>
+                                <span class="module-icon">🔀</span>
                                 <div>
-                                    <h3>Aktuelle Konflikte</h3>
+                                    <h3>Modul 3: Aufgabe 3 — Szenario-Vergleich</h3>
                                     <span class="module-sub" id="mod3-progress">0/4</span>
                                 </div>
                             </div>
                             <span class="chevron" id="chevron-3">▸</span>
                         </div>
                         <div class="module-lessons collapsed" id="module-3-lessons">
-                            <button class="lesson-btn" onclick="startLesson(3,1)"><span id="lesson-3-1-status" class="lesson-status">○</span> Trump-Zölle 2025/26</button>
-                            <button class="lesson-btn" onclick="startLesson(3,2)"><span id="lesson-3-2-status" class="lesson-status">○</span> USA vs. China</button>
-                            <button class="lesson-btn" onclick="startLesson(3,3)"><span id="lesson-3-3-status" class="lesson-status">○</span> Brexit-Folgen</button>
-                            <button class="lesson-btn" onclick="startLesson(3,4)"><span id="lesson-3-4-status" class="lesson-status">○</span> EU-Handelsabkommen</button>
+                            <button class="lesson-btn" onclick="startLesson(3,1)"><span id="lesson-3-1-status" class="lesson-status">○</span> Szenario I: Handelsbeschränkungen</button>
+                            <button class="lesson-btn" onclick="startLesson(3,2)"><span id="lesson-3-2-status" class="lesson-status">○</span> Szenario II: Freier Warenhandel</button>
+                            <button class="lesson-btn" onclick="startLesson(3,3)"><span id="lesson-3-3-status" class="lesson-status">○</span> Direkter Vergleich</button>
+                            <button class="lesson-btn" onclick="startLesson(3,4)"><span id="lesson-3-4-status" class="lesson-status">○</span> Bewertung: Wie sollte Handel gestaltet werden?</button>
                         </div>
                     </div>
 
-                    <!-- Module 4 -->
+                    <!-- Module 4: Konkrete Beispiele -->
                     <div class="module-card">
                         <div class="module-header" onclick="toggleModule(4)">
                             <div class="module-title-row">
-                                <span class="module-icon">🌍</span>
+                                <span class="module-icon">🔍</span>
                                 <div>
-                                    <h3>Auswirkungen</h3>
+                                    <h3>Modul 4: Konkrete Beispiele</h3>
                                     <span class="module-sub" id="mod4-progress">0/4</span>
                                 </div>
                             </div>
                             <span class="chevron" id="chevron-4">▸</span>
                         </div>
                         <div class="module-lessons collapsed" id="module-4-lessons">
-                            <button class="lesson-btn" onclick="startLesson(4,1)"><span id="lesson-4-1-status" class="lesson-status">○</span> Preise & Verbraucher</button>
-                            <button class="lesson-btn" onclick="startLesson(4,2)"><span id="lesson-4-2-status" class="lesson-status">○</span> Jobs & Wirtschaft</button>
-                            <button class="lesson-btn" onclick="startLesson(4,3)"><span id="lesson-4-3-status" class="lesson-status">○</span> Umwelt & Klima</button>
-                            <button class="lesson-btn" onclick="startLesson(4,4)"><span id="lesson-4-4-status" class="lesson-status">○</span> Zukunft des Handels</button>
+                            <button class="lesson-btn" onclick="startLesson(4,1)"><span id="lesson-4-1-status" class="lesson-status">○</span> BMW 3er: Globales Produkt</button>
+                            <button class="lesson-btn" onclick="startLesson(4,2)"><span id="lesson-4-2-status" class="lesson-status">○</span> iPhone: Weltreise im Hosentaschenformat</button>
+                            <button class="lesson-btn" onclick="startLesson(4,3)"><span id="lesson-4-3-status" class="lesson-status">○</span> Kaffee: Von Äthiopien nach Deutschland</button>
+                            <button class="lesson-btn" onclick="startLesson(4,4)"><span id="lesson-4-4-status" class="lesson-status">○</span> Stahl: Dumping, Zölle & Klimaschutz</button>
                         </div>
                     </div>
 
-                    <!-- Module 5: PDF Content -->
+                    <!-- Module 5: Quellen & KI -->
                     <div class="module-card">
                         <div class="module-header" onclick="toggleModule(5)">
                             <div class="module-title-row">
-                                <span class="module-icon">📄</span>
+                                <span class="module-icon">📎</span>
                                 <div>
-                                    <h3>Aufgabe 1: Internationaler Handel</h3>
-                                    <span class="module-sub" id="mod5-progress">0/4</span>
+                                    <h3>Modul 5: Quellen & KI</h3>
+                                    <span class="module-sub" id="mod5-progress">0/1</span>
                                 </div>
                             </div>
                             <span class="chevron" id="chevron-5">▸</span>
                         </div>
                         <div class="module-lessons collapsed" id="module-5-lessons">
-                            <button class="lesson-btn" onclick="startLesson(5,1)"><span id="lesson-5-1-status" class="lesson-status">○</span> Neue US-Zollpolitik & Protektionismus</button>
-                            <button class="lesson-btn" onclick="startLesson(5,2)"><span id="lesson-5-2-status" class="lesson-status">○</span> Reaktionen der EU</button>
-                            <button class="lesson-btn" onclick="startLesson(5,3)"><span id="lesson-5-3-status" class="lesson-status">○</span> Globale Auswirkungen</button>
-                            <button class="lesson-btn" onclick="startLesson(5,4)"><span id="lesson-5-4-status" class="lesson-status">○</span> Fazit: Aktuelle Entwicklungen</button>
-                        </div>
-                    </div>
-
-                    <!-- Module 6: M11 -->
-                    <div class="module-card">
-                        <div class="module-header" onclick="toggleModule(6)">
-                            <div class="module-title-row">
-                                <span class="module-icon">📊</span>
-                                <div>
-                                    <h3>M11: Regionale Handelsabkommen</h3>
-                                    <span class="module-sub" id="mod6-progress">0/3</span>
-                                </div>
-                            </div>
-                            <span class="chevron" id="chevron-6">▸</span>
-                        </div>
-                        <div class="module-lessons collapsed" id="module-6-lessons">
-                            <button class="lesson-btn" onclick="startLesson(6,1)"><span id="lesson-6-1-status" class="lesson-status">○</span> Entwicklung regionaler Abkommen</button>
-                            <button class="lesson-btn" onclick="startLesson(6,2)"><span id="lesson-6-2-status" class="lesson-status">○</span> Trump-Ära & Corona</button>
-                            <button class="lesson-btn" onclick="startLesson(6,3)"><span id="lesson-6-3-status" class="lesson-status">○</span> Die drei Phasen</button>
-                        </div>
-                    </div>
-
-                    <!-- Module 7: M12 -->
-                    <div class="module-card">
-                        <div class="module-header" onclick="toggleModule(7)">
-                            <div class="module-title-row">
-                                <span class="module-icon">💰</span>
-                                <div>
-                                    <h3>M12: Zölle, Preise & Konsum</h3>
-                                    <span class="module-sub" id="mod7-progress">0/1</span>
-                                </div>
-                            </div>
-                            <span class="chevron" id="chevron-7">▸</span>
-                        </div>
-                        <div class="module-lessons collapsed" id="module-7-lessons">
-                            <button class="lesson-btn" onclick="startLesson(7,1)"><span id="lesson-7-1-status" class="lesson-status">○</span> Auswirkungen auf Preise & Konsum</button>
-                        </div>
-                    </div>
-
-                    <!-- Module 8: Szenario-Vergleich (AUFGABE 3) -->
-                    <div class="module-card">
-                        <div class="module-header" onclick="toggleModule(8)">
-                            <div class="module-title-row">
-                                <span class="module-icon">⚖️</span>
-                                <div>
-                                    <h3>Aufgabe 3: Szenario-Vergleich</h3>
-                                    <span class="module-sub" id="mod8-progress">0/4</span>
-                                </div>
-                            </div>
-                            <span class="chevron" id="chevron-8">▸</span>
-                        </div>
-                        <div class="module-lessons collapsed" id="module-8-lessons">
-                            <button class="lesson-btn" onclick="startLesson(8,1)"><span id="lesson-8-1-status" class="lesson-status">○</span> Szenario I: Handelsbeschränkungen</button>
-                            <button class="lesson-btn" onclick="startLesson(8,2)"><span id="lesson-8-2-status" class="lesson-status">○</span> Szenario II: Freier Warenhandel</button>
-                            <button class="lesson-btn" onclick="startLesson(8,3)"><span id="lesson-8-3-status" class="lesson-status">○</span> Direkter Vergleich</button>
-                            <button class="lesson-btn" onclick="startLesson(8,4)"><span id="lesson-8-4-status" class="lesson-status">○</span> Bewertung: Wie sollte Handel gestaltet werden?</button>
-                        </div>
-                    </div>
-
-                    <!-- Module 9: Konkrete Beispiele -->
-                    <div class="module-card">
-                        <div class="module-header" onclick="toggleModule(9)">
-                            <div class="module-title-row">
-                                <span class="module-icon">🔍</span>
-                                <div>
-                                    <h3>Konkrete Beispiele</h3>
-                                    <span class="module-sub" id="mod9-progress">0/4</span>
-                                </div>
-                            </div>
-                            <span class="chevron" id="chevron-9">▸</span>
-                        </div>
-                        <div class="module-lessons collapsed" id="module-9-lessons">
-                            <button class="lesson-btn" onclick="startLesson(9,1)"><span id="lesson-9-1-status" class="lesson-status">○</span> BMW 3er: Globales Produkt</button>
-                            <button class="lesson-btn" onclick="startLesson(9,2)"><span id="lesson-9-2-status" class="lesson-status">○</span> iPhone: Weltreise im Hosentaschenformat</button>
-                            <button class="lesson-btn" onclick="startLesson(9,3)"><span id="lesson-9-3-status" class="lesson-status">○</span> Kaffee: Von Äthiopien nach Deutschland</button>
-                            <button class="lesson-btn" onclick="startLesson(9,4)"><span id="lesson-9-4-status" class="lesson-status">○</span> Stahl: Dumping, Zölle & Klimaschutz</button>
-                        </div>
-                    </div>
-
-                    <!-- Module 10: Quellen & KI-Offenlegung -->
-                    <div class="module-card">
-                        <div class="module-header" onclick="toggleModule(10)">
-                            <div class="module-title-row">
-                                <span class="module-icon">📎</span>
-                                <div>
-                                    <h3>Quellen & KI-Offenlegung</h3>
-                                    <span class="module-sub" id="mod10-progress">0/1</span>
-                                </div>
-                            </div>
-                            <span class="chevron" id="chevron-10">▸</span>
-                        </div>
-                        <div class="module-lessons collapsed" id="module-10-lessons">
-                            <button class="lesson-btn" onclick="startLesson(10,1)"><span id="lesson-10-1-status" class="lesson-status">○</span> Unsere Quellen & KI-Nutzung</button>
+                            <button class="lesson-btn" onclick="startLesson(5,1)"><span id="lesson-5-1-status" class="lesson-status">○</span> Unsere Quellen & KI-Nutzung</button>
                         </div>
                     </div>
                 </section>
