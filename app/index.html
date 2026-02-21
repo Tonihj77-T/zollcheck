@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#1a1a2e">
+    <title>Tarrific - Lern-App</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icons/icon-192.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Desktop Block -->
+    <div id="desktop-block">
+        <h2>📱 Tarrific ist für mobile Geräte optimiert</h2>
+        <p>Scanne den QR-Code, um die App auf deinem Handy zu öffnen:</p>
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://tarrific.tonihj77.de" alt="QR Code" width="200" height="200" style="border-radius: 12px; margin: 8px 0;">
+        <p style="color: var(--accent-light); font-size: 15px; font-weight: 500;">tarrific.tonihj77.de</p>
+    </div>
+
+    <!-- ========== APP SHELL ========== -->
+    <div id="app">
+
+        <!-- Top Bar -->
+        <header id="top-bar">
+            <div class="top-bar-left">
+                <span class="app-logo">📦</span>
+                <span class="app-title">Tarrific</span>
+            </div>
+            <div class="top-bar-right">
+                <span id="xp-display" class="xp-badge">0 XP</span>
+            </div>
+        </header>
+
+        <!-- ========== SCREENS ========== -->
+
+        <!-- HOME -->
+        <main id="screen-home" class="screen active">
+            <div class="screen-scroll">
+                <!-- Hero / Progress -->
+                <section class="hero-card">
+                    <div class="hero-level">
+                        <span class="level-icon">🎓</span>
+                        <div class="level-info">
+                            <span class="level-text">Level 1 • Zoll-Neuling</span>
+                            <div class="xp-bar"><div id="xp-bar-fill" class="xp-bar-fill"></div></div>
+                            <span class="xp-sub"><span id="current-xp">0</span> XP</span>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Quick Stats -->
+                <section class="stats-row">
+                    <div class="stat-box">
+                        <span class="stat-num" id="lessons-done">0</span>
+                        <span class="stat-label">Lektionen</span>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-num" id="quiz-correct">0</span>
+                        <span class="stat-label">Quiz richtig</span>
+                    </div>
+                    <div class="stat-box">
+                        <span class="stat-num" id="quiz-streak">0</span>
+                        <span class="stat-label">🔥 Streak</span>
+                    </div>
+                </section>
+
+                <!-- Learning Modules -->
+                <section class="section">
+                    <h2 class="section-title">📚 Lernmodule</h2>
+                    <div class="progress-bar-wrap">
+                        <div id="total-progress" class="progress-bar-fill"></div>
+                    </div>
+
+                    <!-- Module 0: Grundlagen -->
+                    <div class="module-card">
+                        <div class="module-header" onclick="toggleModule(0)">
+                            <div class="module-title-row">
+                                <span class="module-icon">📘</span>
+                                <div>
+                                    <h3>Modul 0: Grundlagen</h3>
+                                    <span class="module-sub" id="mod0-progress">0/10</span>
+                                </div>
+                            </div>
+                            <span class="chevron" id="chevron-0">▸</span>
+                        </div>
+                        <div class="module-lessons collapsed" id="module-0-lessons">
+                            <button class="lesson-btn" onclick="startLesson(0,1)"><span id="lesson-0-1-status" class="lesson-status">○</span> Geschichte der Zölle</button>
+                            <button class="lesson-btn" onclick="startLesson(0,2)"><span id="lesson-0-2-status" class="lesson-status">○</span> Wer erhebt Zölle?</button>
+                            <button class="lesson-btn" onclick="startLesson(0,3)"><span id="lesson-0-3-status" class="lesson-status">○</span> Exportweltmeister?</button>
+                            <button class="lesson-btn" onclick="startLesson(0,4)"><span id="lesson-0-4-status" class="lesson-status">○</span> Handelspartner</button>
+                            <button class="lesson-btn" onclick="startLesson(0,5)"><span id="lesson-0-5-status" class="lesson-status">○</span> Made in Germany</button>
+                            <button class="lesson-btn" onclick="startLesson(0,6)"><span id="lesson-0-6-status" class="lesson-status">○</span> Handelsbilanz</button>
+                            <button class="lesson-btn" onclick="startLesson(0,7)"><span id="lesson-0-7-status" class="lesson-status">○</span> Preise & Verbraucher</button>
+                            <button class="lesson-btn" onclick="startLesson(0,8)"><span id="lesson-0-8-status" class="lesson-status">○</span> Jobs & Wirtschaft</button>
+                            <button class="lesson-btn" onclick="startLesson(0,9)"><span id="lesson-0-9-status" class="lesson-status">○</span> Umwelt & Klima</button>
+                            <button class="lesson-btn" onclick="startLesson(0,10)"><span id="lesson-0-10-status" class="lesson-status">○</span> Zukunft des Handels</button>
+                        </div>
+                    </div>
+
+                    <!-- Module 1: Aufgabe 1 -->
+                    <div class="module-card">
+                        <div class="module-header" onclick="toggleModule(1)">
+                            <div class="module-title-row">
+                                <span class="module-icon">📄</span>
+                                <div>
+                                    <h3>Modul 1: Entwicklungsprozesse</h3>
+                                    <span class="module-sub" id="mod1-progress">0/11</span>
+                                </div>
+                            </div>
+                            <span class="chevron" id="chevron-1">▸</span>
+                        </div>
+                        <div class="module-lessons collapsed" id="module-1-lessons">
+                            <button class="lesson-btn" onclick="startLesson(1,1)"><span id="lesson-1-1-status" class="lesson-status">○</span> Neue US-Zollpolitik & Protektionismus</button>
+                            <button class="lesson-btn" onclick="startLesson(1,2)"><span id="lesson-1-2-status" class="lesson-status">○</span> Reaktionen der EU</button>
+                            <button class="lesson-btn" onclick="startLesson(1,3)"><span id="lesson-1-3-status" class="lesson-status">○</span> Globale Auswirkungen</button>
+                            <button class="lesson-btn" onclick="startLesson(1,4)"><span id="lesson-1-4-status" class="lesson-status">○</span> Fazit: Aktuelle Entwicklungen</button>
+                            <button class="lesson-btn" onclick="startLesson(1,5)"><span id="lesson-1-5-status" class="lesson-status">○</span> Trump-Zölle 2025/26</button>
+                            <button class="lesson-btn" onclick="startLesson(1,6)"><span id="lesson-1-6-status" class="lesson-status">○</span> USA vs. China</button>
+                            <button class="lesson-btn" onclick="startLesson(1,7)"><span id="lesson-1-7-status" class="lesson-status">○</span> Brexit-Folgen</button>
+                            <button class="lesson-btn" onclick="startLesson(1,8)"><span id="lesson-1-8-status" class="lesson-status">○</span> EU-Handelsabkommen</button>
+                            <button class="lesson-btn" onclick="startLesson(1,9)"><span id="lesson-1-9-status" class="lesson-status">○</span> Entwicklung regionaler Abkommen</button>
+                            <button class="lesson-btn" onclick="startLesson(1,10)"><span id="lesson-1-10-status" class="lesson-status">○</span> Corona-Krise & Handelsabkommen</button>
+                            <button class="lesson-btn" onclick="startLesson(1,11)"><span id="lesson-1-11-status" class="lesson-status">○</span> Die drei Phasen</button>
+                        </div>
+                    </div>
+
+                    <!-- Module 2: Aufgabe 2 -->
+                    <div class="module-card">
+                        <div class="module-header" onclick="toggleModule(2)">
+                            <div class="module-title-row">
+                                <span class="module-icon">⚖️</span>
+                                <div>
+                                    <h3>Modul 2: Zölle & Zielsetzungen</h3>
+                                    <span class="module-sub" id="mod2-progress">0/4</span>
+                                </div>
+                            </div>
+                            <span class="chevron" id="chevron-2">▸</span>
+                        </div>
+                        <div class="module-lessons collapsed" id="module-2-lessons">
+                            <button class="lesson-btn" onclick="startLesson(2,1)"><span id="lesson-2-1-status" class="lesson-status">○</span> Was sind Zölle?</button>
+                            <button class="lesson-btn" onclick="startLesson(2,2)"><span id="lesson-2-2-status" class="lesson-status">○</span> Arten von Zöllen & politische Ziele</button>
+                            <button class="lesson-btn" onclick="startLesson(2,3)"><span id="lesson-2-3-status" class="lesson-status">○</span> Auswirkungen auf Preise & Konsum</button>
+                            <button class="lesson-btn" onclick="startLesson(2,4)"><span id="lesson-2-4-status" class="lesson-status">○</span> Protektionismus am Beispiel seltener Erden</button>
+                        </div>
+                    </div>
+
+                    <!-- Module 3: Aufgabe 3 -->
+                    <div class="module-card">
+                        <div class="module-header" onclick="toggleModule(3)">
+                            <div class="module-title-row">
+                                <span class="module-icon">🔀</span>
+                                <div>
+                                    <h3>Modul 3: Szenario-Vergleich</h3>
+                                    <span class="module-sub" id="mod3-progress">0/4</span>
+                                </div>
+                            </div>
+                            <span class="chevron" id="chevron-3">▸</span>
+                        </div>
+                        <div class="module-lessons collapsed" id="module-3-lessons">
+                            <button class="lesson-btn" onclick="startLesson(3,1)"><span id="lesson-3-1-status" class="lesson-status">○</span> Szenario I: Handelsbeschränkungen</button>
+                            <button class="lesson-btn" onclick="startLesson(3,2)"><span id="lesson-3-2-status" class="lesson-status">○</span> Szenario II: Freier Warenhandel</button>
+                            <button class="lesson-btn" onclick="startLesson(3,3)"><span id="lesson-3-3-status" class="lesson-status">○</span> Direkter Vergleich</button>
+                            <button class="lesson-btn" onclick="startLesson(3,4)"><span id="lesson-3-4-status" class="lesson-status">○</span> Bewertung: Wie sollte Handel gestaltet werden?</button>
+                        </div>
+                    </div>
+
+                    <!-- Module 4: Konkrete Beispiele -->
+                    <div class="module-card">
+                        <div class="module-header" onclick="toggleModule(4)">
+                            <div class="module-title-row">
+                                <span class="module-icon">🔍</span>
+                                <div>
+                                    <h3>Modul 4: Konkrete Beispiele</h3>
+                                    <span class="module-sub" id="mod4-progress">0/4</span>
+                                </div>
+                            </div>
+                            <span class="chevron" id="chevron-4">▸</span>
+                        </div>
+                        <div class="module-lessons collapsed" id="module-4-lessons">
+                            <button class="lesson-btn" onclick="startLesson(4,1)"><span id="lesson-4-1-status" class="lesson-status">○</span> BMW 3er: Globales Produkt</button>
+                            <button class="lesson-btn" onclick="startLesson(4,2)"><span id="lesson-4-2-status" class="lesson-status">○</span> iPhone: Weltreise im Hosentaschenformat</button>
+                            <button class="lesson-btn" onclick="startLesson(4,3)"><span id="lesson-4-3-status" class="lesson-status">○</span> Kaffee: Von Äthiopien nach Deutschland</button>
+                            <button class="lesson-btn" onclick="startLesson(4,4)"><span id="lesson-4-4-status" class="lesson-status">○</span> Stahl: Dumping, Zölle & Klimaschutz</button>
+                        </div>
+                    </div>
+
+                    <!-- Module 5: Quellen & KI -->
+                    <div class="module-card">
+                        <div class="module-header" onclick="toggleModule(5)">
+                            <div class="module-title-row">
+                                <span class="module-icon">📎</span>
+                                <div>
+                                    <h3>Modul 5: Quellen & KI</h3>
+                                    <span class="module-sub" id="mod5-progress">0/1</span>
+                                </div>
+                            </div>
+                            <span class="chevron" id="chevron-5">▸</span>
+                        </div>
+                        <div class="module-lessons collapsed" id="module-5-lessons">
+                            <button class="lesson-btn" onclick="startLesson(5,1)"><span id="lesson-5-1-status" class="lesson-status">○</span> Unsere Quellen & KI-Nutzung</button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Quellen -->
+                <section class="section">
+                    <h2 class="section-title">📎 Quellen</h2>
+                    <div class="sources-card">
+                        <a href="https://www.dihk.de/de/newsroom/ein-jahr-neue-us-regierung-herausforderung-transatlantischer-handel-163996" target="_blank">DIHK: Transatlantischer Handel</a>
+                        <a href="https://www.euronews.com/business/2025/04/16/wto-trumps-tariff-policies-could-make-global-trade-slide-in-2025" target="_blank">Euronews: WTO & Trump Tariffs</a>
+                        <a href="https://www.consilium.europa.eu/de/press/press-releases/2025/11/28/eu-us-trade-relations-council-moves-forward-in-implementing-the-tariff-elements-of-the-joint-statement/" target="_blank">EU Council: EU-US Trade Relations</a>
+                        <a href="https://think.ing.com/articles/global-trade-in-2026-significant-slowdown-amid-large-shifts/" target="_blank">ING: Global Trade 2026</a>
+                        <a href="https://www.barrons.com/articles/eu-india-trade-deal-trump-tariffs-b3b58775" target="_blank">Barron's: EU-India Trade Deal</a>
+                        <a href="https://unctad.org/publication/global-trade-update-january-2026-top-trends-redefining-global-trade-2026" target="_blank">UNCTAD: Global Trade Update 2026</a>
+                        <a href="https://de.statista.com" target="_blank">Statista</a>
+                        <a href="https://www.bpb.de/themen/wirtschaft/globalisierung/261009/trumps-handelspolitik/" target="_blank">bpb: Trumps Handelspolitik</a>
+                        <a href="https://www.welt.de/newsticker/dpa_nt/infoline_nt/wirtschaft_nt/article69808e2a78c88161f9da46e3/eu-kommissar-will-made-in-europe-etablieren.html" target="_blank">Welt: Made in Europe</a>
+                        <a href="https://www.destatis.de/EN/Press/2026/02/PE26_042_51.html" target="_blank">Destatis: Außenhandel Dez 2025</a>
+                        <a href="https://taxfoundation.org/research/all/federal/trump-tariffs-trade-war/" target="_blank">Tax Foundation: Trump Tariffs Analysis</a>
+                        <a href="https://www.congress.gov/crs-product/IF13107" target="_blank">CRS: U.S.-EU Tariffs Framework</a>
+                        <a href="https://www.cnbc.com/2026/02/20/supreme-court-tariff-decision-apple-trump-cook-iphone.html" target="_blank">CNBC: Apple & Tariffs</a>
+                        <a href="https://www.ifo.de" target="_blank">ifo-Institut: Handelsauswirkungen</a>
+                        <a href="https://www.bertelsmann-stiftung.de" target="_blank">Bertelsmann-Stiftung: Freihandel</a>
+                        <a href="https://www.bmwgroup.com" target="_blank">BMW Group Jahresbericht 2025</a>
+                        <a href="https://www.kaffeeverband.de" target="_blank">Deutscher Kaffeeverband</a>
+                        <a href="https://www.fairtrade-deutschland.de" target="_blank">TransFair e.V.: Fair Trade</a>
+                        <a href="https://www.stahl-online.de" target="_blank">Wirtschaftsvereinigung Stahl</a>
+                    </div>
+                </section>
+            </div>
+        </main>
+
+        <!-- LESSON VIEW -->
+        <main id="screen-lesson" class="screen">
+            <div class="lesson-header">
+                <button class="btn-icon" onclick="exitLesson()">✕</button>
+                <div class="lesson-progress-bar"><div id="lesson-progress-fill" class="lesson-progress-fill"></div></div>
+                <span id="lesson-card-count" class="lesson-count">1/5</span>
+            </div>
+            <div class="lesson-body">
+                <div id="lesson-content"></div>
+            </div>
+            <div class="lesson-nav">
+                <button id="lesson-prev" class="btn-secondary" onclick="prevCard()">← Zurück</button>
+                <button id="lesson-next" class="btn-primary" onclick="nextCard()">Weiter →</button>
+            </div>
+        </main>
+
+        <!-- QUIZ -->
+        <main id="screen-quiz" class="screen">
+            <div class="screen-scroll">
+                <section class="section">
+                    <h2 class="section-title">❓ Quiz</h2>
+                    <div class="quiz-stats-row">
+                        <span>✅ <span id="quiz-correct-2">0</span> richtig</span>
+                        <span>🔥 <span id="quiz-streak-2">0</span> Streak</span>
+                    </div>
+                </section>
+
+                <div id="quiz-card" class="quiz-card-wrap">
+                    <h3 id="quiz-question" class="quiz-question"></h3>
+                    <div id="quiz-answers" class="quiz-answers"></div>
+                </div>
+
+                <div id="quiz-feedback" class="quiz-feedback hidden">
+                    <span id="feedback-icon" class="feedback-icon">✓</span>
+                    <h3 id="feedback-text"></h3>
+                    <p id="feedback-explanation"></p>
+                    <button class="btn-primary" onclick="nextQuestion()">Nächste Frage →</button>
+                </div>
+            </div>
+        </main>
+
+        <!-- HAUSHALT (Products) -->
+        <main id="screen-haushalt" class="screen">
+            <div class="screen-scroll">
+                <section class="section">
+                    <h2 class="section-title">🏠 Mein Haushalt</h2>
+                    <p class="section-desc">Entdecke die globale Reise deiner Alltagsprodukte.</p>
+                </section>
+
+                <div id="products-list" class="products-list"></div>
+
+                <button class="btn-add" onclick="showProductModal()">+ Produkt hinzufügen</button>
+
+                <!-- Product Modal -->
+                <div id="product-modal" class="modal hidden">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3>Produkt wählen</h3>
+                            <button class="btn-icon" onclick="hideProductModal()">✕</button>
+                        </div>
+                        <div class="category-grid">
+                            <button class="cat-btn" onclick="selectCategory('kleidung')">👕 Kleidung</button>
+                            <button class="cat-btn" onclick="selectCategory('elektronik')">📱 Elektronik</button>
+                            <button class="cat-btn" onclick="selectCategory('lebensmittel')">🍌 Lebensmittel</button>
+                            <button class="cat-btn" onclick="selectCategory('haushalt')">🪑 Haushalt</button>
+                        </div>
+                        <div id="product-select" class="product-select hidden"></div>
+                    </div>
+                </div>
+
+                <!-- Product Detail Modal -->
+                <div id="product-detail-modal" class="modal hidden">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 id="detail-product-name"></h3>
+                            <button class="btn-icon" onclick="hideProductDetail()">✕</button>
+                        </div>
+                        <div id="product-detail-content"></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- SIMULATOR -->
+        <main id="screen-simulator" class="screen">
+            <div class="screen-scroll">
+                <div id="sim-intro">
+                    <section class="section">
+                        <h2 class="section-title">🎮 Simulator</h2>
+                        <p class="section-desc">Schlüpfe in eine Rolle und triff Entscheidungen!</p>
+                    </section>
+
+                    <div class="sim-roles">
+                        <button class="role-card" onclick="startSimulator('minister')">
+                            <span class="role-icon">🏛️</span>
+                            <h3>Wirtschaftsminister</h3>
+                            <p>Lenke die Handelspolitik deines Landes</p>
+                        </button>
+                        <button class="role-card" onclick="startSimulator('unternehmer')">
+                            <span class="role-icon">🏭</span>
+                            <h3>Unternehmer*in</h3>
+                            <p>Führe dein Unternehmen durch Krisen</p>
+                        </button>
+                        <button class="role-card" onclick="startSimulator('verbraucher')">
+                            <span class="role-icon">🛒</span>
+                            <h3>Verbraucher*in</h3>
+                            <p>Triff kluge Kaufentscheidungen</p>
+                        </button>
+                    </div>
+
+                    <div class="sim-dynamic-wrap">
+                        <button class="role-card dynamic" onclick="startDynamicSimulator()">
+                            <span class="role-icon">🌐</span>
+                            <h3>Dynamischer Simulator</h3>
+                            <p>Steuere Deutschland durch 12 Monate Welthandelspolitik</p>
+                        </button>
+                    </div>
+                </div>
+                <div id="sim-game" class="sim-game hidden"></div>
+            </div>
+        </main>
+
+        <!-- LEXIKON -->
+        <main id="screen-lexikon" class="screen">
+            <div class="screen-scroll">
+                <section class="section">
+                    <h2 class="section-title">📖 Lexikon</h2>
+                    <input type="text" id="lexikon-search" class="search-input" placeholder="🔍 Begriff suchen..." oninput="filterLexikon()">
+                </section>
+                <div id="lexikon-list" class="lexikon-list"></div>
+            </div>
+        </main>
+
+        <!-- KARTE -->
+        <main id="screen-karte" class="screen">
+            <div class="screen-scroll">
+                <section class="section">
+                    <h2 class="section-title">🗺️ Handelskarte</h2>
+                    <p class="section-desc">Interaktive Karte der globalen Handelsströme</p>
+                </section>
+                <div id="map-container" class="map-container"></div>
+            </div>
+        </main>
+
+        <!-- ========== BOTTOM NAV ========== -->
+        <nav id="bottom-nav">
+            <button class="nav-item active" data-screen="screen-home" onclick="showScreen('screen-home')">
+                <span class="nav-icon">🏠</span>
+                <span class="nav-label">Lernen</span>
+            </button>
+            <button class="nav-item" data-screen="screen-quiz" onclick="showScreen('screen-quiz')">
+                <span class="nav-icon">❓</span>
+                <span class="nav-label">Quiz</span>
+            </button>
+            <button class="nav-item" data-screen="screen-haushalt" onclick="showScreen('screen-haushalt')">
+                <span class="nav-icon">🛒</span>
+                <span class="nav-label">Haushalt</span>
+            </button>
+            <button class="nav-item" data-screen="screen-simulator" onclick="showScreen('screen-simulator')">
+                <span class="nav-icon">🎮</span>
+                <span class="nav-label">Simulator</span>
+            </button>
+            <button class="nav-item" data-screen="screen-lexikon" onclick="showScreen('screen-lexikon')">
+                <span class="nav-icon">📖</span>
+                <span class="nav-label">Lexikon</span>
+            </button>
+            <button class="nav-item" data-screen="screen-karte" onclick="showScreen('screen-karte')">
+                <span class="nav-icon">🗺️</span>
+                <span class="nav-label">Karte</span>
+            </button>
+        </nav>
+
+    </div>
+
+    <!-- Toast -->
+    <div id="toast" class="toast"></div>
+    <!-- Confirm Modal -->
+    <div id="confirm-modal" class="confirm-modal hidden">
+        <div class="confirm-box">
+            <p id="confirm-text"></p>
+            <div class="confirm-buttons">
+                <button class="btn-cancel" onclick="hideConfirm(false)">Abbrechen</button>
+                <button class="btn-confirm" onclick="hideConfirm(true)">Beenden</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="data.js"></script>
+    <script src="lessons.js"></script>
+    <script src="simulator.js"></script>
+    <script src="map.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
