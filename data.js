@@ -42,7 +42,7 @@ const quizQuestions = [
             "Textilien"
         ],
         correct: 1,
-        explanation: "Die Automobilindustrie verzeichnete mit -9,4% den stärksten Exportrückgang in die USA."
+        explanation: "Die Automobilindustrie verzeichnete mit -17,8% den stärksten Exportrückgang in die USA."
     },
     {
         question: "Wann wurde die Welthandelsorganisation (WTO) gegründet?",
@@ -53,7 +53,7 @@ const quizQuestions = [
             "2001"
         ],
         correct: 2,
-        explanation: "Die WTO wurde 1995 als Nachfolgerin des GATT gegründet und hat heute 164 Mitgliedsländer."
+        explanation: "Die WTO wurde 1995 als Nachfolgerin des GATT gegründet und hat heute 166 Mitgliedsländer."
     },
     {
         question: "Was ist ein Wertzoll?",
@@ -75,7 +75,7 @@ const quizQuestions = [
             "Niederlande"
         ],
         correct: 2,
-        explanation: "China überholte 2025 die USA wieder als wichtigster Handelspartner mit 298 Mrd. € Handelsvolumen."
+        explanation: "China überholte 2025 die USA wieder als wichtigster Handelspartner mit 251,8 Mrd. € Handelsvolumen."
     },
     {
         question: "Was ist ein Handelsdefizit?",
@@ -114,12 +114,12 @@ const quizQuestions = [
         question: "Um wie viel Prozent sind die deutschen Exporte in die USA 2025 eingebrochen?",
         answers: [
             "3,2%",
-            "9,4%",
+            "17,8%",
             "15,7%",
             "22,1%"
         ],
         correct: 1,
-        explanation: "Die deutschen Exporte in die USA sanken 2025 um 9,4% auf 135,8 Milliarden Euro."
+        explanation: "Die deutschen Exporte in die USA sanken 2025 um 17,8% auf 135,8 Milliarden Euro."
     },
     {
         question: "Was ist das Ziel von 'America First'?",
@@ -181,11 +181,11 @@ const quizQuestions = [
         answers: [
             "52",
             "98",
-            "164",
+            "166",
             "193"
         ],
         correct: 2,
-        explanation: "Die WTO hat 164 Mitgliedsländer, die zusammen über 98% des Welthandels abwickeln."
+        explanation: "Die WTO hat 166 Mitgliedsländer, die zusammen über 98% des Welthandels abwickeln."
     },
     {
         question: "Was ist der EU-Binnenmarkt?",
@@ -304,7 +304,7 @@ const productsDB = {
             ],
             distance: "12.400 km",
             price: {
-                production: 400,
+                production: 520,
                 transport: 15,
                 tariff: 0,
                 retail: 1199
@@ -373,7 +373,7 @@ const productsDB = {
                 retail: 8.99
             },
             tariffNote: "Rohkaffee ist zollfrei – gerösteter Kaffee hat 7,5% Zoll",
-            scenario: "Deutschland importiert ~550.000 Tonnen Rohkaffee pro Jahr – wir könnten ihn nicht selbst anbauen."
+            scenario: "Deutschland importiert ca. 1 Million Tonnen Rohkaffee pro Jahr – wir könnten ihn nicht selbst anbauen."
         },
         {
             id: "banane",
@@ -393,7 +393,7 @@ const productsDB = {
                 tariff: 0.11,
                 retail: 1.49
             },
-            tariffNote: "€114 pro Tonne Zoll – schützt europäische Überseeterritorien",
+            tariffNote: "€75 pro Tonne Zoll – schützt europäische Überseeterritorien",
             scenario: "Bananen aus Afrika/Karibik sind zollfrei (AKP-Abkommen), aus Lateinamerika nicht."
         },
         {
@@ -485,115 +485,116 @@ const productsDB = {
 const lexikonEntries = [
     {
         term: "Zoll",
-        definition: "Eine Abgabe (Steuer), die auf Waren erhoben wird, wenn sie eine Landesgrenze überschreiten – meist beim Import. Zölle können als Prozentsatz vom Warenwert (Wertzoll) oder als fester Betrag pro Menge (Mengenzoll) erhoben werden.",
-        example: "Die USA erheben 25% Zoll auf Stahl aus der EU. Ein Container Stahl im Wert von 100.000€ kostet dann 25.000€ extra."
+        definition: "Eine Abgabe (Steuer), die auf Waren erhoben wird, wenn sie eine Landesgrenze überschreiten \u2013 meist beim Import. Zölle können als Prozentsatz vom Warenwert (Wertzoll) oder als fester Betrag pro Menge (Mengenzoll) erhoben werden.",
+        example: "Am 2. April 2025 \u2013 dem sogenannten \u201ELiberation Day\u201C \u2013 verkündete US-Präsident Trump neue Zölle auf Importe aus fast allen Ländern der Welt. Auf Waren aus der EU wurden pauschal 20 % Zoll erhoben, auf chinesische Produkte sogar bis zu 145 %. Konkret bedeutet das: Ein deutscher Maschinenbauer, der eine Industrieanlage im Wert von 500.000 € in die USA exportiert, muss nun mit einer zusätzlichen Belastung von 100.000 € rechnen, die entweder der US-Importeur zahlt oder die auf den Endpreis aufgeschlagen wird. In der Folge stiegen die Preise für viele Konsumgüter in den USA deutlich \u2013 von Elektronik über Kleidung bis hin zu Lebensmitteln."
     },
     {
         term: "Freihandel",
         definition: "Ein System des internationalen Handels ohne oder mit minimalen staatlichen Eingriffen wie Zöllen, Quoten oder Subventionen. Ziel ist es, dass Waren und Dienstleistungen frei über Grenzen fließen können.",
-        example: "Der EU-Binnenmarkt ist ein Beispiel für Freihandel: Zwischen Deutschland und Frankreich gibt es keine Zölle."
+        example: "Das EU-Japan-Wirtschaftspartnerschaftsabkommen (JEFTA), das 2019 in Kraft trat, ist eines der größten Freihandelsabkommen der Welt und deckt fast ein Drittel des globalen BIP ab. Durch das Abkommen wurden etwa 97 % aller Zölle auf japanische Importe in die EU abgeschafft. Konkret bedeutet das zum Beispiel, dass japanische Autos von Toyota oder Honda schrittweise zollfrei in die EU importiert werden können, während europäische Lebensmittelhersteller wie Käsereien aus Frankreich oder Weinproduzenten aus Italien ihre Produkte ohne die zuvor hohen japanischen Zölle von bis zu 30 % nach Japan exportieren können. Das Abkommen zeigt, wie Freihandel beiden Seiten nützt: Europäische Verbraucher bekommen günstigere Elektronik, japanische Verbraucher günstigere europäische Spezialitäten."
     },
     {
         term: "Protektionismus",
         definition: "Staatliche Maßnahmen zum Schutz der heimischen Wirtschaft vor ausländischer Konkurrenz. Instrumente sind Zölle, Importquoten, Subventionen oder technische Handelshemmnisse.",
-        example: "Die USA unter Trump erhöhten Zölle auf Autos, um amerikanische Autohersteller vor europäischer Konkurrenz zu schützen."
+        example: "Am Beispiel des Handels mit seltenen Erden wird deutlich, wie Protektionismus konkret aussehen kann. Seltene Erden sind strategisch wichtige Rohstoffe, die für die Herstellung moderner Technologien wie Smartphones, Elektroautos, Windkraftanlagen, Computerchips oder militärischer Ausrüstung benötigt werden. Ein großer Teil der weltweiten Förderung und vor allem der Weiterverarbeitung dieser Rohstoffe findet in China statt. Viele Industrieländer, darunter die USA und Deutschland, sind daher stark von Importen abhängig. Ein protektionistischer Staat könnte nun hohe Zölle auf seltene Erden oder auf daraus hergestellte Produkte erheben. Dadurch würden importierte Rohstoffe teurer, während heimische Produzenten wettbewerbsfähiger würden. Ein aktuelles Beispiel ist Trumps \u201ELiberation Day\u201C-Zollstrategie mit hohen Zöllen auf chinesische Produkte. Allerdings steigen dadurch die Produktionskosten für Hersteller von Elektroautos oder Windkraftanlagen, was zu höheren Preisen für Verbraucher führt."
     },
     {
         term: "Handelsdefizit",
         definition: "Wenn ein Land mehr Waren importiert als es exportiert. Das Gegenteil ist ein Handelsüberschuss. Die USA haben ein großes Handelsdefizit mit China und Deutschland.",
-        example: "Deutschland exportiert Autos im Wert von 30 Mrd.€ in die USA, importiert aber nur Waren für 20 Mrd.€ → Die USA haben ein Defizit von 10 Mrd.€ mit Deutschland."
+        example: "Die USA hatten 2024 ein Warenhandelsdefizit von rund 295 Milliarden US-Dollar mit China \u2013 das heißt, sie importierten Waren in diesem Wert mehr aus China als sie dorthin exportierten. Konkret kauften amerikanische Verbraucher und Unternehmen chinesische Produkte wie iPhones (die in China montiert werden), Kleidung, Spielzeug und Elektronik für etwa 440 Milliarden Dollar, während China nur US-Waren wie Sojabohnen, Flugzeuge und Halbleiter-Ausrüstung im Wert von rund 145 Milliarden Dollar importierte. Dieses Defizit war einer der Hauptgründe, warum Präsident Trump massive Zölle auf chinesische Waren einführte \u2013 er argumentierte, China profitiere unfair auf Kosten amerikanischer Arbeitsplätze. Ökonomen weisen allerdings darauf hin, dass ein Handelsdefizit nicht automatisch bedeutet, dass ein Land \u201Everliert\u201C, da die günstigen Importe den amerikanischen Verbrauchern und Unternehmen nützen."
     },
     {
         term: "WTO",
-        definition: "Die Welthandelsorganisation (World Trade Organization) wurde 1995 gegründet und hat 164 Mitglieder. Sie setzt Regeln für den internationalen Handel und schlichtet Handelsstreitigkeiten.",
-        example: "Wenn die EU der Meinung ist, dass US-Zölle gegen WTO-Regeln verstoßen, kann sie bei der WTO Beschwerde einlegen."
+        definition: "Die Welthandelsorganisation (World Trade Organization) wurde 1995 gegründet und hat 166 Mitglieder. Sie setzt Regeln für den internationalen Handel und schlichtet Handelsstreitigkeiten.",
+        example: "Als die USA unter Trump 2018 Zölle von 25 % auf Stahl und 10 % auf Aluminium einführten und dies mit \u201Enationaler Sicherheit\u201C begründeten, reichten zahlreiche Länder \u2013 darunter die EU, China, Kanada und die Türkei \u2013 Beschwerden bei der WTO ein. Im Dezember 2022 urteilte ein WTO-Schiedspanel, dass die US-Zölle gegen internationale Handelsregeln verstoßen, da die Begründung mit nationaler Sicherheit nicht haltbar sei. Die USA wiesen das Urteil jedoch zurück und ignorierten es schlicht \u2013 was eine fundamentale Schwäche der WTO offenbarte: Sie kann Regeln zwar festlegen und Urteile sprechen, aber sie hat keine Möglichkeit, deren Durchsetzung zu erzwingen, besonders wenn eine Großmacht wie die USA nicht kooperiert. Seit 2019 blockieren die USA zudem die Ernennung neuer Richter am WTO-Berufungsgericht, wodurch das Streitschlichtungssystem faktisch lahmgelegt ist."
     },
     {
         term: "Handelskrieg",
         definition: "Eine Eskalation von Handelsstreitigkeiten, bei der Länder gegenseitig Zölle erhöhen oder andere Handelshemmnisse einführen. Oft beginnt er mit Vergeltungszöllen.",
-        example: "USA erhöht Zölle auf EU-Stahl → EU erhebt Zölle auf US-Bourbon und Motorräder → USA droht mit Autozöllen → Eskalation."
+        example: "Der Handelskrieg zwischen den USA und China, der 2018 begann und sich 2025 massiv verschärfte, zeigt exemplarisch, wie solche Konflikte eskalieren. Trump erhöhte die Zölle auf chinesische Waren schrittweise von anfänglich 10 % auf schließlich 145 % im April 2025. China reagierte mit Vergeltungszöllen von 125 % auf amerikanische Produkte wie Sojabohnen, Schweinefleisch und Flugzeuge von Boeing. Amerikanische Farmer verloren einen ihrer größten Absatzmärkte \u2013 die US-Sojabohnen-Exporte nach China brachen um über 70 % ein, und die US-Regierung musste den Farmern Milliardenhilfen zahlen. Gleichzeitig stiegen die Preise in US-Supermärkten für Alltagsprodukte wie Elektronik und Kleidung deutlich an. Am Ende schadete der Handelskrieg beiden Volkswirtschaften und erschütterte die globalen Lieferketten."
     },
     {
         term: "Freihandelsabkommen",
         definition: "Ein Vertrag zwischen zwei oder mehr Ländern, der Zölle und andere Handelshemmnisse reduziert oder abschafft. Beispiele: CETA (EU-Kanada), USMCA (USA-Mexiko-Kanada).",
-        example: "Durch CETA können kanadische Unternehmen ihre Waren ohne Zölle in die EU verkaufen."
+        example: "Das Freihandelsabkommen CETA zwischen der EU und Kanada, das seit 2017 vorläufig angewendet wird, zeigt die konkreten Auswirkungen solcher Abkommen. Vor CETA mussten europäische Automobilhersteller wie BMW oder Mercedes beim Export nach Kanada Zölle von 6,1 % zahlen \u2013 bei einem Fahrzeug im Wert von 60.000 € waren das über 3.600 € zusätzliche Kosten. Diese Zölle wurden durch CETA komplett abgeschafft. Umgekehrt können kanadische Rindfleischproduzenten jährlich bis zu 50.000 Tonnen Rindfleisch zollfrei in die EU exportieren. In den ersten Jahren nach Inkrafttreten stieg der bilaterale Handel um etwa 30 %. Allerdings bleibt CETA umstritten: Kritiker befürchten, dass kanadische Agrarstandards europäische Verbraucherschutzregeln unterlaufen könnten."
     },
     {
         term: "Schutzzoll",
         definition: "Ein Zoll, der erhoben wird, um heimische Industrien vor ausländischer Konkurrenz zu schützen. Er macht importierte Waren teurer und damit weniger wettbewerbsfähig.",
-        example: "China erhebt Zölle auf importierte Autos, um seine eigene Autoindustrie zu schützen und aufzubauen."
+        example: "Indien erhebt auf importierte Smartphones einen Schutzzoll von bis zu 20 %, um seine heimische Elektronikindustrie zu fördern. Diese Strategie hat tatsächlich funktioniert: Apple-Zulieferer Foxconn und der indische Konzern Tata bauten große Fabriken in Indien, weil es günstiger wurde, iPhones vor Ort zu montieren, als sie unter Zollaufschlag zu importieren. Inzwischen werden über 95 % der in Indien verkauften Smartphones auch dort produziert, und Indien ist zum zweitgrößten Smartphone-Hersteller der Welt aufgestiegen. Allerdings zahlten indische Verbraucher jahrelang deutlich höhere Preise für importierte Geräte als Kunden in anderen Ländern \u2013 ein iPhone kostete in Indien oft 20\u201330 % mehr als in den USA."
     },
     {
         term: "Dumping",
         definition: "Wenn ein Unternehmen Waren im Ausland unter dem Herstellungspreis verkauft, oft um Marktanteile zu gewinnen oder Konkurrenten zu verdrängen. Gilt als unfaire Handelspraxis.",
-        example: "China wurde vorgeworfen, Solarmodule unter Produktionskosten nach Europa zu exportieren, um europäische Hersteller aus dem Markt zu drängen."
+        example: "Im Oktober 2024 führte die EU Ausgleichszölle von bis zu 35,3 % auf chinesische Elektroautos ein, weil eine Untersuchung ergeben hatte, dass chinesische Hersteller wie BYD, Geely und SAIC massive staatliche Subventionen erhalten und ihre Fahrzeuge in Europa weit unter den tatsächlichen Produktionskosten anbieten konnten. Ein BYD Seal, der in China für umgerechnet etwa 25.000 € verkauft wird, wurde in Europa für unter 35.000 € angeboten \u2013 ein Preis, den europäische Hersteller wie VW oder Renault für vergleichbare Elektroautos nicht annähernd erreichen konnten. Die EU sah darin eine Form von Dumping, die die europäische Autoindustrie und ihre Millionen Arbeitsplätze existenziell bedroht. China nannte die Zölle \u201Erein protektionistisch\u201C und leitete Gegenmaßnahmen ein, unter anderem eine Anti-Dumping-Untersuchung gegen europäischen Brandy und Schweinefleisch."
     },
     {
         term: "Exportüberschuss",
         definition: "Wenn ein Land mehr Waren exportiert als importiert. Deutschland hat traditionell einen hohen Exportüberschuss, was von anderen Ländern kritisiert wird.",
-        example: "Deutschland exportierte 2024 Waren für 64,8 Mrd.€ mehr in die USA als es von dort importierte."
+        example: "Deutschland erwirtschaftete 2024 einen Warenhandelsüberschuss von rund 64,8 Milliarden Euro allein gegenüber den USA \u2013 das bedeutet, Deutschland verkaufte Waren in diesem Wert mehr in die USA als umgekehrt. Dieser Überschuss besteht vor allem aus Autos (BMW, Mercedes, VW), Maschinen (Siemens, Trumpf) und Chemieerzeugnissen (BASF). Für Trump war dieser Überschuss ein rotes Tuch: Er argumentierte, Deutschland \u201Ebeute\u201C die USA aus und nutze den amerikanischen Markt einseitig. Ökonomen halten dagegen, dass der Exportüberschuss vor allem die hohe Wettbewerbsfähigkeit deutscher Produkte widerspiegele und gleichzeitig bedeute, dass Deutschland weniger konsumiere als es produziere \u2013 was langfristig auch der deutschen Binnenwirtschaft schade."
     },
     {
         term: "Lieferkette",
         definition: "Der gesamte Weg eines Produkts von den Rohstoffen über die Produktion bis zum Endverbraucher. Moderne Lieferketten sind global und komplex.",
-        example: "Ein iPhone: Design in USA → Chips aus Taiwan → Display aus Korea → Montage in China → Verkauf weltweit."
+        example: "Die Blockade des Suezkanals durch das Containerschiff \u201EEver Given\u201C im März 2021 zeigte, wie fragil globale Lieferketten sind: Sechs Tage lang steckte das 400 Meter lange Schiff fest und blockierte eine der wichtigsten Handelsrouten der Welt, durch die etwa 12 % des Welthandels fließen. Über 400 Schiffe stauten sich, Waren im Wert von geschätzt 9,6 Milliarden Dollar pro Tag wurden aufgehalten. IKEA-Regale in Europa blieben leer, Autofabriken standen still, weil Teile fehlten. Seit 2024 verschärfte sich die Situation erneut: Huthi-Rebellen im Jemen griffen Handelsschiffe im Roten Meer an, sodass viele Reedereien wie Maersk und Hapag-Lloyd ihre Schiffe um das Kap der Guten Hoffnung umleiten mussten \u2013 ein Umweg von 10 bis 14 Tagen, der die Transportkosten massiv erhöhte."
     },
     {
         term: "Vergeltungszoll",
         definition: "Ein Zoll, den ein Land als Reaktion auf Zölle eines anderen Landes einführt. Kann zu einer Eskalation (Handelskrieg) führen.",
-        example: "Als die USA Zölle auf EU-Stahl einführten, erhob die EU Vergeltungszölle auf US-Produkte wie Bourbon-Whiskey und Harley-Davidson-Motorräder."
+        example: "Als die USA im März 2018 unter Trump Zölle von 25 % auf Stahl und 10 % auf Aluminium aus der EU einführten, antwortete die EU im Juni 2018 mit gezielten Vergeltungszöllen von 25 % auf typisch amerikanische Produkte: Bourbon-Whiskey aus Kentucky (Heimatstaat des einflussreichen Senators Mitch McConnell), Harley-Davidson-Motorräder aus Wisconsin und Erdnussbutter. Die Auswahl war bewusst politisch: Die EU traf gezielt Produkte aus Bundesstaaten einflussreicher republikanischer Politiker, um maximalen politischen Druck zu erzeugen. Die Strategie zeigte Wirkung \u2013 Harley-Davidson kündigte an, Teile seiner Produktion nach Europa zu verlagern, um den Zöllen zu entgehen, was Trump öffentlich wütend kritisierte."
     },
     {
         term: "Binnenmarkt",
         definition: "Ein Wirtschaftsraum ohne Binnengrenzen, in dem Waren, Dienstleistungen, Kapital und Personen frei zirkulieren können. Der EU-Binnenmarkt ist der größte der Welt.",
-        example: "Ein Unternehmen in Portugal kann seine Produkte ohne Zölle oder Grenzkontrollen in Finnland verkaufen."
+        example: "Der EU-Binnenmarkt mit seinen 450 Millionen Verbrauchern in 27 Ländern ermöglicht es einem Unternehmen wie dem deutschen Mittelständler Würth (Schrauben und Befestigungstechnik), seine Produkte ohne Zölle, Grenzkontrollen oder unterschiedliche technische Normen von Portugal bis Finnland zu verkaufen. Was das konkret bedeutet, wurde beim Brexit 2021 sichtbar: Als Großbritannien den Binnenmarkt verließ, mussten britische Fischer plötzlich tagelang auf Zollabfertigung warten, bis ihr frischer Fisch in die EU gelangte \u2013 die Ware verdarb teilweise. Britische Exporteure mussten Zollerklärungen ausfüllen, Ursprungszeugnisse vorlegen und veterinärrechtliche Kontrollen durchlaufen. Der britische Handel mit der EU ging in den Folgejahren deutlich zurück, während er zwischen EU-Mitgliedstaaten weiter wuchs."
     },
     {
         term: "Meistbegünstigung",
         definition: "Ein WTO-Prinzip: Wenn ein Land einem Handelspartner Zollvergünstigungen gewährt, muss es diese allen WTO-Mitgliedern gewähren (mit Ausnahmen für Freihandelsabkommen).",
-        example: "Wenn Deutschland Indien einen Zollsatz von 5% auf Textilien gewährt, muss es diesen Satz auch Brasilien, Japan etc. anbieten."
+        example: "Das Meistbegünstigungsprinzip lässt sich am Beispiel der US-Zollpolitik verdeutlichen: Wenn die USA den Zoll auf japanische Autos von 10 % auf 5 % senken, müssen sie diesen niedrigeren Satz grundsätzlich allen 164 WTO-Mitgliedern gewähren \u2013 also auch Südkorea, Deutschland oder Brasilien. Genau deshalb war Trumps \u201ELiberation Day\u201C-Zollstrategie 2025 so umstritten: Er erhob unterschiedlich hohe Zölle auf verschiedene Länder (10 % auf Großbritannien, 20 % auf die EU, 145 % auf China), was dem Grundsatz der Meistbegünstigung klar widerspricht. Die USA beriefen sich auf Ausnahmeregeln für \u201Enationale Sicherheit\u201C und \u201Ereziproke Zölle\u201C, doch viele Handelsrechtsexperten sehen darin einen klaren Verstoß gegen WTO-Grundprinzipien."
     },
     {
         term: "America First",
         definition: "Eine von Donald Trump verfolgte Wirtschaftspolitik, die amerikanische Interessen über internationale Kooperation stellt. Beinhaltet Zölle, Neuverhandlung von Handelsabkommen und Druck auf Unternehmen, in den USA zu produzieren.",
-        example: "Trump drohte deutschen Autoherstellern mit Zöllen, um sie zur Produktion in den USA zu bewegen."
+        example: "Die \u201EAmerica First\u201C-Politik zeigte sich besonders deutlich am Inflation Reduction Act (IRA) von 2022, der unter Biden verabschiedet wurde, aber Trumps \u201EBuy American\u201C-Philosophie fortführte: Das Gesetz bietet Steuergutschriften von bis zu 7.500 US-Dollar für den Kauf eines Elektroautos \u2013 aber nur, wenn das Fahrzeug in Nordamerika montiert wurde und die Batteriematerialien überwiegend aus den USA oder Freihandelspartner-Ländern stammen. Europäische Hersteller wie VW, BMW und Stellantis waren entsetzt, da ihre in Europa produzierten E-Autos von den Subventionen ausgeschlossen wurden. In der Folge kündigten zahlreiche Unternehmen Milliardeninvestitionen in US-Fabriken an: BMW investierte 1,7 Milliarden Dollar in sein Werk in South Carolina, VW übernahm die Firma Scout für Produktion in den USA. Kritiker sehen darin einen Subventionswettlauf, der den internationalen Freihandel untergräbt."
     },
     {
         term: "Erziehungszoll",
         definition: "Zoll zum Schutz junger oder aufstrebender Industrien, bis sie international wettbewerbsfähig sind. Idee geht auf Friedrich List zurück.",
-        example: "Ein Land erhebt Zölle auf importierte Solarmodule, damit die eigene, noch junge Solarindustrie wachsen kann, ohne sofort gegen etablierte Hersteller bestehen zu müssen."
+        example: "Ein klassisches modernes Beispiel für Erziehungszölle ist die chinesische Autoindustrie. Seit den 1990er Jahren erhob China Importzölle von bis zu 100 % auf ausländische Fahrzeuge und zwang westliche Hersteller wie VW, Toyota und GM in Joint Ventures mit chinesischen Partnern, bei denen Technologietransfer Bedingung war. Geschützt vor der vollen Wucht internationaler Konkurrenz konnten chinesische Unternehmen wie BYD, NIO und Geely über Jahrzehnte Erfahrung sammeln und eigene Technologien entwickeln. Das Ergebnis: BYD ist heute der weltweit größte Hersteller von Elektroautos und exportiert erfolgreich nach Europa, Südamerika und Südostasien. Der Erziehungszoll hat sein Ziel erreicht \u2013 allerdings auf Kosten chinesischer Verbraucher, die jahrzehntelang überhöhte Preise für ausländische Autos zahlten."
     },
     {
         term: "CBAM (CO\u2082-Grenzausgleich)",
         definition: "EU-Mechanismus, der CO\u2082-Kosten auf Importe aus Ländern ohne vergleichbare Klimapolitik erhebt. Soll Wettbewerbsnachteile für europäische Unternehmen ausgleichen und Carbon Leakage verhindern.",
-        example: "Ein Stahlimporteur muss beim Import aus einem Land ohne CO\u2082-Bepreisung CBAM-Zertifikate kaufen, die dem EU-CO\u2082-Preis entsprechen."
+        example: "Ab 2026 müssen EU-Importeure von Stahl, Aluminium, Zement, Düngemitteln und Strom CBAM-Zertifikate kaufen, deren Preis dem EU-Emissionshandelspreis (ca. 60\u201390 € pro Tonne CO₂) entspricht. Konkret: Ein deutsches Bauunternehmen, das türkischen Stahl importiert, muss für jede Tonne CO₂, die bei der Stahlherstellung in der Türkei ausgestoßen wurde, ein CBAM-Zertifikat erwerben. Da türkische Stahlwerke oft weniger klimafreundlich produzieren als europäische und die Türkei keine vergleichbare CO₂-Bepreisung hat, könnte das den Preis pro Tonne importierten Stahl um 100\u2013200 € erhöhen. Europäische Stahlhersteller wie ThyssenKrupp oder ArcelorMittal begrüßen CBAM, da es den Kostennachteil ausgleicht, den sie durch die strenge EU-Klimapolitik haben. Schwellenländer wie Indien und Brasilien kritisieren CBAM jedoch als \u201Egrünen Protektionismus\u201C, der ihre Industrien benachteilige."
     },
     {
         term: "Komparativer Vorteil",
         definition: "Wirtschaftsprinzip nach David Ricardo: L\u00e4nder profitieren vom Handel, wenn sie sich auf G\u00fcter spezialisieren, die sie relativ g\u00fcnstiger herstellen k\u00f6nnen \u2013 selbst wenn ein anderes Land alles billiger produziert.",
-        example: "Portugal kann sowohl Wein als auch Tuch herstellen, aber Wein relativ g\u00fcnstiger. England produziert Tuch relativ g\u00fcnstiger. Beide profitieren, wenn sie sich spezialisieren und handeln."
+        example: "Bangladesch und Deutschland können beide Textilien und Maschinen produzieren, aber Bangladesch kann Textilien relativ gesehen viel günstiger herstellen als Maschinen. Ein T-Shirt kostet in Bangladesch etwa 2 € in der Herstellung, in Deutschland 15 €. Eine Werkzeugmaschine kostet in Deutschland 100.000 € und wäre in Bangladesch \u2013 wenn überhaupt möglich \u2013 nicht viel günstiger, da das Know-how und die Infrastruktur fehlen. Obwohl Deutschland theoretisch auch billigere T-Shirts als Maschinen herstellen könnte, profitieren beide Länder, wenn Bangladesch sich auf Textilexporte spezialisiert und Deutschland auf Maschinenbau. Tatsächlich ist Bangladesch der zweitgrößte Textilexporteur der Welt und bezieht gleichzeitig Maschinen aus Deutschland \u2013 beiden Volkswirtschaften geht es durch diese Spezialisierung besser als bei Selbstversorgung."
     },
     {
         term: "De-Risking",
         definition: "Strategie zur Verringerung \u00fcberm\u00e4\u00dfiger wirtschaftlicher Abh\u00e4ngigkeiten, insbesondere von China. Kein vollst\u00e4ndiger R\u00fcckzug (Decoupling), sondern gezielte Diversifizierung.",
-        example: "Die EU f\u00f6rdert den Aufbau eigener Chipproduktion, um weniger von asiatischen Lieferanten abh\u00e4ngig zu sein."
+        example: "Mit dem \u201EEuropean Chips Act\u201C investiert die EU über 43 Milliarden Euro in den Aufbau einer eigenen Halbleiterproduktion, um die Abhängigkeit von asiatischen Chipherstellern \u2013 insbesondere TSMC in Taiwan \u2013 zu verringern. Konkret baut Intel eine neue Chipfabrik in Magdeburg für über 30 Milliarden Euro (davon fast 10 Milliarden staatliche Subventionen), und TSMC selbst errichtet ein Werk in Dresden in Zusammenarbeit mit Bosch, Infineon und NXP. Der Hintergrund ist die Erkenntnis aus der Corona-Pandemie und den geopolitischen Spannungen um Taiwan: 2021 mussten VW, BMW und andere Autohersteller monatelang ihre Produktion drosseln, weil Chips aus Asien fehlten \u2013 der Schaden für die europäische Autoindustrie betrug Milliarden. De-Risking bedeutet hier nicht, den Handel mit Asien zu beenden, sondern eine zweite Bezugsquelle in Europa aufzubauen."
     },
     {
         term: "Strategische Autonomie",
         definition: "F\u00e4higkeit eines Landes oder B\u00fcndnisses, in Schl\u00fcsselbereichen wie Energie, Technologie und Verteidigung unabh\u00e4ngig handeln zu k\u00f6nnen.",
-        example: "Die EU investiert in eigene Batterieproduktion f\u00fcr E-Autos, um nicht vollst\u00e4ndig von chinesischen Herstellern abh\u00e4ngig zu sein."
+        example: "Nach dem russischen Angriff auf die Ukraine im Februar 2022 wurde schmerzhaft deutlich, was fehlende strategische Autonomie bedeutet: Deutschland bezog rund 55 % seines Erdgases aus Russland \u2013 über die Pipelines Nord Stream 1 und 2. Als Russland die Gaslieferungen im Sommer 2022 drastisch drosselte, explodierten die Energiepreise, Industrieunternehmen wie BASF mussten ihre Produktion einschränken, und die Bundesregierung gab über 200 Milliarden Euro für Entlastungspakete aus. Seitdem hat die EU ihre Strategie grundlegend geändert: LNG-Terminals wurden in Rekordzeit gebaut (das erste deutsche Terminal in Wilhelmshaven ging nach nur 200 Tagen Bauzeit ans Netz), erneuerbare Energien massiv ausgebaut und die Gasspeicherverordnung eingeführt. Die Lehre: In kritischen Bereichen wie Energie darf man sich nicht von einem einzigen Lieferanten abhängig machen."
     },
     {
         term: "Zolleskalation",
         definition: "Stufenweise Erh\u00f6hung von Z\u00f6llen als Vergeltungsma\u00dfnahme zwischen Handelspartnern. F\u00fchrt oft zu einem Handelskrieg.",
-        example: "USA erhebt 25% Zoll auf EU-Stahl \u2192 EU antwortet mit Z\u00f6llen auf US-Whiskey \u2192 USA droht mit Autozöllen \u2192 Eskalationsspirale."
+        example: "Die Zolleskalation zwischen den USA und China 2018\u20132025 ist ein Lehrbuchbeispiel: Im Januar 2018 begannen die USA mit Zöllen von 30 % auf Solarmodule. Im März folgten 25 % auf Stahl. China antwortete mit 25 % auf US-Schweinefleisch. Im Juli 2018 erhoben die USA 25 % auf chinesische Waren im Wert von 34 Milliarden Dollar \u2013 China reagierte spiegelbildlich. In mehreren weiteren Runden stiegen die Zölle immer weiter. Nach Trumps Rückkehr ins Amt 2025 eskalierte die Situation dramatisch: Die USA erhoben im April 2025 Zölle von 145 % auf chinesische Waren, China konterte mit 125 %. Innerhalb weniger Wochen brach der bilaterale Handel ein, globale Aktienmärkte stürzten ab, und die Weltwirtschaft geriet unter Druck \u2013 ein Paradebeispiel dafür, wie sich Vergeltungsmaßnahmen gegenseitig hochschaukeln."
     },
     {
         term: "GATT",
         definition: "General Agreement on Tariffs and Trade \u2013 Vorl\u00e4ufer der WTO, 1947 gegr\u00fcndet zur F\u00f6rderung des Freihandels durch schrittweisen Zollabbau in multilateralen Verhandlungsrunden.",
-        example: "In der Uruguay-Runde (1986\u20131994) einigten sich 123 L\u00e4nder auf umfassende Zollsenkungen. Das GATT wurde 1995 von der WTO abgel\u00f6st."
+        example: "Als das GATT 1947 von 23 Staaten unterzeichnet wurde, lagen die durchschnittlichen Zollsätze weltweit bei etwa 22 %. In insgesamt acht Verhandlungsrunden \u2013 von der Genfer Runde 1947 bis zur Uruguay-Runde 1986\u20131994 \u2013 wurden die Zölle schrittweise auf durchschnittlich unter 5 % gesenkt. Die bedeutendste war die Uruguay-Runde, an der 123 Länder teilnahmen und die nicht nur Zölle senkte, sondern erstmals auch Regeln für Dienstleistungshandel, geistiges Eigentum und Landwirtschaft schuf. Ihr wichtigstes Ergebnis war die Gründung der WTO am 1. Januar 1995, die das GATT als Institution ablöste. Ohne das GATT wäre der massive Anstieg des Welthandels in der zweiten Hälfte des 20. Jahrhunderts \u2013 von etwa 58 Milliarden Dollar (1948) auf über 6 Billionen Dollar (1994) \u2013 nicht möglich gewesen."
     }
 ];
+
 
 // === Simulator Scenarios (ERWEITERT) ===
 const simulatorScenarios = {
@@ -614,7 +615,7 @@ const simulatorScenarios = {
                     result: "Die Industrie wird gestützt, aber es kostet den Staat viel Geld. Langfristig fraglich."
                 },
                 {
-                    text: "🌍 Nichts tun – freier Markt",
+                    text: "🌍 Nichts tun \u2013 freier Markt",
                     effects: { jobs: -20, prices: +15, trade: +5, treasury: 0 },
                     result: "Die heimische Industrie schrumpft stark. Dafür sind Solaranlagen günstig und die Energiewende wird beschleunigt."
                 },
@@ -722,7 +723,7 @@ const simulatorScenarios = {
                     result: "Du vertiefst die Beziehungen, machst dich aber noch abhängiger. China ist verärgert."
                 },
                 {
-                    text: "🌍 Diversifizieren – auch mit China kooperieren",
+                    text: "🌍 Diversifizieren \u2013 auch mit China kooperieren",
                     effects: { jobs: +5, prices: +5, trade: +15, treasury: -5 },
                     result: "Du balancierst zwischen Taiwan und China. Riskant, aber flexibel."
                 },
@@ -754,7 +755,7 @@ const simulatorScenarios = {
                     result: "Deine Exporte werden günstiger, aber Importe teurer. Die Inflation steigt."
                 },
                 {
-                    text: "🤷 Akzeptieren – Wettbewerb ist Wettbewerb",
+                    text: "🤷 Akzeptieren \u2013 Wettbewerb ist Wettbewerb",
                     effects: { jobs: -10, prices: +10, trade: +10, treasury: 0 },
                     result: "Deine Industrie muss sich anpassen. Einige Unternehmen werden effizienter, andere gehen unter."
                 }
@@ -847,7 +848,7 @@ const simulatorScenarios = {
         {
             id: 4,
             title: "Freihandelsabkommen Chance",
-            text: "Die EU hat ein neues Freihandelsabkommen mit Kanada. Zölle fallen weg. Ein neuer Markt öffnet sich – aber du brauchst Investitionen.",
+            text: "Die EU hat ein neues Freihandelsabkommen mit Kanada. Zölle fallen weg. Ein neuer Markt öffnet sich \u2013 aber du brauchst Investitionen.",
             choices: [
                 {
                     text: "🚀 Sofort groß investieren",
@@ -894,7 +895,7 @@ const simulatorScenarios = {
                 {
                     text: "📊 Langfristige Lieferverträge abschließen",
                     effects: { profit: -5, market: 0, costs: +15, employees: 0 },
-                    result: "Du sicherst dir stabile Preise für die Zukunft – aber bindest dich auch langfristig."
+                    result: "Du sicherst dir stabile Preise für die Zukunft \u2013 aber bindest dich auch langfristig."
                 }
             ]
         }
