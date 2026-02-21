@@ -739,7 +739,7 @@ const LESSONS = {
                 type: "info",
                 emoji: "🌍",
                 title: "Aktuelle Entwicklungsprozesse",
-                text: "Seit Anfang 2025 befinden sich die weltweiten Handelsbeziehungen in einer Phase deutlicher Umbrüche und Umstrukturierungen, die weit über „normale Schwankungen" hinausgehen. Grund dafür sind vor allem massive Änderungen in der Handelspolitik großer Wirtschaftsmächte, allen voran die USA, und die daraus entstehenden Reaktionen anderer Staaten und Wirtschaftsbündnisse wie der Europäischen Union (EU). Diese Entwicklungen haben weitreichende wirtschaftliche, politische und gesellschaftliche Auswirkungen, die den internationalen Handel grundlegend beeinflussen."
+                text: "Seit Anfang 2025 befinden sich die weltweiten Handelsbeziehungen in einer Phase deutlicher Umbrüche und Umstrukturierungen, die weit über „normale Schwankungen“ hinausgehen. Grund dafür sind vor allem massive Änderungen in der Handelspolitik großer Wirtschaftsmächte, allen voran die USA, und die daraus entstehenden Reaktionen anderer Staaten und Wirtschaftsbündnisse wie der Europäischen Union (EU). Diese Entwicklungen haben weitreichende wirtschaftliche, politische und gesellschaftliche Auswirkungen, die den internationalen Handel grundlegend beeinflussen."
             },
             {
                 type: "info",
@@ -752,7 +752,7 @@ const LESSONS = {
                 type: "info",
                 emoji: "⚖️",
                 title: "Schutz oder Gefahr?",
-                text: "Diese Zölle sollen laut US-Regierung die heimische Industrie vor „unfairem Wettbewerb" schützen und Arbeitsplätze sichern. Kritiker hingegen sehen darin eine Abkehr von offenen Märkten und eine Gefahr für das multilaterale Handelssystem. Die WeltZollOrganisation (WTO) warnt, dass solche Maßnahmen globales Handelsvolumen einschränken und das Vertrauen in freie Märkte schwächen könnten.",
+                text: "Diese Zölle sollen laut US-Regierung die heimische Industrie vor „unfairem Wettbewerb“ schützen und Arbeitsplätze sichern. Kritiker hingegen sehen darin eine Abkehr von offenen Märkten und eine Gefahr für das multilaterale Handelssystem. Die WeltZollOrganisation (WTO) warnt, dass solche Maßnahmen globales Handelsvolumen einschränken und das Vertrauen in freie Märkte schwächen könnten.",
                 source: "Quellen: dihk.de, euronews.com/business"
             },
             {
@@ -796,14 +796,14 @@ const LESSONS = {
                 type: "info",
                 emoji: "📋",
                 title: "EU-Strategien (2/3)",
-                text: "**2)** Zollkontigente und befristete Zollsenkungen für bestimmte Güter als Ausgleich\n\n**3)** Ausbau eigener Wettbewersstrategien wie „Made in Europe", um die Wettbewerbsfähigkeit der europäischen Industrie zu stärken und weniger abhängig von Importen und Exporten in unsichere Märkte zu werden",
-                source: "Quelle: welt.de – EU-Kommissar will „Made in Europe" etablieren"
+                text: "**2)** Zollkontigente und befristete Zollsenkungen für bestimmte Güter als Ausgleich\n\n**3)** Ausbau eigener Wettbewersstrategien wie „Made in Europe“, um die Wettbewerbsfähigkeit der europäischen Industrie zu stärken und weniger abhängig von Importen und Exporten in unsichere Märkte zu werden",
+                source: "Quelle: welt.de – EU-Kommissar will „Made in Europe“ etablieren"
             },
             {
                 type: "info",
                 emoji: "🤝",
                 title: "Gemeinsame Erklärung EU-USA",
-                text: "Ein bedeutender Schritt in diesem Prozess war die Gemeinsame Erklärung zwischen EU und USA im August 2025, durch die die Zölle auf bestimmten Warengruppen vereinheitlicht und Zollobergrenzen eingeführt werden sollen, um „Vorhersehbarkeit und Stabilität in den transatlantischen Handelsbeziehungen" zu schaffen.",
+                text: "Ein bedeutender Schritt in diesem Prozess war die Gemeinsame Erklärung zwischen EU und USA im August 2025, durch die die Zölle auf bestimmten Warengruppen vereinheitlicht und Zollobergrenzen eingeführt werden sollen, um „Vorhersehbarkeit und Stabilität in den transatlantischen Handelsbeziehungen“ zu schaffen.",
                 source: "Quelle: consilium.europa.eu – EU-US Trade Relations, Nov. 2025"
             },
             {
@@ -811,7 +811,7 @@ const LESSONS = {
                 question: "Welche Strategie ist KEINE EU-Gegenstrategie?",
                 options: ["Verhandlungen mit den USA", "Eigene Zollerhöhungen auf 100%", "Zollkontingente als Ausgleich", "\"Made in Europe\" Strategie"],
                 correct: 1,
-                explanation: "Die EU setzt auf Verhandlungen, Zollkontingente und „Made in Europe" – nicht auf maximale Zollerhöhungen."
+                explanation: "Die EU setzt auf Verhandlungen, Zollkontingente und „Made in Europe“ – nicht auf maximale Zollerhöhungen."
             },
             {
                 type: "summary",
@@ -840,7 +840,7 @@ const LESSONS = {
                 type: "info",
                 emoji: "🇮🇳",
                 title: "Diversifizierung: EU-Indien",
-                text: "Ein wichtiger Trend ist die verstärkte Suche nach neuen „Freihandelszonen", um Abhängigkeiten zu reduzieren. Ein prominentes Beispiel dafür ist das große Freihandelsabkommen zwischen der EU und Indien (Januar 2026), bei dem Zölle auf zahlreiche Produkte reduziert oder aufgehoben werden sollen – ein Schritt, der auch als Antwort auf den protektionistischen Druck aus den USA gesehen wird.",
+                text: "Ein wichtiger Trend ist die verstärkte Suche nach neuen „Freihandelszonen“, um Abhängigkeiten zu reduzieren. Ein prominentes Beispiel dafür ist das große Freihandelsabkommen zwischen der EU und Indien (Januar 2026), bei dem Zölle auf zahlreiche Produkte reduziert oder aufgehoben werden sollen – ein Schritt, der auch als Antwort auf den protektionistischen Druck aus den USA gesehen wird.",
                 highlight: "EU-Indien Freihandelsabkommen: Januar 2026",
                 source: "Quelle: barrons.com – EU India Trade Deal"
             },
@@ -848,7 +848,7 @@ const LESSONS = {
                 type: "info",
                 emoji: "🏭",
                 title: "Strategische Autonomie",
-                text: "Gleichzeitig verschiebt sich die Weltwirtschaftspolitik in Richtung „strategischer Autonomie", d. h. Länder oder Bündnisse versuchen, ihre eigenen industriellen Kapazitäten zu stärken und unabhängiger von internationalen Lieferketten zu werden. Dies zeigt sich sowohl bei den USA als auch bei der EU.",
+                text: "Gleichzeitig verschiebt sich die Weltwirtschaftspolitik in Richtung „strategischer Autonomie“, d. h. Länder oder Bündnisse versuchen, ihre eigenen industriellen Kapazitäten zu stärken und unabhängiger von internationalen Lieferketten zu werden. Dies zeigt sich sowohl bei den USA als auch bei der EU.",
                 source: "Quelle: think.ing.com – Global Trade in 2026"
             },
             {
@@ -932,7 +932,7 @@ const LESSONS = {
                 type: "info",
                 emoji: "🇺🇸",
                 title: "Trump & America First (2016/17)",
-                text: "Mit der Wahl Donald Trumps 2016 und seinem Amtsantritt 2017 änderte sich die Handelspolitik der USA grundlegend. Trump vertrat eine klar protektionistische Linie („America First"). Er trat aus dem transpazifischen Freihandelsabkommen (TPP), verhandelte neu von NAFTA –> USMCA, führte Strafzölle auf Stahl und Aluminium ein und begann ein Handelskonflikt mit China.",
+                text: "Mit der Wahl Donald Trumps 2016 und seinem Amtsantritt 2017 änderte sich die Handelspolitik der USA grundlegend. Trump vertrat eine klar protektionistische Linie („America First“). Er trat aus dem transpazifischen Freihandelsabkommen (TPP), verhandelte neu von NAFTA –> USMCA, führte Strafzölle auf Stahl und Aluminium ein und begann ein Handelskonflikt mit China.",
                 highlight: "TPP-Ausstieg, NAFTA → USMCA, Strafzölle, Handelskonflikt mit China",
                 source: "Quelle: bpb.de – Trumps Handelspolitik"
             },
