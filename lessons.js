@@ -1120,6 +1120,72 @@ const LESSONS = {
         ]
     },
 
+    "2-4": {
+        title: "Protektionismus am Beispiel seltener Erden",
+        xp: 20,
+        cards: [
+            {
+                type: "info",
+                emoji: "🛡️",
+                title: "Was ist Protektionismus?",
+                text: "Protektionismus bezeichnet wirtschaftspolitische Maßnahmen eines Staates, mit denen die heimische Wirtschaft vor ausländischer Konkurrenz geschützt wird. Dabei werden Handelshemmnisse wie Zölle, Importquoten, technische Vorschriften oder Subventionen gezielt eingesetzt, um Importe zu verteuern oder zu begrenzen. Ziel ist es, wichtige Branchen zu sichern, Arbeitsplätze im Inland zu erhalten, staatliche Einnahmen zu steigern und nationale Interessen durchzusetzen. Im Gegensatz zum Freihandel, der auf offenen Märkten und internationaler Arbeitsteilung beruht, greift der Staat beim Protektionismus aktiv in den Markt ein.",
+                highlight: "Protektionismus = Staat greift aktiv in den Markt ein, um heimische Wirtschaft zu schützen"
+            },
+            {
+                type: "info",
+                emoji: "⛏️",
+                title: "Seltene Erden: Strategische Rohstoffe",
+                text: "Am Beispiel des Handels mit seltenen Erden wird deutlich, wie Protektionismus konkret aussehen kann. Seltene Erden sind strategisch wichtige Rohstoffe, die für die Herstellung moderner Technologien wie Smartphones, Elektroautos, Windkraftanlagen, Computerchips oder militärischer Ausrüstung benötigt werden. Ein großer Teil der weltweiten Förderung und vor allem der Weiterverarbeitung dieser Rohstoffe findet in China statt. Viele Industrieländer, darunter die USA und Deutschland sind daher stark von Importen abhängig. Diese Abhängigkeit wird zunehmend als wirtschaftliches und sicherheitspolitisches Risiko betrachtet."
+            },
+            {
+                type: "info",
+                emoji: "💰",
+                title: "Protektionistische Maßnahmen bei seltenen Erden",
+                text: "Ein protektionistischer Staat könnte nun hohe Zölle auf seltene Erden oder auf daraus hergestellte Produkte erheben. Dadurch würden importierte Rohstoffe teurer, während heimische Produzenten wettbewerbsfähiger würden. Gleichzeitig könnte der Staat eigene Bergbauunternehmen durch Subventionen unterstützen, um eine nationale Förderung aufzubauen. Kurzfristig würden inländische Unternehmen profitieren, da sie weniger Konkurrenz aus dem Ausland hätten. Arbeitsplätze könnten gesichert oder neu geschaffen werden, und die Versorgungssicherheit würde steigen. Genau dies entspricht den im Material beschriebenen Zielen des Protektionismus: Schutz wichtiger Branchen, Sicherung von Beschäftigung und Durchsetzung nationaler Interessen.",
+                highlight: "Kurzfristig: weniger Konkurrenz, mehr Arbeitsplätze, höhere Versorgungssicherheit"
+            },
+            {
+                type: "info",
+                emoji: "🇺🇸",
+                title: "Trumps \u201cLiberation Day\u201d-Zollstrategie",
+                text: "Ein aktuelles Beispiel für eine solche protektionistische Politik ist die von Donald Trump verfolgte Zollstrategie. Im Zusammenhang mit dem sogenannten \u201eLiberation Day\u201c stellte Trump seine Zollpolitik als wirtschaftliche \u201eBefreiung\u201c der USA von unfairen Handelspraktiken dar. Durch hohe Zölle auf chinesische Produkte, darunter auch strategisch wichtige Rohstoffe und Technologieprodukte, sollten amerikanische Unternehmen geschützt und Produktionsstätten zurück in die USA verlagert werden. Die Idee dahinter ist, die Abhängigkeit von ausländischen Lieferketten \u2013 etwa bei seltenen Erden \u2013 zu reduzieren und die heimische Industrie zu stärken. Diese Politik entspricht dem klassischen Protektionismus, da Handelshemmnisse bewusst eingesetzt werden, um die nationale Wirtschaft zu fördern."
+            },
+            {
+                type: "info",
+                emoji: "⚠️",
+                title: "Nebenwirkungen des Protektionismus",
+                text: "Allerdings zeigen sich auch Nebenwirkungen. Wenn Zölle auf seltene Erden erhoben werden, steigen die Produktionskosten für Unternehmen, die diese Rohstoffe benötigen, beispielsweise Hersteller von Elektroautos oder Windkraftanlagen. Diese höheren Kosten werden häufig an die Verbraucher weitergegeben, was zu steigenden Preisen führt. Zudem kann es zu internationalen Handelskonflikten kommen, wenn betroffene Länder Gegenmaßnahmen ergreifen. Langfristig kann ein geringerer Wettbewerb Innovationen hemmen und die globale Wettbewerbsfähigkeit schwächen.",
+                highlight: "Langfristig: höhere Preise, weniger Innovation, internationale Spannungen"
+            },
+            {
+                type: "info",
+                emoji: "📋",
+                title: "Fazit: Protektionismus \u2013 Chancen und Risiken",
+                text: "Zusammenfassend zeigt das Beispiel des Handels mit seltenen Erden, dass Protektionismus darauf abzielt, strategisch wichtige Industrien zu schützen und wirtschaftliche Abhängigkeiten zu verringern. Kurzfristig kann dies Arbeitsplätze sichern und nationale Interessen stärken. Langfristig besteht jedoch die Gefahr höherer Preise, geringerer Produktvielfalt und internationaler Spannungen.",
+                source: "Quellen: bpb.de, swr.de, baks.bund.de"
+            },
+            {
+                type: "quiz",
+                question: "Warum sind seltene Erden ein Beispiel für Protektionismus?",
+                options: ["Sie sind billig", "Viele Länder sind von China abhängig \u2013 ein wirtschaftliches und sicherheitspolitisches Risiko", "Sie werden nicht mehr gebraucht", "China verschenkt sie"],
+                correct: 1,
+                explanation: "Ein großer Teil der Förderung und Verarbeitung seltener Erden findet in China statt. Diese Abhängigkeit wird als Risiko betrachtet, weshalb Staaten protektionistische Maßnahmen ergreifen."
+            },
+            {
+                type: "summary",
+                emoji: "✅",
+                title: "Zusammenfassung",
+                points: [
+                    "Protektionismus: Staat schützt heimische Wirtschaft durch Zölle, Quoten, Subventionen",
+                    "Seltene Erden: strategische Rohstoffe, Abhängigkeit von China",
+                    "Trumps Liberation Day: Zölle als wirtschaftliche Befreiung",
+                    "Kurzfristig: Schutz, Arbeitsplätze, Versorgungssicherheit",
+                    "Langfristig: höhere Preise, weniger Innovation, Handelskonflikte"
+                ]
+            }
+        ]
+    },
+
     // =============================================
     // MODUL 3: AUFGABE 3 — SZENARIO-VERGLEICH
     // =============================================
@@ -1653,7 +1719,7 @@ const LESSONS = {
 const MODULE_CONFIG = {
     0: { count: 10 },
     1: { count: 11 },
-    2: { count: 3 },
+    2: { count: 4 },
     3: { count: 4 },
     4: { count: 4 },
     5: { count: 1 }
