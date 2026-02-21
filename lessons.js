@@ -70,7 +70,7 @@ const LESSONS = {
                 type: "info",
                 emoji: "🌍",
                 title: "WTO",
-                text: "Die **Welthandelsorganisation** (WTO) setzt Regeln für den globalen Handel. 164 Länder sind Mitglied.",
+                text: "Die **Welthandelsorganisation** (WTO) setzt Regeln für den globalen Handel. 166 Länder sind Mitglied.",
                 highlight: "Quasi die UNO für Handel"
             },
             {
@@ -108,7 +108,7 @@ const LESSONS = {
                 emoji: "📈",
                 title: "Export-Überschuss",
                 text: "Deutschland **exportiert mehr als es importiert**. Das nennt man Handelsüberschuss.",
-                highlight: "+284 Mrd € Überschuss (2025)"
+                highlight: "+200,5 Mrd € Überschuss (2025)"
             },
             {
                 type: "quiz",
@@ -122,7 +122,7 @@ const LESSONS = {
                 emoji: "⚠️",
                 title: "Aber Vorsicht",
                 text: "Große Abhängigkeit vom Export macht **verwundbar**. Wenn andere Länder Zölle erheben, leidet Deutschland besonders.",
-                highlight: "Trump-Zölle: -9,4% Exporte in die USA"
+                highlight: "Trump-Zölle: -17,8% Exporte in die USA"
             },
             {
                 type: "info",
@@ -138,7 +138,7 @@ const LESSONS = {
                 title: "Zusammenfassung",
                 points: [
                     "Deutschland: Platz 3 der Exportnationen",
-                    "Handelsüberschuss von ~284 Mrd €",
+                    "Handelsüberschuss von ~200,5 Mrd €",
                     "Exportquote 47% – höchste unter großen VWL",
                     "Hohe Exportabhängigkeit = hohes Risiko bei Zöllen"
                 ]
@@ -153,14 +153,14 @@ const LESSONS = {
                 type: "info",
                 emoji: "🇺🇸",
                 title: "USA: Platz 1",
-                text: "Die **USA** sind Deutschlands wichtigster Handelspartner außerhalb der EU.\n\n**253 Mrd €** Handelsvolumen",
+                text: "Die **USA** sind Deutschlands wichtigster Handelspartner außerhalb der EU.\n\n**240,5 Mrd €** Handelsvolumen",
                 highlight: "Hauptexport: Autos, Maschinen, Pharma"
             },
             {
                 type: "info",
                 emoji: "🇨🇳",
                 title: "China: Platz 2",
-                text: "**China** ist größter Lieferant UND Kunde.\n\n**298 Mrd €** Handelsvolumen",
+                text: "**China** ist größter Lieferant UND Kunde.\n\n**251,8 Mrd €** Handelsvolumen",
                 highlight: "Deutschland importiert mehr aus China als es exportiert"
             },
             {
@@ -249,7 +249,7 @@ const LESSONS = {
                 emoji: "✅",
                 title: "Deutschland: Überschuss",
                 text: "Deutschland hat fast immer einen **Überschuss** - wir verkaufen mehr ans Ausland als wir kaufen.",
-                highlight: "+284 Mrd € (2025)"
+                highlight: "+200,5 Mrd € (2025)"
             },
             {
                 type: "info",
@@ -271,7 +271,7 @@ const LESSONS = {
                 title: "Zusammenfassung",
                 points: [
                     "Handelsbilanz = Exporte minus Importe",
-                    "Deutschland: Überschuss (~284 Mrd €)",
+                    "Deutschland: Überschuss (~200,5 Mrd €)",
                     "USA: Defizit - Grund für Trump-Zölle"
                 ]
             }
@@ -387,7 +387,7 @@ const LESSONS = {
                 type: "info",
                 emoji: "⚡",
                 title: "Beispiel: Stahl",
-                text: "Chinesischer Stahl verursacht **3x so viel CO2** wie europäischer. Mit CBAM wird er teurer.",
+                text: "Chinesischer Stahl verursacht **ca. doppelt so viel CO2** wie europäischer. Mit CBAM wird er teurer.",
                 highlight: "Faire Bedingungen für EU-Industrie"
             },
             {
@@ -663,7 +663,7 @@ const LESSONS = {
                 emoji: "🚗",
                 title: "15% auf Autos",
                 text: "Europäische **Autos** werden mit **15% Zoll** belegt. Das macht einen BMW 45.000€ → ~52.000€ teurer!",
-                highlight: "Deutsche Autoexporte in die USA: -9,4%"
+                highlight: "Deutsche Autoexporte in die USA: -17,8%"
             },
             {
                 type: "info",
@@ -714,7 +714,7 @@ const LESSONS = {
                 emoji: "🇩🇪",
                 title: "Deutschland mittendrin",
                 text: "Deutsche Firmen sind **zwischen den Fronten**: China ist Kunde UND Konkurrent.",
-                highlight: "VW verkauft 40% seiner Autos in China!"
+                highlight: "VW verkauft ~30% seiner Autos in China!"
             },
             {
                 type: "quiz",
@@ -794,7 +794,7 @@ const LESSONS = {
                 type: "info",
                 emoji: "🇯🇵",
                 title: "EU-Japan (2019)",
-                text: "Größtes Handelsabkommen der Welt! **Fast alle Zölle** zwischen EU und Japan wurden abgeschafft.",
+                text: "Zum Zeitpunkt des Inkrafttretens das größte bilaterale Handelsabkommen! **Fast alle Zölle** zwischen EU und Japan wurden abgeschafft.",
                 highlight: "Japanische Autos & Elektronik günstiger"
             },
             {
@@ -874,7 +874,7 @@ const LESSONS = {
                 type: "info",
                 emoji: "🦠",
                 title: "Corona & Welthandel",
-                text: "Die Corona Pandemie stellte ab 2019/2020 einen massiven Rückschritt für den Welthandel dar. Folgen waren unter anderem die Unterbrechung globaler Lieferketten, Produktionsausfälle, Exportbeschränkungen (z. B. medizinische Ausrüstung) und stärkere nationale Eingriffe in Handelsstrukturen. Viele Staaten erkannten in dieser Phase ihre Abhängigkeit von globalen Lieferketten, insbesondere von China. Dies verstärkte die Diskussion um strategische Autonomie und De-Risking. De-Risking beschreibt in dem Zusammenhang die übermäßige Abhängigkeit vom chinesischen Markt und die Intention sich von diesem zu lösen, um in andere Märkte zu investieren.",
+                text: "Die Corona Pandemie stellte ab Anfang 2020 einen massiven Rückschritt für den Welthandel dar. Folgen waren unter anderem die Unterbrechung globaler Lieferketten, Produktionsausfälle, Exportbeschränkungen (z. B. medizinische Ausrüstung) und stärkere nationale Eingriffe in Handelsstrukturen. Viele Staaten erkannten in dieser Phase ihre Abhängigkeit von globalen Lieferketten, insbesondere von China. Dies verstärkte die Diskussion um strategische Autonomie und De-Risking. De-Risking beschreibt in dem Zusammenhang die übermäßige Abhängigkeit vom chinesischen Markt und die Intention sich von diesem zu lösen, um in andere Märkte zu investieren.",
                 highlight: "De-Risking: Lösung von übermäßiger Abhängigkeit vom chinesischen Markt"
             },
             {
@@ -1466,7 +1466,7 @@ const LESSONS = {
                 type: "info",
                 emoji: "💰",
                 title: "Preiseffekt von Zöllen",
-                text: "**BMW 3er Grundpreis (Deutschland):** ca. 47.000€\n**Exportpreis USA (vor Zoll):** ca. 48.000$\n\nMit **15% US-Zoll** (aktuell): → 55.200$ (+7.200$)\nMit **25% Zoll** (Drohung): → 60.000$ (+12.000$)\n\n**Folge:** BMW verkauft weniger Autos in den USA. 2025 gingen die Exporte um **9,4%** zurück. BMW baut stattdessen mehr Autos direkt in den USA (Werk Spartanburg), was deutschen Arbeitsplätzen schadet.",
+                text: "**BMW 3er Grundpreis (Deutschland):** ca. 47.000€\n**Exportpreis USA (vor Zoll):** ca. 48.000$\n\nMit **15% US-Zoll** (aktuell): → 55.200$ (+7.200$)\nMit **25% Zoll** (Drohung): → 60.000$ (+12.000$)\n\n**Folge:** BMW verkauft weniger Autos in den USA. 2025 gingen die Exporte um **17,8%** zurück. BMW baut stattdessen mehr Autos direkt in den USA (Werk Spartanburg), was deutschen Arbeitsplätzen schadet.",
                 highlight: "15% Zoll = 7.200$ Aufpreis, 25% = 12.000$ Aufpreis",
                 source: "Quelle: BMW Group Jahresbericht 2025, Destatis"
             },
@@ -1491,7 +1491,7 @@ const LESSONS = {
                 points: [
                     "BMW 3er: Teile aus über 30 Ländern",
                     "15% US-Zoll = 7.200$ Aufpreis pro Fahrzeug",
-                    "Exporte in die USA -9,4% in 2025",
+                    "Exporte in die USA -17,8% in 2025",
                     "Produktion verlagert sich durch Zölle ins Ausland",
                     "200.000+ Zulieferer-Jobs in Deutschland betroffen"
                 ]
@@ -1520,7 +1520,7 @@ const LESSONS = {
                 type: "info",
                 emoji: "💸",
                 title: "Was kosten Zölle?",
-                text: "**iPhone 16 Pro (Verkaufspreis USA):** 999$\n**Herstellungskosten:** ca. 570$\n**Apples Marge:** ca. 429$\n\nBei **47% Zoll** auf China-Importe (2025):\n→ Aufpreis: ca. 270$\n→ Neuer Preis: ca. 1.269$ oder Apple schluckt die Marge\n\nApple hat reagiert: **50% der US-iPhones** kommen jetzt aus Indien statt China. Aber auch Indien drohen Zölle (Trump drohte mit 25%).",
+                text: "**iPhone 16 Pro (Verkaufspreis USA):** 999$\n**Herstellungskosten:** ca. 570$\n**Apples Marge:** ca. 429$\n\nBei **47% Zoll** auf China-Importe (2025):\n→ Aufpreis: ca. 270$\n→ Neuer Preis: ca. 1.269$ oder Apple schluckt die Marge\n\nApple hat reagiert: zunehmend auch **Indien (ca. 15% der globalen Produktion)**. Aber auch Indien drohen Zölle (Trump drohte mit 25%).",
                 highlight: "47% China-Zoll = 270$ Aufpreis pro iPhone",
                 source: "Quelle: CNBC, Bloomberg, Apple Geschäftsbericht 2025"
             },
