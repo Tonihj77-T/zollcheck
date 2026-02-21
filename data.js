@@ -42,7 +42,7 @@ const quizQuestions = [
             "Textilien"
         ],
         correct: 1,
-        explanation: "Die Automobilindustrie verzeichnete mit -17,5% den stärksten Exportrückgang in die USA."
+        explanation: "Die Automobilindustrie verzeichnete mit -9,4% den stärksten Exportrückgang in die USA."
     },
     {
         question: "Wann wurde die Welthandelsorganisation (WTO) gegründet?",
@@ -75,7 +75,7 @@ const quizQuestions = [
             "Niederlande"
         ],
         correct: 2,
-        explanation: "China überholte 2025 die USA wieder als wichtigster Handelspartner mit 230,8 Mrd. € Handelsumsatz."
+        explanation: "China überholte 2025 die USA wieder als wichtigster Handelspartner mit 298 Mrd. € Handelsvolumen."
     },
     {
         question: "Was ist ein Handelsdefizit?",
@@ -557,6 +557,41 @@ const lexikonEntries = [
         term: "America First",
         definition: "Eine von Donald Trump verfolgte Wirtschaftspolitik, die amerikanische Interessen über internationale Kooperation stellt. Beinhaltet Zölle, Neuverhandlung von Handelsabkommen und Druck auf Unternehmen, in den USA zu produzieren.",
         example: "Trump drohte deutschen Autoherstellern mit Zöllen, um sie zur Produktion in den USA zu bewegen."
+    },
+    {
+        term: "Erziehungszoll",
+        definition: "Zoll zum Schutz junger oder aufstrebender Industrien, bis sie international wettbewerbsfähig sind. Idee geht auf Friedrich List zurück.",
+        example: "Ein Land erhebt Zölle auf importierte Solarmodule, damit die eigene, noch junge Solarindustrie wachsen kann, ohne sofort gegen etablierte Hersteller bestehen zu müssen."
+    },
+    {
+        term: "CBAM (CO\u2082-Grenzausgleich)",
+        definition: "EU-Mechanismus, der CO\u2082-Kosten auf Importe aus Ländern ohne vergleichbare Klimapolitik erhebt. Soll Wettbewerbsnachteile für europäische Unternehmen ausgleichen und Carbon Leakage verhindern.",
+        example: "Ein Stahlimporteur muss beim Import aus einem Land ohne CO\u2082-Bepreisung CBAM-Zertifikate kaufen, die dem EU-CO\u2082-Preis entsprechen."
+    },
+    {
+        term: "Komparativer Vorteil",
+        definition: "Wirtschaftsprinzip nach David Ricardo: L\u00e4nder profitieren vom Handel, wenn sie sich auf G\u00fcter spezialisieren, die sie relativ g\u00fcnstiger herstellen k\u00f6nnen \u2013 selbst wenn ein anderes Land alles billiger produziert.",
+        example: "Portugal kann sowohl Wein als auch Tuch herstellen, aber Wein relativ g\u00fcnstiger. England produziert Tuch relativ g\u00fcnstiger. Beide profitieren, wenn sie sich spezialisieren und handeln."
+    },
+    {
+        term: "De-Risking",
+        definition: "Strategie zur Verringerung \u00fcberm\u00e4\u00dfiger wirtschaftlicher Abh\u00e4ngigkeiten, insbesondere von China. Kein vollst\u00e4ndiger R\u00fcckzug (Decoupling), sondern gezielte Diversifizierung.",
+        example: "Die EU f\u00f6rdert den Aufbau eigener Chipproduktion, um weniger von asiatischen Lieferanten abh\u00e4ngig zu sein."
+    },
+    {
+        term: "Strategische Autonomie",
+        definition: "F\u00e4higkeit eines Landes oder B\u00fcndnisses, in Schl\u00fcsselbereichen wie Energie, Technologie und Verteidigung unabh\u00e4ngig handeln zu k\u00f6nnen.",
+        example: "Die EU investiert in eigene Batterieproduktion f\u00fcr E-Autos, um nicht vollst\u00e4ndig von chinesischen Herstellern abh\u00e4ngig zu sein."
+    },
+    {
+        term: "Zolleskalation",
+        definition: "Stufenweise Erh\u00f6hung von Z\u00f6llen als Vergeltungsma\u00dfnahme zwischen Handelspartnern. F\u00fchrt oft zu einem Handelskrieg.",
+        example: "USA erhebt 25% Zoll auf EU-Stahl \u2192 EU antwortet mit Z\u00f6llen auf US-Whiskey \u2192 USA droht mit Autozöllen \u2192 Eskalationsspirale."
+    },
+    {
+        term: "GATT",
+        definition: "General Agreement on Tariffs and Trade \u2013 Vorl\u00e4ufer der WTO, 1947 gegr\u00fcndet zur F\u00f6rderung des Freihandels durch schrittweisen Zollabbau in multilateralen Verhandlungsrunden.",
+        example: "In der Uruguay-Runde (1986\u20131994) einigten sich 123 L\u00e4nder auf umfassende Zollsenkungen. Das GATT wurde 1995 von der WTO abgel\u00f6st."
     }
 ];
 
