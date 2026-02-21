@@ -49,7 +49,6 @@ function saveState() {
 function addXP(amount) {
     state.xp += amount;
     
-    // Check for level up
     const levels = [0, 100, 300, 600, 1000, 1500, 2000];
     for (let i = levels.length - 1; i >= 0; i--) {
         if (state.xp >= levels[i]) {
@@ -64,7 +63,8 @@ function addXP(amount) {
 
 function updateUI() {
     // XP Badge
-    document.getElementById('xp-display').textContent = `${state.xp} XP`;
+    const xpDisplay = document.getElementById('xp-display');
+    if (xpDisplay) xpDisplay.textContent = `${state.xp} XP`;
     
     // Level info
     const levels = [0, 100, 300, 600, 1000, 1500, 2000];
@@ -74,63 +74,42 @@ function updateUI() {
     const progress = ((state.xp - currentLevelXP) / (nextLevelXP - currentLevelXP)) * 100;
     
     const levelText = document.querySelector('.level-text');
-    if (levelText) {
-        levelText.textContent = `Level ${state.level} • ${levelNames[state.level - 1]}`;
-    }
+    if (levelText) levelText.textContent = `Level ${state.level} • ${levelNames[state.level - 1]}`;
     
     const xpBarFill = document.getElementById('xp-bar-fill');
-    if (xpBarFill) {
-        xpBarFill.style.width = `${Math.min(progress, 100)}%`;
-    }
+    if (xpBarFill) xpBarFill.style.width = `${Math.min(progress, 100)}%`;
     
     const currentXPEl = document.getElementById('current-xp');
-    if (currentXPEl) {
-        currentXPEl.textContent = state.xp;
-    }
+    if (currentXPEl) currentXPEl.textContent = state.xp;
     
-    // Daily challenge progress
-    const dailyProgress = document.getElementById('daily-progress');
-    if (dailyProgress) {
-        dailyProgress.style.width = `${(state.dailyQuizCount / 3) * 100}%`;
-    }
-    const dailyCount = document.getElementById('daily-count');
-    if (dailyCount) {
-        dailyCount.textContent = Math.min(state.dailyQuizCount, 3);
-    }
-    
-    // Quiz stats
-    const quizCorrect = document.getElementById('quiz-correct');
-    if (quizCorrect) {
-        quizCorrect.textContent = state.quizCorrect;
-    }
-    const quizStreak = document.getElementById('quiz-streak');
-    if (quizStreak) {
-        quizStreak.textContent = state.quizStreak;
-    }
-    
-    // Globalization index
-    updateGlobIndex();
+    // Quiz stats (home + quiz screen)
+    ['quiz-correct', 'quiz-correct-2'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.textContent = state.quizCorrect;
+    });
+    ['quiz-streak', 'quiz-streak-2'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.textContent = state.quizStreak;
+    });
 }
-
-// === Charts Instance ===
-let zollCharts = null;
-let chartsInitialized = false;
 
 // === Navigation ===
 function showScreen(screenId) {
-    // Hide all screens
     document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
     
-    // Show target screen
     const target = document.getElementById(screenId);
-    if (target) {
-        target.classList.add('active');
-    }
+    if (target) target.classList.add('active');
     
     // Update nav
     document.querySelectorAll('.nav-item').forEach(item => {
         item.classList.toggle('active', item.dataset.screen === screenId);
     });
+    
+    // Hide/show nav bar for lesson view
+    const nav = document.getElementById('bottom-nav');
+    if (nav) {
+        nav.style.display = screenId === 'screen-lesson' ? 'none' : 'flex';
+    }
     
     // Reset simulator when leaving
     if (screenId !== 'screen-simulator') {
@@ -140,48 +119,6 @@ function showScreen(screenId) {
     // Initialize map when showing map screen
     if (screenId === 'screen-karte' && window.tradeMap) {
         window.tradeMap.init();
-    }
-    
-    // Initialize charts when showing statistiken screen
-    if (screenId === 'screen-statistiken' && !chartsInitialized) {
-        initCharts();
-    }
-}
-
-// === Charts Initialization ===
-function initCharts() {
-    if (window.ZollCharts && !chartsInitialized) {
-        zollCharts = new ZollCharts();
-        zollCharts.renderAll();
-        chartsInitialized = true;
-    }
-}
-
-// Render a single chart in a container (for lessons)
-function renderLessonChart(chartType, containerId) {
-    if (!window.ZollCharts) return;
-    
-    const tempCharts = new ZollCharts();
-    
-    switch(chartType) {
-        case 'exportquote':
-            tempCharts.renderExportquote(containerId);
-            break;
-        case 'handelspartner':
-            tempCharts.renderHandelspartner(containerId);
-            break;
-        case 'handelsabkommen':
-            tempCharts.renderHandelsabkommen(containerId);
-            break;
-        case 'importbeschraenkungen':
-            tempCharts.renderImportbeschraenkungen(containerId);
-            break;
-        case 'euUsaHandel':
-            tempCharts.renderEuUsaHandel(containerId);
-            break;
-        case 'trumpZoelle':
-            tempCharts.renderTrumpZoelle(containerId);
-            break;
     }
 }
 
@@ -198,8 +135,8 @@ function showQuestion() {
     const quizCard = document.getElementById('quiz-card');
     const feedback = document.getElementById('quiz-feedback');
     
-    quizCard.classList.remove('hidden');
-    feedback.classList.add('hidden');
+    if (quizCard) quizCard.classList.remove('hidden');
+    if (feedback) feedback.classList.add('hidden');
     
     if (state.currentQuestion >= shuffledQuestions.length) {
         shuffledQuestions = [...quizQuestions].sort(() => Math.random() - 0.5);
@@ -207,12 +144,15 @@ function showQuestion() {
     }
     
     const q = shuffledQuestions[state.currentQuestion];
-    document.getElementById('quiz-question').textContent = q.question;
+    const questionEl = document.getElementById('quiz-question');
+    if (questionEl) questionEl.textContent = q.question;
     
     const answersContainer = document.getElementById('quiz-answers');
-    answersContainer.innerHTML = q.answers.map((answer, i) => `
-        <button class="answer-btn" onclick="checkAnswer(${i})">${answer}</button>
-    `).join('');
+    if (answersContainer) {
+        answersContainer.innerHTML = q.answers.map((answer, i) => `
+            <button class="answer-btn" onclick="checkAnswer(${i})">${answer}</button>
+        `).join('');
+    }
 }
 
 function checkAnswer(index) {
@@ -220,47 +160,44 @@ function checkAnswer(index) {
     const buttons = document.querySelectorAll('.answer-btn');
     const isCorrect = index === q.correct;
     
-    // Disable all buttons
     buttons.forEach((btn, i) => {
         btn.disabled = true;
-        if (i === q.correct) {
-            btn.classList.add('correct');
-        } else if (i === index && !isCorrect) {
-            btn.classList.add('wrong');
-        }
+        if (i === q.correct) btn.classList.add('correct');
+        else if (i === index && !isCorrect) btn.classList.add('wrong');
     });
     
-    // Update stats
     if (isCorrect) {
         state.quizCorrect++;
         state.quizStreak++;
         state.dailyQuizCount++;
-        addXP(5 + (state.quizStreak > 3 ? 2 : 0)); // Bonus for streak
+        addXP(5 + (state.quizStreak > 3 ? 2 : 0));
     } else {
         state.quizStreak = 0;
     }
     saveState();
     updateUI();
     
-    // Show feedback after short delay
-    setTimeout(() => {
-        showFeedback(isCorrect, q.explanation);
-    }, 800);
+    setTimeout(() => showFeedback(isCorrect, q.explanation), 800);
 }
 
 function showFeedback(isCorrect, explanation) {
     const quizCard = document.getElementById('quiz-card');
     const feedback = document.getElementById('quiz-feedback');
     
-    quizCard.classList.add('hidden');
-    feedback.classList.remove('hidden');
+    if (quizCard) quizCard.classList.add('hidden');
+    if (feedback) feedback.classList.remove('hidden');
     
     const icon = document.getElementById('feedback-icon');
-    icon.textContent = isCorrect ? '✓' : '✗';
-    icon.className = `feedback-icon ${isCorrect ? 'correct' : 'wrong'}`;
+    if (icon) {
+        icon.textContent = isCorrect ? '✓' : '✗';
+        icon.className = `feedback-icon ${isCorrect ? 'correct' : 'wrong'}`;
+    }
     
-    document.getElementById('feedback-text').textContent = isCorrect ? 'Richtig!' : 'Leider falsch';
-    document.getElementById('feedback-explanation').textContent = explanation;
+    const feedbackText = document.getElementById('feedback-text');
+    if (feedbackText) feedbackText.textContent = isCorrect ? 'Richtig!' : 'Leider falsch';
+    
+    const feedbackExp = document.getElementById('feedback-explanation');
+    if (feedbackExp) feedbackExp.textContent = explanation;
 }
 
 function nextQuestion() {
@@ -289,7 +226,7 @@ function selectCategory(category) {
             <span style="font-size: 24px">${p.emoji}</span>
             <div>
                 <strong>${p.name}</strong>
-                <div style="font-size: 12px; color: #718096">${p.origin}</div>
+                <div style="font-size: 12px; color: var(--text-dim)">${p.origin}</div>
             </div>
         </div>
     `).join('');
@@ -310,6 +247,7 @@ function addProduct(productId) {
 
 function renderProducts() {
     const container = document.getElementById('products-list');
+    if (!container) return;
     
     if (state.products.length === 0) {
         container.innerHTML = '<p class="empty-state">Noch keine Produkte erfasst.<br>Füge dein erstes Produkt hinzu!</p>';
@@ -326,19 +264,6 @@ function renderProducts() {
             <span class="product-arrow">→</span>
         </div>
     `).join('');
-    
-    updateGlobIndex();
-}
-
-function updateGlobIndex() {
-    // Calculate based on number of products and their origins
-    const uniqueCountries = new Set(state.products.map(p => p.origin));
-    const index = Math.min(100, state.products.length * 12 + uniqueCountries.size * 5);
-    
-    const indexEl = document.getElementById('glob-index');
-    if (indexEl) {
-        indexEl.textContent = `${index}%`;
-    }
 }
 
 function showProductDetail(productId) {
@@ -359,29 +284,17 @@ function showProductDetail(productId) {
         <div class="detail-map">
             <h4>🗺️ Herkunft & Route</h4>
             ${routeHTML}
-            <div style="margin-top: 12px; font-size: 13px; opacity: 0.8">
+            <div style="margin-top: 12px; font-size: 13px; opacity: 0.7">
                 📏 Gesamtstrecke: ${product.distance}
             </div>
         </div>
         
         <div class="detail-section">
             <h4>💰 Preisaufschlüsselung</h4>
-            <div class="price-row">
-                <span>Herstellung</span>
-                <span>${product.price.production.toFixed(2)} €</span>
-            </div>
-            <div class="price-row">
-                <span>Transport</span>
-                <span>${product.price.transport.toFixed(2)} €</span>
-            </div>
-            <div class="price-row">
-                <span>Zoll</span>
-                <span>${product.price.tariff.toFixed(2)} €</span>
-            </div>
-            <div class="price-row">
-                <span>Verkaufspreis</span>
-                <span>${product.price.retail.toFixed(2)} €</span>
-            </div>
+            <div class="price-row"><span>Herstellung</span><span>${product.price.production.toFixed(2)} €</span></div>
+            <div class="price-row"><span>Transport</span><span>${product.price.transport.toFixed(2)} €</span></div>
+            <div class="price-row"><span>Zoll</span><span>${product.price.tariff.toFixed(2)} €</span></div>
+            <div class="price-row"><span>Verkaufspreis</span><span>${product.price.retail.toFixed(2)} €</span></div>
         </div>
         
         <div class="detail-section">
@@ -389,7 +302,7 @@ function showProductDetail(productId) {
             <p style="font-size: 14px">${product.tariffNote}</p>
         </div>
         
-        <div class="detail-section" style="background: #FFF5F5; border-left: 3px solid #FF6B6B;">
+        <div class="detail-section" style="border-left: 3px solid var(--red);">
             <h4>⚡ Was wäre wenn?</h4>
             <p style="font-size: 14px">${product.scenario}</p>
         </div>
@@ -409,6 +322,7 @@ function loadLexikon() {
 
 function renderLexikon(entries) {
     const container = document.getElementById('lexikon-list');
+    if (!container) return;
     container.innerHTML = entries.map(entry => `
         <div class="lexikon-item" onclick="showLexikonDetail('${entry.term}')">
             <h4>${entry.term}</h4>
@@ -433,17 +347,16 @@ function showLexikonDetail(term) {
     const container = document.getElementById('lexikon-list');
     container.innerHTML = `
         <div class="lexikon-detail">
-            <button class="back-btn" onclick="loadLexikon()" style="margin-bottom: 16px">← Zurück</button>
+            <button class="back-btn" onclick="loadLexikon()">← Zurück</button>
             <h3>${entry.term}</h3>
             <p>${entry.definition}</p>
             <div class="example">
                 <div class="example-label">🎯 Beispiel</div>
-                <p style="margin: 0">${entry.example}</p>
+                <p>${entry.example}</p>
             </div>
         </div>
     `;
     
-    // Award XP for reading
     addXP(3);
 }
 
@@ -452,7 +365,6 @@ function startSimulator(role) {
     state.simRole = role;
     state.simScenarioIndex = 0;
     
-    // Verschiedene Meter je nach Rolle
     if (role === 'minister') {
         state.simMeters = { jobs: 50, prices: 50, trade: 50, treasury: 50 };
     } else if (role === 'unternehmer') {
@@ -472,22 +384,10 @@ function getMetersHTML() {
         return `
             <div class="sim-header">
                 <div class="sim-meters">
-                    <div class="meter">
-                        <span class="meter-label">👷 Arbeitsplätze</span>
-                        <div class="meter-bar"><div class="meter-fill green" style="width: ${state.simMeters.jobs}%"></div></div>
-                    </div>
-                    <div class="meter">
-                        <span class="meter-label">🛒 Preise</span>
-                        <div class="meter-bar"><div class="meter-fill ${state.simMeters.prices > 50 ? 'green' : 'red'}" style="width: ${state.simMeters.prices}%"></div></div>
-                    </div>
-                    <div class="meter">
-                        <span class="meter-label">🤝 Handel</span>
-                        <div class="meter-bar"><div class="meter-fill blue" style="width: ${state.simMeters.trade}%"></div></div>
-                    </div>
-                    <div class="meter">
-                        <span class="meter-label">💰 Staatskasse</span>
-                        <div class="meter-bar"><div class="meter-fill ${state.simMeters.treasury > 40 ? 'green' : 'red'}" style="width: ${state.simMeters.treasury}%"></div></div>
-                    </div>
+                    <div class="meter"><span class="meter-label">👷 Arbeitsplätze</span><div class="meter-bar"><div class="meter-fill green" style="width: ${state.simMeters.jobs}%"></div></div></div>
+                    <div class="meter"><span class="meter-label">🛒 Preise</span><div class="meter-bar"><div class="meter-fill ${state.simMeters.prices > 50 ? 'green' : 'red'}" style="width: ${state.simMeters.prices}%"></div></div></div>
+                    <div class="meter"><span class="meter-label">🤝 Handel</span><div class="meter-bar"><div class="meter-fill blue" style="width: ${state.simMeters.trade}%"></div></div></div>
+                    <div class="meter"><span class="meter-label">💰 Staatskasse</span><div class="meter-bar"><div class="meter-fill ${state.simMeters.treasury > 40 ? 'green' : 'red'}" style="width: ${state.simMeters.treasury}%"></div></div></div>
                 </div>
             </div>
         `;
@@ -495,22 +395,10 @@ function getMetersHTML() {
         return `
             <div class="sim-header">
                 <div class="sim-meters">
-                    <div class="meter">
-                        <span class="meter-label">💵 Gewinn</span>
-                        <div class="meter-bar"><div class="meter-fill ${state.simMeters.profit > 40 ? 'green' : 'red'}" style="width: ${state.simMeters.profit}%"></div></div>
-                    </div>
-                    <div class="meter">
-                        <span class="meter-label">📈 Marktanteil</span>
-                        <div class="meter-bar"><div class="meter-fill blue" style="width: ${state.simMeters.market}%"></div></div>
-                    </div>
-                    <div class="meter">
-                        <span class="meter-label">💰 Kostenkontrolle</span>
-                        <div class="meter-bar"><div class="meter-fill ${state.simMeters.costs > 40 ? 'green' : 'yellow'}" style="width: ${state.simMeters.costs}%"></div></div>
-                    </div>
-                    <div class="meter">
-                        <span class="meter-label">👥 Mitarbeiter</span>
-                        <div class="meter-bar"><div class="meter-fill green" style="width: ${state.simMeters.employees}%"></div></div>
-                    </div>
+                    <div class="meter"><span class="meter-label">💵 Gewinn</span><div class="meter-bar"><div class="meter-fill ${state.simMeters.profit > 40 ? 'green' : 'red'}" style="width: ${state.simMeters.profit}%"></div></div></div>
+                    <div class="meter"><span class="meter-label">📈 Marktanteil</span><div class="meter-bar"><div class="meter-fill blue" style="width: ${state.simMeters.market}%"></div></div></div>
+                    <div class="meter"><span class="meter-label">💰 Kostenkontrolle</span><div class="meter-bar"><div class="meter-fill ${state.simMeters.costs > 40 ? 'green' : 'yellow'}" style="width: ${state.simMeters.costs}%"></div></div></div>
+                    <div class="meter"><span class="meter-label">👥 Mitarbeiter</span><div class="meter-bar"><div class="meter-fill green" style="width: ${state.simMeters.employees}%"></div></div></div>
                 </div>
             </div>
         `;
@@ -518,18 +406,9 @@ function getMetersHTML() {
         return `
             <div class="sim-header">
                 <div class="sim-meters">
-                    <div class="meter">
-                        <span class="meter-label">💰 Budget</span>
-                        <div class="meter-bar"><div class="meter-fill ${state.simMeters.budget > 40 ? 'green' : 'red'}" style="width: ${state.simMeters.budget}%"></div></div>
-                    </div>
-                    <div class="meter">
-                        <span class="meter-label">😊 Zufriedenheit</span>
-                        <div class="meter-bar"><div class="meter-fill ${state.simMeters.satisfaction > 50 ? 'green' : 'yellow'}" style="width: ${state.simMeters.satisfaction}%"></div></div>
-                    </div>
-                    <div class="meter">
-                        <span class="meter-label">🌱 Ethik/Nachhaltigkeit</span>
-                        <div class="meter-bar"><div class="meter-fill blue" style="width: ${state.simMeters.ethics}%"></div></div>
-                    </div>
+                    <div class="meter"><span class="meter-label">💰 Budget</span><div class="meter-bar"><div class="meter-fill ${state.simMeters.budget > 40 ? 'green' : 'red'}" style="width: ${state.simMeters.budget}%"></div></div></div>
+                    <div class="meter"><span class="meter-label">😊 Zufriedenheit</span><div class="meter-bar"><div class="meter-fill ${state.simMeters.satisfaction > 50 ? 'green' : 'yellow'}" style="width: ${state.simMeters.satisfaction}%"></div></div></div>
+                    <div class="meter"><span class="meter-label">🌱 Ethik</span><div class="meter-bar"><div class="meter-fill blue" style="width: ${state.simMeters.ethics}%"></div></div></div>
                 </div>
             </div>
         `;
@@ -567,7 +446,6 @@ function makeChoice(choiceIndex) {
     const scenario = simulatorScenarios[state.simRole][state.simScenarioIndex];
     const choice = scenario.choices[choiceIndex];
     
-    // Apply effects
     if (choice.effects) {
         Object.entries(choice.effects).forEach(([key, value]) => {
             if (state.simMeters[key] !== undefined) {
@@ -576,7 +454,6 @@ function makeChoice(choiceIndex) {
         });
     }
     
-    // Show result
     const container = document.getElementById('sim-game');
     container.innerHTML = `
         <div class="sim-scenario">
@@ -596,106 +473,97 @@ function nextSimScenario() {
 
 function showSimResults() {
     const container = document.getElementById('sim-game');
-    
-    // Berechne Durchschnitt je nach Rolle
-    let avg, verdict, roleTitle, summary;
     const meters = state.simMeters;
+    let avg, roleTitle, summary;
     
     if (state.simRole === 'minister') {
         avg = (meters.jobs + meters.prices + meters.trade + meters.treasury) / 4;
         roleTitle = "Wirtschaftsminister";
-        summary = `
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 16px 0; font-size: 13px;">
-                <div>👷 Arbeitsplätze: <strong>${meters.jobs}%</strong></div>
-                <div>🛒 Preise: <strong>${meters.prices}%</strong></div>
-                <div>🤝 Handel: <strong>${meters.trade}%</strong></div>
-                <div>💰 Staatskasse: <strong>${meters.treasury}%</strong></div>
-            </div>
-        `;
+        summary = `<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 16px 0; font-size: 13px;">
+            <div>👷 Jobs: <strong>${meters.jobs}%</strong></div>
+            <div>🛒 Preise: <strong>${meters.prices}%</strong></div>
+            <div>🤝 Handel: <strong>${meters.trade}%</strong></div>
+            <div>💰 Kasse: <strong>${meters.treasury}%</strong></div>
+        </div>`;
     } else if (state.simRole === 'unternehmer') {
         avg = (meters.profit + meters.market + meters.costs + meters.employees) / 4;
         roleTitle = "Unternehmer*in";
-        summary = `
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 16px 0; font-size: 13px;">
-                <div>💵 Gewinn: <strong>${meters.profit}%</strong></div>
-                <div>📈 Marktanteil: <strong>${meters.market}%</strong></div>
-                <div>💰 Kosten: <strong>${meters.costs}%</strong></div>
-                <div>👥 Mitarbeiter: <strong>${meters.employees}%</strong></div>
-            </div>
-        `;
+        summary = `<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 16px 0; font-size: 13px;">
+            <div>💵 Gewinn: <strong>${meters.profit}%</strong></div>
+            <div>📈 Markt: <strong>${meters.market}%</strong></div>
+            <div>💰 Kosten: <strong>${meters.costs}%</strong></div>
+            <div>👥 Team: <strong>${meters.employees}%</strong></div>
+        </div>`;
     } else {
         avg = (meters.budget + meters.satisfaction + meters.ethics) / 3;
         roleTitle = "Verbraucher*in";
-        summary = `
-            <div style="display: grid; grid-template-columns: 1fr; gap: 8px; margin: 16px 0; font-size: 13px;">
-                <div>💰 Budget: <strong>${meters.budget}%</strong></div>
-                <div>😊 Zufriedenheit: <strong>${meters.satisfaction}%</strong></div>
-                <div>🌱 Ethik: <strong>${meters.ethics}%</strong></div>
-            </div>
-        `;
+        summary = `<div style="display: grid; grid-template-columns: 1fr; gap: 8px; margin: 16px 0; font-size: 13px;">
+            <div>💰 Budget: <strong>${meters.budget}%</strong></div>
+            <div>😊 Zufriedenheit: <strong>${meters.satisfaction}%</strong></div>
+            <div>🌱 Ethik: <strong>${meters.ethics}%</strong></div>
+        </div>`;
     }
     
-    if (avg >= 65) {
-        verdict = "🏆 Ausgezeichnet! Du hast eine gute Balance gefunden.";
-    } else if (avg >= 50) {
-        verdict = "👍 Solide! Es gibt Verbesserungspotenzial, aber insgesamt gut gemeistert.";
-    } else if (avg >= 35) {
-        verdict = "😐 Gemischt. Einige gute Entscheidungen, aber auch Verbesserungspotenzial.";
-    } else {
-        verdict = "😬 Schwierig! Deine Entscheidungen hatten einige negative Folgen.";
-    }
+    let verdict;
+    if (avg >= 65) verdict = "🏆 Ausgezeichnet! Du hast eine gute Balance gefunden.";
+    else if (avg >= 50) verdict = "👍 Solide! Insgesamt gut gemeistert.";
+    else if (avg >= 35) verdict = "😐 Gemischt. Einige gute Entscheidungen, aber Verbesserungspotenzial.";
+    else verdict = "😬 Schwierig! Deine Entscheidungen hatten negative Folgen.";
     
     const scenarios = simulatorScenarios[state.simRole];
     
     container.innerHTML = `
         <div class="sim-scenario">
             <h4>🎮 Simulation beendet!</h4>
-            <p style="font-size: 13px; color: #718096; margin-bottom: 12px;">
+            <p style="font-size: 13px; color: var(--text-dim); margin-bottom: 12px;">
                 Du hast ${scenarios.length} Situationen als ${roleTitle} gemeistert.
             </p>
-            <p style="font-size: 18px; font-weight: 600;">${verdict}</p>
+            <p style="font-size: 16px; font-weight: 600;">${verdict}</p>
             ${summary}
-            <div style="background: #F7F9FC; padding: 12px; border-radius: 8px; margin-top: 16px;">
-                <p style="font-size: 13px; color: #718096; margin: 0;">
-                    💡 <strong>Erkenntnis:</strong> In der Realität sind solche Entscheidungen noch komplexer. 
-                    Es gibt selten eine "richtige" Antwort – jede Wahl hat Vor- und Nachteile.
+            <div style="background: var(--bg-input); padding: 12px; border-radius: 8px; margin-top: 12px;">
+                <p style="font-size: 13px; color: var(--text-dim); margin: 0;">
+                    💡 In der Realität sind solche Entscheidungen noch komplexer. 
+                    Es gibt selten eine "richtige" Antwort.
                 </p>
             </div>
         </div>
-        <div style="display: flex; gap: 10px; margin-top: 16px;">
-            <button class="next-btn" onclick="restartSameRole()" style="flex: 1; background: #4ECDC4;">🔄 Nochmal</button>
+        <div style="display: flex; gap: 10px; margin-top: 12px;">
+            <button class="next-btn" onclick="restartSameRole()" style="flex: 1; background: var(--green);">🔄 Nochmal</button>
             <button class="next-btn" onclick="resetSimulator()" style="flex: 1;">↩️ Andere Rolle</button>
         </div>
     `;
     
-    addXP(25 + scenarios.length * 5); // Mehr XP für längere Simulationen
+    addXP(25 + scenarios.length * 5);
 }
 
 function restartSameRole() {
-    const role = state.simRole;
-    startSimulator(role);
+    startSimulator(state.simRole);
 }
 
 function resetSimulator() {
     state.simRole = null;
     state.simScenarioIndex = 0;
-    document.getElementById('sim-intro').classList.remove('hidden');
-    document.getElementById('sim-game').classList.add('hidden');
+    const intro = document.getElementById('sim-intro');
+    const game = document.getElementById('sim-game');
+    if (intro) intro.classList.remove('hidden');
+    if (game) game.classList.add('hidden');
 }
 
 // === Close modals on backdrop click ===
-document.querySelectorAll('.modal').forEach(modal => {
-    modal.addEventListener('click', (e) => {
-        if (e.target === modal) {
-            modal.classList.add('hidden');
-        }
-    });
+document.addEventListener('click', (e) => {
+    if (e.target.classList.contains('modal')) {
+        e.target.classList.add('hidden');
+    }
 });
 
 // === DYNAMISCHER SIMULATOR ===
 let currentDynamicScenario = null;
 
 function startDynamicSimulator() {
+    if (!window.dynamicSim) {
+        alert('Dynamischer Simulator wird geladen...');
+        return;
+    }
     window.dynamicSim.init();
     document.getElementById('sim-intro').classList.add('hidden');
     document.getElementById('sim-game').classList.remove('hidden');
@@ -704,20 +572,17 @@ function startDynamicSimulator() {
 
 function showDynamicScenario() {
     const sim = window.dynamicSim;
-    const state = sim.getState();
+    const st = sim.getState();
     const container = document.getElementById('sim-game');
     
-    // Check ob Spiel zu Ende
-    if (state.turn >= state.maxTurns) {
+    if (st.turn >= st.maxTurns) {
         showDynamicResults();
         return;
     }
     
-    // Check auf pending events
     let scenario;
-    if (state.pendingEvents.length > 0) {
-        const pendingEvent = state.pendingEvents.shift();
-        // Generiere Szenario aus pending event
+    if (st.pendingEvents.length > 0) {
+        const pendingEvent = st.pendingEvents.shift();
         scenario = sim.generateScenario();
         scenario.type = pendingEvent.type;
         scenario.country = pendingEvent.country;
@@ -729,15 +594,14 @@ function showDynamicScenario() {
     
     currentDynamicScenario = scenario;
     
-    // Render UI
     const countries = sim.countries;
-    const relationsHTML = Object.entries(state.relations).map(([key, value]) => {
+    const relationsHTML = Object.entries(st.relations).map(([key, value]) => {
         const country = countries[key];
         return `<div class="relation-item">
             <span>${country.flag}</span>
             <span class="relation-bar" style="background: linear-gradient(to right, 
-                ${value < 0 ? '#FF6B6B' : '#4ECDC4'} ${Math.abs(value)}%, 
-                #E2E8F0 ${Math.abs(value)}%)"></span>
+                ${value < 0 ? 'var(--red)' : 'var(--green)'} ${Math.abs(value)}%, 
+                var(--border) ${Math.abs(value)}%)"></span>
             <span style="font-size: 11px">${sim.getRelationEmoji(value)}</span>
         </div>`;
     }).join('');
@@ -745,25 +609,16 @@ function showDynamicScenario() {
     container.innerHTML = `
         <div class="sim-header">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                <span style="font-weight: 600; color: #1E3A5F;">🗓️ Monat ${state.turn + 1}/${state.maxTurns}</span>
-                <span style="font-size: 12px; color: #718096;">Deutschland 🇩🇪</span>
+                <span style="font-weight: 600;">🗓️ Monat ${st.turn + 1}/${st.maxTurns}</span>
+                <span style="font-size: 12px; color: var(--text-dim);">Deutschland 🇩🇪</span>
             </div>
             <div class="sim-meters">
-                <div class="meter">
-                    <span class="meter-label">📈 Wirtschaft</span>
-                    <div class="meter-bar"><div class="meter-fill ${sim.getMeterColor(state.economy)}" style="width: ${state.economy}%"></div></div>
-                </div>
-                <div class="meter">
-                    <span class="meter-label">🌍 Diplomatie</span>
-                    <div class="meter-bar"><div class="meter-fill ${sim.getMeterColor(state.diplomacy)}" style="width: ${state.diplomacy}%"></div></div>
-                </div>
-                <div class="meter">
-                    <span class="meter-label">🏠 Innenpolitik</span>
-                    <div class="meter-bar"><div class="meter-fill ${sim.getMeterColor(state.domestic)}" style="width: ${state.domestic}%"></div></div>
-                </div>
+                <div class="meter"><span class="meter-label">📈 Wirtschaft</span><div class="meter-bar"><div class="meter-fill ${sim.getMeterColor(st.economy)}" style="width: ${st.economy}%"></div></div></div>
+                <div class="meter"><span class="meter-label">🌍 Diplomatie</span><div class="meter-bar"><div class="meter-fill ${sim.getMeterColor(st.diplomacy)}" style="width: ${st.diplomacy}%"></div></div></div>
+                <div class="meter"><span class="meter-label">🏠 Innenpolitik</span><div class="meter-bar"><div class="meter-fill ${sim.getMeterColor(st.domestic)}" style="width: ${st.domestic}%"></div></div></div>
             </div>
-            <div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid #E2E8F0;">
-                <span style="font-size: 11px; color: #718096; display: block; margin-bottom: 6px;">Beziehungen:</span>
+            <div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border);">
+                <span style="font-size: 11px; color: var(--text-dim); display: block; margin-bottom: 6px;">Beziehungen:</span>
                 <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 4px; font-size: 12px;">
                     ${relationsHTML}
                 </div>
@@ -773,7 +628,7 @@ function showDynamicScenario() {
         <div class="sim-scenario">
             <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
                 <span style="font-size: 24px">${scenario.countryData.flag}</span>
-                <h4 style="margin: 0; color: #1E3A5F;">${scenario.title}</h4>
+                <h4 style="margin: 0;">${scenario.title}</h4>
             </div>
             <p>${scenario.text}</p>
         </div>
@@ -789,39 +644,29 @@ function showDynamicScenario() {
 function makeDynamicChoice(choiceIndex) {
     const sim = window.dynamicSim;
     const result = sim.processChoice(currentDynamicScenario, choiceIndex);
-    const state = sim.getState();
+    const st = sim.getState();
     const container = document.getElementById('sim-game');
     
-    // Zeige Ergebnis
     container.innerHTML = `
         <div class="sim-header">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                <span style="font-weight: 600; color: #1E3A5F;">🗓️ Monat ${state.turn}/${state.maxTurns}</span>
+                <span style="font-weight: 600;">🗓️ Monat ${st.turn}/${st.maxTurns}</span>
             </div>
             <div class="sim-meters">
-                <div class="meter">
-                    <span class="meter-label">📈 Wirtschaft</span>
-                    <div class="meter-bar"><div class="meter-fill ${sim.getMeterColor(state.economy)}" style="width: ${state.economy}%"></div></div>
-                </div>
-                <div class="meter">
-                    <span class="meter-label">🌍 Diplomatie</span>
-                    <div class="meter-bar"><div class="meter-fill ${sim.getMeterColor(state.diplomacy)}" style="width: ${state.diplomacy}%"></div></div>
-                </div>
-                <div class="meter">
-                    <span class="meter-label">🏠 Innenpolitik</span>
-                    <div class="meter-bar"><div class="meter-fill ${sim.getMeterColor(state.domestic)}" style="width: ${state.domestic}%"></div></div>
-                </div>
+                <div class="meter"><span class="meter-label">📈 Wirtschaft</span><div class="meter-bar"><div class="meter-fill ${sim.getMeterColor(st.economy)}" style="width: ${st.economy}%"></div></div></div>
+                <div class="meter"><span class="meter-label">🌍 Diplomatie</span><div class="meter-bar"><div class="meter-fill ${sim.getMeterColor(st.diplomacy)}" style="width: ${st.diplomacy}%"></div></div></div>
+                <div class="meter"><span class="meter-label">🏠 Innenpolitik</span><div class="meter-bar"><div class="meter-fill ${sim.getMeterColor(st.domestic)}" style="width: ${st.domestic}%"></div></div></div>
             </div>
         </div>
         
-        <div class="sim-scenario" style="border-left: 4px solid #4ECDC4;">
-            <h4 style="color: #1E3A5F; margin-bottom: 12px;">📰 Ergebnis</h4>
+        <div class="sim-scenario" style="border-left: 4px solid var(--green);">
+            <h4>📰 Ergebnis</h4>
             <p>${result.text}</p>
-            ${result.followUp ? '<p style="margin-top: 12px; color: #FF6B6B; font-weight: 500;">⚠️ Die Situation entwickelt sich weiter...</p>' : ''}
+            ${result.followUp ? '<p style="margin-top: 12px; color: var(--red); font-weight: 500;">⚠️ Die Situation entwickelt sich weiter...</p>' : ''}
         </div>
         
         <button class="next-btn" onclick="showDynamicScenario()" style="width: 100%">
-            ${state.turn >= state.maxTurns ? '📊 Ergebnis ansehen' : 'Weiter → Monat ' + (state.turn + 1)}
+            ${st.turn >= st.maxTurns ? '📊 Ergebnis ansehen' : 'Weiter → Monat ' + (st.turn + 1)}
         </button>
     `;
     
@@ -830,74 +675,57 @@ function makeDynamicChoice(choiceIndex) {
 
 function showDynamicResults() {
     const sim = window.dynamicSim;
-    const state = sim.getState();
+    const st = sim.getState();
     const score = sim.calculateFinalScore();
     const verdict = sim.getVerdict(score);
     const container = document.getElementById('sim-game');
     
-    // Generiere Beziehungs-Zusammenfassung
-    const relSummary = Object.entries(state.relations).map(([key, value]) => {
+    const relSummary = Object.entries(st.relations).map(([key, value]) => {
         const country = sim.countries[key];
-        return `<div style="display: flex; justify-content: space-between; padding: 4px 0; border-bottom: 1px solid #E2E8F0;">
+        return `<div style="display: flex; justify-content: space-between; padding: 4px 0; border-bottom: 1px solid var(--border);">
             <span>${country.flag} ${country.name}</span>
-            <span>${sim.getRelationEmoji(value)} ${sim.getRelationText(value)} (${value > 0 ? '+' : ''}${value})</span>
+            <span>${sim.getRelationEmoji(value)} ${sim.getRelationText(value)}</span>
         </div>`;
     }).join('');
     
-    // Generiere Chronik
-    const historyHTML = state.history.slice(-5).map(h => `
-        <div style="font-size: 12px; padding: 8px; background: #F7F9FC; border-radius: 6px; margin-bottom: 6px;">
+    const historyHTML = st.history.slice(-5).map(h => `
+        <div style="font-size: 12px; padding: 8px; background: var(--bg-input); border-radius: 6px; margin-bottom: 6px;">
             <strong>Monat ${h.turn + 1}:</strong> ${h.scenario}<br>
-            <span style="color: #718096;">${h.choice}</span>
+            <span style="color: var(--text-dim);">${h.choice}</span>
         </div>
     `).join('');
     
     container.innerHTML = `
-        <div class="sim-scenario">
-            <div style="text-align: center; margin-bottom: 20px;">
-                <span style="font-size: 48px;">${verdict.emoji}</span>
-                <h3 style="margin: 12px 0; color: #1E3A5F;">Amtszeit beendet!</h3>
-                <p style="font-size: 24px; font-weight: 700; color: #4ECDC4;">${score}/100 Punkte</p>
-            </div>
+        <div class="sim-scenario" style="text-align: center;">
+            <span style="font-size: 48px;">${verdict.emoji}</span>
+            <h3 style="margin: 12px 0;">Amtszeit beendet!</h3>
+            <p style="font-size: 24px; font-weight: 700; color: var(--green);">${score}/100 Punkte</p>
+            <p style="margin: 16px 0;">${verdict.text}</p>
             
-            <p style="text-align: center; margin-bottom: 20px;">${verdict.text}</p>
-            
-            <div style="background: #F7F9FC; padding: 16px; border-radius: 12px; margin-bottom: 16px;">
-                <h4 style="margin: 0 0 12px 0; font-size: 14px; color: #1E3A5F;">📊 Endstand</h4>
-                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; text-align: center;">
-                    <div>
-                        <div style="font-size: 24px; font-weight: 700; color: ${sim.getMeterColor(state.economy) === 'green' ? '#48BB78' : sim.getMeterColor(state.economy) === 'yellow' ? '#ECC94B' : '#FF6B6B'}">${state.economy}%</div>
-                        <div style="font-size: 11px; color: #718096;">Wirtschaft</div>
-                    </div>
-                    <div>
-                        <div style="font-size: 24px; font-weight: 700; color: ${sim.getMeterColor(state.diplomacy) === 'green' ? '#48BB78' : sim.getMeterColor(state.diplomacy) === 'yellow' ? '#ECC94B' : '#FF6B6B'}">${state.diplomacy}%</div>
-                        <div style="font-size: 11px; color: #718096;">Diplomatie</div>
-                    </div>
-                    <div>
-                        <div style="font-size: 24px; font-weight: 700; color: ${sim.getMeterColor(state.domestic) === 'green' ? '#48BB78' : sim.getMeterColor(state.domestic) === 'yellow' ? '#ECC94B' : '#FF6B6B'}">${state.domestic}%</div>
-                        <div style="font-size: 11px; color: #718096;">Innenpolitik</div>
-                    </div>
+            <div style="background: var(--bg-input); padding: 16px; border-radius: 12px; margin: 16px 0; text-align: center;">
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;">
+                    <div><div style="font-size: 22px; font-weight: 700; color: var(--accent-light);">${st.economy}%</div><div style="font-size: 11px; color: var(--text-dim);">Wirtschaft</div></div>
+                    <div><div style="font-size: 22px; font-weight: 700; color: var(--accent-light);">${st.diplomacy}%</div><div style="font-size: 11px; color: var(--text-dim);">Diplomatie</div></div>
+                    <div><div style="font-size: 22px; font-weight: 700; color: var(--accent-light);">${st.domestic}%</div><div style="font-size: 11px; color: var(--text-dim);">Innenpolitik</div></div>
                 </div>
             </div>
             
-            <div style="background: #F7F9FC; padding: 16px; border-radius: 12px; margin-bottom: 16px;">
-                <h4 style="margin: 0 0 12px 0; font-size: 14px; color: #1E3A5F;">🌍 Internationale Beziehungen</h4>
+            <div style="background: var(--bg-input); padding: 16px; border-radius: 12px; margin-bottom: 16px; text-align: left;">
+                <h4 style="margin: 0 0 12px 0; font-size: 14px;">🌍 Beziehungen</h4>
                 ${relSummary}
             </div>
             
-            <details style="background: #F7F9FC; padding: 12px; border-radius: 12px;">
-                <summary style="cursor: pointer; font-weight: 600; color: #1E3A5F;">📜 Chronik (letzte 5 Ereignisse)</summary>
-                <div style="margin-top: 12px;">
-                    ${historyHTML}
-                </div>
+            <details style="background: var(--bg-input); padding: 12px; border-radius: 12px; text-align: left;">
+                <summary style="cursor: pointer; font-weight: 600;">📜 Chronik</summary>
+                <div style="margin-top: 12px;">${historyHTML}</div>
             </details>
         </div>
         
-        <div style="display: flex; gap: 10px; margin-top: 16px;">
-            <button class="next-btn" onclick="startDynamicSimulator()" style="flex: 1; background: #4ECDC4;">🔄 Nochmal spielen</button>
+        <div style="display: flex; gap: 10px; margin-top: 12px;">
+            <button class="next-btn" onclick="startDynamicSimulator()" style="flex: 1; background: var(--green);">🔄 Nochmal</button>
             <button class="next-btn" onclick="resetSimulator()" style="flex: 1;">↩️ Zurück</button>
         </div>
     `;
     
-    addXP(50 + Math.floor(score / 2)); // Bonus XP basierend auf Score
+    addXP(50 + Math.floor(score / 2));
 }
