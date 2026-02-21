@@ -478,7 +478,7 @@ const LESSONS = {
                 type: "info",
                 emoji: "⚖️",
                 title: "Schutz oder Gefahr?",
-                text: "Diese Zölle sollen laut US-Regierung die heimische Industrie vor „unfairem Wettbewerb\u201c schützen und Arbeitsplätze sichern. Kritiker hingegen sehen darin eine Abkehr von offenen Märkten und eine Gefahr für das multilaterale Handelssystem. Die WeltZollOrganisation (WTO) warnt, dass solche Maßnahmen globales Handelsvolumen einschränken und das Vertrauen in freie Märkte schwächen könnten.",
+                text: "Diese Zölle sollen laut US-Regierung die heimische Industrie vor „unfairem Wettbewerb\u201c schützen und Arbeitsplätze sichern. Kritiker hingegen sehen darin eine Abkehr von offenen Märkten und eine Gefahr für das multilaterale Handelssystem. Die Welthandelsorganisation (WTO) warnt, dass solche Maßnahmen globales Handelsvolumen einschränken und das Vertrauen in freie Märkte schwächen könnten.",
                 source: "Quellen: dihk.de, euronews.com/business"
             },
             {
@@ -516,13 +516,13 @@ const LESSONS = {
                 type: "info",
                 emoji: "🛡️",
                 title: "EU-Strategien (1/3)",
-                text: "Die EU hat mehrere Gegenstrategien entwickelt:\n\n**1)** Gemeinsame Verhandlungen mit den USA zur Stabilisierung der Handelssituation, z.b. durch Abkommen mit klaren Zollregeln"
+                text: "Die EU hat mehrere Gegenstrategien entwickelt:\n\n**1)** Gemeinsame Verhandlungen mit den USA zur Stabilisierung der Handelssituation, z. B. durch Abkommen mit klaren Zollregeln"
             },
             {
                 type: "info",
                 emoji: "📋",
                 title: "EU-Strategien (2/3)",
-                text: "**2)** Zollkontigente und befristete Zollsenkungen für bestimmte Güter als Ausgleich\n\n**3)** Ausbau eigener Wettbewersstrategien wie „Made in Europe\u201c, um die Wettbewerbsfähigkeit der europäischen Industrie zu stärken und weniger abhängig von Importen und Exporten in unsichere Märkte zu werden",
+                text: "**2)** Zollkontingente und befristete Zollsenkungen für bestimmte Güter als Ausgleich\n\n**3)** Ausbau eigener Wettbewerbsstrategien wie „Made in Europe\u201c, um die Wettbewerbsfähigkeit der europäischen Industrie zu stärken und weniger abhängig von Importen und Exporten in unsichere Märkte zu werden",
                 source: "Quelle: welt.de – EU-Kommissar will „Made in Europe\u201c etablieren"
             },
             {
@@ -604,13 +604,13 @@ const LESSONS = {
                 type: "info",
                 emoji: "1️⃣",
                 title: "Fazit – Punkt 1 & 2",
-                text: "**1)** Zunahme protektionistischer Maßnahmen, vorallem durch höhere Zölle und Importbarrieren in den USA\n\n**2)** Abschwächung und Neuorientierung traditioneller Handelsbeziehungen, insbesondere zwischen Europa und Nordamerika"
+                text: "**1)** Zunahme protektionistischer Maßnahmen, vor allem durch höhere Zölle und Importbarrieren in den USA\n\n**2)** Abschwächung und Neuorientierung traditioneller Handelsbeziehungen, insbesondere zwischen Europa und Nordamerika"
             },
             {
                 type: "info",
                 emoji: "3️⃣",
                 title: "Fazit – Punkt 3 & 4",
-                text: "**3)** Ausbau alternativer Freihandelsstrukturen, z.b. zwischen EU und Indien\n\n**4)** Veränderte Wettbewerbsbedingungen für Unternehmen weltweit, die strategisch auf neue Märkte und Lieferketten reagieren müssen."
+                text: "**3)** Ausbau alternativer Freihandelsstrukturen, z. B. zwischen EU und Indien\n\n**4)** Veränderte Wettbewerbsbedingungen für Unternehmen weltweit, die strategisch auf neue Märkte und Lieferketten reagieren müssen."
             },
             {
                 type: "info",
@@ -837,7 +837,7 @@ const LESSONS = {
                 type: "info",
                 emoji: "🇺🇸",
                 title: "Trump & America First (2016/17)",
-                text: "Mit der Wahl Donald Trumps 2016 und seinem Amtsantritt 2017 änderte sich die Handelspolitik der USA grundlegend. Trump vertrat eine klar protektionistische Linie („America First\u201c). Er trat aus dem transpazifischen Freihandelsabkommen (TPP), verhandelte neu von NAFTA –> USMCA, führte Strafzölle auf Stahl und Aluminium ein und begann ein Handelskonflikt mit China.",
+                text: "Mit der Wahl Donald Trumps 2016 und seinem Amtsantritt 2017 änderte sich die Handelspolitik der USA grundlegend. Trump vertrat eine klar protektionistische Linie („America First\u201c). Er trat aus dem transpazifischen Freihandelsabkommen (TPP), verhandelte neu von NAFTA –> USMCA, führte Strafzölle auf Stahl und Aluminium ein und begann einen Handelskonflikt mit China.",
                 highlight: "TPP-Ausstieg, NAFTA → USMCA, Strafzölle, Handelskonflikt mit China",
                 source: "Quelle: bpb.de – Trumps Handelspolitik"
             },
@@ -874,14 +874,14 @@ const LESSONS = {
                 type: "info",
                 emoji: "🦠",
                 title: "Corona & Welthandel",
-                text: "Die Corona Pandemie stellte ab 2019/2020 einen massiven Rückschritt für den Welthandel dar. Folgen waren unter anderem die Unterbrechung globaler Lieferketten, Produktionsausfälle, Exportbeschränkungen (z.b. medizinische Ausrüstung) und stärkere nationale Eingriffe in Handelsstrukturen. Viele Staaten erkannten in dieser Phase ihre Abhängigkeit von globalen Lieferketten, insbesondere von China. Dies verstärkte die Diskussion um strategische Autonomie und De-Risking. De-Risking beschreibt indem Zusammenhang die übermäßige Abhängigkeit vom chinesischen Markt und die Intention sich von diesem zu lösen, um in andere Märkte zu investieren.",
+                text: "Die Corona Pandemie stellte ab 2019/2020 einen massiven Rückschritt für den Welthandel dar. Folgen waren unter anderem die Unterbrechung globaler Lieferketten, Produktionsausfälle, Exportbeschränkungen (z. B. medizinische Ausrüstung) und stärkere nationale Eingriffe in Handelsstrukturen. Viele Staaten erkannten in dieser Phase ihre Abhängigkeit von globalen Lieferketten, insbesondere von China. Dies verstärkte die Diskussion um strategische Autonomie und De-Risking. De-Risking beschreibt in dem Zusammenhang die übermäßige Abhängigkeit vom chinesischen Markt und die Intention sich von diesem zu lösen, um in andere Märkte zu investieren.",
                 highlight: "De-Risking: Lösung von übermäßiger Abhängigkeit vom chinesischen Markt"
             },
             {
                 type: "info",
                 emoji: "📈",
                 title: "Regionale Abkommen trotz Krise",
-                text: "Trotz der Krise wurden regionale Handelsabkommen weiter ausgebaut. Saaten suchten verlässliche Partner in geografischer Nähe, um Risiken globaler Abhängigkeiten zu reduzieren. Die Corona-Krise hat also nicht zum Stilstand regionaler Handesabkommen geführt, sondern ihre strategische Bedeutung sogar verstärkt.",
+                text: "Trotz der Krise wurden regionale Handelsabkommen weiter ausgebaut. Staaten suchten verlässliche Partner in geografischer Nähe, um Risiken globaler Abhängigkeiten zu reduzieren. Die Corona-Krise hat also nicht zum Stillstand regionaler Handelsabkommen geführt, sondern ihre strategische Bedeutung sogar verstärkt.",
                 highlight: "Corona verstärkte die Bedeutung regionaler Handelsabkommen"
             },
             {
