@@ -37,12 +37,29 @@ const LESSONS = {
                 highlight: "Fast alles, was du kaufst, ist davon betroffen!"
             },
             {
+                type: "info",
+                emoji: "🔢",
+                title: "Wie hoch sind Zölle?",
+                text: "Das variiert stark:\n\n• **EU-Durchschnitt:** ca. 5% auf Industriegüter\n• **USA auf EU-Waren (2025):** 15% pauschal\n• **USA auf China:** bis zu 47%\n• **Innerhalb der EU:** 0% (Binnenmarkt!)\n\nBei manchen Produkten (z.B. Tabak, Alkohol) gibt es zusätzlich Verbrauchsteuern. Und auf Luxusgüter teilweise Sonderzölle.",
+                highlight: "Von 0% (EU-Binnenmarkt) bis 47% (USA auf China)"
+            },
+            {
+                type: "info",
+                emoji: "💡",
+                title: "Wer zahlt am Ende?",
+                text: "Wichtig zu verstehen: Zölle zahlt erstmal der **Importeur** (das Unternehmen). Aber die Kosten werden fast immer an den **Endverbraucher** weitergegeben – über höhere Preise.\n\nStudien zeigen: Bei den Trump-Zöllen 2018-2019 wurden **nahezu 100%** der Kosten an die US-Verbraucher weitergegeben. Die ausländischen Exporteure haben ihre Preise NICHT gesenkt.",
+                highlight: "Verbraucher zahlen die Zeche – nicht das Ausland",
+                source: "Quelle: Tax Foundation, Federal Reserve Bank of New York"
+            },
+            {
                 type: "summary",
                 emoji: "✅",
                 title: "Zusammenfassung",
                 points: [
                     "Zoll = Abgabe beim Grenzübertritt von Waren",
                     "Wird in Prozent vom Warenwert berechnet",
+                    "Zollsätze: 0% (EU intern) bis 47% (USA-China)",
+                    "Kosten werden an Verbraucher weitergegeben",
                     "Beeinflusst Preise, Jobs und internationale Beziehungen"
                 ]
             }
@@ -118,11 +135,32 @@ const LESSONS = {
                 highlight: "Trump-Zölle auf Stahl = Schutzzoll"
             },
             {
+                type: "info",
+                emoji: "🎓",
+                title: "Erziehungszoll",
+                text: "Zölle zum **temporären Schutz junger Industrien**, die noch nicht wettbewerbsfähig sind. Die Idee: Die heimische Branche bekommt Zeit zum Wachsen, bevor sie dem Weltmarkt ausgesetzt wird.\n\nBeispiel: Südkorea schützte in den 1960-80ern seine Elektronik-Industrie mit Zöllen. Heute ist Samsung Weltmarktführer – der Erziehungszoll hat funktioniert.",
+                highlight: "Temporärer Schutz für junge Industrien – kann funktionieren!"
+            },
+            {
+                type: "info",
+                emoji: "🔄",
+                title: "Retorsionszoll & Finanzzoll",
+                text: "**Retorsionszoll (Vergeltungszoll):** Gegenmaßnahme, wenn ein anderes Land unfaire Zölle erhebt. Beispiel: EU droht USA mit Zöllen auf Bourbon-Whiskey als Antwort auf Stahl-Zölle.\n\n**Finanzzoll:** Dient primär den **Staatseinnahmen**. Historisch wichtig – im 19. Jahrhundert waren Zölle die Haupteinnahmequelle vieler Staaten. Heute spielen sie eine geringere Rolle (EU: Zolleinnahmen ca. 25 Mrd €/Jahr).",
+                highlight: "Vergeltungszölle sind die „Waffen\u201c im Handelskrieg"
+            },
+            {
                 type: "quiz",
                 question: "Was ist ein Schutzzoll?",
                 options: ["Zoll zum Schutz der Umwelt", "Zoll zum Schutz der eigenen Industrie", "Zoll zum Schutz vor Piraten", "Zoll zum Schutz von Daten"],
                 correct: 1,
                 explanation: "Schutzzölle sollen die heimische Wirtschaft vor ausländischer Konkurrenz schützen."
+            },
+            {
+                type: "quiz",
+                question: "Was ist ein Erziehungszoll?",
+                options: ["Zoll auf Schulbücher", "Temporärer Schutz für junge Industrien", "Strafe für schlechte Produkte", "Zoll auf Bildungsimporte"],
+                correct: 1,
+                explanation: "Erziehungszölle schützen junge Industrien temporär, bis sie international wettbewerbsfähig sind."
             },
             {
                 type: "summary",
@@ -131,7 +169,10 @@ const LESSONS = {
                 points: [
                     "Wertzoll: Prozent vom Warenwert (häufigste Art)",
                     "Mengenzoll: Fester Betrag pro Stück/Kilo",
-                    "Schutzzoll: Hoher Zoll zum Schutz der eigenen Industrie"
+                    "Schutzzoll: Schutz der eigenen Industrie",
+                    "Erziehungszoll: Temporärer Schutz junger Branchen",
+                    "Retorsionszoll: Vergeltung gegen unfaire Zölle",
+                    "Finanzzoll: Einnahmen für den Staat"
                 ]
             }
         ]
@@ -217,12 +258,21 @@ const LESSONS = {
                 highlight: "Trump-Zölle: -9,4% Exporte in die USA"
             },
             {
+                type: "info",
+                emoji: "📊",
+                title: "Exportquote: 47%",
+                text: "Deutschlands **Exportquote** liegt bei ca. **47%** – fast die Hälfte der deutschen Wirtschaftsleistung hängt vom Export ab! Zum Vergleich: USA nur ca. 11%, China ca. 19%.\n\nDas macht Deutschland besonders anfällig für Handelsbarrieren. Jeder Prozentpunkt Zollerhöhung kostet Milliarden.",
+                highlight: "47% Exportquote – höchste unter den großen Volkswirtschaften",
+                source: "Quelle: Destatis, Dezember 2025"
+            },
+            {
                 type: "summary",
                 emoji: "✅",
                 title: "Zusammenfassung",
                 points: [
                     "Deutschland: Platz 3 der Exportnationen",
                     "Handelsüberschuss von ~284 Mrd €",
+                    "Exportquote 47% – höchste unter großen VWL",
                     "Hohe Exportabhängigkeit = hohes Risiko bei Zöllen"
                 ]
             }
@@ -729,6 +779,527 @@ const LESSONS = {
     },
 
     // =============================================
+    // MODUL 8: SZENARIO-VERGLEICH (AUFGABE 3 – KRITISCH)
+    // =============================================
+    "8-1": {
+        title: "Szenario I: Handelsbeschränkungen",
+        xp: 20,
+        cards: [
+            {
+                type: "info",
+                emoji: "🚧",
+                title: "Was wäre, wenn...?",
+                text: "Stell dir vor, der weltweite Handel wird **massiv eingeschränkt**: hohe Zölle, Importverbote, Handelskriege an allen Fronten.",
+                highlight: "Szenario I: Große Einschränkungen des weltweiten Handels"
+            },
+            {
+                type: "info",
+                emoji: "💸",
+                title: "Preisexplosion im Supermarkt",
+                text: "Ohne freien Handel steigen die Preise drastisch. Ein **iPhone** könnte statt 1.199€ plötzlich **1.700€** kosten (bei 40% Zoll auf chinesische Komponenten). Kaffee aus Äthiopien, Bananen aus Ecuador, Avocados aus Mexiko – alles wird **30-50% teurer**.\n\nEine durchschnittliche deutsche Familie gibt ca. 350€/Monat für Lebensmittel aus. Bei Zöllen von 20-30% wären das **70-105€ mehr pro Monat** – über 1.000€ im Jahr.",
+                highlight: "Durchschnittsfamilie: über 1.000€ Mehrkosten pro Jahr"
+            },
+            {
+                type: "info",
+                emoji: "📉",
+                title: "Weniger Auswahl, weniger Innovation",
+                text: "Ohne internationalen Wettbewerb gibt es **weniger Anreiz zur Innovation**. Warum sollte ein deutscher Hersteller sein Produkt verbessern, wenn die günstigere koreanische Alternative durch Zölle unbezahlbar wird?\n\nVerbraucher*innen hätten **weniger Produkte zur Auswahl**. Viele Marken, die wir kennen – von Samsung über Nike bis Zara – könnten sich aus dem deutschen Markt zurückziehen, weil der Verkauf nicht mehr profitabel ist.",
+                highlight: "Weniger Wettbewerb = weniger Motivation für bessere Produkte"
+            },
+            {
+                type: "info",
+                emoji: "🏭",
+                title: "Lieferketten brechen zusammen",
+                text: "Moderne Produkte bestehen aus Teilen von überall: Ein **BMW 3er** enthält Stahl aus Schweden, Elektronik aus Japan, Leder aus Argentinien und Software aus den USA. Wenn all das verzollt wird, steigt der Preis um **8.000-12.000€ pro Fahrzeug**.\n\nDeutschland importiert **70% seiner Rohstoffe**. Ohne freien Zugang müssten Fabriken drosseln oder schließen. Das ifo-Institut schätzt: Ein vollständiger Handelskrieg könnte das deutsche BIP um **3-5%** schrumpfen lassen.",
+                highlight: "BMW 3er: 8.000-12.000€ teurer durch Zölle auf Vorprodukte",
+                source: "Quelle: ifo-Institut, DIHK Außenhandelsbericht 2025"
+            },
+            {
+                type: "info",
+                emoji: "👨‍👩‍👧‍👦",
+                title: "Perspektive: Verbraucher*innen",
+                text: "Für **Verbraucher*innen in Deutschland** bedeutet Szenario I:\n\n• **Höhere Preise** bei fast allen Produkten (Elektronik, Kleidung, Lebensmittel)\n• **Geringere Kaufkraft** – das Gehalt reicht für weniger\n• **Weniger Produktvielfalt** in den Geschäften\n• **Jobverluste** in exportabhängigen Regionen (z.B. Stuttgart, München, Wolfsburg)\n• **Inflation** könnte auf 5-8% steigen\n\nBesonders betroffen: Geringverdiener, die einen größeren Anteil ihres Einkommens für Grundbedürfnisse ausgeben.",
+                highlight: "Geringverdiener werden am härtesten getroffen"
+            },
+            {
+                type: "quiz",
+                question: "Um wie viel könnte ein iPhone bei 40% Zöllen teurer werden?",
+                options: ["50€", "200€", "~500€", "1.000€"],
+                correct: 2,
+                explanation: "Bei einem iPhone für 1.199€ und 40% Zoll auf Komponenten aus China könnte der Preis auf ca. 1.700€ steigen – rund 500€ mehr."
+            },
+            {
+                type: "summary",
+                emoji: "✅",
+                title: "Zusammenfassung Szenario I",
+                points: [
+                    "Massive Preiserhöhungen bei fast allen Produkten",
+                    "Lieferketten brechen zusammen – Fabriken drosseln",
+                    "Weniger Auswahl und Innovation für Verbraucher*innen",
+                    "Geringverdiener werden am härtesten getroffen",
+                    "BIP könnte um 3-5% schrumpfen"
+                ]
+            }
+        ]
+    },
+    "8-2": {
+        title: "Szenario II: Freier Warenhandel",
+        xp: 20,
+        cards: [
+            {
+                type: "info",
+                emoji: "🌐",
+                title: "Freier Handel für alle",
+                text: "Stell dir vor, Waren können **weitgehend ohne Hindernisse** über Grenzen fließen: niedrige Zölle, wenige Bürokratie, offene Märkte.",
+                highlight: "Szenario II: Weitgehend reibungsloser Warenhandel"
+            },
+            {
+                type: "info",
+                emoji: "💰",
+                title: "Günstigere Preise",
+                text: "Ohne Zölle können Unternehmen dort produzieren, wo es am **effizientesten** ist. Das senkt Kosten – und damit Preise.\n\nBeispiel: Ein T-Shirt aus Bangladesch kostet in Deutschland ca. 10€. Mit 20% Zoll wären es 12€. Bei 0% bleibt es günstig. Über ein ganzes Jahr und alle Einkäufe gerechnet sparen deutsche Verbraucher*innen durch den EU-Binnenmarkt geschätzt **1.500-2.000€ pro Person pro Jahr**.",
+                highlight: "Geschätzte Ersparnis: 1.500-2.000€ pro Person und Jahr durch freien Handel"
+            },
+            {
+                type: "info",
+                emoji: "🏆",
+                title: "Wettbewerb fördert Innovation",
+                text: "Internationaler Wettbewerb zwingt Unternehmen, **bessere Produkte zu entwickeln**. Deutsche Autos sind so gut, weil sie mit japanischen, koreanischen und amerikanischen Herstellern konkurrieren.\n\nVerbraucher*innen profitieren von **riesiger Auswahl**: Smartphones aus Südkorea, Mode aus Italien, Lebensmittel aus der ganzen Welt. Innovation wird belohnt, Stillstand bestraft.",
+                highlight: "Wettbewerb = Motor für bessere und günstigere Produkte"
+            },
+            {
+                type: "info",
+                emoji: "📈",
+                title: "Wohlstand durch Spezialisierung",
+                text: "Das Prinzip des **komparativen Vorteils** (David Ricardo, 1817): Jedes Land produziert das, worin es am besten ist.\n\n• Deutschland: Maschinen, Autos, Chemie\n• China: Elektronik-Massenproduktion\n• Äthiopien: Kaffee\n• Chile: Kupfer\n\nErgebnis: **Alle gewinnen**, weil jeder das produziert, was er am effizientesten kann.",
+                highlight: "Komparativer Vorteil: Spezialisierung macht alle reicher"
+            },
+            {
+                type: "info",
+                emoji: "👨‍👩‍👧‍👦",
+                title: "Perspektive: Verbraucher*innen",
+                text: "Für **Verbraucher*innen in Deutschland** bedeutet Szenario II:\n\n• **Niedrigere Preise** durch globalen Wettbewerb\n• **Riesige Produktvielfalt** – von Avocados bis iPhones\n• **Höhere Kaufkraft** – das Gehalt reicht für mehr\n• **Mehr Jobs** in Exportbranchen (Auto, Maschinen, Pharma)\n• **Stabilere Preise** durch diversifizierte Lieferketten\n\nAber auch Risiken: Billige Importe können **heimische Arbeitsplätze** gefährden (z.B. Textilindustrie).",
+                highlight: "Nicht nur Vorteile: Billigimporte können Jobs gefährden"
+            },
+            {
+                type: "quiz",
+                question: "Was ist der 'komparative Vorteil'?",
+                options: ["Das Land mit den niedrigsten Löhnen gewinnt", "Jedes Land produziert das, worin es relativ am besten ist", "Nur große Länder profitieren vom Handel", "Zölle schaffen Vorteile"],
+                correct: 1,
+                explanation: "Der komparative Vorteil besagt: Jedes Land spezialisiert sich auf das, was es relativ am effizientesten produzieren kann – so gewinnen alle."
+            },
+            {
+                type: "summary",
+                emoji: "✅",
+                title: "Zusammenfassung Szenario II",
+                points: [
+                    "Günstigere Preise durch globalen Wettbewerb",
+                    "Riesige Produktvielfalt für Verbraucher*innen",
+                    "Innovation durch Wettbewerb",
+                    "Spezialisierung macht alle wohlhabender",
+                    "Risiko: Billigimporte können heimische Jobs gefährden"
+                ]
+            }
+        ]
+    },
+    "8-3": {
+        title: "Direkter Vergleich",
+        xp: 20,
+        cards: [
+            {
+                type: "info",
+                emoji: "⚖️",
+                title: "Szenario I vs. Szenario II",
+                text: "Vergleichen wir die beiden Szenarien **direkt** aus der Perspektive von Verbraucher*innen in Deutschland:",
+                highlight: "Gegenüberstellung der denkbaren Auswirkungen"
+            },
+            {
+                type: "info",
+                emoji: "💶",
+                title: "Preise & Kaufkraft",
+                text: "**Szenario I** (Handelsbeschränkungen):\n→ Preise steigen um 20-40% bei importierten Gütern\n→ Kaufkraft sinkt massiv\n→ Familie zahlt >1.000€/Jahr mehr\n\n**Szenario II** (Freier Handel):\n→ Preise bleiben niedrig oder sinken\n→ Kaufkraft bleibt stabil oder steigt\n→ Ersparnis von ~1.500-2.000€/Person/Jahr\n\n**Differenz:** Bis zu 3.000€ pro Person und Jahr zwischen den Szenarien.",
+                highlight: "Bis zu 3.000€ Unterschied pro Person und Jahr"
+            },
+            {
+                type: "info",
+                emoji: "🛍️",
+                title: "Produktvielfalt & Qualität",
+                text: "**Szenario I:**\n→ Deutlich weniger Auswahl\n→ Marken ziehen sich zurück\n→ Weniger Innovationsdruck\n→ Qualität stagniert\n\n**Szenario II:**\n→ Maximale Vielfalt\n→ Globale Marken konkurrieren\n→ Ständiger Innovationsdruck\n→ Qualität steigt kontinuierlich\n\nBeispiel: Ohne Samsung, Apple und Xiaomi als Konkurrenten hätte Siemens weniger Grund, innovative Smartphones zu entwickeln.",
+                highlight: "Wettbewerb treibt Qualität und Innovation"
+            },
+            {
+                type: "info",
+                emoji: "👷",
+                title: "Arbeitsmarkt",
+                text: "**Szenario I:**\n→ Einige geschützte Jobs in importkonkurrierenden Branchen\n→ Aber: massive Jobverluste in Exportbranchen\n→ Netto: deutlich mehr Verluste (ifo: -500.000 bis -1 Mio. Jobs)\n\n**Szenario II:**\n→ Starke Exportbranchen schaffen Jobs\n→ Aber: Druck auf gering qualifizierte Arbeit\n→ Netto: mehr Jobs, aber Umverteilung nötig\n\n**Fazit:** Freier Handel schafft insgesamt mehr Wohlstand, aber die Gewinne sind **ungleich verteilt**.",
+                highlight: "Freier Handel: mehr Wohlstand insgesamt, aber ungleich verteilt",
+                source: "Quelle: ifo-Institut, Bertelsmann-Stiftung"
+            },
+            {
+                type: "info",
+                emoji: "🏥",
+                title: "Konkrete Beispiele im Vergleich",
+                text: "**Kaffee (1kg):**\nSzenario I: 15€ → 22€ (+47%)\nSzenario II: 15€ → 12€ (-20%)\n\n**Smartphone (Mittelklasse):**\nSzenario I: 400€ → 560€ (+40%)\nSzenario II: 400€ → 350€ (-13%)\n\n**Winterjacke:**\nSzenario I: 80€ → 110€ (+38%)\nSzenario II: 80€ → 65€ (-19%)\n\n**BMW 3er (Exportpreis USA):**\nSzenario I: Export bricht ein, Kurzarbeit\nSzenario II: Starker Export, sichere Jobs",
+                highlight: "Konkrete Preisbeispiele zeigen den dramatischen Unterschied"
+            },
+            {
+                type: "quiz",
+                question: "Was passiert laut Studien insgesamt mit Arbeitsplätzen bei großen Handelsbeschränkungen?",
+                options: ["Mehr Jobs insgesamt", "Gleich viele Jobs", "Netto deutlich weniger Jobs", "Jobs nur in der Landwirtschaft"],
+                correct: 2,
+                explanation: "Das ifo-Institut schätzt: Große Handelsbeschränkungen könnten netto 500.000 bis 1 Million Jobs in Deutschland kosten."
+            },
+            {
+                type: "summary",
+                emoji: "✅",
+                title: "Zusammenfassung Vergleich",
+                points: [
+                    "Preise: bis zu 3.000€ Unterschied pro Person/Jahr",
+                    "Vielfalt: deutlich mehr Auswahl bei freiem Handel",
+                    "Jobs: Handelsbeschränkungen kosten netto mehr Jobs",
+                    "Freier Handel schafft mehr Wohlstand insgesamt",
+                    "Aber: Gewinne sind ungleich verteilt"
+                ]
+            }
+        ]
+    },
+    "8-4": {
+        title: "Bewertung: Wie sollte Handel gestaltet werden?",
+        xp: 25,
+        cards: [
+            {
+                type: "info",
+                emoji: "🤔",
+                title: "Die Kernfrage",
+                text: "Weder reiner Freihandel noch totaler Protektionismus sind die Lösung. Die Frage ist: **Wie sollten Handelsbeziehungen gestaltet werden?**",
+                highlight: "Es geht um den richtigen Mittelweg"
+            },
+            {
+                type: "info",
+                emoji: "✅",
+                title: "Argumente für offenen Handel",
+                text: "• **Wohlstandsgewinne** für alle Beteiligten (komparativer Vorteil)\n• **Niedrigere Preise** und mehr Auswahl für Verbraucher*innen\n• **Innovation** durch internationalen Wettbewerb\n• **Friedenssicherung** – Handelspartner führen seltener Krieg\n• **Entwicklungschancen** für ärmere Länder durch Marktzugang\n\nDie EU ist das beste Beispiel: Der Binnenmarkt mit 450 Mio. Menschen hat enormen Wohlstand geschaffen.",
+                highlight: "Handel schafft Wohlstand und fördert Frieden"
+            },
+            {
+                type: "info",
+                emoji: "⚠️",
+                title: "Argumente für Schutzmaßnahmen",
+                text: "• **Schutz junger Industrien** (Erziehungszölle)\n• **Nationale Sicherheit** – strategisch wichtige Produkte selbst herstellen\n• **Sozialstandards** – keine Ausbeutung in Billiglohnländern belohnen\n• **Umweltschutz** – CO₂-Zölle (CBAM) als Klimainstrument\n• **Faire Wettbewerbsbedingungen** – gegen staatlich subventionierte Dumpingpreise\n\nChinas staatlich subventionierter Stahlexport hat europäische Stahlwerke an den Rand des Ruins getrieben – ein Fall, wo Schutzzölle gerechtfertigt sein können.",
+                highlight: "Manchmal sind Schutzzölle gerechtfertigt – aber gezielt und temporär"
+            },
+            {
+                type: "info",
+                emoji: "🎯",
+                title: "Der Mittelweg: Fairer Handel",
+                text: "Die beste Lösung liegt in der Mitte – **regelbasierter, fairer Handel**:\n\n1. **Offene Märkte** als Grundprinzip\n2. **Klare Regeln** durch WTO und bilaterale Abkommen\n3. **Gezielte Schutzmaßnahmen** nur bei Dumping oder Sicherheitsrisiken\n4. **Sozial- und Umweltstandards** in Handelsabkommen verankern\n5. **Kompensation** für Verlierer des Freihandels (Umschulung, Sozialprogramme)\n6. **Strategische Autonomie** bei kritischen Gütern (Chips, Medikamente, Energie)",
+                highlight: "Regelbasierter, fairer Handel als Leitprinzip"
+            },
+            {
+                type: "info",
+                emoji: "🇪🇺",
+                title: "Die EU-Strategie",
+                text: "Die EU verfolgt genau diesen Mittelweg:\n\n• **Open Strategic Autonomy** – offene Märkte, aber weniger Abhängigkeiten\n• **CBAM** – CO₂-Zölle zum Klimaschutz\n• **Anti-Dumping-Zölle** gegen unfaire Praktiken (z.B. chinesischer Stahl)\n• **Freihandelsabkommen** mit Standards (Japan, Kanada, bald Indien)\n• **De-Risking** statt Decoupling – Risiken reduzieren, nicht komplett abkoppeln\n\nDies ist der pragmatischste Ansatz: Die Vorteile des Handels nutzen, aber Risiken und Ungerechtigkeiten aktiv adressieren.",
+                highlight: "Open Strategic Autonomy: Offenheit mit Absicherung",
+                source: "Quelle: Europäische Kommission, Trade Policy Review 2025"
+            },
+            {
+                type: "info",
+                emoji: "💡",
+                title: "Unsere Position",
+                text: "Nach Analyse beider Szenarien und aller Argumente kommen wir zu dem Schluss:\n\n**Handelsbeziehungen sollten möglichst offen, aber fair und regelbasiert gestaltet werden.** Reiner Protektionismus schadet vor allem Verbraucher*innen und kostet mehr Jobs als er schützt. Gleichzeitig braucht es klare Regeln, Sozial- und Umweltstandards sowie strategische Vorsorge bei kritischen Gütern.\n\nDie EU-Strategie der „Open Strategic Autonomy\u201c zeigt, dass Offenheit und Sicherheit kein Widerspruch sein müssen.",
+                highlight: "Offen, aber fair und regelbasiert – das ist der Weg"
+            },
+            {
+                type: "quiz",
+                question: "Was bedeutet 'De-Risking' in der EU-Handelspolitik?",
+                options: ["Komplett von China abkoppeln", "Risiken reduzieren, aber Handel beibehalten", "Alle Zölle abschaffen", "Nur mit Nachbarländern handeln"],
+                correct: 1,
+                explanation: "De-Risking bedeutet: Abhängigkeiten und Risiken reduzieren, aber den Handel nicht komplett abbrechen – im Gegensatz zu Decoupling."
+            },
+            {
+                type: "summary",
+                emoji: "✅",
+                title: "Zusammenfassung",
+                points: [
+                    "Weder reiner Freihandel noch totaler Protektionismus ist ideal",
+                    "Bester Ansatz: regelbasierter, fairer Handel",
+                    "Offene Märkte + Sozial-/Umweltstandards + strategische Autonomie",
+                    "EU-Strategie: Open Strategic Autonomy als Vorbild",
+                    "Kompensation für Verlierer des Freihandels nötig"
+                ]
+            }
+        ]
+    },
+
+    // =============================================
+    // MODUL 9: KONKRETE BEISPIELE
+    // =============================================
+    "9-1": {
+        title: "BMW 3er: Globales Produkt",
+        xp: 15,
+        cards: [
+            {
+                type: "info",
+                emoji: "🚗",
+                title: "Ein Auto, viele Länder",
+                text: "Ein **BMW 3er** ist kein \u201Edeutsches\u201C Auto – er ist ein **globales Produkt**. Teile kommen aus über 30 Ländern:",
+                highlight: "Über 30.000 Einzelteile aus der ganzen Welt"
+            },
+            {
+                type: "info",
+                emoji: "🌍",
+                title: "Die Lieferkette",
+                text: "• **Motor**: Deutschland (München, Steyr/Österreich)\n• **Getriebe**: Japan (Aisin) oder Deutschland (ZF)\n• **Elektronik/Chips**: Taiwan (TSMC), Südkorea (Samsung)\n• **Stahl**: Schweden (SSAB), Deutschland (ThyssenKrupp)\n• **Leder**: Argentinien, Italien\n• **Reifen**: Frankreich (Michelin), Japan (Bridgestone)\n• **Software**: USA, Indien\n• **Batterie (Hybrid)**: China (CATL)\n• **Aluminium**: Norwegen, Island\n\nProduktion: München, aber auch Spartanburg (USA), Shenyang (China).",
+                highlight: "Ein einziges Auto verbindet Dutzende Volkswirtschaften"
+            },
+            {
+                type: "info",
+                emoji: "💰",
+                title: "Preiseffekt von Zöllen",
+                text: "**BMW 3er Grundpreis (Deutschland):** ca. 47.000€\n**Exportpreis USA (vor Zoll):** ca. 48.000$\n\nMit **15% US-Zoll** (aktuell): → 55.200$ (+7.200$)\nMit **25% Zoll** (Drohung): → 60.000$ (+12.000$)\n\n**Folge:** BMW verkauft weniger Autos in den USA. 2025 gingen die Exporte um **9,4%** zurück. BMW baut stattdessen mehr Autos direkt in den USA (Werk Spartanburg), was deutschen Arbeitsplätzen schadet.",
+                highlight: "15% Zoll = 7.200$ Aufpreis, 25% = 12.000$ Aufpreis",
+                source: "Quelle: BMW Group Jahresbericht 2025, Destatis"
+            },
+            {
+                type: "info",
+                emoji: "👷",
+                title: "Auswirkung auf Arbeitsplätze",
+                text: "BMW beschäftigt in Deutschland ca. **80.000 Mitarbeiter** direkt, plus über **200.000** bei Zulieferern.\n\nWenn Exporte in die USA einbrechen:\n• Kurzarbeit in deutschen Werken\n• Zulieferer verlieren Aufträge\n• Produktion verlagert sich ins Ausland\n\nSpartanburg (USA) ist bereits BMWs **größtes Werk weltweit** – dort werden X3, X5, X7 für den Weltmarkt produziert. Hohe Zölle beschleunigen diese Verlagerung.",
+                highlight: "Zölle beschleunigen die Verlagerung von Produktion ins Ausland"
+            },
+            {
+                type: "quiz",
+                question: "Was ist BMWs größtes Werk weltweit?",
+                options: ["München", "Leipzig", "Spartanburg (USA)", "Shenyang (China)"],
+                correct: 2,
+                explanation: "Das BMW-Werk in Spartanburg, South Carolina (USA) ist das größte BMW-Werk der Welt – es produziert vor allem SUVs für den globalen Markt."
+            },
+            {
+                type: "summary",
+                emoji: "✅",
+                title: "Zusammenfassung",
+                points: [
+                    "BMW 3er: Teile aus über 30 Ländern",
+                    "15% US-Zoll = 7.200$ Aufpreis pro Fahrzeug",
+                    "Exporte in die USA -9,4% in 2025",
+                    "Produktion verlagert sich durch Zölle ins Ausland",
+                    "200.000+ Zulieferer-Jobs in Deutschland betroffen"
+                ]
+            }
+        ]
+    },
+    "9-2": {
+        title: "iPhone: Weltreise im Hosentaschenformat",
+        xp: 15,
+        cards: [
+            {
+                type: "info",
+                emoji: "📱",
+                title: "Designed in California, Made Everywhere",
+                text: "Das **iPhone** ist das Paradebeispiel globaler Lieferketten. Apple designt in Kalifornien, aber die **200+ Zulieferer** sitzen in über 40 Ländern.",
+                highlight: "200+ Zulieferer in 40+ Ländern"
+            },
+            {
+                type: "info",
+                emoji: "🔧",
+                title: "Wer liefert was?",
+                text: "• **Prozessor (A-Chip)**: Design USA, Fertigung Taiwan (TSMC)\n• **Display (OLED)**: Südkorea (Samsung, LG)\n• **Kamera-Sensoren**: Japan (Sony)\n• **Speicherchips**: Südkorea (SK Hynix, Samsung)\n• **Modem (5G)**: USA (Qualcomm)\n• **Gehäuse (Aluminium/Titan)**: China\n• **Akku**: China (CATL, BYD)\n• **Glas (Ceramic Shield)**: USA (Corning)\n• **Endmontage**: China (Foxconn), zunehmend Indien\n\nApple selbst produziert **kein einziges physisches Teil** – alles kommt von Zulieferern.",
+                highlight: "Apple produziert nichts selbst – alles kommt von Zulieferern"
+            },
+            {
+                type: "info",
+                emoji: "💸",
+                title: "Was kosten Zölle?",
+                text: "**iPhone 16 Pro (Verkaufspreis USA):** 999$\n**Herstellungskosten:** ca. 570$\n**Apples Marge:** ca. 429$\n\nBei **47% Zoll** auf China-Importe (2025):\n→ Aufpreis: ca. 270$\n→ Neuer Preis: ca. 1.269$ oder Apple schluckt die Marge\n\nApple hat reagiert: **50% der US-iPhones** kommen jetzt aus Indien statt China. Aber auch Indien drohen Zölle (Trump drohte mit 25%).",
+                highlight: "47% China-Zoll = 270$ Aufpreis pro iPhone",
+                source: "Quelle: CNBC, Bloomberg, Apple Geschäftsbericht 2025"
+            },
+            {
+                type: "info",
+                emoji: "🇩🇪",
+                title: "Was bedeutet das für Deutschland?",
+                text: "In Deutschland zahlen Verbraucher*innen für ein iPhone 16 Pro **1.199€**. Die EU hat aktuell keine hohen Zölle auf Smartphones (ca. 0%). Aber:\n\n• Wenn die EU **Gegenzölle auf US-Produkte** erhebt, könnten iPhones teurer werden\n• Apple könnte Preise **weltweit anpassen**, um Margen zu schützen\n• Deutsche Zulieferer (z.B. Infineon für Sensoren) verlieren Aufträge, wenn Apple Lieferketten umstellt\n\nDas iPhone zeigt: In einer globalisierten Welt sind **alle miteinander verbunden**.",
+                highlight: "Auch deutsche Zulieferer wie Infineon sind Teil der iPhone-Lieferkette"
+            },
+            {
+                type: "quiz",
+                question: "Woher kommen die meisten iPhone-Displays?",
+                options: ["USA", "China", "Südkorea (Samsung/LG)", "Japan"],
+                correct: 2,
+                explanation: "Die OLED-Displays für iPhones kommen hauptsächlich von Samsung und LG aus Südkorea."
+            },
+            {
+                type: "summary",
+                emoji: "✅",
+                title: "Zusammenfassung",
+                points: [
+                    "iPhone: 200+ Zulieferer in 40+ Ländern",
+                    "Apple designt nur – produziert nichts selbst",
+                    "47% China-Zoll = ~270$ Aufpreis pro iPhone",
+                    "Apple verlagert Produktion nach Indien",
+                    "Deutsche Zulieferer (Infineon) sind Teil der Kette"
+                ]
+            }
+        ]
+    },
+    "9-3": {
+        title: "Kaffee: Von Äthiopien nach Deutschland",
+        xp: 15,
+        cards: [
+            {
+                type: "info",
+                emoji: "☕",
+                title: "Deutschlands Lieblingsgetränk",
+                text: "Deutsche trinken im Schnitt **164 Liter Kaffee pro Jahr** – mehr als Wasser oder Bier! Deutschland ist der **zweitgrößte Kaffeeimporteur** der Welt (nach den USA).",
+                highlight: "164 Liter pro Person pro Jahr – Platz 2 weltweit beim Import"
+            },
+            {
+                type: "info",
+                emoji: "🌱",
+                title: "Die Reise der Kaffeebohne",
+                text: "1. **Anbau**: Äthiopien, Brasilien, Vietnam, Kolumbien\n2. **Ernte**: Meist Handarbeit, oft unter schwierigen Bedingungen\n3. **Verarbeitung**: Waschen, Trocknen, Sortieren im Ursprungsland\n4. **Transport**: Per Schiff nach Hamburg (größter Kaffeehafen Europas)\n5. **Röstung**: In Deutschland (Tchibo, Jacobs, Dallmayr)\n6. **Verpackung & Verkauf**: Im Supermarkt\n\nVon der Pflanze bis zur Tasse: **ca. 6-12 Monate** Reisezeit.",
+                highlight: "Hamburg ist der größte Kaffeehafen Europas"
+            },
+            {
+                type: "info",
+                emoji: "💰",
+                title: "Zölle und Kaffee",
+                text: "Die EU erhebt auf **Rohkaffee 0% Zoll** – damit er günstig bleibt. Aber auf **gerösteten Kaffee: 7,5%** Zoll. Warum?\n\n→ Die EU will, dass die **Wertschöpfung** (Rösten) in Europa stattfindet, nicht im Anbauland.\n\nDas ist ein Problem für Anbauländer: Sie dürfen günstig Rohstoffe liefern, aber nicht die profitablen Verarbeitungsschritte übernehmen. Kritiker nennen das **„Zolleskalation\u201c** – ein Relikt der Kolonialzeit.",
+                highlight: "Rohkaffee: 0% Zoll. Gerösteter Kaffee: 7,5%. Wertschöpfung bleibt in Europa."
+            },
+            {
+                type: "info",
+                emoji: "🤝",
+                title: "Fair Trade als Alternative",
+                text: "**Fair Trade** versucht, dieses Ungleichgewicht auszugleichen:\n\n• **Mindestpreis** für Kaffeebauern (aktuell: 1,80$/Pfund)\n• **Prämie** für Gemeinschaftsprojekte (0,20$/Pfund)\n• **Verbot** von Kinderarbeit\n• **Nachhaltige** Anbaumethoden\n\nAber: Nur ca. **5%** des in Deutschland verkauften Kaffees ist Fair Trade. Der Rest wird zu Weltmarktpreisen gehandelt, die oft unter den Produktionskosten liegen.",
+                highlight: "Nur 5% des Kaffees in Deutschland ist Fair Trade",
+                source: "Quelle: Deutscher Kaffeeverband, TransFair e.V."
+            },
+            {
+                type: "quiz",
+                question: "Warum erhebt die EU auf gerösteten Kaffee höhere Zölle als auf Rohkaffee?",
+                options: ["Gerösteter Kaffee ist schwerer", "Die Wertschöpfung soll in Europa bleiben", "Gerösteter Kaffee ist gesünder", "Es gibt keinen Unterschied"],
+                correct: 1,
+                explanation: "Durch die Zolleskalation (0% auf Roh, 7,5% auf geröstet) bleibt die profitable Verarbeitung in Europa – zum Nachteil der Anbauländer."
+            },
+            {
+                type: "summary",
+                emoji: "✅",
+                title: "Zusammenfassung",
+                points: [
+                    "Deutschland: zweitgrößter Kaffeeimporteur weltweit",
+                    "Zolleskalation: 0% auf Rohkaffee, 7,5% auf gerösteten",
+                    "Wertschöpfung bleibt in Europa – Nachteil für Anbauländer",
+                    "Fair Trade: nur 5% Marktanteil in Deutschland",
+                    "Kaffee zeigt die Ungleichheiten im Welthandel"
+                ]
+            }
+        ]
+    },
+    "9-4": {
+        title: "Stahl: Dumping, Zölle & Klimaschutz",
+        xp: 15,
+        cards: [
+            {
+                type: "info",
+                emoji: "🏗️",
+                title: "Stahl: Rückgrat der Industrie",
+                text: "Stahl steckt überall: Autos, Brücken, Gebäude, Maschinen. Deutschland produziert ca. **36 Mio. Tonnen Stahl pro Jahr** und ist damit der größte Stahlproduzent der EU.",
+                highlight: "36 Mio. Tonnen/Jahr – größter EU-Produzent"
+            },
+            {
+                type: "info",
+                emoji: "🇨🇳",
+                title: "Chinas Stahl-Überkapazitäten",
+                text: "China produziert über **1 Milliarde Tonnen Stahl pro Jahr** – mehr als die Hälfte der Weltproduktion! Weil China mehr produziert als es braucht, wird der Überschuss **zu Dumpingpreisen** (unter Herstellungskosten) auf den Weltmarkt geworfen.\n\nDie Folge: Europäische Stahlwerke können preislich nicht mithalten. Seit 2015 haben Tausende Stahlarbeiter in der EU ihren Job verloren.",
+                highlight: "China: >1 Mrd. Tonnen/Jahr – mehr als 50% der Weltproduktion"
+            },
+            {
+                type: "info",
+                emoji: "🛡️",
+                title: "EU Anti-Dumping-Zölle",
+                text: "Die EU hat **Anti-Dumping-Zölle** auf chinesischen Stahl eingeführt: **bis zu 44%** auf bestimmte Stahlsorten.\n\nDie USA gingen noch weiter: **25% Zoll auf ALLEN Stahl** (auch aus der EU!) seit 2018 (Section 232). Begründung: „nationale Sicherheit\u201c.\n\nDas zeigt das Dilemma: Schutzzölle gegen China treffen manchmal auch Verbündete. Die EU und die USA streiten bis heute über Stahl-Zölle untereinander.",
+                highlight: "EU: bis 44% Anti-Dumping-Zoll auf China-Stahl. USA: 25% auf ALLEN Stahl."
+            },
+            {
+                type: "info",
+                emoji: "🌱",
+                title: "CBAM: Der grüne Stahlzoll",
+                text: "Ab 2026 greift der **CBAM** (Carbon Border Adjustment Mechanism) der EU vollständig. Er besteuert den CO₂-Gehalt importierter Waren.\n\n**Beispiel Stahl:**\n• EU-Stahl: 1,2 Tonnen CO₂ pro Tonne Stahl\n• China-Stahl: 2,5-3,0 Tonnen CO₂ pro Tonne\n\nMit CBAM zahlt chinesischer Stahl einen **CO₂-Aufpreis** von ca. 80-150€/Tonne. Das macht EU-Stahl konkurrenzfähiger UND schützt das Klima.",
+                highlight: "CBAM ab 2026: CO₂-Aufpreis von 80-150€/Tonne auf China-Stahl",
+                source: "Quelle: EU-Kommission, Wirtschaftsvereinigung Stahl"
+            },
+            {
+                type: "quiz",
+                question: "Warum hat die EU Anti-Dumping-Zölle auf chinesischen Stahl?",
+                options: ["China-Stahl ist zu gut", "China verkauft unter Herstellungskosten (Dumping)", "China importiert zu viel EU-Stahl", "Es gibt keine solchen Zölle"],
+                correct: 1,
+                explanation: "China produziert mehr Stahl als es braucht und verkauft den Überschuss unter Herstellungskosten (Dumping) auf dem Weltmarkt."
+            },
+            {
+                type: "summary",
+                emoji: "✅",
+                title: "Zusammenfassung",
+                points: [
+                    "China: >50% der Welt-Stahlproduktion, Dumping-Problem",
+                    "EU: Anti-Dumping-Zölle bis 44% auf China-Stahl",
+                    "USA: 25% Zoll auf ALLEN Stahl (auch EU!)",
+                    "CBAM ab 2026: CO₂-Aufpreis macht EU-Stahl konkurrenzfähiger",
+                    "Stahl zeigt den Konflikt zwischen Schutz und Freihandel"
+                ]
+            }
+        ]
+    },
+
+    // =============================================
+    // MODUL 10: QUELLEN & KI-OFFENLEGUNG
+    // =============================================
+    "10-1": {
+        title: "Unsere Quellen",
+        xp: 10,
+        cards: [
+            {
+                type: "info",
+                emoji: "📚",
+                title: "Quellenverzeichnis (1/3)",
+                text: "**Offizielle Institutionen:**\n• Destatis – Statistisches Bundesamt: Außenhandelsstatistiken 2025\n• Europäische Kommission: Trade Policy Review 2025\n• WTO: World Trade Report 2025\n• UNCTAD: Global Trade Update Januar 2026\n• Bundesministerium für Wirtschaft und Klimaschutz (BMWK)\n• Deutscher Industrie- und Handelskammertag (DIHK): Außenhandelsbericht 2025"
+            },
+            {
+                type: "info",
+                emoji: "📰",
+                title: "Quellenverzeichnis (2/3)",
+                text: "**Forschungsinstitute & Medien:**\n• ifo-Institut: Studien zu Handelsauswirkungen\n• Bertelsmann-Stiftung: Freihandel und Beschäftigung\n• Bundeszentrale für politische Bildung (bpb): Trumps Handelspolitik\n• Euronews Business: WTO & Trump Tariffs 2025\n• CNBC: Apple Supply Chain & Tariffs 2025/26\n• Barron's: EU-India Trade Deal\n• ING Think: Global Trade in 2026\n• Tax Foundation: Trump Tariffs Trade War Analysis"
+            },
+            {
+                type: "info",
+                emoji: "📖",
+                title: "Quellenverzeichnis (3/3)",
+                text: "**Unternehmensquellen:**\n• BMW Group Jahresbericht 2025\n• Apple Inc. Geschäftsbericht (10-K) 2025\n• Wirtschaftsvereinigung Stahl: Stahlmarktbericht\n• Deutscher Kaffeeverband: Marktbericht\n• TransFair e.V.: Fair Trade Statistiken\n\n**Unterrichtsmaterial:**\n• econo=me Wettbewerbsunterlagen 2025/26\n• Schulbuch-PDF: Materialien M11, M12"
+            },
+            {
+                type: "info",
+                emoji: "🤖",
+                title: "KI-Nutzung: Offenlegung",
+                text: "Bei der Erstellung dieser App wurde **Künstliche Intelligenz (Claude, Anthropic)** als Hilfsmittel eingesetzt für:\n\n• Recherche-Unterstützung und Faktenprüfung\n• Strukturierung und Aufbereitung von Inhalten\n• Programmierung der Web-App (HTML, CSS, JavaScript)\n• Formulierungshilfe bei Texten\n\nAlle Fakten wurden mit den oben genannten Quellen **gegengeprüft**. Die inhaltlichen Entscheidungen, die Bewertungen und die kreative Gestaltung sind **eigenständige Leistungen**.",
+                highlight: "KI als Werkzeug – Inhalt und Bewertung sind eigenständig"
+            },
+            {
+                type: "summary",
+                emoji: "✅",
+                title: "Zusammenfassung",
+                points: [
+                    "Über 20 seriöse Quellen verwendet",
+                    "Offizielle Statistiken, Forschungsinstitute, Medien",
+                    "Unternehmensberichte für konkrete Beispiele",
+                    "KI als Werkzeug eingesetzt – transparent offengelegt",
+                    "Alle Fakten gegengeprüft"
+                ]
+            }
+        ]
+    },
+
+    // =============================================
     // MODUL 5: AUFGABE 1 – PDF CONTENT (WORD FOR WORD)
     // =============================================
     "5-1": {
@@ -1095,7 +1666,10 @@ const MODULE_CONFIG = {
     4: { count: 4 },
     5: { count: 4 },
     6: { count: 3 },
-    7: { count: 1 }
+    7: { count: 1 },
+    8: { count: 4 },
+    9: { count: 4 },
+    10: { count: 1 }
 };
 
 // Lesson state
