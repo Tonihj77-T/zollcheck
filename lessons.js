@@ -1690,14 +1690,14 @@ const LESSONS = {
                 type: "info",
                 emoji: "🤖",
                 title: "KI-Nutzung: Offenlegung",
-                text: "Bei der Erstellung dieser App wurde **Künstliche Intelligenz (Claude, Anthropic)** als Hilfsmittel eingesetzt für:\n\n• Recherche-Unterstützung und Faktenprüfung\n• Strukturierung und Aufbereitung von Inhalten\n• Programmierung der Web-App (HTML, CSS, JavaScript)\n• Formulierungshilfe bei Texten\n• Code-Testing und Qualitätssicherung\n\nAlle Fakten wurden mit den oben genannten Quellen **gegengeprüft**. Die inhaltlichen Entscheidungen, die Bewertungen und die kreative Gestaltung sind **eigenständige Leistungen**.",
+                text: "Bei der Erstellung dieser App wurde **Künstliche Intelligenz (Claude 4.6 Sonnet, Anthropic und GPT 5, OpenAI)** als Hilfsmittel eingesetzt für:\n\n• Recherche-Unterstützung und Faktenprüfung\n• Strukturierung und Aufbereitung von Inhalten\n• Programmierung der Web-App (HTML, CSS, JavaScript)\n• Formulierungshilfe bei Texten\n• Code-Testing und Qualitätssicherung\n\nAlle Fakten wurden mit den oben genannten Quellen **gegengeprüft**. Die inhaltlichen Entscheidungen, die Bewertungen und die kreative Gestaltung sind **eigenständige Leistungen**.",
                 highlight: "KI als Werkzeug – Inhalt und Bewertung sind eigenständig"
             },
             {
                 type: "info",
                 emoji: "💬",
-                title: "Verwendete Prompts (Auswahl)",
-                text: "**Recherche & Inhalt:**\n• \"Recherchiere die aktuellen US-Zollsätze auf EU-Importe 2025/26 mit Quellen\"\n• \"Vergleiche Szenario I (Handelsbeschränkungen) und Szenario II (freier Handel) für deutsche Verbraucher mit konkreten Preisbeispielen\"\n• \"Erkläre die verschiedenen Zollarten (Schutzzoll, Erziehungszoll, Retorsionszoll, Finanzzoll) mit aktuellen Beispielen\"\n\n**Programmierung:**\n• \"Erstelle eine mobile-first PWA mit Lernmodulen im Karteikarten-Stil, dark theme, bottom navigation\"\n• \"Implementiere ein Fortschrittssystem mit XP, Leveln und Lesson-Tracking in localStorage\"\n• \"Baue einen interaktiven Handelssimulator mit Entscheidungen und Auswirkungsmetern\"\n\n**Testing:**\n• \"Überprüfe die JavaScript-Syntax aller Dateien auf Fehler (node -c)\"\n• \"Teste die App auf überlappende Elemente und broken layouts\"\n• \"Validiere dass alle Lektionen korrekt laden und die Navigation funktioniert\""
+                title: "Verwendete Prompts",
+                text: "**Recherche & Inhalt:**\n• \"Recherchiere die aktuellen US-Zollsätze auf EU-Importe 2025/26. Gebe Quellen an!\"\n• \"Erkläre die verschiedenen Zollarten (Schutzzoll, Erziehungszoll, Retorsionszoll, Finanzzoll)\"\n\n**Programmierung:**\n• \"Erstelle ein unit Test für die Funktion ... der PWA.\"\n• \"Gib Vorschläge zur Umsetzung der Implementierung eines Fortschrittssystems mit XP, Leveln und Lesson-Tracking in localStorage\"\n• \"Gib Vorschläge zur Umsetzung eines interaktiven Handelssimulator mit Entscheidungen und Auswirkungsmetern\"\n\n**Testing:**\n• \"Überprüfe die JavaScript-Syntax der Dateien ... auf Fehler (node -c)\"\n• \"Teste die App auf überlappende Elemente und broken layouts\"\n• \"Validiere dass alle Lektionen korrekt laden und die Navigation funktioniert\""
             },
             {
                 type: "summary",
