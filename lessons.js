@@ -824,21 +824,21 @@ const LESSONS = {
         ]
     },
     "1-9": {
-        title: "M11: Entwicklung regionaler Abkommen",
+        title: "Analyse: Entwicklung regionaler Abkommen",
         xp: 20,
         cards: [
             {
                 type: "image",
-                title: "Material M11: RTAs weltweit",
+                title: "RTAs weltweit",
                 src: "charts/M11.png",
-                alt: "Grafik M11: Entwicklung regionaler Handelsabkommen",
+                alt: "Grafik: Entwicklung regionaler Handelsabkommen",
                 caption: "Entwicklung der Regional Trade Agreements (RTAs) weltweit seit 1990."
             },
             {
                 type: "info",
                 emoji: "📊",
-                title: "Analyse M11",
-                text: "Material M11 zeigt die weltweite Entwicklung regionaler Handelsabkommen (Regional Trade Agreements, RTAs). Auffällig ist der starke Anstieg seit den 1990er-Jahren, insbesondere nach 2000. Die Zahl der gemeldeten Abkommen steigt kontinuierlich und erreicht heute mehrere hundert aktive Vereinbarungen weltweit. Diese Entwicklung ist jedoch nicht gleichmäßig verlaufen, sondern steht in engem Zusammenhang mit politischen und wirtschaftlichen Ereignissen."
+                title: "Analyse der Grafik",
+                text: "Die Grafik zeigt die weltweite Entwicklung regionaler Handelsabkommen (Regional Trade Agreements, RTAs). Auffällig ist der starke Anstieg seit den 1990er-Jahren, insbesondere nach 2000. Die Zahl der gemeldeten Abkommen steigt kontinuierlich und erreicht heute mehrere hundert aktive Vereinbarungen weltweit. Diese Entwicklung ist jedoch nicht gleichmäßig verlaufen, sondern steht in engem Zusammenhang mit politischen und wirtschaftlichen Ereignissen."
             },
             {
                 type: "info",
@@ -946,7 +946,7 @@ const LESSONS = {
             {
                 type: "summary",
                 emoji: "✅",
-                title: "Zusammenfassung M11",
+                title: "Zusammenfassung der Analyse",
                 points: [
                     "Phase 1 (1990-2008): Globalisierung & WTO-Expansion",
                     "Phase 2 (ab 2008): Finanzkrise → mehr regionale Kooperation",
@@ -1675,6 +1675,12 @@ const LESSONS = {
         title: "Unsere Quellen",
         xp: 10,
         cards: [
+            {
+                type: "info",
+                emoji: "📚",
+                title: "Interview mit Zollbeamten",
+                text: "**Interview:**\nWir haben ein ausführliches Interview mit einem Zollbeamten (im Moment im dualen Studium) geführt.\nDie mitgezeichnete Audio-Aufzeichnung ist NICHT öffentlich, jedoch kann das Transkript angeschaut werden."
+            },
             {
                 type: "info",
                 emoji: "📚",
