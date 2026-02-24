@@ -824,13 +824,20 @@ const LESSONS = {
         ]
     },
     "1-9": {
-        title: "Entwicklung regionaler Handelsabkommen",
+        title: "M11: Entwicklung regionaler Abkommen",
         xp: 20,
         cards: [
             {
+                type: "image",
+                title: "Material M11: RTAs weltweit",
+                src: "charts/M11.png",
+                alt: "Grafik M11: Entwicklung regionaler Handelsabkommen",
+                caption: "Entwicklung der Regional Trade Agreements (RTAs) weltweit seit 1990."
+            },
+            {
                 type: "info",
                 emoji: "📊",
-                title: "RTAs weltweit",
+                title: "Analyse M11",
                 text: "Material M11 zeigt die weltweite Entwicklung regionaler Handelsabkommen (Regional Trade Agreements, RTAs). Auffällig ist der starke Anstieg seit den 1990er-Jahren, insbesondere nach 2000. Die Zahl der gemeldeten Abkommen steigt kontinuierlich und erreicht heute mehrere hundert aktive Vereinbarungen weltweit. Diese Entwicklung ist jedoch nicht gleichmäßig verlaufen, sondern steht in engem Zusammenhang mit politischen und wirtschaftlichen Ereignissen."
             },
             {
@@ -1788,6 +1795,14 @@ function renderLessonCard() {
                 <ul class="summary-points">
                     ${card.points.map(p => `<li>${p}</li>`).join('')}
                 </ul>
+            </div>
+        `;
+    } else if (card.type === 'image') {
+        html = `
+            <div class="lesson-card image-card">
+                ${card.title ? `<h3 class="card-title" style="text-align: center; margin-bottom: 16px;">${card.title}</h3>` : ''}
+                <img src="${card.src}" alt="${card.alt || 'Grafik'}" class="card-image">
+                ${card.caption ? `<p class="card-caption">${card.caption}</p>` : ''}
             </div>
         `;
     }
