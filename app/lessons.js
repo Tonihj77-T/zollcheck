@@ -829,16 +829,16 @@ const LESSONS = {
         cards: [
             {
                 type: "image",
-                title: "RTAs weltweit",
+                title: "Kumulierte Handelsabkommen weltweit",
                 src: "charts/M11.png",
-                alt: "Grafik: Entwicklung regionaler Handelsabkommen",
-                caption: "Entwicklung der Regional Trade Agreements (RTAs) weltweit seit 1990."
+                alt: "Grafik: Kumulierte Anzahl der Handelsabkommen weltweit 1958–2024",
+                caption: "Kumulierte Anzahl der Handelsabkommen weltweit von 1958 bis 2024 (Quelle: Schulbuch-Material)"
             },
             {
                 type: "info",
                 emoji: "📊",
                 title: "Analyse der Grafik",
-                text: "Die Grafik zeigt die weltweite Entwicklung regionaler Handelsabkommen (Regional Trade Agreements, RTAs). Auffällig ist der starke Anstieg seit den 1990er-Jahren, insbesondere nach 2000. Die Zahl der gemeldeten Abkommen steigt kontinuierlich und erreicht heute mehrere hundert aktive Vereinbarungen weltweit. Diese Entwicklung ist jedoch nicht gleichmäßig verlaufen, sondern steht in engem Zusammenhang mit politischen und wirtschaftlichen Ereignissen."
+                text: "Die obige Grafik zeigt die weltweite Entwicklung regionaler Handelsabkommen (Regional Trade Agreements, RTAs). Auffällig ist der starke Anstieg seit den 1990er-Jahren, insbesondere nach 2000. Bis 2024 stieg die Gesamtzahl auf 373 aktive Vereinbarungen. Diese Entwicklung ist jedoch nicht gleichmäßig verlaufen, sondern steht in engem Zusammenhang mit politischen und wirtschaftlichen Ereignissen."
             },
             {
                 type: "info",
@@ -946,7 +946,7 @@ const LESSONS = {
             {
                 type: "summary",
                 emoji: "✅",
-                title: "Zusammenfassung der Analyse",
+                title: "Zusammenfassung",
                 points: [
                     "Phase 1 (1990-2008): Globalisierung & WTO-Expansion",
                     "Phase 2 (ab 2008): Finanzkrise → mehr regionale Kooperation",
@@ -1093,10 +1093,17 @@ const LESSONS = {
         xp: 20,
         cards: [
             {
+                type: "image",
+                title: "Importbeschränkungen weltweit 2009–2024",
+                src: "charts/M12.png",
+                alt: "Grafik: Wert und Anteil der Importbeschränkungen weltweit 2009–2024",
+                caption: "Importbeschränkungen: Handelsvolumen in Mrd. USD und Anteil am Weltimport (Quelle: Schulbuch-Material)"
+            },
+            {
                 type: "info",
                 emoji: "💰",
-                title: "Material M12: Zölle & Verbraucher",
-                text: "Material M 12 verdeutlicht die wirtschaftlichen Folgen von Zöllen für Verbraucherinnen und Verbraucher. Durch höhere Importpreise steigen häufig auch die Endpreise für Konsumgüter. Dies führt zu einer geringeren Auswahl, steigenden Lebenshaltungskosten und sinkender Kaufkraft. Die Grafik zeigt damit, dass Zölle zwar Vorteile für inländische Produzenten haben können, gleichzeitig jedoch die Konsumentinnen und Konsumenten belasten. Es entsteht ein Zielkonflikt zwischen wirtschaftlichem Schutz und sozialer Gerechtigkeit.",
+                title: "Zölle & Verbraucher",
+                text: "Die obige Grafik verdeutlicht die wirtschaftlichen Folgen von Importbeschränkungen: Von 73 Mrd. USD (2009) stieg das betroffene Handelsvolumen auf 2.942 Mrd. USD (2024) — der Anteil am Weltimport von 0,6% auf 11,8%. Durch höhere Importpreise steigen häufig auch die Endpreise für Konsumgüter. Dies führt zu einer geringeren Auswahl, steigenden Lebenshaltungskosten und sinkender Kaufkraft. Zölle können Vorteile für inländische Produzenten haben, belasten aber die Verbraucher. Es entsteht ein Zielkonflikt zwischen wirtschaftlichem Schutz und sozialer Gerechtigkeit.",
                 highlight: "Zielkonflikt: Wirtschaftlicher Schutz vs. soziale Gerechtigkeit",
                 source: "Quelle: de.statista.com"
             },
@@ -1117,7 +1124,7 @@ const LESSONS = {
             {
                 type: "summary",
                 emoji: "✅",
-                title: "Zusammenfassung M12",
+                title: "Zusammenfassung",
                 points: [
                     "Zölle erhöhen Importpreise und Endpreise",
                     "Folgen: weniger Auswahl, höhere Lebenshaltungskosten",
@@ -1679,7 +1686,7 @@ const LESSONS = {
                 type: "info",
                 emoji: "📚",
                 title: "Interview mit Zollbeamten",
-                text: "**Interview:**\nWir haben ein ausführliches Interview mit einem Zollbeamten (im Moment im dualen Studium) geführt.\nDie mitgezeichnete Audio-Aufzeichnung ist NICHT öffentlich, jedoch kann das Transkript angeschaut werden."
+                text: "**Interview:**\nWir haben ein ausführliches Interview mit einem Zollbeamten des Hauptzollamts Köln (im Moment im dualen Studium zum gehobenen Dienst) geführt.\nDie mitgezeichnete Audio-Aufzeichnung ist NICHT öffentlich, jedoch kann das Transkript eingesehen werden.\n\n📄 **[Interview-Transkript als PDF](Interview.pdf)**"
             },
             {
                 type: "info",
