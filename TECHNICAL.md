@@ -1,10 +1,10 @@
-# ZollCheck – Technisches Handbuch
+# Tarrific – Technisches Handbuch
 
 ## Übersicht
 
-ZollCheck ist eine Progressive Web App (PWA) zum Thema Zölle und Welthandel, entwickelt für den **econo=me Wettbewerb 2025/26**.
+Tarrific ist eine Progressive Web App (PWA) zum Thema Zölle und Welthandel, entwickelt für den **econo=me Wettbewerb 2025/26**.
 
-**Live-Demo:** [tonihj77-t.github.io/zollcheck](https://tonihj77-t.github.io/zollcheck)
+**Live:** [tarrific.tonihj77.de](https://tarrific.tonihj77.de)
 
 ---
 
@@ -14,13 +14,18 @@ ZollCheck ist eine Progressive Web App (PWA) zum Thema Zölle und Welthandel, en
 zollcheck/
 ├── index.html       # Haupt-HTML, alle Screens/Modals
 ├── app.js           # App-Logik, State, Navigation, Quiz, Haushalt
+├── lessons.js       # Alle 34 Lektionen (6 Module)
 ├── simulator.js     # Dynamischer Weltwirtschafts-Simulator
 ├── data.js          # Quiz-Fragen, Produkte, Lexikon, Szenarien
+├── charts.js        # Chart-Daten und Visualisierungen
 ├── map.js           # Interaktive Handelskarte (Canvas-basiert)
 ├── styles.css       # Komplettes Styling (Mobile-first)
 ├── sw.js            # Service Worker für Offline-Fähigkeit
 ├── manifest.json    # PWA-Manifest
-└── icons/           # App-Icons (192px, 512px)
+├── Interview.pdf    # Interview-Transkript (Zollbeamter)
+├── charts/          # Grafiken (M11, M12, etc.)
+├── icons/           # App-Icons (192px, 512px)
+└── app/             # Alternative App-Struktur (Subset)
 ```
 
 ---
@@ -403,20 +408,34 @@ XP-Quellen:
 
 ## 🚀 Deployment
 
-### GitHub Pages
+### K3s Cluster (Production)
 
-```bash
-git add .
-git commit -m "Update"
-git push origin main
+Die App läuft als nginx-Container im K3s-Cluster. Ein Init-Container clont das Repo bei jedem Pod-Start:
+
+```yaml
+initContainers:
+  - name: fetch-app
+    image: alpine/git:latest
+    command: [sh, -c, "git clone https://github.com/Tonihj77-T/zollcheck.git /app && cp -r /app/* /data/"]
+containers:
+  - name: nginx
+    image: nginx:alpine
+    volumeMounts:
+      - name: app-files
+        mountPath: /usr/share/nginx/html
 ```
 
-Automatisch live unter: `https://tonihj77-t.github.io/zollcheck/`
+**Deploy-Workflow:**
+```bash
+git push origin master
+ssh root@194.164.207.131 "kubectl rollout restart deployment/tarrific -n tarrific"
+```
+
+Live unter: `https://tarrific.tonihj77.de`
 
 ### Lokale Entwicklung
 
 ```bash
-# Einfacher HTTP-Server
 python3 -m http.server 8000
 # oder
 npx serve .
@@ -427,7 +446,7 @@ npx serve .
 ## 📝 Lizenz
 
 Erstellt für den econo=me Wettbewerb 2025/26.  
-Thema: "Was ZOLL das? Wir und der Welthandel"
+Thema: „Was ZOLL das? Wir und der Welthandel"
 
 ---
 

@@ -1686,7 +1686,7 @@ const LESSONS = {
                 type: "info",
                 emoji: "📚",
                 title: "Interview mit Zollbeamten",
-                text: "**Interview:**\nWir haben ein ausführliches Interview mit einem Zollbeamten des Hauptzollamts Köln (im Moment im dualen Studium zum gehobenen Dienst) geführt.\nDie mitgezeichnete Audio-Aufzeichnung ist NICHT öffentlich, jedoch kann das Transkript eingesehen werden.\n\n📄 **[Interview-Transkript als PDF](Interview.pdf)**"
+                text: "**Interview:**\nWir haben ein ausführliches Interview mit einem Zollbeamten des Hauptzollamts Köln (im Moment im dualen Studium zum gehobenen Dienst) geführt.\nDie mitgezeichnete Audio-Aufzeichnung ist NICHT öffentlich, jedoch kann das Transkript eingesehen werden.\n\n📄 **[Interview-Transkript als PDF](https://github.com/Tonihj77-T/zollcheck/raw/master/Interview.pdf)**"
             },
             {
                 type: "info",

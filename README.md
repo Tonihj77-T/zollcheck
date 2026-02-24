@@ -1,69 +1,44 @@
-# ZollCheck - PWA
+# Tarrific – Zölle & Welthandel lernen
 
-Interaktive Lern-App zum Thema Zölle und Welthandel.
+Interaktive Lern-App zum Thema Zölle und Welthandel, entwickelt für den **econo=me Wettbewerb 2025/26**.  
+Thema: „Was ZOLL das? Wir und der Welthandel"
 
-## Starten
-
-### Lokal testen
-```bash
-cd app
-python3 -m http.server 8000
-# oder
-npx serve .
-```
-
-Dann öffne `http://localhost:8000` im Browser.
-
-### Installieren als App
-1. Öffne die URL im Browser (Chrome/Safari)
-2. **iOS:** Teilen → "Zum Home-Bildschirm"
-3. **Android:** Menü → "Zum Startbildschirm hinzufügen"
-4. **Desktop:** Adressleiste → Install-Button
-
-## Icons erstellen
-
-Die SVG-Datei `icons/icon.svg` muss in PNG konvertiert werden:
-
-### Option 1: Online Converter
-- https://cloudconvert.com/svg-to-png
-- Erstelle 192x192 und 512x512 Versionen
-
-### Option 2: Mit Inkscape (CLI)
-```bash
-inkscape icons/icon.svg -w 192 -h 192 -o icons/icon-192.png
-inkscape icons/icon.svg -w 512 -h 512 -o icons/icon-512.png
-```
-
-### Option 3: Figma/Sketch
-Importiere das SVG und exportiere als PNG.
+**Live:** [tarrific.tonihj77.de](https://tarrific.tonihj77.de)
 
 ## Features
 
-- 🏠 **Mein Haushalt** - Produkte erfassen und Herkunft erkunden
-- 🎮 **Quiz** - 15+ Fragen zu Zöllen und Welthandel
-- 🏛️ **Simulator** - Entscheidungen als Minister/Unternehmer/Verbraucher treffen
-- 📖 **Lexikon** - Wichtige Begriffe nachschlagen
-- 🗺️ **Handelskarte** - (Coming soon)
+- 📚 **34 Lektionen** in 6 Modulen (Grundlagen → Entwicklungsprozesse → Zölle & Zielsetzungen → Szenario-Vergleich → Konkrete Beispiele → Quellen)
+- 🎮 **Quiz** – 20+ Fragen mit Streak-System
+- 🏛️ **Simulator** – Dynamischer Weltwirtschafts-Simulator mit KI-Ländern
+- 🏠 **Mein Haushalt** – Produkte erfassen und Herkunft erkunden
+- 📖 **Lexikon** – Wichtige Begriffe nachschlagen
+- 🗺️ **Handelskarte** – Interaktive Weltkarte
+- 📊 **Charts** – Datenvisualisierungen zu Handelsabkommen und Importbeschränkungen
 
 ## Gamification
 
 - XP für jede Aktivität
-- Level 1-6
+- Level 1–6 (Zoll-Neuling → Zoll-Legende)
 - Tägliche Challenges
 - Streak-Bonus
 
+## Quellen
+
+- Interview mit Zollbeamtem (Hauptzollamt Köln) – [Transkript (PDF)](Interview.pdf)
+- Destatis, WTO, UNCTAD, DIHK, bpb, ifo-Institut u.v.m.
+- Vollständiges Quellenverzeichnis in der App (Modul 5)
+
 ## Technologie
 
-- Vanilla HTML/CSS/JS
-- Progressive Web App (PWA)
-- Offline-fähig via Service Worker
+- Vanilla HTML/CSS/JS (kein Framework)
+- Progressive Web App (PWA) – offline-fähig
 - LocalStorage für Spielstand
+- Deployed via K3s + nginx
 
-## Für den Wettbewerb
+## KI-Nutzung
 
-Diese App wurde für den **econo=me Wettbewerb 2025/26** entwickelt.
-Thema: "Was ZOLL das? Wir und der Welthandel"
+Bei der Erstellung wurde KI (Claude, GPT) als Werkzeug eingesetzt für Recherche, Programmierung und Texterstellung. Alle Fakten wurden mit seriösen Quellen gegengeprüft. Details in der App unter Modul 5.
 
 ---
 
-Made with 🦝 by John Tigg
+econo=me Wettbewerb 2025/26
