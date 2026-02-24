@@ -471,8 +471,8 @@ const LESSONS = {
                 type: "info",
                 emoji: "🇺🇸",
                 title: "Protektionistische Zollpolitik der USA",
-                text: "Ein zentraler Trend ist die stark ausgeweitete protektionistische Zollpolitik der USA. Seit 2025 hat die US-Regierung grundlegend höhere Einfuhrzölle eingeführt, insbesondere auf Produkte aus der EU und anderen Handelspartnern. Am sogenannten „Liberation Day\u201c (2. April 2025) wurden pauschal 20 % Zoll auf EU-Waren erhoben. Nach der Gemeinsamen Erklärung EU-USA (August 2025) wurden Obergrenzen vereinbart, sodass der gewichtete effektive Zollsatz Ende 2025 bei ca. 8,6 % für die EU lag – aber bis zu 50 % auf Stahl und Aluminium. Auf Autos gilt ein spezifischer Zollsatz von 15 %.",
-                highlight: "Liberation Day: 20% pauschal → nach Verhandlungen effektiv ~8,6% (EU)"
+                text: "Ein zentraler Trend ist die stark ausgeweitet protektionistische Zollpolitik der USA. Seit 2025 hat die US-Regierung grundlegend höhere Einfuhrzölle eingeführt, insbesondere auf Produkte aus der EU und anderen Handelspartnern. Ursprünglich lag der durchschnittliche Zollsatz für EU-Importe in die USA bei nur etwa 2 %, heute gelten Mindestzölle von rund 15 %, teilweise sogar bis 50 % oder mehr auf Stahl, Aluminium oder bestimmte Industriegüter. Dies hat die Situation für exportorientierte Unternehmen, insbesondere aus Deutschland, spürbar verändert.",
+                highlight: "Von 2% auf mindestens 15% – bis zu 50% auf Stahl und Aluminium"
             },
             {
                 type: "info",
@@ -483,10 +483,10 @@ const LESSONS = {
             },
             {
                 type: "quiz",
-                question: "Wie hoch war der pauschale US-Zoll auf EU-Waren am „Liberation Day\u201c (April 2025)?",
-                options: ["5%", "10%", "20%", "50%"],
-                correct: 2,
-                explanation: "Am Liberation Day wurden pauschal 20% Zoll auf EU-Waren erhoben. Nach Verhandlungen sank der effektive gewichtete Satz auf ca. 8,6%."
+                question: "Von wie viel Prozent auf wie viel Prozent stiegen die US-Zölle auf EU-Importe?",
+                options: ["Von 5% auf 10%", "Von 2% auf mind. 15%", "Von 10% auf 25%", "Von 0% auf 5%"],
+                correct: 1,
+                explanation: "Der durchschnittliche Zollsatz stieg von etwa 2% auf Mindestzölle von rund 15%, teilweise bis 50%."
             },
             {
                 type: "summary",
@@ -495,7 +495,7 @@ const LESSONS = {
                 points: [
                     "Seit 2025: massive Umbrüche in den Handelsbeziehungen",
                     "USA: protektionistische Zollpolitik mit stark erhöhten Einfuhrzöllen",
-                    "Liberation Day: 20% pauschal, effektiv ~8,6% nach Verhandlungen",
+                    "Zollsätze: von ~2% auf 15-50%",
                     "WTO warnt vor Einschränkung des globalen Handelsvolumens"
                 ]
             }
@@ -566,8 +566,8 @@ const LESSONS = {
                 type: "info",
                 emoji: "🇮🇳",
                 title: "Diversifizierung: EU-Indien",
-                text: "Ein wichtiger Trend ist die verstärkte Suche nach neuen „Freihandelszonen\u201c, um Abhängigkeiten zu reduzieren. Ein prominentes Beispiel dafür sind die intensivierten Verhandlungen über ein Freihandelsabkommen zwischen der EU und Indien (seit 2022 neu aufgenommen), bei dem Zölle auf zahlreiche Produkte reduziert oder aufgehoben werden sollen – ein Schritt, der auch als Antwort auf den protektionistischen Druck aus den USA gesehen wird.",
-                highlight: "EU-Indien: Verhandlungen über Freihandelsabkommen intensiviert",
+                text: "Ein wichtiger Trend ist die verstärkte Suche nach neuen „Freihandelszonen\u201c, um Abhängigkeiten zu reduzieren. Ein prominentes Beispiel dafür ist das große Freihandelsabkommen zwischen der EU und Indien (Januar 2026), bei dem Zölle auf zahlreiche Produkte reduziert oder aufgehoben werden sollen – ein Schritt, der auch als Antwort auf den protektionistischen Druck aus den USA gesehen wird.",
+                highlight: "EU-Indien Freihandelsabkommen: Januar 2026",
                 source: "Quelle: barrons.com – EU India Trade Deal"
             },
             {
@@ -590,7 +590,7 @@ const LESSONS = {
                 title: "Zusammenfassung",
                 points: [
                     "WTO und UNCTAD: Abkühlung des globalen Handelswachstums",
-                    "Neue Freihandelszonen, z.B. EU-Indien-Verhandlungen",
+                    "Neue Freihandelszonen, z.B. EU-Indien (Jan. 2026)",
                     "Trend zur strategischen Autonomie bei USA und EU"
                 ]
             }
@@ -824,27 +824,27 @@ const LESSONS = {
         ]
     },
     "1-9": {
-        title: "M11: Entwicklung regionaler Abkommen",
+        title: "Analyse: Entwicklung regionaler Abkommen",
         xp: 20,
         cards: [
             {
                 type: "image",
-                title: "Material M11: RTAs weltweit",
+                title: "RTAs weltweit",
                 src: "charts/M11.png",
-                alt: "Grafik M11: Entwicklung regionaler Handelsabkommen",
+                alt: "Grafik: Entwicklung regionaler Handelsabkommen",
                 caption: "Entwicklung der Regional Trade Agreements (RTAs) weltweit seit 1990."
             },
             {
                 type: "info",
                 emoji: "📊",
-                title: "Analyse M11",
-                text: "Material M11 zeigt die weltweite Entwicklung regionaler Handelsabkommen (Regional Trade Agreements, RTAs). Auffällig ist der starke Anstieg seit den 1990er-Jahren, insbesondere nach 2000. Die Zahl der gemeldeten Abkommen steigt kontinuierlich und erreicht heute mehrere hundert aktive Vereinbarungen weltweit. Diese Entwicklung ist jedoch nicht gleichmäßig verlaufen, sondern steht in engem Zusammenhang mit politischen und wirtschaftlichen Ereignissen."
+                title: "Analyse der Grafik",
+                text: "Die Grafik zeigt die weltweite Entwicklung regionaler Handelsabkommen (Regional Trade Agreements, RTAs). Auffällig ist der starke Anstieg seit den 1990er-Jahren, insbesondere nach 2000. Die Zahl der gemeldeten Abkommen steigt kontinuierlich und erreicht heute mehrere hundert aktive Vereinbarungen weltweit. Diese Entwicklung ist jedoch nicht gleichmäßig verlaufen, sondern steht in engem Zusammenhang mit politischen und wirtschaftlichen Ereignissen."
             },
             {
                 type: "info",
                 emoji: "🇺🇸",
                 title: "Trump & America First (2016/17)",
-                text: "Mit der Wahl Donald Trumps 2016 und seinem Amtsantritt 2017 änderte sich die Handelspolitik der USA grundlegend. Trump vertrat eine klar protektionistische Linie („America First\u201c). Er trat aus dem transpazifischen Freihandelsabkommen (TPP), verhandelte NAFTA neu zum USMCA, führte Strafzölle auf Stahl und Aluminium ein und begann einen Handelskonflikt mit China.",
+                text: "Mit der Wahl Donald Trumps 2016 und seinem Amtsantritt 2017 änderte sich die Handelspolitik der USA grundlegend. Trump vertrat eine klar protektionistische Linie („America First\u201c). Er trat aus dem transpazifischen Freihandelsabkommen (TPP), verhandelte neu von NAFTA –> USMCA, führte Strafzölle auf Stahl und Aluminium ein und begann einen Handelskonflikt mit China.",
                 highlight: "TPP-Ausstieg, NAFTA → USMCA, Strafzölle, Handelskonflikt mit China",
                 source: "Quelle: bpb.de – Trumps Handelspolitik"
             },
@@ -852,7 +852,7 @@ const LESSONS = {
                 type: "info",
                 emoji: "🔄",
                 title: "Reaktion anderer Staaten",
-                text: "Staaten reagierten auf die Unsicherheit der US-Handelspolitik, indem sie eigene regionale Abkommen vorantrieben. Während die USA sich teilweise aus multilateralen Strukturen zurückgezogen, intensivierten andere Regionen, wie zum Beispiel die EU oder Asien ihre wirtschaftliche Zusammenarbeit."
+                text: "Staaten reagierten auf die Unsicherheit der US-Handelspolitik, indem sie eigene regionale Abkommen vorantrieben. Während die USA sich teilweise aus multilateralen Strukturen zurückgezogen, intensivierten andere Regionen, wie zum Beispiel die EU oder Asien ihre Wirtschaftliche Zusammenarbeit."
             },
             {
                 type: "quiz",
@@ -881,7 +881,7 @@ const LESSONS = {
                 type: "info",
                 emoji: "🦠",
                 title: "Corona & Welthandel",
-                text: "Die Corona-Pandemie stellte ab Anfang 2020 einen massiven Rückschritt für den Welthandel dar. Folgen waren unter anderem die Unterbrechung globaler Lieferketten, Produktionsausfälle, Exportbeschränkungen (z. B. medizinische Ausrüstung) und stärkere nationale Eingriffe in Handelsstrukturen. Viele Staaten erkannten in dieser Phase ihre Abhängigkeit von globalen Lieferketten, insbesondere von China. Dies verstärkte die Diskussion um strategische Autonomie und De-Risking. De-Risking beschreibt die Strategie, übermäßige Abhängigkeiten vom chinesischen Markt zu reduzieren und stattdessen in andere Märkte zu investieren.",
+                text: "Die Corona Pandemie stellte ab Anfang 2020 einen massiven Rückschritt für den Welthandel dar. Folgen waren unter anderem die Unterbrechung globaler Lieferketten, Produktionsausfälle, Exportbeschränkungen (z. B. medizinische Ausrüstung) und stärkere nationale Eingriffe in Handelsstrukturen. Viele Staaten erkannten in dieser Phase ihre Abhängigkeit von globalen Lieferketten, insbesondere von China. Dies verstärkte die Diskussion um strategische Autonomie und De-Risking. De-Risking beschreibt in dem Zusammenhang die übermäßige Abhängigkeit vom chinesischen Markt und die Intention sich von diesem zu lösen, um in andere Märkte zu investieren.",
                 highlight: "De-Risking: Lösung von übermäßiger Abhängigkeit vom chinesischen Markt"
             },
             {
@@ -933,7 +933,7 @@ const LESSONS = {
                 type: "info",
                 emoji: "3️⃣",
                 title: "Phase 3: Trump & Corona (ab 2017/2020)",
-                text: "**Trump-Ära & Corona-Krise (ab 2017/2020):** Zunehmende Unsicherheit im Welthandel → Ausbau regionaler Bündnisse als Absicherungsstrategie",
+                text: "**Trump-Ära & Corona-Krise (ab 2017/2020):** Zunehmende Unsicherheit im Welthandel ––> Ausbau regionaler Bündnisse als Absicherungsstrategie",
                 highlight: "Regionale Bündnisse als Schutz gegen globale Unsicherheit"
             },
             {
@@ -946,7 +946,7 @@ const LESSONS = {
             {
                 type: "summary",
                 emoji: "✅",
-                title: "Zusammenfassung M11",
+                title: "Zusammenfassung der Analyse",
                 points: [
                     "Phase 1 (1990-2008): Globalisierung & WTO-Expansion",
                     "Phase 2 (ab 2008): Finanzkrise → mehr regionale Kooperation",
@@ -995,8 +995,8 @@ const LESSONS = {
                 type: "info",
                 emoji: "🔢",
                 title: "Wie hoch sind Zölle?",
-                text: "Das variiert stark:\n\n• **EU-Durchschnitt:** ca. 5% auf Industriegüter\n• **USA auf EU-Waren:** 20% pauschal (Liberation Day, April 2025), effektiv ~8,6% gewichtet (Ende 2025)\n• **USA auf China:** effektiv ~37,7% gewichtet (Ende 2025)\n• **USA auf EU-Autos:** 15% spezifischer Zollsatz\n• **Innerhalb der EU:** 0% (Binnenmarkt!)\n\nBei manchen Produkten (z.B. Tabak, Alkohol) gibt es zusätzlich Verbrauchsteuern.",
-                highlight: "Von 0% (EU-Binnenmarkt) bis 37,7% (USA auf China)"
+                text: "Das variiert stark:\n\n• **EU-Durchschnitt:** ca. 5% auf Industriegüter\n• **USA auf EU-Waren (2025):** 15% pauschal\n• **USA auf China:** bis zu 47%\n• **Innerhalb der EU:** 0% (Binnenmarkt!)\n\nBei manchen Produkten (z.B. Tabak, Alkohol) gibt es zusätzlich Verbrauchsteuern. Und auf Luxusgüter teilweise Sonderzölle.",
+                highlight: "Von 0% (EU-Binnenmarkt) bis 47% (USA auf China)"
             },
             {
                 type: "info",
@@ -1095,7 +1095,7 @@ const LESSONS = {
             {
                 type: "info",
                 emoji: "💰",
-                title: "Zölle & Verbraucher",
+                title: "Material M12: Zölle & Verbraucher",
                 text: "Material M 12 verdeutlicht die wirtschaftlichen Folgen von Zöllen für Verbraucherinnen und Verbraucher. Durch höhere Importpreise steigen häufig auch die Endpreise für Konsumgüter. Dies führt zu einer geringeren Auswahl, steigenden Lebenshaltungskosten und sinkender Kaufkraft. Die Grafik zeigt damit, dass Zölle zwar Vorteile für inländische Produzenten haben können, gleichzeitig jedoch die Konsumentinnen und Konsumenten belasten. Es entsteht ein Zielkonflikt zwischen wirtschaftlichem Schutz und sozialer Gerechtigkeit.",
                 highlight: "Zielkonflikt: Wirtschaftlicher Schutz vs. soziale Gerechtigkeit",
                 source: "Quelle: de.statista.com"
@@ -1422,8 +1422,8 @@ const LESSONS = {
                 type: "info",
                 emoji: "💡",
                 title: "Unsere Position",
-                text: "Nach Analyse beider Szenarien und aller Argumente kommen wir zu dem Schluss:\n\n**Handelsbeziehungen sollten möglichst offen, aber fair und regelbasiert gestaltet werden.** Reiner Protektionismus schadet vor allem Verbraucher*innen und kostet mehr Jobs als er schützt. Gleichzeitig braucht es klare Regeln, Sozial- und Umweltstandards sowie strategische Vorsorge bei kritischen Gütern.\n\n**Als Schüler*innen sehen wir das so:** Wir sind die Generation, die mit den Folgen heutiger Handelspolitik leben muss. Wenn Lieferketten zusammenbrechen, werden unsere Smartphones teurer. Wenn Klimazölle fehlen, zahlen wir mit unserer Zukunft. Wir wollen günstige Produkte – aber nicht auf Kosten von Ausbeutung oder Umweltzerstörung. Deshalb fordern wir: fairen Handel, der Wohlstand schafft, ohne die Schwächsten zu vergessen.\n\nDie EU-Strategie der „Open Strategic Autonomy\u201c zeigt, dass Offenheit und Sicherheit kein Widerspruch sein müssen.",
-                highlight: "Offen, fair und regelbasiert – aus unserer Perspektive der einzig tragfähige Weg"
+                text: "Nach Analyse beider Szenarien und aller Argumente kommen wir zu dem Schluss:\n\n**Handelsbeziehungen sollten möglichst offen, aber fair und regelbasiert gestaltet werden.** Reiner Protektionismus schadet vor allem Verbraucher*innen und kostet mehr Jobs als er schützt. Gleichzeitig braucht es klare Regeln, Sozial- und Umweltstandards sowie strategische Vorsorge bei kritischen Gütern.\n\nDie EU-Strategie der „Open Strategic Autonomy\u201c zeigt, dass Offenheit und Sicherheit kein Widerspruch sein müssen.",
+                highlight: "Offen, aber fair und regelbasiert – das ist der Weg"
             },
             {
                 type: "quiz",
@@ -1678,6 +1678,12 @@ const LESSONS = {
             {
                 type: "info",
                 emoji: "📚",
+                title: "Interview mit Zollbeamten",
+                text: "**Interview:**\nWir haben ein ausführliches Interview mit einem Zollbeamten (im Moment im dualen Studium) geführt.\nDie mitgezeichnete Audio-Aufzeichnung ist NICHT öffentlich, jedoch kann das Transkript angeschaut werden."
+            },
+            {
+                type: "info",
+                emoji: "📚",
                 title: "Quellenverzeichnis (1/3)",
                 text: "**Offizielle Institutionen:**\n• Destatis – Statistisches Bundesamt: Außenhandelsstatistiken 2025\n• Europäische Kommission: Trade Policy Review 2025\n• WTO: World Trade Report 2025\n• UNCTAD: Global Trade Update Januar 2026\n• Bundesministerium für Wirtschaft und Klimaschutz (BMWK)\n• Deutscher Industrie- und Handelskammertag (DIHK): Außenhandelsbericht 2025"
             },
@@ -1685,7 +1691,7 @@ const LESSONS = {
                 type: "info",
                 emoji: "📰",
                 title: "Quellenverzeichnis (2/3)",
-                text: "**Forschungsinstitute & Medien:**\n• ifo-Institut: Ökonomische Auswirkungen eines Handelskriegs, ifo Schnelldienst 2025 (abgerufen am 15.02.2026)\n• Bertelsmann-Stiftung: Wer profitiert vom Freihandel?, GED Study 2024 (abgerufen am 10.01.2026)\n• Bundeszentrale für politische Bildung (bpb): Trumps Handelspolitik, Dossier Globalisierung (abgerufen am 20.01.2026)\n• Euronews Business: WTO warns Trump tariff policies could make global trade slide, 16.04.2025 (abgerufen am 05.02.2026)\n• CNBC: Supreme Court tariff decision – Apple, Trump, Cook, iPhone, 20.02.2026 (abgerufen am 20.02.2026)\n• Barron's: EU-India Trade Deal Gains Momentum Amid Trump Tariffs, 2025 (abgerufen am 12.02.2026)\n• ING Think: Global trade in 2026 – significant slowdown amid large shifts, 2026 (abgerufen am 15.02.2026)\n• Tax Foundation: Trump Tariffs – Tracking the Economic Impact of the Trade War, 2025 (abgerufen am 18.02.2026)"
+                text: "**Forschungsinstitute & Medien:**\n• ifo-Institut: Studien zu Handelsauswirkungen\n• Bertelsmann-Stiftung: Freihandel und Beschäftigung\n• Bundeszentrale für politische Bildung (bpb): Trumps Handelspolitik\n• Euronews Business: WTO & Trump Tariffs 2025\n• CNBC: Apple Supply Chain & Tariffs 2025/26\n• Barron's: EU-India Trade Deal\n• ING Think: Global Trade in 2026\n• Tax Foundation: Trump Tariffs Trade War Analysis"
             },
             {
                 type: "info",
@@ -1887,14 +1893,14 @@ function completeLesson() {
     
     // Show completion message
     setTimeout(() => {
-        showToast(`🎉 Lektion abgeschlossen! +${currentLesson.data.xp} XP`);
+        alert(`🎉 Lektion abgeschlossen!\n+${currentLesson.data.xp} XP`);
     }, 100);
 }
 
 function exitLesson() {
-    showConfirm('Lektion wirklich beenden? Fortschritt geht verloren.').then(confirmed => {
-        if (confirmed) showScreen('screen-home');
-    });
+    if (confirm('Lektion wirklich beenden? Fortschritt geht verloren.')) {
+        showScreen('screen-home');
+    }
 }
 
 function toggleModule(num) {
