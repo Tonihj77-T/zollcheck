@@ -1,9 +1,9 @@
-# Tarrific – Zölle & Welthandel lernen
+# Tarrifics – Zölle & Welthandel lernen
 
 Interaktive Lern-App zum Thema Zölle und Welthandel, entwickelt für den **econo=me Wettbewerb 2025/26**.  
 Thema: „Was ZOLL das? Wir und der Welthandel"
 
-**Live:** [tarrific.tonihj77.de](https://tarrific.tonihj77.de)
+**Live:** [tarrifics.tonihj77.de](https://tarrifics.tonihj77.de)
 
 ## Features
 

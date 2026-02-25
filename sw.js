@@ -1,4 +1,4 @@
-const CACHE_NAME = 'tarrific-v14';
+const CACHE_NAME = 'tarrifics-v14';
 const ASSETS = [
     '/',
     '/index.html',

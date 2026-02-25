@@ -1751,12 +1751,12 @@ let currentCardIndex = 0;
 let lessonProgress = {};
 
 function loadLessonProgress() {
-    const saved = localStorage.getItem('tarrific_lessons');
+    const saved = localStorage.getItem('tarrifics_lessons');
     if (saved) lessonProgress = JSON.parse(saved);
 }
 
 function saveLessonProgress() {
-    localStorage.setItem('tarrific_lessons', JSON.stringify(lessonProgress));
+    localStorage.setItem('tarrifics_lessons', JSON.stringify(lessonProgress));
 }
 
 function startLesson(module, lesson) {

@@ -36,14 +36,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // === State Management ===
 function loadState() {
-    const saved = localStorage.getItem('tarrific_state');
+    const saved = localStorage.getItem('tarrifics_state');
     if (saved) {
         state = { ...state, ...JSON.parse(saved) };
     }
 }
 
 function saveState() {
-    localStorage.setItem('tarrific_state', JSON.stringify(state));
+    localStorage.setItem('tarrifics_state', JSON.stringify(state));
 }
 
 function addXP(amount) {

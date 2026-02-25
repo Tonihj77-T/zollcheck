@@ -1,10 +1,10 @@
-# Tarrific – Technisches Handbuch
+# Tarrifics – Technisches Handbuch
 
 ## Übersicht
 
-Tarrific ist eine Progressive Web App (PWA) zum Thema Zölle und Welthandel, entwickelt für den **econo=me Wettbewerb 2025/26**.
+Tarrifics ist eine Progressive Web App (PWA) zum Thema Zölle und Welthandel, entwickelt für den **econo=me Wettbewerb 2025/26**.
 
-**Live:** [tarrific.tonihj77.de](https://tarrific.tonihj77.de)
+**Live:** [tarrifics.tonihj77.de](https://tarrifics.tonihj77.de)
 
 ---
 
@@ -428,10 +428,10 @@ containers:
 **Deploy-Workflow:**
 ```bash
 git push origin master
-ssh root@194.164.207.131 "kubectl rollout restart deployment/tarrific -n tarrific"
+ssh root@194.164.207.131 "kubectl rollout restart deployment/tarrifics -n tarrifics"
 ```
 
-Live unter: `https://tarrific.tonihj77.de`
+Live unter: `https://tarrifics.tonihj77.de`
 
 ### Lokale Entwicklung
 
