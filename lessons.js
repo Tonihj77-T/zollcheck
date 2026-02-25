@@ -1704,7 +1704,7 @@ const LESSONS = {
                 type: "info",
                 emoji: "📖",
                 title: "Quellenverzeichnis (3/3)",
-                text: "**Unternehmensquellen:**\n• BMW Group – Jahresbericht 2025. URL: bmwgroup.com → Bericht → Geschäftsbericht 2025 (abgerufen am 24.02.26)\n• Apple Inc. – Annual Report (10-K) 2025. URL: investor.apple.com/sec-filings/ (abgerufen am 23.02.26)\n• Wirtschaftsvereinigung Stahl – Stahlmarktbericht 2025. URL: stahl-online.de/marktdaten/ (abgerufen am 25.02.26)\n• Deutscher Kaffeeverband – Kaffeemarkt 2025. URL: kaffeeverband.de/de/kaffeemarkt (abgerufen am 24.02.26)\n• TransFair e.V. – Absatz Fairtrade-Produkte Deutschland. URL: fairtrade-deutschland.de → Zahlen & Fakten (abgerufen am 23.02.26)\n\n**Unterrichtsmaterial:**\n• econo=me Wettbewerbsunterlagen 2025/26\n• Schulbuch-PDF: Materialien M11, M12"
+                text: "**Unternehmensquellen:**\n• BMW Group – Jahresbericht 2025. URL: bmwgroup.com → Bericht → Geschäftsbericht 2025 (abgerufen am 24.02.26)\n• Apple Inc. – Annual Report (10-K) 2025. URL: investor.apple.com/sec-filings/ (abgerufen am 23.02.26)\n• Wirtschaftsvereinigung Stahl – Stahlmarktbericht 2025. URL: wvstahl.de/daten-fakten/konjunkturinformationen/ (abgerufen am 25.02.26)\n• Deutscher Kaffeeverband – Kaffeemarkt 2025. URL: kaffeeverband.de/de/kaffeemarkt (abgerufen am 24.02.26)\n• TransFair e.V. – Absatz Fairtrade-Produkte Deutschland. URL: fairtrade-deutschland.de → Zahlen & Fakten (abgerufen am 23.02.26)\n\n**Unterrichtsmaterial:**\n• econo=me Wettbewerbsunterlagen 2025/26\n• Schulbuch-PDF: Materialien M11, M12"
             },
             {
                 type: "info",
